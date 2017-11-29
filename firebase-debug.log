@@ -1,0 +1,28 @@
+[debug] [2017-11-29T15:50:16.846Z] ----------------------------------------------------------------------
+[debug] [2017-11-29T15:50:16.848Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2017-11-29T15:50:16.849Z] CLI Version:   3.15.3
+[debug] [2017-11-29T15:50:16.849Z] Platform:      darwin
+[debug] [2017-11-29T15:50:16.849Z] Node Version:  v9.2.0
+[debug] [2017-11-29T15:50:16.849Z] Time:          Wed Nov 29 2017 10:50:16 GMT-0500 (EST)
+[debug] [2017-11-29T15:50:16.849Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-11-29T15:50:16.859Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-11-29T15:50:16.860Z] > authorizing via signed-in user
+[debug] [2017-11-29T15:50:16.863Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/muster-94d83  
+ Wed Nov 29 2017 10:50:16 GMT-0500 (EST)
+[debug] [2017-11-29T15:50:17.213Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-29T15:50:17.213Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/muster-94d83/tokens  
+ Wed Nov 29 2017 10:50:17 GMT-0500 (EST)
+[debug] [2017-11-29T15:50:17.702Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/SeamusMartin1/Desktop/muster'...
+[info] 
+[debug] [2017-11-29T15:50:17.705Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/muster-94d83  
+ Wed Nov 29 2017 10:50:17 GMT-0500 (EST)
+[debug] [2017-11-29T15:50:18.010Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-29T15:50:18.010Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/725434233122/clients/_:getWebAppConfig  
+ Wed Nov 29 2017 10:50:18 GMT-0500 (EST)
+[debug] [2017-11-29T15:50:18.519Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+

@@ -1,0 +1,34 @@
+/*save for last day*/
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color = #FFFFFF;
+  display:inline;
+}
+
+
+li {
+  float: left;
+}
+
+li a {
+   display: block;
+   color: white;
+   text-align: center;
+   padding: 14px 16px;
+   text decoartion: none;
+}
+
+.logo {
+}
+
+.link-button {
+}
+
+.search-bar {
+}
+
