@@ -5,17 +5,17 @@ import Signup from './Signup'
 import Login from './Login'
 
 export default class AuthFrame extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      isSigningUp: false, // this will load the login page by default. 
+      isSigningUp: this.props.isSigningUp// this will load the login page by default. 
     }; 
     this.loadSignupPage = this.loadSignupPage.bind(this); 
     this.loadLoginPage = this.loadLoginPage.bind(this);
   }
 
-  componentDidMount() { 
-    
+  componentWillReceiveProps() {
+    this.setState({isSigningUp : this.props.isSigningUp})
   }
 
   loadSignupPage() {
@@ -26,7 +26,6 @@ export default class AuthFrame extends React.Component {
     this.setState({isSigningUp: false})
   }
 
-// The user will have the option of rendering
   render() {
     return this.state.isSigningUp 
     ? (<Signup loadLoginPage = {this.loadLoginPage} />) 
