@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "muster-94d83"
+    "default": "muster-94d83",
+    "firebase serve": "muster-94d83"
   }
 }
