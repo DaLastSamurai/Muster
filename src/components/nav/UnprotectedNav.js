@@ -61,9 +61,9 @@ export default class UnprotectedNav extends React.Component {
           </nav>
           {/* use react router to only show one of our components at a time */}
           {/*  */}
-          <Switch> 
+
             <Route exact path="/login" 
-              render={() => <AuthFrame user={this.props.user}/>} 
+              render={() => <AuthFrame user={this.props.user} isSigningUp={false}/>} 
             />
             <Route exact path="/a" 
               render={() => <div> You clicked a button without a Route!</div> } 
@@ -71,7 +71,7 @@ export default class UnprotectedNav extends React.Component {
             <Route exact path="/b" 
               render={() => <div> You clicked a button without a Route!</div>} 
             />
-          </Switch> 
+
           
         </div>
       </Router>

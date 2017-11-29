@@ -1,3 +1,4 @@
 node_modules
 functions/node_modules
 public/bundle.js
+firebase-debug.log

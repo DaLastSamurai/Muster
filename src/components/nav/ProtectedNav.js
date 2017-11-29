@@ -5,6 +5,7 @@ import { firebaseAuth } from '../../../config/firebaseCredentials'
 import Logo from './Logo'
 import LinkButton from '../helperElements/LinkButton'
 import SearchBar from '../helperElements/SearchBar'
+import AuthFrame from '../authentication/AuthFrame'
 
 export default class ProtectedNav extends React.Component {
   constructor() {
@@ -40,7 +41,7 @@ export default class ProtectedNav extends React.Component {
                 </li>
 
                 <li className="link-button">
-                  <Link to="/logout">
+                  <Link to="/">
                     <LinkButton title='Logout' clickFunction={() => {firebaseAuth().signOut()}} />
                   </Link>
                 </li>
@@ -58,7 +59,7 @@ export default class ProtectedNav extends React.Component {
           {/* This takes the user back to the login page when they sign out
               We may want to change this so that it redirects to the main page */}
 
-          <Route exact path="/logout" 
+          <Route exact path="/" 
             render={() => <AuthFrame />} 
           />
           <Route exact path="/a" 
