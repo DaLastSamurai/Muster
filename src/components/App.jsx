@@ -4,6 +4,7 @@ import { firebaseAuth } from '../../config/firebaseCredentials';
 import UnprotectedNav from './nav/UnprotectedNav';
 import ProtectedNav from './nav/ProtectedNav';
 import PopularCategoryList from './popularcategory/PopularCategoryList';
+import AuthFrame from './authentication/AuthFrame';
 
 export default class App extends React.Component {
   constructor() {
@@ -37,10 +38,16 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.state.authed  ? (<ProtectedNav user={this.state.user} />) : (<UnprotectedNav />)}
-        <PopularCategoryList />
-      </div>
+      <Router>
+        <div>
+          {this.state.authed  ? (<ProtectedNav user={this.state.user} />) : (<UnprotectedNav />)}
+          <Switch>
+            <Redirect exact from='/' to='/popularcategory'/>
+            <Route exact path='/popularcategory' render={() => <PopularCategoryList />} />
+            <Route exact path='/login' render={() => <AuthFrame user={this.props.user} isSigningUp={false} />} />
+          </Switch>
+        </div>
+      </Router>
     )
   }
 }

@@ -6,6 +6,7 @@ import Logo from './Logo'
 import LinkButton from '../helperElements/LinkButton'
 import SearchBar from '../helperElements/SearchBar'
 import AuthFrame from '../authentication/AuthFrame'
+import PopularCategoryList from '../popularcategory/PopularCategoryList';
 
 export default class UnprotectedNav extends React.Component {
   constructor() {
@@ -24,7 +25,6 @@ export default class UnprotectedNav extends React.Component {
       ONLY WHEN THE USER IS NOT SIGNED IN */
   render() {
     return (
-      <Router>
         <div>
           <nav className="navbar navbar-default">     
             <div className="container-fluid">
@@ -39,7 +39,7 @@ export default class UnprotectedNav extends React.Component {
                 </li>
 
                 <li className="link-button">
-                  <Link to="/b">
+                  <Link to="/popularcategory">
                     <LinkButton title='Landing' clickFunction={() => {}}/>
                   </Link>
                 </li>
@@ -61,7 +61,7 @@ export default class UnprotectedNav extends React.Component {
           </nav>
           {/* use react router to only show one of our components at a time */}
           {/*  */}
-
+          {/* 
             <Route exact path="/login" 
               render={() => <AuthFrame user={this.props.user} isSigningUp={false}/>} 
             />
@@ -71,10 +71,9 @@ export default class UnprotectedNav extends React.Component {
             <Route exact path="/b" 
               render={() => <div> You clicked a button without a Route!</div>} 
             />
-
-          
+            <Route exact path='/popularcategory' render={() => <PopularCategoryList/>} />
+          */}
         </div>
-      </Router>
     )
   }
 }
