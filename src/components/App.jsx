@@ -4,18 +4,19 @@ import { firebaseAuth } from '../../config/firebaseCredentials';
 import UnprotectedNav from './nav/UnprotectedNav';
 import ProtectedNav from './nav/ProtectedNav';
 import PopularCategoryList from './popularcategory/PopularCategoryList';
+import MyCollections from './userBar/MyCollections.jsx'
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      authed: false, 
-      user: null,  
-    }; 
-    this.checkAuthStatus = this.checkAuthStatus.bind(this); 
+      authed: false,
+      user: null,
+    };
+    this.checkAuthStatus = this.checkAuthStatus.bind(this);
   }
 
-  componentDidMount() { 
+  componentDidMount() {
     this.checkAuthStatus()
   }
 
@@ -23,23 +24,33 @@ export default class App extends React.Component {
     firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
-          authed : true, 
-          user: user, 
+          authed : true,
+          user: user,
         })
       } else {
         this.setState({
-          authed : false, 
-          user : null, 
+          authed : false,
+          user : null,
         })
       }
-    }) 
+    })
   }
 
   render() {
-    return (
+    return this.state.authed
+    ? (
       <div>
-        {this.state.authed  ? (<ProtectedNav user={this.state.user} />) : (<UnprotectedNav />)}
+        <ProtectedNav user={this.state.user} />
         <PopularCategoryList />
+
+      </div>
+    )
+    : (
+      <div>
+        <UnprotectedNav />
+        <MyCollections user={this.state.user} />
+        <PopularCategoryList />
+
       </div>
     )
   }

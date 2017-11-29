@@ -8,8 +8,8 @@
     "run": "webpack -w",
     "stop": "pkill -9 sh -c",
     "start": "npm run-script run",
-    "local": "firebase serve",
-    "deploy": "firebase deploy"
+    "local" : "firebase serve",
+    "deploy" : "firebase deploy"
   },
   "author": "Seamus Martin",
   "license": "MIT",

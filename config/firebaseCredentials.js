@@ -11,16 +11,16 @@ const config = {
 
 firebase.initializeApp(config)
 
-// probably want to put these in seperate files. 
+// probably want to put these in seperate files.
 /* ================================ REFS =================================== */
 // firebase.database().ref's are analogous to routes in express. They point to
-// a specific location in the database. 
-// this is the root ref that can be used for manually assigning refs. 
+// a specific location in the database.
+// this is the root ref that can be used for manually assigning refs.
 export const rootRef = firebase.database().ref()
 
 // this is the authentication ref ('users' becuase it stores user information)
 // to add info to this, do: usersRef.child(`${user.uid}`).set({ /* email: user.email })
-export const usersRef = firebase.database().ref("users/") 
+export const usersRef = firebase.database().ref("users/")
 
 
 /* ============================ Firebase Methods =========================== */
