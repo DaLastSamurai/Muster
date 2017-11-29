@@ -1,4 +1,4 @@
-// This navbar will show up when the user is logged in. 
+// This navbar will show up when the user is logged in.
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
 import { firebaseAuth } from '../../../config/firebaseCredentials'
@@ -10,11 +10,11 @@ import AuthFrame from '../authentication/AuthFrame'
 export default class ProtectedNav extends React.Component {
   constructor() {
     super();
-    this.state = {}; 
+    this.state = {};
 
   }
 
-  componentDidMount() { 
+  componentDidMount() {
 
   }
 
@@ -22,7 +22,7 @@ export default class ProtectedNav extends React.Component {
     return (
       <Router>
         <div>
-          <nav className="navbar navbar-default">     
+          <nav className="navbar navbar-default">
             <div className="container-fluid">
               <ul className="nav navbar-nav navbar-legt">
                 <li className="logo"><Logo />
@@ -59,14 +59,14 @@ export default class ProtectedNav extends React.Component {
           {/* This takes the user back to the login page when they sign out
               We may want to change this so that it redirects to the main page */}
 
-          <Route exact path="/" 
-            render={() => <AuthFrame />} 
+          <Route exact path="/logout"
+            render={() => <AuthFrame />}
           />
-          <Route exact path="/a" 
-            render={() => <div> You clicked a button without a Route!</div> } 
+          <Route exact path="/a"
+            render={() => <div> You clicked a button without a Route!</div> }
           />
-          <Route exact path="/b" 
-            render={() => <div> You clicked a button without a Route!</div>} 
+          <Route exact path="/b"
+            render={() => <div> You clicked a button without a Route!</div>}
           />
         </div>
       </Router>

@@ -1,0 +1,74 @@
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+[debug] [2017-11-29T17:12:07.692Z] ----------------------------------------------------------------------
+[debug] [2017-11-29T17:12:07.694Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2017-11-29T17:12:07.694Z] CLI Version:   3.15.3
+[debug] [2017-11-29T17:12:07.694Z] Platform:      darwin
+[debug] [2017-11-29T17:12:07.694Z] Node Version:  v9.2.0
+[debug] [2017-11-29T17:12:07.694Z] Time:          Wed Nov 29 2017 12:12:07 GMT-0500 (EST)
+[debug] [2017-11-29T17:12:07.695Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-11-29T17:12:07.705Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-11-29T17:12:07.705Z] > authorizing via signed-in user
+[debug] [2017-11-29T17:12:07.707Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-11-29T17:12:07.707Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/uuInIsGbYkdX-ERK0X-07BGDUCtHEZbG7ERevC2PpKU',
+=======
+[debug] [2017-11-29T17:13:07.918Z] ----------------------------------------------------------------------
+[debug] [2017-11-29T17:13:07.922Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2017-11-29T17:13:07.923Z] CLI Version:   3.15.3
+[debug] [2017-11-29T17:13:07.923Z] Platform:      darwin
+[debug] [2017-11-29T17:13:07.923Z] Node Version:  v6.11.3
+[debug] [2017-11-29T17:13:07.924Z] Time:          Wed Nov 29 2017 12:13:07 GMT-0500 (EST)
+[debug] [2017-11-29T17:13:07.924Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-11-29T17:13:07.940Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-11-29T17:13:07.941Z] > authorizing via signed-in user
+[debug] [2017-11-29T17:13:07.943Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-11-29T17:13:07.943Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/6IPVIZ0boTMIQgSgWk7WlKbAAcqg0J3zmtKpynEVcvE',
+>>>>>>> Stashed changes
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+<<<<<<< Updated upstream
+ Wed Nov 29 2017 12:12:07 GMT-0500 (EST)
+[debug] [2017-11-29T17:12:07.886Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-29T17:12:07.895Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/muster-94d83  
+ Wed Nov 29 2017 12:12:07 GMT-0500 (EST)
+[debug] [2017-11-29T17:12:08.219Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-29T17:12:08.220Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/muster-94d83/tokens  
+ Wed Nov 29 2017 12:12:08 GMT-0500 (EST)
+[debug] [2017-11-29T17:12:08.509Z] <<< HTTP RESPONSE 200
+=======
+ Wed Nov 29 2017 12:13:07 GMT-0500 (EST)
+[debug] [2017-11-29T17:13:08.163Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-29T17:13:08.178Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/muster-94d83  
+ Wed Nov 29 2017 12:13:08 GMT-0500 (EST)
+[debug] [2017-11-29T17:13:08.551Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-29T17:13:08.552Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/muster-94d83/tokens  
+ Wed Nov 29 2017 12:13:08 GMT-0500 (EST)
+[debug] [2017-11-29T17:13:09.011Z] <<< HTTP RESPONSE 200
+>>>>>>> Stashed changes
+[info] 
+[info] === Serving from '/Users/Christine/Muster'...
+[info] 
+<<<<<<< Updated upstream
+[debug] [2017-11-29T17:12:08.512Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/muster-94d83  
+ Wed Nov 29 2017 12:12:08 GMT-0500 (EST)
+[debug] [2017-11-29T17:12:08.786Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-29T17:12:08.786Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/725434233122/clients/_:getWebAppConfig  
+ Wed Nov 29 2017 12:12:08 GMT-0500 (EST)
+[debug] [2017-11-29T17:12:09.193Z] <<< HTTP RESPONSE 200
+=======
+[debug] [2017-11-29T17:13:09.015Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/muster-94d83  
+ Wed Nov 29 2017 12:13:09 GMT-0500 (EST)
+[debug] [2017-11-29T17:13:09.349Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-29T17:13:09.351Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/725434233122/clients/_:getWebAppConfig  
+ Wed Nov 29 2017 12:13:09 GMT-0500 (EST)
+[debug] [2017-11-29T17:13:09.723Z] <<< HTTP RESPONSE 200
+>>>>>>> Stashed changes
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+>>>>>>> userbar
