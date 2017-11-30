@@ -5,6 +5,7 @@ import UnprotectedNav from './nav/UnprotectedNav';
 import ProtectedNav from './nav/ProtectedNav';
 import PopularCategoryList from './popularcategory/PopularCategoryList';
 import MyCollections from './userBar/MyCollections.jsx'
+import AuthFrame from './authentication/AuthFrame';
 
 export default class App extends React.Component {
   constructor() {
@@ -37,21 +38,22 @@ export default class App extends React.Component {
   }
 
   render() {
-    return this.state.authed
-    ? (
-      <div>
-        <ProtectedNav user={this.state.user} />
-        <PopularCategoryList />
-
-      </div>
-    )
-    : (
-      <div>
-        <UnprotectedNav />
-        <MyCollections user={this.state.user} />
-        <PopularCategoryList />
-
-      </div>
+    return (
+      <Router>
+        <div>
+          {this.state.authed  ? 
+          (<div>
+           <ProtectedNav user={this.state.user} />
+           <MyCollections user={this.state.user} />
+           </div>)
+            : (<UnprotectedNav />)}
+          <Switch>
+            <Redirect exact from='/' to='/popularcategory'/>
+            <Route exact path='/popularcategory' render={() => <PopularCategoryList />} />
+            <Route exact path='/login' render={() => <AuthFrame user={this.props.user} isSigningUp={false} />} />
+          </Switch>
+        </div>
+      </Router>
     )
   }
 }
