@@ -5,12 +5,14 @@ import { firebaseAuth } from '../../../config/firebaseCredentials';
 import SearchBar from '../helperElements/SearchBar';
 import MyCollectionsList from './MyCollectionsList.jsx';
 import NewCollectionsInput from './NewCollectionsInput.jsx';
+import ProfilePic from './ProfilePic.jsx';
 
 export default class MyCollections extends React.Component {
   constructor(){
     super();
     this.state={
-      showInputForm : false
+      showInputForm : false,
+      hasProfilePic : false
     };
   }
 
@@ -23,6 +25,7 @@ export default class MyCollections extends React.Component {
     return(
       <div>
       This is the left-side userbar
+      <img src="https://visit.nemedic.com/storage/default.jpg" />
         <SearchBar/>
         <MyCollectionsList />
           <button type="button" className="btn btn-outline-secondary bg-primary" onClick={()=>{this.setState({showInputForm:!this.state.showInputForm})}}>
