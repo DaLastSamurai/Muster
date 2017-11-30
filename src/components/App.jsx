@@ -41,12 +41,16 @@ export default class App extends React.Component {
     return (
       <Router>
         <div>
-          {this.state.authed  ? 
-          (<div>
-           <ProtectedNav user={this.state.user} />
-           <MyCollections user={this.state.user} />
-           </div>)
-            : (<UnprotectedNav />)}
+          {this.state.authed  
+          ? (
+           <div>
+              <Redirect exact from='/login' to='/popularcategory'/>
+              <ProtectedNav user={this.state.user} />
+              <MyCollections user={this.state.user} />
+           </div>
+           )
+          : (<UnprotectedNav />)}
+
           <Switch>
             <Redirect exact from='/' to='/popularcategory'/>
             <Route exact path='/popularcategory' render={() => <PopularCategoryList />} />
@@ -57,3 +61,11 @@ export default class App extends React.Component {
     )
   }
 }
+
+
+
+
+
+
+
+
