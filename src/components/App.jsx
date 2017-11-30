@@ -4,11 +4,8 @@ import { firebaseAuth } from '../../config/firebaseCredentials';
 import UnprotectedNav from './nav/UnprotectedNav';
 import ProtectedNav from './nav/ProtectedNav';
 import PopularCategoryList from './popularcategory/PopularCategoryList';
-<<<<<<< HEAD
 import MyCollections from './userBar/MyCollections.jsx'
-=======
 import AuthFrame from './authentication/AuthFrame';
->>>>>>> fb
 
 export default class App extends React.Component {
   constructor() {

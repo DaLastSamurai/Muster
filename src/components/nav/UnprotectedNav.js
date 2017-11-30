@@ -6,7 +6,7 @@ import Logo from './Logo'
 import LinkButton from '../helperElements/LinkButton'
 import SearchBar from '../helperElements/SearchBar'
 import AuthFrame from '../authentication/AuthFrame'
-import PopularCategoryList from '../popularcategory/PopularCategoryList';
+
 
 export default class UnprotectedNav extends React.Component {
   constructor() {
