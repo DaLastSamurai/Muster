@@ -42,8 +42,10 @@ export default class App extends React.Component {
       <Router>
         <div>
           {this.state.authed  ? 
-          (<ProtectedNav user={this.state.user} />
-           <MyCollections user={this.state.user} />)
+          (<div>
+           <ProtectedNav user={this.state.user} />
+           <MyCollections user={this.state.user} />
+           </div>)
             : (<UnprotectedNav />)}
           <Switch>
             <Redirect exact from='/' to='/popularcategory'/>
