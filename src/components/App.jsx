@@ -19,6 +19,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.checkAuthStatus()
+    console.log('userinfo', firebaseAuth.currentUser)
   }
 
   checkAuthStatus() {
@@ -42,7 +43,7 @@ export default class App extends React.Component {
     return (
       <Router>
         <div>
-          {this.state.authed  
+          {this.state.authed
           ? (
            <div>
               <Redirect exact from='/login' to='/popularcategory'/>
@@ -63,11 +64,3 @@ export default class App extends React.Component {
     )
   }
 }
-
-
-
-
-
-
-
-

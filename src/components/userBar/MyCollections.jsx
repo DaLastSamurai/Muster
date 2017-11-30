@@ -5,14 +5,13 @@ import { firebaseAuth } from '../../../config/firebaseCredentials';
 import SearchBar from '../helperElements/SearchBar';
 import MyCollectionsList from './MyCollectionsList.jsx';
 import NewCollectionsInput from './NewCollectionsInput.jsx';
-import ProfilePic from './ProfilePic.jsx';
+import UserInfo from './UserInfo.jsx';
 
 export default class MyCollections extends React.Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state={
       showInputForm : false,
-      hasProfilePic : false
     };
   }
 
@@ -21,12 +20,12 @@ export default class MyCollections extends React.Component {
   }
 
   render() {
-    console.log('input form toggle',this.state.showInputForm)
+    // console.log('input form toggle',this.state.showInputForm)
     return(
       <div>
       This is the left-side userbar
-      <img src="https://visit.nemedic.com/storage/default.jpg" />
         <SearchBar/>
+        <UserInfo user={this.props.user}/>
         <MyCollectionsList />
           <button type="button" className="btn btn-outline-secondary bg-primary" onClick={()=>{this.setState({showInputForm:!this.state.showInputForm})}}>
             New Collection
