@@ -59,6 +59,7 @@ export default class App extends React.Component {
 
           <Switch>
             <Redirect exact from='/' to='/popularcategory'/>
+            <Route exact path='/' render={() => <PopularCategoryList/>} />
             <Route exact path='/popularcategory' render={() => <PopularCategoryList />} />
             <Route exact path='/login' render={() => <AuthFrame user={this.props.user} isSigningUp={false} />} />
             <Route exact path='/collections' render={() => <CollectionList />} />

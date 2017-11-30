@@ -13,13 +13,20 @@ export default class MyCollections extends React.Component {
     this.state={
       showInputForm : false,
     };
+    this.addNewCollection = this.addNewCollection.bind(this);
   }
 
   componentDidMount() {
 
   }
 
+  addNewCollection(e) {
+    console.log('this function should write to the collections database')
+    
+  }
+
   render() {
+    console.log('print this user', this.props.user.uid)
     // console.log('input form toggle',this.state.showInputForm)
     return(
       <div>
@@ -30,7 +37,7 @@ export default class MyCollections extends React.Component {
           <button type="button" className="btn btn-outline-secondary bg-primary" onClick={()=>{this.setState({showInputForm:!this.state.showInputForm})}}>
             New Collection
           </button>
-          {this.state.showInputForm?(<NewCollectionsInput />):(<div/>)}
+          {this.state.showInputForm?(<NewCollectionsInput addNewCollection={this.addNewCollection}/>):(<div/>)}
       </div>
     )
   }
