@@ -21,18 +21,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.checkAuthStatus()
-    rootRef.on('value', snap => {
-      console.log('every db', snap.val())//will consolelog all data we have in db
-    })
-    collection.on('value', snap => {
-      console.log('collection', snap.val())
-    })
-    category.on('value', snap => {
-      console.log('category', snap.val())
-    })
-    item.on('value', snap => {
-      console.log('item', snap.val())
-    })
+    console.log('userinfo', firebaseAuth.currentUser)
   }
 
   checkAuthStatus() {
@@ -73,7 +62,7 @@ export default class App extends React.Component {
     return (
       <Router>
         <div>
-          {this.state.authed  
+          {this.state.authed
           ? (
            <div>
               <Redirect exact from='/login' to='/popularcategory'/>
@@ -95,11 +84,3 @@ export default class App extends React.Component {
     )
   }
 }
-
-
-
-
-
-
-
-
