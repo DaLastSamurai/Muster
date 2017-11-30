@@ -6,13 +6,14 @@ export default class ResetPassword extends React.Component {
   constructor() {
     super();
     this.state = {
-      error : "", 
-      email : "", 
+      error : "", // misnomer, also shows the success response. 
+      email : "",
     }; 
     this.resetPassword = this.resetPassword.bind(this)
   }
 
-  resetPassword() {
+  resetPassword(e) {
+    e.preventDefault(); 
     firebaseAuth().sendPasswordResetEmail(this.state.email.value)
       .then(() => this.setState({error : `Password reset email sent to ${this.state.email.value}.`}))
       .catch(() => this.setState({error : `Email Address ${this.state.email.value} not found`}))

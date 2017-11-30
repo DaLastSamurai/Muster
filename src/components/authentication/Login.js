@@ -13,6 +13,7 @@ export default class Login extends React.Component {
       error : "", 
       email : "", 
       pw : "", 
+      resettingPW: false, 
     }; 
     this.handleEmailSubmit = this.handleEmailSubmit.bind(this)
   }
@@ -69,17 +70,16 @@ export default class Login extends React.Component {
         </form>
         <div>
           {this.state.error} 
-            <div>  
-              <Link to="/resetPassword">
-                <LinkButton title='resetPassword' clickFunction={() => {}}/>
-              </Link>
-              <LinkButton title='Signup Page' clickFunction={this.props.loadSignupPage}/>
-              <Route exact path="/resetPassword" 
-                render={() => <ResetPassword />} 
-              />
-            </div>
+            {!this.state.resettingPW 
+              ? (<LinkButton title='resetPassword' clickFunction={() => { this.setState({resettingPW : true}) } }/>)
+              : (<ResetPassword />)
+            }
         </div> 
       </div> 
     )
   }
 }
+
+
+
+
