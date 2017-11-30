@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
-import { firebaseAuth, rootRef } from '../../config/firebaseCredentials';
+import { firebaseAuth, rootRef, collection, category, item } from '../../config/firebaseCredentials';
 import UnprotectedNav from './nav/UnprotectedNav';
 import ProtectedNav from './nav/ProtectedNav';
 import PopularCategoryList from './popularcategory/PopularCategoryList';
@@ -21,7 +21,16 @@ export default class App extends React.Component {
   componentDidMount() {
     this.checkAuthStatus()
     rootRef.on('value', snap => {
-      console.log(snap.val())//will consolelog all data we have in db
+      console.log('every db', snap.val())//will consolelog all data we have in db
+    })
+    collection.on('value', snap => {
+      console.log('collection', snap.val())
+    })
+    category.on('value', snap => {
+      console.log('category', snap.val())
+    })
+    item.on('value', snap => {
+      console.log('item', snap.val())
     })
   }
 

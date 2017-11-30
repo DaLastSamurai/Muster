@@ -16,7 +16,10 @@ firebase.initializeApp(config)
 // firebase.database().ref's are analogous to routes in express. They point to
 // a specific location in the database.
 // this is the root ref that can be used for manually assigning refs.
-export const rootRef = firebase.database().ref()
+export const rootRef = firebase.database().ref()//bring everything
+export const category = firebase.database().ref('category/')
+export const collection = firebase.database().ref('collection/')
+export const item = firebase.database().ref('item/')
 
 // this is the authentication ref ('users' becuase it stores user information)
 // to add info to this, do: usersRef.child(`${user.uid}`).set({ /* email: user.email })
