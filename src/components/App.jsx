@@ -24,6 +24,7 @@ export default class App extends React.Component {
   checkAuthStatus() {
     firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
+        console.log('this is the user data: ', user)
         this.setState({
           authed : true,
           user: user,
@@ -49,7 +50,8 @@ export default class App extends React.Component {
               <MyCollections user={this.state.user} />
            </div>
            )
-          : (<UnprotectedNav />)}
+          : (<UnprotectedNav />)
+          }
 
           <Switch>
             <Redirect exact from='/' to='/popularcategory'/>
