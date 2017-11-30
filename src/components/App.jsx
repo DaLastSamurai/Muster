@@ -39,14 +39,23 @@ export default class App extends React.Component {
     firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
-          authed : true,
+          authed: true,
           user: user,
         }, () => {
           let basicInfo = {
-            email : user.email, 
-            isPaidUser : false, 
-          }; 
+            email: user.email, 
+            isPaidUser: false, 
+          }
+          let profileInfo = {
+            profilePhoto: 'http://bit.ly/2BoCV0Y', 
+            following: ['PVj0eR1eM7NyTOlsKUv2Qt9K6293'], // =seamus lol 
+            followers: ['PVj0eR1eM7NyTOlsKUv2Qt9K6293'], // =seamus lol 
+            bio: 'tell me about yourself...', 
+            favoriteCategories: ['Baseball Cards'],
+            username : user.email, 
+          }
           let updates = {};
+          updates[user.uid + '/profileInfo'] = profileInfo
           updates[user.uid + '/collectionIds'] = [0]; 
           updates[user.uid + '/info'] = basicInfo;
           return users.update(updates)
