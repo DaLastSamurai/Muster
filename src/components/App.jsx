@@ -1,6 +1,7 @@
 import React from 'react';
+import firebase from 'firebase'; 
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
-import { firebaseAuth, rootRef, collection, category, item } from '../../config/firebaseCredentials';
+import { firebaseAuth, rootRef, collection, category, item, users} from '../../config/firebaseCredentials';
 import UnprotectedNav from './nav/UnprotectedNav';
 import ProtectedNav from './nav/ProtectedNav';
 import PopularCategoryList from './popularcategory/PopularCategoryList';
@@ -36,13 +37,19 @@ export default class App extends React.Component {
 
   checkAuthStatus() {
     firebaseAuth().onAuthStateChanged((user) => {
-      // if we want to store this data independent of the user, this is where
-      // the data should be captured. 
       if (user) {
-        // console.log('this is the user data: ', user)
         this.setState({
           authed : true,
           user: user,
+        }, () => {
+          let basicInfo = {
+            email : user.email, 
+            isPaidUser : false, 
+          }; 
+          let updates = {};
+          updates[user.uid + '/collectionIds'] = [0]; 
+          updates[user.uid + '/info'] = basicInfo;
+          return users.update(updates)
         })
       } else {
         this.setState({

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // generic component for link buttons. Used multple times, very straightforward.
-
+// takes an optional argument for type. 
 export default class LinkButton extends React.Component {
   constructor(props) {
     super(props);
@@ -15,12 +15,10 @@ export default class LinkButton extends React.Component {
     }
   }
 
-
-
   render() {
    return (
     <div>
-      <button type="button" className="btn btn-outline-secondary bg-primary" onClick={this.handlePress}>
+      <button type={this.props.type || "button"} className="btn btn-outline-secondary bg-primary" onClick={this.handlePress}>
         {this.props.title}
       </button>
     </div>

@@ -23,7 +23,7 @@ export const item = firebase.database().ref('item/')
 
 // this is the authentication ref ('users' becuase it stores user information)
 // to add info to this, do: usersRef.child(`${user.uid}`).set({ /* email: user.email })
-export const usersRef = firebase.database().ref("users/")
+export const users = firebase.database().ref("users/")
 
 
 /* ============================ Firebase Methods =========================== */
