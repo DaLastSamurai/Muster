@@ -8,8 +8,8 @@
     "run": "webpack -w",
     "stop": "pkill -9 sh -c",
     "start": "npm run-script run",
-    "local" : "firebase serve",
-    "deploy" : "firebase deploy"
+    "local": "firebase serve",
+    "deploy": "firebase deploy"
   },
   "author": "Seamus Martin",
   "license": "MIT",
@@ -22,6 +22,7 @@
     "firebase-admin": "^5.5.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-loading-animation": "^1.4.0",
     "react-router-dom": "^4.2.2",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4"
