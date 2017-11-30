@@ -20,24 +20,13 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.checkAuthStatus()
-    rootRef.on('value', snap => {
-      console.log('every db', snap.val())//will consolelog all data we have in db
-    })
-    collection.on('value', snap => {
-      console.log('collection', snap.val())
-    })
-    category.on('value', snap => {
-      console.log('category', snap.val())
-    })
-    item.on('value', snap => {
-      console.log('item', snap.val())
-    })
+    console.log('userinfo', firebaseAuth.currentUser)
   }
 
   checkAuthStatus() {
     firebaseAuth().onAuthStateChanged((user) => {
       // if we want to store this data independent of the user, this is where
-      // the data should be captured. 
+      // the data should be captured.
       if (user) {
         // console.log('this is the user data: ', user)
         this.setState({
@@ -57,7 +46,7 @@ export default class App extends React.Component {
     return (
       <Router>
         <div>
-          {this.state.authed  
+          {this.state.authed
           ? (
            <div>
               <Redirect exact from='/login' to='/popularcategory'/>
@@ -79,11 +68,3 @@ export default class App extends React.Component {
     )
   }
 }
-
-
-
-
-
-
-
-
