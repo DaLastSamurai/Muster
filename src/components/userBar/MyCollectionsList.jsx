@@ -1,5 +1,5 @@
 import React from 'react';
-import { firebaseAuth } from '../../../config/firebaseCredentials';
+// import { firebaseAuth } from '../../../config/firebaseCredentials';
 import DummyData from './DummyData.js'
 import MyCollectionsEntry from './MyCollectionsEntry.jsx';
 
