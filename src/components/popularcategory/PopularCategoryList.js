@@ -1,5 +1,6 @@
 import React from 'react';
 import PopularCategoryEntry from './PopularCategoryEntry';
+import CollectionList from '../collections/CollectionList';
 
 class PopularCategoryList extends React.Component {
   constructor() {
@@ -32,7 +33,8 @@ class PopularCategoryList extends React.Component {
       <div>
           <div>popular list</div>
           <div>
-            {this.state.popularList.map((popularItem) => <PopularCategoryEntry popularItem={popularItem} getCollection={this.getCollection}/>)}
+            {this.state.popularList.map((popularItem) => 
+            <PopularCategoryEntry popularItem={popularItem} getCollection={this.getCollection}/>)}
           </div>
       </div>
     )
