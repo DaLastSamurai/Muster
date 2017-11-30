@@ -36,8 +36,10 @@ export default class App extends React.Component {
 
   checkAuthStatus() {
     firebaseAuth().onAuthStateChanged((user) => {
+      // if we want to store this data independent of the user, this is where
+      // the data should be captured. 
       if (user) {
-        console.log('this is the user data: ', user)
+        // console.log('this is the user data: ', user)
         this.setState({
           authed : true,
           user: user,
