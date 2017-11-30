@@ -7,7 +7,6 @@ import LinkButton from '../helperElements/LinkButton'
 import SearchBar from '../helperElements/SearchBar'
 import AuthFrame from '../authentication/AuthFrame'
 
-
 export default class UnprotectedNav extends React.Component {
   constructor() {
     super();

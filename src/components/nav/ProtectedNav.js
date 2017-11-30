@@ -20,7 +20,6 @@ export default class ProtectedNav extends React.Component {
 
   render() {
     return (
-      <Router>
         <div>
           <nav className="navbar navbar-default">
             <div className="container-fluid">
@@ -34,7 +33,7 @@ export default class ProtectedNav extends React.Component {
                   </Link>
                 </li>
 
-                <li className="link-button">
+                <li className="/popularcategory">
                   <Link to="/">
                     <LinkButton title='Landing' clickFunction={() => {}}/>
                   </Link>
@@ -69,7 +68,6 @@ export default class ProtectedNav extends React.Component {
             render={() => <div> You clicked a button without a Route!</div>} 
           /> */}
         </div>
-      </Router>
     )
   }
 }

@@ -48,7 +48,6 @@ export default class Login extends React.Component {
         </form>
         <div>
           {this.state.error} 
-          <Router> 
             <div>  
               <Link to="/resetPassword">
                 <LinkButton title='resetPassword' clickFunction={() => {}}/>
@@ -58,7 +57,6 @@ export default class Login extends React.Component {
                 render={() => <ResetPassword />} 
               />
             </div>
-          </Router> 
         </div> 
       </div> 
     )
