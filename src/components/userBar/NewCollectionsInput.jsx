@@ -1,14 +1,19 @@
 import React from 'react';
 import LinkButton from '../helperElements/LinkButton.js'
 
-export default class NewCategoryInput extends React.Component {
+export default class NewCollectionsInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state ={};
+    this.state ={
+      collectionName:"",
+      category:""
+    };
   }
   render() {
     return(
-      <form onSubmit={LinkButton}>
+      <form onSubmit={(e)=>{ e.preventDefault()
+        console.log('adding a new collection')
+      }}>
         <div className="category-input">
         <input
           type="text"
