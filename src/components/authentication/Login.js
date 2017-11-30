@@ -5,20 +5,19 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 import ResetPassword from './ResetPassword'
 import Signup from './Signup'
 import LinkButton from '../helperElements/LinkButton'
+import LoadingIcon from '../helperElements/LoadingIcon'
 
 export default class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       error : "", 
       email : "", 
       pw : "", 
       resettingPW: false, 
+      loading: false, 
     }; 
     this.handleEmailSubmit = this.handleEmailSubmit.bind(this)
-  }
-
-  componentDidMount() { 
   }
 
   handleGoogleSubmit(e) {
@@ -30,7 +29,6 @@ export default class Login extends React.Component {
       .catch(function(error) {
         this.setState({error: error.toString()})
       });
-
   }
 
   handleEmailSubmit(e) {
@@ -40,12 +38,12 @@ export default class Login extends React.Component {
     // these are being retrieved from the form with thier refs. 
     firebaseAuth()
       .signInWithEmailAndPassword(this.state.email.value, this.state.pw.value)
+      .then(() => {this.setState({loading : true})})
       .catch(error => this.setState({error: error.toString()}))
-
   }
 
   render() {
-    // console.log('this is the provider', provider)
+    // console.log('this is the state', this.state.loading)
     // console.log('these are the props from authFrame', this.props)
     return (
       <div className="col-sm-6 col-sm-offset-4">
@@ -53,7 +51,7 @@ export default class Login extends React.Component {
         
         {/* This is the google authentication: */}
         <form onSubmit={this.handleGoogleSubmit}>
-          <button type="submit" className="btn btn-primary">Login With Google</button>
+          <LinkButton type={"submit"} title='Login With Google' clickFunction={() => {} } />
         </form>
 
         {/* This is the email auth*/}
@@ -70,10 +68,11 @@ export default class Login extends React.Component {
         </form>
         <div>
           {this.state.error} 
-            {!this.state.resettingPW 
-              ? (<LinkButton title='resetPassword' clickFunction={() => { this.setState({resettingPW : true}) } }/>)
-              : (<ResetPassword />)
-            }
+          {!this.state.resettingPW 
+            ? (<LinkButton title='Reset Password' clickFunction={() => { this.setState({resettingPW : true}) } }/>)
+            : (<ResetPassword />)
+          }
+          <LinkButton title='Signup Page' clickFunction={this.props.loadSignupPage}/>
         </div> 
       </div> 
     )

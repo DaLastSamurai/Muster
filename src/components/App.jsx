@@ -1,6 +1,7 @@
 import React from 'react';
+import firebase from 'firebase'; 
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
-import { firebaseAuth, rootRef, collection, category, item } from '../../config/firebaseCredentials';
+import { firebaseAuth, rootRef, collection, category, item, users} from '../../config/firebaseCredentials';
 import UnprotectedNav from './nav/UnprotectedNav';
 import ProtectedNav from './nav/ProtectedNav';
 import PopularCategoryList from './popularcategory/PopularCategoryList';
@@ -25,13 +26,28 @@ export default class App extends React.Component {
 
   checkAuthStatus() {
     firebaseAuth().onAuthStateChanged((user) => {
-      // if we want to store this data independent of the user, this is where
-      // the data should be captured.
       if (user) {
-        // console.log('this is the user data: ', user)
         this.setState({
-          authed : true,
+          authed: true,
           user: user,
+        }, () => {
+          let basicInfo = {
+            email: user.email, 
+            isPaidUser: false, 
+          }
+          let profileInfo = {
+            profilePhoto: 'http://bit.ly/2BoCV0Y', 
+            following: ['PVj0eR1eM7NyTOlsKUv2Qt9K6293'], // =seamus lol 
+            followers: ['PVj0eR1eM7NyTOlsKUv2Qt9K6293'], // =seamus lol 
+            bio: 'tell me about yourself...', 
+            favoriteCategories: ['Baseball Cards'],
+            username : user.email, 
+          }
+          let updates = {};
+          updates[user.uid + '/profileInfo'] = profileInfo
+          updates[user.uid + '/collectionIds'] = [0]; 
+          updates[user.uid + '/info'] = basicInfo;
+          return users.update(updates)
         })
       } else {
         this.setState({
