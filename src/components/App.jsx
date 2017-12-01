@@ -24,7 +24,7 @@ export default class App extends React.Component {
       clickedCategory: ['default clicked cat'],
     };
 
-    this.checkAuthStatus = this.checkAuthStatus.bind(this);
+    this.checkAuthStatus = checkAuthStatus.bind(this);
     this.handleClickFromPopularCat = this.handleClickFromPopularCat.bind(this);
     this.addNewCollection = this.addNewCollection.bind(this);
     this.addToClickedCategory = this.addToClickedCategory.bind(this);
@@ -49,21 +49,26 @@ export default class App extends React.Component {
     })
   }
 
-  checkAuthStatus() {
-    firebaseAuth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({
-          authed : true,
-          user: user,
-        })
-      } else {
-        this.setState({
-          authed : false,
-          user : null,
-        })
-      }
-    })
-    console.log('userinfo', firebaseAuth.currentUser)
+
+  handleClickFromPopularCat(collectionIds) {
+    // let collectionInCat = [];
+    // collection.on('value', snap => {
+    //   let collections = snap.val()
+    //   collectionIds.forEach((id) =>
+    //     collectionInCat.push(collections[id]))
+    // })
+    //   this.setState({clickedCategory: collectionInCat})
+    //   // console.log(this.state.clickedCategory)
+
+    // console.log(this.state.clickedCategory)
+    collectionIds.map((id) =>
+      collection.orderByKey().equalTo(id).on("value", function(snapshot) {
+      // console.log(snapshot.key);
+      console.log(snapshot.val())
+    }))
+
+    // console.log('>>', cococ)
+
 
   }
 
