@@ -10,7 +10,7 @@ export default class LinkButton extends React.Component {
 
   handlePress(e) {
     if(typeof this.props.clickFunction(e) !== 'undefined') {
-      console.log('invoked this.props.clickFunction: ', this.props.clickFunction(e));
+      // console.log('invoked this.props.clickFunction: ', this.props.clickFunction(e));
       this.props.clickFunction(e).then(data => data)
     }
   }

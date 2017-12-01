@@ -8,7 +8,9 @@ import PopularCategoryList from './popularcategory/PopularCategoryList';
 import MyCollections from './userBar/MyCollections.jsx'
 import AuthFrame from './authentication/AuthFrame';
 import CollectionList from './collections/CollectionList';
-import { checkAuthStatus } from './authentication/authenticationHelpers'
+import { checkAuthStatus } from './authentication/authenticationHelpers'; 
+import ProfileFrame from './profilePages/ProfileFrame'; 
+import UserInfo from './userBar/UserInfo.jsx'
 
 export default class App extends React.Component {
   constructor() {
@@ -47,6 +49,7 @@ export default class App extends React.Component {
             <Route exact path='/popularcategory' render={() => <PopularCategoryList />} />
             <Route exact path='/login' render={() => <AuthFrame user={this.props.user} isSigningUp={false} />} />
             <Route exact path='/collections' render={() => <CollectionList />} />
+            <Route exact path='/profile' render={() => <ProfileFrame />} /> 
           </Switch>
         </div>
       </Router>
