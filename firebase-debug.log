@@ -37,3 +37,39 @@
 [info] ✔  hosting: Local server: http://localhost:5000
 
 >>>>>>> addingCollection
+[debug] [2017-12-01T18:19:40.207Z] ----------------------------------------------------------------------
+[debug] [2017-12-01T18:19:40.211Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2017-12-01T18:19:40.212Z] CLI Version:   3.15.3
+[debug] [2017-12-01T18:19:40.212Z] Platform:      darwin
+[debug] [2017-12-01T18:19:40.212Z] Node Version:  v8.9.1
+[debug] [2017-12-01T18:19:40.213Z] Time:          Fri Dec 01 2017 13:19:40 GMT-0500 (EST)
+[debug] [2017-12-01T18:19:40.213Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-12-01T18:19:40.238Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-12-01T18:19:40.238Z] > authorizing via signed-in user
+[debug] [2017-12-01T18:19:40.243Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-12-01T18:19:40.243Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/orPZ2VGekeNsDK7Wshw0Fg4jm7qet8G6ttsut6efZPY',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Fri Dec 01 2017 13:19:40 GMT-0500 (EST)
+[debug] [2017-12-01T18:19:40.413Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-01T18:19:40.426Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/muster-94d83  
+ Fri Dec 01 2017 13:19:40 GMT-0500 (EST)
+[debug] [2017-12-01T18:19:40.800Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-01T18:19:40.801Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/muster-94d83/tokens  
+ Fri Dec 01 2017 13:19:40 GMT-0500 (EST)
+[debug] [2017-12-01T18:19:41.218Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/yusaku/development/github.com/Muster'...
+[info] 
+[debug] [2017-12-01T18:19:41.223Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/muster-94d83  
+ Fri Dec 01 2017 13:19:41 GMT-0500 (EST)
+[debug] [2017-12-01T18:19:41.593Z] <<< HTTP RESPONSE 200
+[debug] [2017-12-01T18:19:41.594Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/725434233122/clients/_:getWebAppConfig  
+ Fri Dec 01 2017 13:19:41 GMT-0500 (EST)
+[debug] [2017-12-01T18:19:41.949Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
