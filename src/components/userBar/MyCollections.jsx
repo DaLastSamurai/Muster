@@ -13,31 +13,25 @@ export default class MyCollections extends React.Component {
     this.state={
       showInputForm : false,
     };
-    this.addNewCollection = this.addNewCollection.bind(this);
   }
 
   componentDidMount() {
 
   }
 
-  addNewCollection(e) {
-    console.log('this function should write to the collections database')
-    
-  }
-
   render() {
-    console.log('print this user', this.props.user.uid)
+    // console.log('print this user', this.props.user.uid)
     // console.log('input form toggle',this.state.showInputForm)
     return(
       <div>
       This is the left-side userbar
         <SearchBar/>
-        <UserInfo user={this.props.user}/> 
+        <UserInfo user={this.props.user}/>
         <MyCollectionsList />
           <button type="button" className="btn btn-outline-secondary bg-primary" onClick={()=>{this.setState({showInputForm:!this.state.showInputForm})}}>
             New Collection
           </button>
-          {this.state.showInputForm?(<NewCollectionsInput addNewCollection={this.addNewCollection}/>):(<div />)}
+          {this.state.showInputForm?(<NewCollectionsInput addNewCollection={this.props.addNewCollection}/>):(<div/>)}
       </div>
     )
   }
