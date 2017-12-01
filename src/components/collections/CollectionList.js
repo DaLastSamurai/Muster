@@ -9,7 +9,11 @@ class CollectionList extends React.Component {
   render() {
     return(
       <div>
-        collectionList
+        {this.props.clickedCollectionList.map((colObj, i) => {
+          let colKey = Object.keys(colObj);
+          return <CollectionEntry collection={colObj[colKey]} key={colKey} />
+        }
+        )}
       </div>
     )
   }
