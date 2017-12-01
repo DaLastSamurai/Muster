@@ -32,12 +32,12 @@ export default class MyCollections extends React.Component {
       <div>
       This is the left-side userbar
         <SearchBar/>
-        <UserInfo user={this.props.user}/>
+        <UserInfo user={this.props.user}/> 
         <MyCollectionsList />
           <button type="button" className="btn btn-outline-secondary bg-primary" onClick={()=>{this.setState({showInputForm:!this.state.showInputForm})}}>
             New Collection
           </button>
-          {this.state.showInputForm?(<NewCollectionsInput addNewCollection={this.addNewCollection}/>):(<div/>)}
+          {this.state.showInputForm?(<NewCollectionsInput addNewCollection={this.addNewCollection}/>):(<div />)}
       </div>
     )
   }

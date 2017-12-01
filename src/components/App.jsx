@@ -19,6 +19,7 @@ export default class App extends React.Component {
       authed: false,
       user: null,
     };
+    // this is being imported from authenticationHelpers
     this.checkAuthStatus = checkAuthStatus.bind(this);
   }
 
