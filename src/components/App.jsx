@@ -1,5 +1,5 @@
 import React from 'react';
-import firebase from 'firebase'; 
+import firebase from 'firebase';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../config/firebaseCredentials';
 import UnprotectedNav from './nav/UnprotectedNav';
@@ -15,14 +15,56 @@ export default class App extends React.Component {
     super();
     this.state = {
       authed: false,
-      user: null,
+      user: null
     };
     this.checkAuthStatus = checkAuthStatus.bind(this);
+    this.addNewCollection = this.addNewCollection.bind(this);
   }
+
 
   componentDidMount() {
     this.checkAuthStatus()
-    console.log('userinfo', firebaseAuth.currentUser)
+  }
+
+  //retrieve the specific logged in users's UID > array of collection IDs
+  //add new collectionID key from push into that array
+
+  //add to collection with collectionID key
+  //put in other stuff including uid
+
+  addNewCollection(addCollection, addCategory, photoURL) {
+    // console.log('new collection name', addCollection)
+    // console.log('new category name', addCategory)
+    // console.log('all collections', collection)
+    // console.log('currentUID retrieved from auth', firebase.auth().currentUser.uid)
+    // console.log('new hash for collection id', collection.push().key)
+
+    let newCollectionId = collection.push().key
+    let currentUID = firebase.auth().currentUser.uid
+
+    let updateCollections = function() {
+      let collectionData = {
+        categoryId: addCategory,
+        itemId:[0],
+        name:addCollection,
+        photoUrl:"",
+        public: true,
+        uid:[currentUID]
+      }
+      let updates = {};
+      updates[newCollectionId] = collectionData;
+      return collection.update(updates);
+    }
+
+    let updateUsers = function() {
+      let updates = {};
+      updates[currentUID + '/collectionIds/' + newCollectionId] = newCollectionId;
+      return users.update(updates)
+    }
+
+    updateCollections();
+    updateUsers();
+
   }
 
   render() {
@@ -34,7 +76,10 @@ export default class App extends React.Component {
            <div>
               <Redirect exact from='/login' to='/popularcategory'/>
               <ProtectedNav user={this.state.user} />
-              <MyCollections user={this.state.user} />
+              <MyCollections
+                user={this.state.user}
+                addNewCollection={this.addNewCollection}
+              />
            </div>
            )
           : (<UnprotectedNav />)
