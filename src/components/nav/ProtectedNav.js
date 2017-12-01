@@ -19,6 +19,7 @@ export default class ProtectedNav extends React.Component {
   }
 
   render() {
+    console.log('this is the user', this.props.user.uid)
     return (
         <div>
           <nav className="navbar navbar-default">
@@ -28,7 +29,7 @@ export default class ProtectedNav extends React.Component {
                 </li>
 
                 <li className="link-button">
-                  <Link to="/profile">
+                  <Link to={`/profile/${this.props.user.uid}/${this.props.user.uid}`}>
                     <LinkButton title='Profile' clickFunction={() => {}}/>
                   </Link>
                 </li>

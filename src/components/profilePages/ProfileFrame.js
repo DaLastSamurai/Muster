@@ -9,8 +9,13 @@ export default class ProfileFrame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // currentUser : , 
-      // profileUID :  
+      currentUser: this.props.match.params.curUser, 
+      // this could either be the profileUID of some user, or the 
+      // profile UID of the current logged in user. 
+      profileUID: this.props.match.params.uid, 
+      // this is boolean that is true when the user that is on the profile page
+      // is the user that is currently logged in. 
+      isUsersProfile: this.props.match.params.curUser === this.props.match.params.uid
     }; 
     this.handleEmailSubmit = this.handleEmailSubmit.bind(this)
   }
@@ -30,7 +35,8 @@ export default class ProfileFrame extends React.Component {
 
 
   render() {
-    console.log(this.props)
+    console.log('this is the props', this.props)
+    console.log('this is the state', this.state)
     return (
       <div>
         This is the profile frame. 
