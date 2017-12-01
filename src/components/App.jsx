@@ -26,11 +26,8 @@ export default class App extends React.Component {
 
     this.checkAuthStatus = this.checkAuthStatus.bind(this);
     this.handleClickFromPopularCat = this.handleClickFromPopularCat.bind(this);
-<<<<<<< HEAD
     this.addNewCollection = this.addNewCollection.bind(this);
-=======
     this.addToClickedCategory = this.addToClickedCategory.bind(this);
->>>>>>> fbfb
   }
 
   componentDidMount() {
@@ -154,16 +151,9 @@ export default class App extends React.Component {
               handleClickFromPopularCat={this.handleClickFromPopularCat}/>} />
             <Route exact path='/login' render={() =>
               <AuthFrame user={this.props.user} isSigningUp={false} />} />
-            <Route exact path='/collections' render={() => <CollectionList />} />
             <Route exact path='/' render={() => <PopularCategoryList/>} />
-            <Route exact path='/popularcategory' render={() => <PopularCategoryList />} />
-            <Route exact path='/login' render={() => <AuthFrame user={this.props.user} isSigningUp={false} />} />
-            <Route exact path='/collections' render={() => <CollectionList />} />
             <Route exact path='/profile/:curUser/:uid' component={ProfileFrame} />
             <Route exact path='/addItems' render={() => <AddItems />} />
-              handleClickFromPopularCat={this.handleClickFromPopularCat}
-              />}
-            />
             <Route exact path='/collections' render={() => 
               <CollectionList clickedCollectionList={this.state.clickedCategory}/>} />
           </Switch>
