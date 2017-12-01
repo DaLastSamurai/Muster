@@ -14,8 +14,11 @@ export default class App extends React.Component {
     this.state = {
       authed: false,
       user: null,
+      popularCategoryList: [],
+      clickedCategory: ['default clicked cat'],
     };
     this.checkAuthStatus = this.checkAuthStatus.bind(this);
+    this.handleClickFromPopularCat = this.handleClickFromPopularCat.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +31,8 @@ export default class App extends React.Component {
     })
     category.on('value', snap => {
       console.log('category', snap.val())
+      this.setState({popularCategoryList: snap.val()})
+      console.log('popularcat from state', this.state.popularCategoryList)
     })
     item.on('value', snap => {
       console.log('item', snap.val())
@@ -50,6 +55,26 @@ export default class App extends React.Component {
     })
   }
 
+  handleClickFromPopularCat(collectionIds) {
+    // let collectionInCat = [];
+    // collection.on('value', snap => {
+    //   let collections = snap.val()
+    //   collectionIds.forEach((id) => 
+    //     collectionInCat.push(collections[id]))
+    // })
+    //   this.setState({clickedCategory: collectionInCat})
+    //   // console.log(this.state.clickedCategory)
+    
+    // console.log(this.state.clickedCategory)
+    collectionIds.map((id) =>
+      collection.orderByKey().equalTo(id).on("value", function(snapshot) {
+      // console.log(snapshot.key);
+      console.log(snapshot.val())
+    }))
+    
+    // console.log('>>', cococ)
+  }
+
   render() {
     return (
       <Router>
@@ -66,9 +91,17 @@ export default class App extends React.Component {
 
           <Switch>
             <Redirect exact from='/' to='/popularcategory'/>
-            <Route exact path='/popularcategory' render={() => <PopularCategoryList />} />
-            <Route exact path='/login' render={() => <AuthFrame user={this.props.user} isSigningUp={false} />} />
-            <Route exact path='/collections' render={() => <CollectionList />} />
+            <Route exact path='/popularcategory' render={() => 
+              <PopularCategoryList popularCategoryList={this.state.popularCategoryList}
+              handleClickFromPopularCat={this.handleClickFromPopularCat}
+              />
+            } />
+            <Route exact path='/login' render={() => 
+              <AuthFrame user={this.props.user} isSigningUp={false} />
+            } />
+            <Route exact path='/collections' render={() => 
+              <CollectionList />
+            } />
           </Switch>
         </div>
       </Router>
