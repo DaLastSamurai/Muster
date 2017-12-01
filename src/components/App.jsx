@@ -19,7 +19,6 @@ export default class App extends React.Component {
     super();
     this.state = {
       authed: false,
-<<<<<<< HEAD
       user: null,
       popularCategoryList: [],
       clickedCategory: ['default clicked cat'],
@@ -27,18 +26,11 @@ export default class App extends React.Component {
 
     this.checkAuthStatus = this.checkAuthStatus.bind(this);
     this.handleClickFromPopularCat = this.handleClickFromPopularCat.bind(this);
-=======
-      user: null
-    };
-    this.checkAuthStatus = checkAuthStatus.bind(this);
     this.addNewCollection = this.addNewCollection.bind(this);
->>>>>>> addingCollection
   }
-
 
   componentDidMount() {
     this.checkAuthStatus()
-<<<<<<< HEAD
 
     rootRef.on('value', snap => {
       console.log('every db', snap.val())//will consolelog all data we have in db
