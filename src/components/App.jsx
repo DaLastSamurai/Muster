@@ -19,6 +19,7 @@ export default class App extends React.Component {
     };
     this.checkAuthStatus = this.checkAuthStatus.bind(this);
     this.handleClickFromPopularCat = this.handleClickFromPopularCat.bind(this);
+    this.addToClickedCategory = this.addToClickedCategory.bind(this);
   }
 
   componentDidMount() {
@@ -55,25 +56,23 @@ export default class App extends React.Component {
     })
   }
 
-  handleClickFromPopularCat(collectionIds) {
-    // let collectionInCat = [];
-    // collection.on('value', snap => {
-    //   let collections = snap.val()
-    //   collectionIds.forEach((id) => 
-    //     collectionInCat.push(collections[id]))
-    // })
-    //   this.setState({clickedCategory: collectionInCat})
-    //   // console.log(this.state.clickedCategory)
+  addToClickedCategory(newState) {
+    this.setState({clickedCategory: newState})
+    // console.log('sdsdsd', this.state.clickedCategory)
+  };
+
+  handleClickFromPopularCat(collectionIds, callback=this.addToClickedCategory) {
+    callback(
+      collectionIds.map((id) =>{
+        let obj = null;
+        collection.orderByKey().equalTo(id).on("value", function(snapshot) {
+          obj = snapshot.val();
+        })
+        return obj;
+      })  
+    )
     
-    // console.log(this.state.clickedCategory)
-    collectionIds.map((id) =>
-      collection.orderByKey().equalTo(id).on("value", function(snapshot) {
-      // console.log(snapshot.key);
-      console.log(snapshot.val())
-    }))
-    
-    // console.log('>>', cococ)
-  }
+  };
 
   render() {
     return (
@@ -94,14 +93,14 @@ export default class App extends React.Component {
             <Route exact path='/popularcategory' render={() => 
               <PopularCategoryList popularCategoryList={this.state.popularCategoryList}
               handleClickFromPopularCat={this.handleClickFromPopularCat}
-              />
-            } />
+              />}
+            />
             <Route exact path='/login' render={() => 
-              <AuthFrame user={this.props.user} isSigningUp={false} />
-            } />
+              <AuthFrame user={this.props.user} isSigningUp={false} />} 
+            />
             <Route exact path='/collections' render={() => 
-              <CollectionList />
-            } />
+              <CollectionList clickedCollectionList={this.state.clickedCategory}/>} 
+            />
           </Switch>
         </div>
       </Router>
