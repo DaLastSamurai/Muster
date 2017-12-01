@@ -33,7 +33,19 @@ class AddItems extends React.Component {
   }
 
   handleSubmit(event) {
-    alert(JSON.stringify(this.state));
+    firebase.database().ref('/item').push({
+      name: this.state.name,
+      collectionId: this.state.collectionId,
+      location: this.state.location,
+      notes: this.state.notes,
+      photoUrls: this.state.photoUrls,
+      price: this.state.price,
+      sell: this.state.sell,
+      // boughtFrom: '',
+      // productIds: { amazon: '', ebay: '' },
+      // purchaseTime: '',
+      // uId: '',
+    });
     event.preventDefault();
   }
 
@@ -52,17 +64,6 @@ class AddItems extends React.Component {
       console.error(error);
     });
   }
-
-
-
-  // function writeUserData(userId, name, email, imageUrl) {
-  //   firebase.database().ref('users/' + userId).set({
-  //     username: name,
-  //     email: email,
-  //     profile_picture: imageUrl
-  //   });
-  // }
-
 
   render() {
     console.log('COLLECTIONLIST:', this.state.collectionList)
@@ -153,8 +154,39 @@ class AddItems extends React.Component {
                   name="location"
                   component="input"
                   type="text"
-                  placeholder="where"
+                  placeholder="current location?"
                   value={this.state.location}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label>Bought From</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="boughtFrom"
+                  component="input"
+                  type="text"
+                  placeholder="where did you buy this from?"
+                  value={this.state.boughtFrom}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+
+            <div>
+              <label>Purchase Date</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="purchaseTime"
+                  component="input"
+                  type="text"
+                  placeholder="where did you buy this?"
+                  value={this.state.purchaseTime}
                   onChange={this.handleChange}
                 />
               </div>
