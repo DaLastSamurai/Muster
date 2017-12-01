@@ -1,18 +1,27 @@
 import React from 'react';
 import LinkButton from '../helperElements/LinkButton.js'
 
+
 export default class NewCollectionsInput extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
       collectionName:"",
       category:""
-    };
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
+
+  handleSubmit(e){
+    e.preventDefault();
+    this.props.addNewCollection(this.state);
+  }
+
   render() {
     return(
-      <form onSubmit={(e)=>{ e.preventDefault()
-        console.log('adding a new collection')
+      <form onSubmit={(e)=>{
+        e.preventDefault();
+        this.handleSubmit(e);
       }}>
         <div className="category-input">
         <input
