@@ -24,7 +24,7 @@ export default class App extends React.Component {
       clickedCategory: ['default clicked cat'],
     };
 
-    this.checkAuthStatus = this.checkAuthStatus.bind(this);
+    this.checkAuthStatus = checkAuthStatus.bind(this);
     this.handleClickFromPopularCat = this.handleClickFromPopularCat.bind(this);
     this.addNewCollection = this.addNewCollection.bind(this);
   }
@@ -46,24 +46,6 @@ export default class App extends React.Component {
     item.on('value', snap => {
       console.log('item', snap.val())
     })
-  }
-
-  checkAuthStatus() {
-    firebaseAuth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({
-          authed : true,
-          user: user,
-        })
-      } else {
-        this.setState({
-          authed : false,
-          user : null,
-        })
-      }
-    })
-    console.log('userinfo', firebaseAuth.currentUser)
-
   }
 
   handleClickFromPopularCat(collectionIds) {
