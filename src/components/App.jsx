@@ -13,6 +13,7 @@ import { checkAuthStatus } from './authentication/authenticationHelpers';
 import ProfileFrame from './profilePages/ProfileFrame';
 import UserInfo from './userBar/UserInfo.jsx'
 import AddItems from './addItems/addItems';
+import { addNewCollection } from './userBar/writeNewCollectionHelpers'
 
 export default class App extends React.Component {
   constructor() {
@@ -25,9 +26,10 @@ export default class App extends React.Component {
       category: 'Board Games'
     };
 
-    this.checkAuthStatus = checkAuthStatus.bind(this);
+    this.checkAuthStatus = checkAuthStatus.bind(this); // Declared in authentication/authenticationHelpers
     this.handleClickFromPopularCat = this.handleClickFromPopularCat.bind(this);
-    this.addNewCollection = this.addNewCollection.bind(this);
+
+    this.addNewCollection = addNewCollection.bind(this);// Declared in userBar/writeNewCollectionHelpers
     this.addToClickedCategory = this.addToClickedCategory.bind(this);
   }
 
@@ -66,79 +68,9 @@ export default class App extends React.Component {
       // console.log(snapshot.key);
       // console.log(snapshot.val())
     }))
-
     // console.log('>>', cococ)
-
-
   }
 
-  //retrieve the specific logged in users's UID > array of collection IDs
-  //add new collectionID key from push into that array
-
-  //add to collection with collectionID key
-  //put in other stuff including uid
-  // addCategory is a key that is a name.
-  // addCollection is a name.
-  // photoURL is a string.
-  addNewCollection(addCollection, addCategory, photoURL) {
-    // console.log('new collection name', addCollection)
-    // console.log('new category name', addCategory)
-    // console.log('all collections', collection)
-    // console.log('currentUID retrieved from auth', firebase.auth().currentUser.uid)
-    // console.log('new hash for collection id', collection.push().key)
-
-    let newCollectionId = collection.push().key
-    let currentUID = firebase.auth().currentUser.uid
-
-    let updateCollections = function() {
-      let collectionData = {
-        categoryId: addCategory,
-        itemId:{},
-        name:addCollection,
-        photoUrl:"",
-        publicCat: true,
-        uid:[currentUID]
-      }
-      let updates = {};
-      updates[newCollectionId] = collectionData;
-      return collection.update(updates);
-    }
-
-    let updateUsers = function() {
-      let updates = {};
-      updates[currentUID + '/collectionIds/' + newCollectionId] = newCollectionId;
-      return users.update(updates)
-    }
-
-    let updateCategory = () => {
-      //if category already exists
-      //add collection ID to that category -- only need collection ID
-
-      if(this.state.category[addCategory]) {
-        // console.log('this category already exists. Add collectionId to preexisting category');
-        // console.log(this.state.category[addCategory])
-        let updates = {};
-        updates[addCategory + '/collectionId/' + newCollectionId] = addCollection
-        return category.update(updates)
-      } else {
-        //if category is new
-        //add create an entire new category object
-        let updates = {}
-        // updates.collectionId = {newCollectionId:collectionName}; //we can't do this here because keys can't be interpreted as variables
-        updates.name = addCategory;
-        updates.pictureurl = photoURL || "";
-        firebase.database().ref('category/' + addCategory).set(updates)
-        let collectionIdUpdate = {};
-        collectionIdUpdate[addCategory + '/collectionId/' + newCollectionId] = addCollection;
-        return category.update(collectionIdUpdate)
-      }
-    }
-
-    updateCategory();
-    updateCollections();
-    updateUsers();
-  }
-  
   addToClickedCategory(newState) {
     this.setState({clickedCategory: newState})
     // console.log('sdsdsd', this.state.clickedCategory)
@@ -152,9 +84,8 @@ export default class App extends React.Component {
           obj = snapshot.val();
         })
         return obj;
-      })  
+      })
     )
-    
   };
 
   render() {
@@ -186,7 +117,7 @@ export default class App extends React.Component {
             <Route exact path='/' render={() => <PopularCategoryList/>} />
             <Route exact path='/profile/:curUser/:uid' component={ProfileFrame} />
             <Route exact path='/addItems' render={() => <AddItems />} />
-            <Route exact path='/collections' render={() => 
+            <Route exact path='/collections' render={() =>
               <CollectionList clickedCollectionList={this.state.clickedCategory}/>} />
           </Switch>
         </div>
