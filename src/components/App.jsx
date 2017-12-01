@@ -22,6 +22,7 @@ export default class App extends React.Component {
       user: null,
       popularCategoryList: [],
       clickedCategory: ['default clicked cat'],
+      category: 'Board Games'
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
@@ -32,23 +33,22 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.checkAuthStatus()
-
     rootRef.on('value', snap => {
-      console.log('every db', snap.val())//will consolelog all data we have in db
+      // console.log('every db', snap.val())//will consolelog all data we have in db
     })
     collection.on('value', snap => {
-      console.log('collection', snap.val())
+      // console.log('collection', snap.val())
     })
     category.on('value', snap => {
-      console.log('category', snap.val())
+      // console.log('category', snap.val())
+      this.setState({'category': snap.val()})
       this.setState({popularCategoryList: snap.val()})
-      console.log('popularcat from state', this.state.popularCategoryList)
+      // console.log('popularcat from state', this.state.popularCategoryList)
     })
     item.on('value', snap => {
-      console.log('item', snap.val())
+      // console.log('item', snap.val())
     })
   }
-
 
   handleClickFromPopularCat(collectionIds) {
     // let collectionInCat = [];
@@ -64,7 +64,7 @@ export default class App extends React.Component {
     collectionIds.map((id) =>
       collection.orderByKey().equalTo(id).on("value", function(snapshot) {
       // console.log(snapshot.key);
-      console.log(snapshot.val())
+      // console.log(snapshot.val())
     }))
 
     // console.log('>>', cococ)
@@ -77,7 +77,9 @@ export default class App extends React.Component {
 
   //add to collection with collectionID key
   //put in other stuff including uid
-
+  // addCategory is a key that is a name.
+  // addCollection is a name.
+  // photoURL is a string.
   addNewCollection(addCollection, addCategory, photoURL) {
     // console.log('new collection name', addCollection)
     // console.log('new category name', addCategory)
@@ -91,10 +93,10 @@ export default class App extends React.Component {
     let updateCollections = function() {
       let collectionData = {
         categoryId: addCategory,
-        itemId:[0],
+        itemId:{},
         name:addCollection,
         photoUrl:"",
-        public: true,
+        publicCat: true,
         uid:[currentUID]
       }
       let updates = {};
@@ -108,6 +110,31 @@ export default class App extends React.Component {
       return users.update(updates)
     }
 
+    let updateCategory = () => {
+      //if category already exists
+      //add collection ID to that category -- only need collection ID
+
+      if(this.state.category[addCategory]) {
+        // console.log('this category already exists. Add collectionId to preexisting category');
+        // console.log(this.state.category[addCategory])
+        let updates = {};
+        updates[addCategory + '/collectionId/' + newCollectionId] = addCollection
+        return category.update(updates)
+      } else {
+        //if category is new
+        //add create an entire new category object
+        let updates = {}
+        // updates.collectionId = {newCollectionId:collectionName}; //we can't do this here because keys can't be interpreted as variables
+        updates.name = addCategory;
+        updates.pictureurl = photoURL || "";
+        firebase.database().ref('category/' + addCategory).set(updates)
+        let collectionIdUpdate = {};
+        collectionIdUpdate[addCategory + '/collectionId/' + newCollectionId] = addCollection;
+        return category.update(collectionIdUpdate)
+      }
+    }
+
+    updateCategory();
     updateCollections();
     updateUsers();
   }
