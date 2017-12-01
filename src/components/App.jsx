@@ -26,7 +26,11 @@ export default class App extends React.Component {
 
     this.checkAuthStatus = this.checkAuthStatus.bind(this);
     this.handleClickFromPopularCat = this.handleClickFromPopularCat.bind(this);
+<<<<<<< HEAD
     this.addNewCollection = this.addNewCollection.bind(this);
+=======
+    this.addToClickedCategory = this.addToClickedCategory.bind(this);
+>>>>>>> fbfb
   }
 
   componentDidMount() {
@@ -63,27 +67,6 @@ export default class App extends React.Component {
       }
     })
     console.log('userinfo', firebaseAuth.currentUser)
-
-  }
-
-  handleClickFromPopularCat(collectionIds) {
-    // let collectionInCat = [];
-    // collection.on('value', snap => {
-    //   let collections = snap.val()
-    //   collectionIds.forEach((id) =>
-    //     collectionInCat.push(collections[id]))
-    // })
-    //   this.setState({clickedCategory: collectionInCat})
-    //   // console.log(this.state.clickedCategory)
-
-    // console.log(this.state.clickedCategory)
-    collectionIds.map((id) =>
-      collection.orderByKey().equalTo(id).on("value", function(snapshot) {
-      // console.log(snapshot.key);
-      console.log(snapshot.val())
-    }))
-
-    // console.log('>>', cococ)
 
   }
 
@@ -126,6 +109,24 @@ export default class App extends React.Component {
     updateCollections();
     updateUsers();
   }
+  
+  addToClickedCategory(newState) {
+    this.setState({clickedCategory: newState})
+    // console.log('sdsdsd', this.state.clickedCategory)
+  };
+
+  handleClickFromPopularCat(collectionIds, callback=this.addToClickedCategory) {
+    callback(
+      collectionIds.map((id) =>{
+        let obj = null;
+        collection.orderByKey().equalTo(id).on("value", function(snapshot) {
+          obj = snapshot.val();
+        })
+        return obj;
+      })  
+    )
+    
+  };
 
   render() {
     return (
@@ -160,6 +161,11 @@ export default class App extends React.Component {
             <Route exact path='/collections' render={() => <CollectionList />} />
             <Route exact path='/profile/:curUser/:uid' component={ProfileFrame} />
             <Route exact path='/addItems' render={() => <AddItems />} />
+              handleClickFromPopularCat={this.handleClickFromPopularCat}
+              />}
+            />
+            <Route exact path='/collections' render={() => 
+              <CollectionList clickedCollectionList={this.state.clickedCategory}/>} />
           </Switch>
         </div>
       </Router>
