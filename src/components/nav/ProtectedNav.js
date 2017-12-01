@@ -33,6 +33,12 @@ export default class ProtectedNav extends React.Component {
                   </Link>
                 </li>
 
+                <li className="link-button">
+                  <Link to="/addItems">
+                    <LinkButton title='Add Item' clickFunction={() => { }} />
+                  </Link>
+                </li>
+                
                 <li className="/popularcategory">
                   <Link to="/">
                     <LinkButton title='Landing' clickFunction={() => {}}/>
