@@ -28,6 +28,7 @@ export default class App extends React.Component {
     this.checkAuthStatus = checkAuthStatus.bind(this);
     this.handleClickFromPopularCat = this.handleClickFromPopularCat.bind(this);
     this.addNewCollection = this.addNewCollection.bind(this);
+    this.addToClickedCategory = this.addToClickedCategory.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +68,7 @@ export default class App extends React.Component {
     }))
 
     // console.log('>>', cococ)
+
 
   }
 
@@ -136,6 +138,24 @@ export default class App extends React.Component {
     updateCollections();
     updateUsers();
   }
+  
+  addToClickedCategory(newState) {
+    this.setState({clickedCategory: newState})
+    // console.log('sdsdsd', this.state.clickedCategory)
+  };
+
+  handleClickFromPopularCat(collectionIds, callback=this.addToClickedCategory) {
+    callback(
+      collectionIds.map((id) =>{
+        let obj = null;
+        collection.orderByKey().equalTo(id).on("value", function(snapshot) {
+          obj = snapshot.val();
+        })
+        return obj;
+      })  
+    )
+    
+  };
 
   render() {
     return (
@@ -163,13 +183,11 @@ export default class App extends React.Component {
               handleClickFromPopularCat={this.handleClickFromPopularCat}/>} />
             <Route exact path='/login' render={() =>
               <AuthFrame user={this.props.user} isSigningUp={false} />} />
-            <Route exact path='/collections' render={() => <CollectionList />} />
             <Route exact path='/' render={() => <PopularCategoryList/>} />
-            <Route exact path='/popularcategory' render={() => <PopularCategoryList />} />
-            <Route exact path='/login' render={() => <AuthFrame user={this.props.user} isSigningUp={false} />} />
-            <Route exact path='/collections' render={() => <CollectionList />} />
             <Route exact path='/profile/:curUser/:uid' component={ProfileFrame} />
             <Route exact path='/addItems' render={() => <AddItems />} />
+            <Route exact path='/collections' render={() => 
+              <CollectionList clickedCollectionList={this.state.clickedCategory}/>} />
           </Switch>
         </div>
       </Router>

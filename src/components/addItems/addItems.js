@@ -1,4 +1,5 @@
 import React from 'react';
+import * as firebase from 'firebase';
 
 class AddItems extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class AddItems extends React.Component {
       productIds: { amazon: '', ebay: '' },
       purchaseTime: '',
       sell: '',
-      uId: ''
+      uId: '',
+      collectionList: [['', 'loading collections...']]
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,116 +33,185 @@ class AddItems extends React.Component {
   }
 
   handleSubmit(event) {
-    alert(JSON.stringify(this.state));
+    firebase.database().ref('/item').push({
+      name: this.state.name,
+      collectionId: this.state.collectionId,
+      location: this.state.location,
+      notes: this.state.notes,
+      photoUrls: this.state.photoUrls,
+      price: this.state.price,
+      sell: this.state.sell,
+      // boughtFrom: '',
+      // productIds: { amazon: '', ebay: '' },
+      // purchaseTime: '',
+      // uId: '',
+    });
     event.preventDefault();
   }
 
+  componentDidMount() {
+    var collectionRef = firebase.database().ref('/collection');
+    collectionRef.on("value", (snapshot) => {
+      // console.log('snapshot.val()', snapshot.val())
+
+      var grabIdName = Object.keys(snapshot.val()).map((k, i) => {
+        return [Object.keys(snapshot.val())[i], snapshot.val()[k].categoryId]
+      });
+
+      this.setState({ collectionList: grabIdName });
+
+    }, (error) => {
+      console.error(error);
+    });
+  }
+
   render() {
+    console.log('COLLECTIONLIST:', this.state.collectionList)
     return (
-      <form onSubmit={this.handleSubmit}>
+      <div className="col-sm-4 col-sm-offset-4">
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <div>
+              <label>Name</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="name"
+                  component="input"
+                  type="text"
+                  placeholder="name..."
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
 
-        <div>
-          <label>Name</label>
-          <div>
-            <input
-              name="name"
-              component="input"
-              type="text"
-              placeholder="name..."
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
+            <div>
+              <label>Photo URL</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="photoUrls"
+                  component="input"
+                  type="text"
+                  placeholder="http://"
+                  value={this.state.photoUrls}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label>Collection</label>
+              <div>
+                <select
+                  className="form-control"
+                  name="collectionId"
+                  component="select"
+                  value={this.state.collectionId}
+                  onChange={this.handleChange}
+                >
+                  <option />
+                  {this.state.collectionList.map(collection =>
+                    <option value={collection[0]}>{collection[1]}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label>Notes</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="notes"
+                  component="textarea"
+                  placeholder="notes..."
+                  value={this.state.notes}
+                  onChange={this.handleChange} />
+              </div>
+            </div>
+
+            <div>
+              <label>Price</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="price"
+                  component="input"
+                  type="text"
+                  placeholder="$1.00"
+                  value={this.state.price}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label>Location</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="location"
+                  component="input"
+                  type="text"
+                  placeholder="current location?"
+                  value={this.state.location}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label>Bought From</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="boughtFrom"
+                  component="input"
+                  type="text"
+                  placeholder="where did you buy this from?"
+                  value={this.state.boughtFrom}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+
+            <div>
+              <label>Purchase Date</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="purchaseTime"
+                  component="input"
+                  type="text"
+                  placeholder="where did you buy this?"
+                  value={this.state.purchaseTime}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div>
+              <div>
+                <label>For Sale?</label>
+                <input
+                  name="sell"
+                  id="sell"
+                  component="input"
+                  type="checkbox"
+                  value={this.state.sell}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div>
+              <input type="submit" value="Submit" />
+            </div>
           </div>
-        </div>
-
-        <div>
-          <label>Photo URL</label>
-          <div>
-            <input
-              name="photoUrls"
-              component="input"
-              type="text"
-              placeholder="http://"
-              value={this.state.photoUrls}
-              onChange={this.handleChange}
-            />
-          </div>
-        </div>
-
-        <div>
-          <label>Collection</label>
-          <div>
-            <select
-              name="collectionId"
-              component="select"
-              value={this.state.collectionId}
-              onChange={this.handleChange}
-            >
-              <option />
-              <option value="0">Sohee's Board Games</option>
-              <option value="1">Yusaku's 1992 IMPEL MARVEL UNIVERSE SERIES</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label>Notes</label>
-          <div>
-            <input
-              name="notes"
-              component="textarea"
-              placeholder="notes..."
-              value={this.state.notes}
-              onChange={this.handleChange} />
-          </div>
-        </div>
-
-        <div>
-          <label>For Sale?</label>
-          <div>
-            <input
-              name="sell"
-              id="sell"
-              component="input"
-              type="checkbox"
-              value={this.state.sell}
-              onChange={this.handleChange}
-            />
-          </div>
-        </div>
-
-        <div>
-          <label>Price</label>
-          <div>
-            <input
-              name="price"
-              component="input"
-              type="text"
-              placeholder="$1.00"
-              value={this.state.price}
-              onChange={this.handleChange}
-            />
-          </div>
-        </div>
-
-        <div>
-          <label>Location</label>
-          <div>
-            <input
-              name="location"
-              component="input"
-              type="text"
-              placeholder="where"
-              value={this.state.location}
-              onChange={this.handleChange}
-            />
-          </div>
-        </div>
-
-
-        <input type="submit" value="Submit" />
-
-      </form>
+        </form>
+      </div>
     )
   }
 }
