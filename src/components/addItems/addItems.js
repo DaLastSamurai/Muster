@@ -11,17 +11,18 @@ class AddItems extends React.Component {
       location: '',
       name: '',
       notes: '',
-      photoUrls: '',
+      imageUrls: '',
       price: '',
       productIds: '',
       purchaseTime: '',
       sell: '',
       uId: '',
-      imageURL: null,
+      // imageURL: null,
       collectionList: [['', 'loading collections...']]
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setImageState = this.setImageState.bind(this); 
   }
 
   getValidationState() {
@@ -31,8 +32,12 @@ class AddItems extends React.Component {
     else if (length > 0) return 'error';
     return null;
   }
+  setImageState(imageUrls) {
+    this.state.imageUrls = imageUrls;
+  }
 
   handleChange(event) {
+    event.preventDefault()
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -42,32 +47,8 @@ class AddItems extends React.Component {
   }
 
   handleSubmit(event) {
-    firebase.database().ref('/item').push({
-      name: this.state.name,
-      collectionId: this.state.collectionId,
-      location: this.state.location,
-      notes: this.state.notes,
-      photoUrls: this.state.photoUrls,
-      price: this.state.price,
-      sell: this.state.sell,
-      boughtFrom: this.state.boughtFrom,
-      // productIds: { amazon: '', ebay: '' },
-      purchaseTime: this.state.purchaseTime
-      // uId: '',
-    })
+    firebase.database().ref('/item').push(this.state)
 
-    // this.setState({
-    //   boughtFrom: '',
-    //   collectionId: '',
-    //   location: '',
-    //   name: '',
-    //   notes: '',
-    //   photoUrls: '',
-    //   price: '',
-    //   productIds: { amazon: '', ebay: '' },
-    //   purchaseTime: '',
-    //   sell: ''
-    // })
     event.preventDefault();
     event.target.reset();
 
@@ -90,12 +71,17 @@ class AddItems extends React.Component {
   }
 
   render() {
-    console.log('COLLECTIONLIST:', this.state.collectionList)
+    // console.log('COLLECTIONLIST:', this.state.collectionList)
+    console.log('THIS.STATE:', this.state)
     return (
       <div className="col-sm-4 col-sm-offset-4">
+            <ImageUpload 
+              setImageState = {this.setImageState}
+            />
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div className="form-group">
             
+
             <div>
               <label>Name</label>
               <div>
@@ -113,21 +99,21 @@ class AddItems extends React.Component {
             </div>
 
             <div>
-              <label>Photo URL</label>
+              <label>Image URL</label>
               <div>
                 <input
                   className="form-control"
-                  name="photoUrls"
+                  name="imageUrls"
                   component="input"
                   type="text"
                   placeholder="http://"
-                  value={this.state.photoUrls}
+                  value={this.state.imageUrls}
                   onChange={this.handleChange}
                   required
                 />
               </div>
             </div>
-        <ImageUpload/>
+
 
             <div>
               <label>Collection</label>
