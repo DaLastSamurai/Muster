@@ -1,5 +1,6 @@
 import React from 'react';
 import * as firebase from 'firebase';
+import ImageUpload from '../helperElements/imageUploader';
 
 class AddItems extends React.Component {
   constructor(props) {
@@ -12,16 +13,24 @@ class AddItems extends React.Component {
       notes: '',
       photoUrls: '',
       price: '',
-      productIds: { amazon: '', ebay: '' },
+      productIds: '',
       purchaseTime: '',
       sell: '',
       uId: '',
+      imageURL: null,
       collectionList: [['', 'loading collections...']]
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  getValidationState() {
+    const length = this.state.value.length;
+    if (length > 10) return 'success';
+    else if (length > 5) return 'warning';
+    else if (length > 0) return 'error';
+    return null;
+  }
 
   handleChange(event) {
     const target = event.target;
@@ -41,12 +50,27 @@ class AddItems extends React.Component {
       photoUrls: this.state.photoUrls,
       price: this.state.price,
       sell: this.state.sell,
-      // boughtFrom: '',
+      boughtFrom: this.state.boughtFrom,
       // productIds: { amazon: '', ebay: '' },
-      // purchaseTime: '',
+      purchaseTime: this.state.purchaseTime
       // uId: '',
-    });
+    })
+
+    // this.setState({
+    //   boughtFrom: '',
+    //   collectionId: '',
+    //   location: '',
+    //   name: '',
+    //   notes: '',
+    //   photoUrls: '',
+    //   price: '',
+    //   productIds: { amazon: '', ebay: '' },
+    //   purchaseTime: '',
+    //   sell: ''
+    // })
     event.preventDefault();
+    event.target.reset();
+
   }
 
   componentDidMount() {
@@ -69,8 +93,9 @@ class AddItems extends React.Component {
     console.log('COLLECTIONLIST:', this.state.collectionList)
     return (
       <div className="col-sm-4 col-sm-offset-4">
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit.bind(this)}>
           <div className="form-group">
+            
             <div>
               <label>Name</label>
               <div>
@@ -82,6 +107,7 @@ class AddItems extends React.Component {
                   placeholder="name..."
                   value={this.state.name}
                   onChange={this.handleChange}
+                  required
                 />
               </div>
             </div>
@@ -97,9 +123,11 @@ class AddItems extends React.Component {
                   placeholder="http://"
                   value={this.state.photoUrls}
                   onChange={this.handleChange}
+                  required
                 />
               </div>
             </div>
+        <ImageUpload/>
 
             <div>
               <label>Collection</label>
@@ -110,8 +138,8 @@ class AddItems extends React.Component {
                   component="select"
                   value={this.state.collectionId}
                   onChange={this.handleChange}
+                  required
                 >
-                  <option />
                   {this.state.collectionList.map(collection =>
                     <option value={collection[0]}>{collection[1]}</option>)}
                 </select>
@@ -124,10 +152,12 @@ class AddItems extends React.Component {
                 <input
                   className="form-control"
                   name="notes"
-                  component="textarea"
+                  component="text"
                   placeholder="notes..."
                   value={this.state.notes}
-                  onChange={this.handleChange} />
+                  onChange={this.handleChange}
+                  required 
+                />
               </div>
             </div>
 
@@ -142,6 +172,7 @@ class AddItems extends React.Component {
                   placeholder="$1.00"
                   value={this.state.price}
                   onChange={this.handleChange}
+                  required
                 />
               </div>
             </div>
@@ -157,6 +188,7 @@ class AddItems extends React.Component {
                   placeholder="current location?"
                   value={this.state.location}
                   onChange={this.handleChange}
+                  required
                 />
               </div>
             </div>
@@ -176,6 +208,20 @@ class AddItems extends React.Component {
               </div>
             </div>
 
+            <div>
+              <label>Amazon Link</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="productIds"
+                  component="input"
+                  type="text"
+                  placeholder="https://www.amazon.com/..."
+                  value={this.state.productIds}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
 
             <div>
               <label>Purchase Date</label>
@@ -187,8 +233,7 @@ class AddItems extends React.Component {
                   type="text"
                   placeholder="where did you buy this?"
                   value={this.state.purchaseTime}
-                  onChange={this.handleChange}
-                />
+                  onChange={this.handleChange}                />
               </div>
             </div>
 
@@ -211,6 +256,7 @@ class AddItems extends React.Component {
             </div>
           </div>
         </form>
+
       </div>
     )
   }
