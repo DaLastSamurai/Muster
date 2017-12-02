@@ -6,12 +6,11 @@ class ItemEntry extends React.Component {
   }
 
   render() {
-    console.log('>>>',this.props.Item)
+    // console.log('itementry',this.props.item)
     return(
       <div>
-        {this.props.item}
-        <img src={this.props.item.photoUrl}/>
-        <h4>{this.props.item.name}</h4>
+        <img src={this.props.item.photoUrls} /> 
+        {/* <h4>{this.props.item.name}</h4> */}
       </div>
     )
   }

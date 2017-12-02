@@ -1,7 +1,7 @@
 import React from 'react';
-import ItemEntry from './ItemEntry';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
+import ItemEntry from './ItemEntry';
 
 
 class ItemList extends React.Component {
@@ -9,7 +9,7 @@ class ItemList extends React.Component {
     super(props)
     this.state = {
       collectionName:'',
-      items:[],
+      items:[['id', {photoUrls: 'notworking', name: 'notworking'}]],
     }
   }
 
@@ -20,33 +20,37 @@ class ItemList extends React.Component {
         return resolve(snap.val())
       })
     })
-    // .then(data => console.log('this should be collection obj', data))
     .then((collectionObj) => {
+      // console.log('collectionobj',collectionObj)
       this.setState({collectionName: collectionObj.name})
-      return Object.keys(collectionObj.itemId)
+      return Object.keys(collectionObj.itemId) || 'add items!'
     })
-    .then(data => console.log('this shouldbe arr itemid', data))
-    //.then((collectionIdArr) => {
-    //   var arr = [];
-    //   collectionIdArr.forEach(id => {
-    //     var tempPromise = new Promise((resolve, reject) => {
-    //       collection.child(id).on('value', function(snap) {
-    //         resolve([id, snap.val()])
-    //       })
-    //     })
-    //     arr.push(tempPromise);
-    //   })
-    //   return Promise.all(arr);
-    // })
-    //.then(data => this.setState({collections: data}))
+    .then((itemIdArr) => {
+      // console.log('itemidarr', itemIdArr)
+      var arr = [];
+      itemIdArr.forEach(id => {
+        var tempPromise = new Promise((resolve, reject) => {
+          item.child(id).on('value', function(snap) {
+            resolve([id, snap.val()])
+          })
+        })
+        arr.push(tempPromise);
+      })
+      return Promise.all(arr);
+    })
+    .then(data => this.setState({items: data}))
   }
 
   render() {
+    console.log('this is state of item',this.state.items)
     return(
       <div>
-          ItemList
-        {/* <h2>{this.state.categoryName}</h2>
-        {this.state.collections ? this.state.collections.map((colObj) => {return <CollectionEntry collection={colObj}/>} ) : <h5>add collection</h5>} */}
+        <h2>{this.state.collectionName}</h2>
+        
+        {this.state.items.map((itemArr) => {
+          console.log('itemarr', itemArr)
+          return <ItemEntry item={itemArr[1]} key={itemArr[0]} />
+        })}
       </div>
     )
   }
