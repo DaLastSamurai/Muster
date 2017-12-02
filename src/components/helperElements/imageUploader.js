@@ -2,38 +2,35 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import ImageUploader from 'react-firebase-image-uploader';
 
-//component called in none
+//component called in addItems
 
 class ImageUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
       image: '',
       isUploading: false,
       progress: 0,
-      imageURL: ''
+      imageUrls: ''
     };
 
-    this.handleChangeUsername = this.handleChangeUsername.bind(this)
-    this.handleUploadStart = this.handleUploadStart.bind(this)
-    this.handleProgress = this.handleProgress.bind(this)
-    this.handleUploadError = this.handleUploadError.bind(this)
-    this.handleUploadSuccess = this.handleUploadSuccess.bind(this)
+    this.handleUploadStart = this.handleUploadStart.bind(this);
+    this.handleProgress = this.handleProgress.bind(this);
+    this.handleUploadError = this.handleUploadError.bind(this);
+    this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
   }
-
-  handleChangeUsername(event) {
-    this.setState({ username: event.target.value });
-  };
 
   handleUploadStart() {
-    this.setState({ isUploading: true, progress: 0 });
-  }
+    this.setState( { 
+      isUploading: true, 
+      progress: 0 
+    });
+  };
 
-  handleProgress(progress) { this.setState({ progress }) };
+  handleProgress(progress) { this.setState( { progress } ) };
 
   handleUploadError(error) {
-    this.setState({ isUploading: false });
+    this.setState( { isUploading: false } );
     console.error(error);
   };
 
@@ -43,23 +40,34 @@ class ImageUpload extends Component {
       progress: 100,
       isUploading: false
     });
-
+    // console.log('FILENAME:', filename);
     firebase.storage().ref('images').child(filename)
-      .getDownloadURL.then(url =>
-        this.setState({ imageURL: url }));
+      .getDownloadURL().then(imageUrls => {
+        this.setState({imageUrls}, () => {
+          this.props.setImageState(imageUrls)
+        })
+      }).catch(err => console.log(err));
+    console.log('imageUrls:', this.state.imageUrls);
+
   };
 
   render() {
+    console.log('IMAGEUPLOADER.THIS.STATE:', this.state)
     return (
       <div>
         <form>
 
-          <label>Preview</label>
-          {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-          {this.state.imageURL && <img src={this.state.imageURL} />}
+          {this.state.imageUrls && 
+            <img src={this.state.imageUrls} />}
+        
+          <div>
+            <label>Image</label>
+              {this.state.isUploading && 
+                <p>Progress: {this.state.progress}</p>}
+          </div>
           <ImageUploader
             name="image"
-            storageRef={firebase.storage().ref('images/')}
+            storageRef={firebase.storage().ref('images')}
             onUploadStart={this.handleUploadStart}
             onUploadError={this.handleUploadError}
             onUploadSuccess={this.handleUploadSuccess}
@@ -69,7 +77,7 @@ class ImageUpload extends Component {
         </form>
       </div>
     );
-  }
-}
+  };
+};
 
 export default ImageUpload;

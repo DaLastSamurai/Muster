@@ -2,24 +2,23 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import ImageUploader from 'react-firebase-image-uploader';
 
-//component called in addItems
+//component called in none
 
-class ImageUpload extends Component {
+class AvatarUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
       avatar: '',
       isUploading: false,
       progress: 0,
       avatarURL: ''
     };
 
-    this.handleChangeUsername = this.handleChangeUsername.bind(this)
-    this.handleUploadStart = this.handleUploadStart.bind(this)
-    this.handleProgress = this.handleProgress.bind(this)
-    this.handleUploadError = this.handleUploadError.bind(this)
-    this.handleUploadSuccess = this.handleUploadSuccess.bind(this)
+    this.handleChangeUsername = this.handleChangeUsername.bind(this);
+    this.handleUploadStart = this.handleUploadStart.bind(this);
+    this.handleProgress = this.handleProgress.bind(this);
+    this.handleUploadError = this.handleUploadError.bind(this);
+    this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
   }
 
   handleChangeUsername(event) {
@@ -27,8 +26,11 @@ class ImageUpload extends Component {
   };
 
   handleUploadStart() {
-    this.setState({ isUploading: true, progress: 0 });
-  }
+    this.setState({ 
+      isUploading: true, 
+      progress: 0 
+    });
+  };
 
   handleProgress(progress) { this.setState({ progress }) };
 
@@ -44,8 +46,8 @@ class ImageUpload extends Component {
       isUploading: false
     });
 
-    firebase.storage().ref('images').child(filename)
-      .getDownloadURL.then(url =>
+    firebase.storage().ref('avatars/').child(filename)
+      .getDownloadURL().then(url =>
         this.setState({ avatarURL: url }));
   };
 
@@ -54,22 +56,14 @@ class ImageUpload extends Component {
       <div>
         <form>
 
-          <label>Username</label>
-          <input
-            className="form-control"
-            type="text"
-            value={this.state.username}
-            name="username"
-            onChange={this.handleChangeUsername}
-          />
-
           <label>Avatar</label>
+
           {this.state.isUploading &&
-            <p>Progress: {this.state.progress}</p>
-          }
+            <p>Progress: {this.state.progress}</p>}
+          
           {this.state.avatarURL &&
-            <img src={this.state.avatarURL} />
-          }
+            <img src={this.state.avatarURL} />}
+
           <ImageUploader
             name="avatar"
             storageRef={firebase.storage().ref('avatars/')}
@@ -78,10 +72,11 @@ class ImageUpload extends Component {
             onUploadSuccess={this.handleUploadSuccess}
             onProgress={this.handleProgress}
           />
+
         </form>
       </div>
     );
-  }
-}
+  };
+};
 
-export default ImageUpload;
+export default AvatarUpload;
