@@ -19,7 +19,7 @@ export default class ProtectedNav extends React.Component {
   }
 
   render() {
-    console.log('this is the user', this.props.user.uid)
+    // console.log('this is the user', this.props.user.uid)
     return (
         <div>
           <nav className="navbar navbar-default">
@@ -39,7 +39,7 @@ export default class ProtectedNav extends React.Component {
                     <LinkButton title='Add Item' clickFunction={() => { }} />
                   </Link>
                 </li>
-                
+
                 <li className="/popularcategory">
                   <Link to="/">
                     <LinkButton title='Landing' clickFunction={() => {}}/>
@@ -65,14 +65,14 @@ export default class ProtectedNav extends React.Component {
           {/* This takes the user back to the login page when they sign out
               We may want to change this so that it redirects to the main page */}
 
-          {/* <Route exact path="/" 
-            render={() => <AuthFrame />} 
+          {/* <Route exact path="/"
+            render={() => <AuthFrame />}
           />
           <Route exact path="/a"
             render={() => <div> You clicked a button without a Route!</div> }
           />
-          <Route exact path="/b" 
-            render={() => <div> You clicked a button without a Route!</div>} 
+          <Route exact path="/b"
+            render={() => <div> You clicked a button without a Route!</div>}
           /> */}
         </div>
     )

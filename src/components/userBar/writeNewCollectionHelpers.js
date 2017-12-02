@@ -3,11 +3,11 @@ import firebase from 'firebase';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 
-   //retrieve the specific logged in users's UID > array of collection IDs
-  //add new collectionID key from push into that array
+  // retrieve the specific logged in users's UID > array of collection IDs
+  // add new collectionID key from push into that array
 
-  //add to collection with collectionID key
-  //put in other stuff including uid
+  // add to collection with collectionID key
+  // put in other stuff including uid
   // addCategory is a key that is a name.
   // addCollection is a name.
   // photoURL is a string.
@@ -17,9 +17,9 @@ export const addNewCollection = function(addCollection, addCategory, photoURL) {
     // console.log('all collections', collection)
     // console.log('currentUID retrieved from auth', firebase.auth().currentUser.uid)
     // console.log('new hash for collection id', collection.push().key)
-
     let newCollectionId = collection.push().key
     let currentUID = firebase.auth().currentUser.uid
+    console.log('this works here',currentUID)
 
     let updateCollections = function() {
       let collectionData = {
@@ -42,9 +42,6 @@ export const addNewCollection = function(addCollection, addCategory, photoURL) {
     }
 
     let updateCategory = () => {
-      //if category already exists
-      //add collection ID to that category -- only need collection ID
-
       if(this.state.category[addCategory]) {
         // console.log('this category already exists. Add collectionId to preexisting category');
         // console.log(this.state.category[addCategory])
@@ -52,10 +49,9 @@ export const addNewCollection = function(addCollection, addCategory, photoURL) {
         updates[addCategory + '/collectionId/' + newCollectionId] = addCollection
         return category.update(updates)
       } else {
-        //if category is new
-        //add create an entire new category object
+        //console.log('this category is new add. Create a new category object')
         let updates = {}
-        // updates.collectionId = {newCollectionId:collectionName}; //we can't do this here because keys can't be interpreted as variables
+        // updates.collectionId = {newCollectionId:collectionName}; //we can't update collectionId from here because keys can't be interpreted as variables, only strings
         updates.name = addCategory;
         updates.pictureurl = photoURL || "";
         firebase.database().ref('category/' + addCategory).set(updates)
@@ -64,7 +60,6 @@ export const addNewCollection = function(addCollection, addCategory, photoURL) {
         return category.update(collectionIdUpdate)
       }
     }
-
     updateCategory();
     updateCollections();
     updateUsers();

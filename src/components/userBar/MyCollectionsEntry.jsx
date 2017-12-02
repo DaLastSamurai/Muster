@@ -6,15 +6,11 @@ export default class MyCollectionsEntry extends React.Component {
     this.state ={};
   }
   render() {
-    // console.log(this.props.collectionName)
     return(
       <div>
-      <h5>
-        {this.props.collectionName}
-      </h5>
-        category: {this.props.category},
-        description: {this.props.description},
-        collection started in: {this.props.yearAdded}
+        <h5>
+          {this.props.name}
+        </h5>
       </div>
     )
   }
