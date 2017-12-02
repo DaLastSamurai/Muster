@@ -13,31 +13,26 @@ class ItemList extends React.Component {
 
   componentDidMount() {
     // let categoryId = this.props.match.params.categoryId.slice(1);
-    // let getCollectionList = new Promise((resolve, reject) => {
+    // new Promise((resolve, reject) => {
     //   category.child(categoryId).on('value', (snap) => {
-    //     let categoryObj = snap.val();
-    //     this.setState({categoryName: categoryObj.name})
-    //     return resolve(Object.keys(categoryObj.collectionId));
+    //     return resolve(snap.val())
     //   })
-    // }).then((colIds) => {
-    //   let obj = [];
-    //   colIds.map((id) => {
-    //     collection.child(id).on('value', function(snap) {
-    //       obj.push(snap.val())
+    // }).then((categoryObj) => {
+    //   this.setState({categoryName: categoryObj.name})
+    //   return Object.keys(categoryObj.collectionId)
+    // }).then((collectionIdArr) => {
+    //   var arr = [];
+    //   collectionIdArr.forEach(id => {
+    //     var tempPromise = new Promise((resolve, reject) => {
+    //       collection.child(id).on('value', function(snap) {
+    //         resolve([id, snap.val()])
+    //       })
     //     })
+    //     arr.push(tempPromise);
     //   })
-    //   return obj
-    // }).then((data) => {
-    //   this.setState({collections: data})
-    // })
+    //   return Promise.all(arr);
+    // }).then(data => this.setState({collections: data}))
   }
-
-//   shouldComponentUpdate(nextProps, nextState) {
-//     if (nextState !== this.state) {
-//       return true;
-//     }
-//     return false;
-//   }
 
   render() {
     return(
