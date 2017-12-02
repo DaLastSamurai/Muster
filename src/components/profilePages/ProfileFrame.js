@@ -1,6 +1,12 @@
 import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth } from '../../../config/firebaseCredentials'
+// components: 
+import FavoriteCategories from './FavoriteCategories'
+import FollowButton from './FollowButton'
+import FollowersDropDown from './FollowersDropDown'
+import FollowingDropDown from './FollowingDropDown'
+// dynamic text editing: 
 import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek'
 import _ from 'lodash'
 // this profile is always called by a route in the form /profile/:uid
@@ -21,7 +27,7 @@ export default class ProfileFrame extends React.Component {
       // these are the fields that will be handled by the text to 
       bio: null, 
       username: null, 
-      profileUrl: null, 
+      profilePhoto: null, 
 
       // handles the social: 
       following: null, 
@@ -30,30 +36,42 @@ export default class ProfileFrame extends React.Component {
       // this is passed down. 
       favoriteCategories: null, 
     }; 
-    this.handleUserDataRendering = this.handleUserDataRendering.bind(this)
-    this.sendNewUserData = this.sendNewUserData.bind(this)
+    this.addUserDataToState = this.addUserDataToState.bind(this)
+    // this.sendUpdatedUserDateToDB = this.sendUpdatedUserDateToDB.bind(this)
   }
 
-  componentWillMount() {
-    handleUserDataRendering()
+  componentDidMount() {
+    this.addUserDataToState(["bio", "username", "profilePhoto", "following", "followers", "favoriteCategories"])
   }
 
-  handleUserDataRendering(fieldsToRerender = []) {
+  addUserDataToState(fieldsToRerender = []) {
     // takes in an array of fields to Rerender and then rerenders those
     // recursively calls each element in the array and renders it. 
-    if (fieldsToRerender.length === 0) {return}
-
+    if (fieldsToRerender.length === 0) {return} // base case
+    else {
+      let currentFieldToUpdate = fieldsToRerender.pop() 
+      // console.log('this is the route: ', `users/${currentFieldToUpdate}`)
+      firebase.database().ref(`users/${this.state.profileUID}/profileInfo/${currentFieldToUpdate}`).on('value', (snapshot) => {
+        // console.log('this is the value of the firebase response: ', snapshot.val())
+        let stateObj = {}; 
+        stateObj[currentFieldToUpdate] = snapshot.val()
+        this.setState(stateObj, () => {
+          this.addUserDataToState(fieldsToRerender) // call the recursive function 
+        })
+      })
+    }
 
   }
 
-  sendNewUserData(fieldToSend, cb) {
-    // takes in a string that is the field that needs to be 
+  // sendUpdatedUserDateToDB(fieldToSend, cb) {
+  //   // takes in a string that is the field that needs to be 
 
-    this.setState({})
+  //   this.setState({})
 
-    // this callback calls handleUserDataRendering and thus takes an array of
-    cb([fieldToSend]) 
-  }
+  //   // this callback calls addUserDataToState and thus needs to send the 
+  //   // the fieldToSend as an array. 
+  //   cb([fieldToSend]) 
+  // }
 
 
   render() {
