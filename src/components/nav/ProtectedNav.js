@@ -29,7 +29,7 @@ export default class ProtectedNav extends React.Component {
                 </li>
 
                 <li className="link-button">
-                  <Link to={`/profile/${this.props.user.uid}/${this.props.user.uid}`}>
+                  <Link to={`/profile/${this.props.user.uid}`}>
                     <LinkButton title='Profile' clickFunction={() => {}}/>
                   </Link>
                 </li>
