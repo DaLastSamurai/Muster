@@ -88,6 +88,7 @@ export default class App extends React.Component {
               <MyCollections
                 user={this.state.user}
                 addNewCollection={this.addNewCollection}
+                getMyCollections={this.getMyCollections}
               />
            </div>
            )

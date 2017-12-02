@@ -27,7 +27,7 @@ export default class MyCollections extends React.Component {
       This is the left-side userbar
         <SearchBar/>
         <UserInfo user={this.props.user}/>
-        <MyCollectionsList />
+        <MyCollectionsList getMyCollections={this.props.getMyCollections}/>
           <button type="button" className="btn btn-outline-secondary bg-primary" onClick={()=>{this.setState({showInputForm:!this.state.showInputForm})}}>
             New Collection
           </button>
