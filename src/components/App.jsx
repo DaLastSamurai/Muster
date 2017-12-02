@@ -32,7 +32,7 @@ export default class App extends React.Component {
     this.checkAuthStatus()
     category.on('value', snap => {
       this.setState({popularCategoryList: snap.val()})
-      console.log('state popcat', this.state.popularCategoryList)
+      // console.log('state popcat', this.state.popularCategoryList)
     })
   }
 

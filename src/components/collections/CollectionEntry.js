@@ -6,10 +6,8 @@ class CollectionEntry extends React.Component {
   }
 
   render() {
-    console.log('>>>',this.props.collection)
     return(
       <div>
-        {this.props.collection}
         <img src={this.props.collection.photoUrl}/>
         <h4>{this.props.collection.name}</h4>
       </div>
