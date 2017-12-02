@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
-import { firebaseAuth } from '../../../config/firebaseCredentials'
+import { firebaseAuth, users } from '../../../config/firebaseCredentials'
+import { isStringAcceptable } from './profileHelpers.js'
 // components: 
 import FavoriteCategories from './FavoriteCategories'
 import FollowButton from './FollowButton'
@@ -15,18 +16,20 @@ export default class ProfileFrame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: firebase.auth().currentUser.uid, 
+      currentUser: "", // this gets set by setCurrentUserAndIsUsersProfile()
       // this could either be the profileUID of some user, or the 
       // profile UID of the current logged in user. 
       profileUID: this.props.match.params.uid, 
       // this is boolean that is true when the user that is on the profile page
       // is the user that is currently logged in. If true, the user can edit the profile. 
-      isUsersProfile: firebase.auth().currentUser.uid === this.props.match.params.uid, 
+      isUsersProfile: false, // this gets set by setCurrentUserAndIsUsersProfile()
 
-      // these are all just user fields:
-      // these are the fields that will be handled by the text to 
+      // these are all user fields:
+      // these are the fields that will be handled by the reik text fields. 
       bio: null, 
       username: null, 
+      
+      // this is handled by Yusaku's avatar uploader. 
       profilePhoto: null, 
 
       // handles the social: 
@@ -36,65 +39,101 @@ export default class ProfileFrame extends React.Component {
       // this is passed down. 
       favoriteCategories: null, 
     }; 
+    this.isStringAcceptable = isStringAcceptable.bind(this) // imported from profileHelpers.js
     this.addUserDataToState = this.addUserDataToState.bind(this)
-    // this.sendUpdatedUserDateToDB = this.sendUpdatedUserDateToDB.bind(this)
+    this.sendUpdatedUserDataToDB = this.sendUpdatedUserDataToDB.bind(this)
   }
 
   componentDidMount() {
+    this.setCurrentUserAndIsUsersProfile()
     this.addUserDataToState(["bio", "username", "profilePhoto", "following", "followers", "favoriteCategories"])
   }
 
-  addUserDataToState(fieldsToRerender = []) {
-    // takes in an array of fields to Rerender and then rerenders those
-    // recursively calls each element in the array and renders it. 
-    if (fieldsToRerender.length === 0) {return} // base case
-    else {
-      let currentFieldToUpdate = fieldsToRerender.pop() 
-      // console.log('this is the route: ', `users/${currentFieldToUpdate}`)
-      firebase.database().ref(`users/${this.state.profileUID}/profileInfo/${currentFieldToUpdate}`).on('value', (snapshot) => {
-        // console.log('this is the value of the firebase response: ', snapshot.val())
-        let stateObj = {}; 
-        stateObj[currentFieldToUpdate] = snapshot.val()
-        this.setState(stateObj, () => {
-          this.addUserDataToState(fieldsToRerender) // call the recursive function 
-        })
-      })
+  setCurrentUserAndIsUsersProfile() {
+    let currentUser = "none" 
+    if (firebase.auth().currentUser !== null) {
+      currentUser = firebase.auth().currentUser.uid
     }
-
+    this.setState({currentUser}, () => {
+      if (currentUser === this.props.match.params.uid) {
+        this.setState({isUsersProfile : true})
+      }
+    })
   }
 
-  // sendUpdatedUserDateToDB(fieldToSend, cb) {
-  //   // takes in a string that is the field that needs to be 
+  addUserDataToState(fieldsToAddToState = [], stateObj = {}) {
+    // takes in an array of fieldsToAddToState, queries the db and sets state with result
+    // recursively calls each element in the array and renders it. 
+    if (fieldsToAddToState.length === 0) {return this.setState(stateObj)} 
+    else {
+      let currentField = fieldsToAddToState.pop() 
+      let dbPath = `users/${this.state.profileUID}/profileInfo/${currentField}`
+      firebase.database().ref(dbPath).on('value', (snapshot) => {
+        stateObj[currentField] = snapshot.val()
+        this.addUserDataToState(fieldsToAddToState, stateObj) // call the recursive function 
+      })
+    }
+  }
 
-  //   this.setState({})
+  sendUpdatedUserDataToDB(fieldData) {
+    // takes in a string that is the field that needs to be 
+    console.log('this is what gets sent to sendUpdatedUserDataToDB:', fieldData)
+    let update = {} 
+    if (fieldData.text !== undefined) { // if the user name 
+      update[`${this.state.profileUID}/profileInfo/username`] = fieldData.text
+      // triggers re-render which will push new data to state with addUserDataToState
+      users.update(update) 
+    } else { // if the bio. 
+      update[`${this.state.profileUID}/profileInfo/bio`] = fieldData.textarea
+      // triggers re-render which will push new data to state with addUserDataToState
+      users.update(update)     
+    }
 
-  //   // this callback calls addUserDataToState and thus needs to send the 
-  //   // the fieldToSend as an array. 
-  //   cb([fieldToSend]) 
-  // }
+    // this addUserDataToState and thus needs to send the 
+    // the fieldData as an array. 
+    // this.addUserDataToState([fieldData]) 
+  }
 
 
   render() {
     // console.log('this is the props', this.props)
     console.log('this is the state', this.state)
-    // console.log('this is the user information',  )
-    return (
+    // starts by checking to see if the state is loaded. 
+    return this.state.bio === null ? (<div> loading... </div> ) : (
       <div>
-        {this.state.isUsersProfile ? <FollowButton /> : <div /> }
-        <FollowersDropDown /> 
-        <FollowingDropDown /> 
+        {this.state.isUsersProfile && this.state.currentUser !== 'none' 
+          ? <div /> 
+          : <FollowButton /> 
+        }
+        <FollowersDropDown followers = {this.state.followers} /> 
+        <FollowingDropDown following = {this.state.following}/> 
         {this.state.isUsersProfile 
           ? (
             <div> 
-
               This is where all of the editable text fields will go. 
-
+              Username (click to edit): 
+              <RIEInput
+                value={this.state.username}
+                change={this.sendUpdatedUserDataToDB}
+                propName="text"
+                validate={this.isStringAcceptable}
+                classLoading="loading"
+                // classInvalid="invalid"
+              />
+              Bio (click to edit): 
+              <RIETextArea
+                value={this.state.bio}
+                change={this.sendUpdatedUserDataToDB}
+                propName="textarea"
+                validate={this.isStringAcceptable}
+                classLoading="loading"
+                // classInvalid="invalid"
+              />
             </div>
           ) : (
             <div> 
-
-              This is where all of the non-editable text fields will go. 
-
+              bio: {this.state.bio}
+              Username: {this.state.username}
             </div>
           )
         }
