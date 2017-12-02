@@ -11,7 +11,7 @@ class AvatarUpload extends Component {
       avatar: '',
       isUploading: false,
       progress: 0,
-      avatarURL: ''
+      avatarUrl: ''
     };
 
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
@@ -48,7 +48,7 @@ class AvatarUpload extends Component {
 
     firebase.storage().ref('avatars/').child(filename)
       .getDownloadURL().then(url =>
-        this.setState({ avatarURL: url }));
+        this.setState({ avatarUrl: url }));
   };
 
   render() {
@@ -61,8 +61,9 @@ class AvatarUpload extends Component {
           {this.state.isUploading &&
             <p>Progress: {this.state.progress}</p>}
           
-          {this.state.avatarURL &&
-            <img src={this.state.avatarURL} />}
+          {this.state.avatarUrl &&
+            <img src={this.state.avatarUrl}
+              style={{ width: 100, height: 100 }}/>}
 
           <ImageUploader
             name="avatar"

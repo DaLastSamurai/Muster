@@ -7,18 +7,19 @@ import ImageUploader from 'react-firebase-image-uploader';
 class ImageUpload extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       image: '',
       isUploading: false,
       progress: 0,
-      imageUrls: ''
+      imageURL: ''
     };
 
     this.handleUploadStart = this.handleUploadStart.bind(this);
     this.handleProgress = this.handleProgress.bind(this);
     this.handleUploadError = this.handleUploadError.bind(this);
     this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
-  }
+  };
 
   handleUploadStart() {
     this.setState( { 
@@ -42,12 +43,12 @@ class ImageUpload extends Component {
     });
     // console.log('FILENAME:', filename);
     firebase.storage().ref('images').child(filename)
-      .getDownloadURL().then(imageUrls => {
-        this.setState({imageUrls}, () => {
-          this.props.setImageState(imageUrls)
+      .getDownloadURL().then(imageURL => {
+        this.setState({imageURL}, () => {
+          this.props.setImageState(imageURL)
         })
       }).catch(err => console.log(err));
-    console.log('imageUrls:', this.state.imageUrls);
+    console.log('imageURL:', this.state.imageURL);
 
   };
 
@@ -57,8 +58,9 @@ class ImageUpload extends Component {
       <div>
         <form>
 
-          {this.state.imageUrls && 
-            <img src={this.state.imageUrls} />}
+          {this.state.imageURL && 
+            <img src={this.state.imageURL}
+              style={{ width: 300 }} />}
         
           <div>
             <label>Image</label>
