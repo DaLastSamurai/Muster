@@ -64,9 +64,7 @@ export default class Login extends React.Component {
             <label>Password</label>
             <input type="password" className="form-control" placeholder="Password" ref={(pw) => this.state.pw = pw} />
           </div>
-          <Link to='/'>
             <button type="submit" className="btn btn-primary">Login</button>
-          </Link>
         </form>
         <div>
           {this.state.error} 

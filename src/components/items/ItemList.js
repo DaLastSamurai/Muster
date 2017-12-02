@@ -8,36 +8,38 @@ class ItemList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      collectionName:'',
+      items:[],
     }
   }
 
   componentDidMount() {
-    // let categoryId = this.props.match.params.categoryId.slice(1);
-    // let getCollectionList = new Promise((resolve, reject) => {
-    //   category.child(categoryId).on('value', (snap) => {
-    //     let categoryObj = snap.val();
-    //     this.setState({categoryName: categoryObj.name})
-    //     return resolve(Object.keys(categoryObj.collectionId));
-    //   })
-    // }).then((colIds) => {
-    //   let obj = [];
-    //   colIds.map((id) => {
-    //     collection.child(id).on('value', function(snap) {
-    //       obj.push(snap.val())
+    let collectionId = this.props.match.params.collectionId.slice(1);
+    new Promise((resolve, reject) => {
+      collection.child(collectionId).on('value', (snap) => {
+        return resolve(snap.val())
+      })
+    })
+    // .then(data => console.log('this should be collection obj', data))
+    .then((collectionObj) => {
+      this.setState({collectionName: collectionObj.name})
+      return Object.keys(collectionObj.itemId)
+    })
+    .then(data => console.log('this shouldbe arr itemid', data))
+    //.then((collectionIdArr) => {
+    //   var arr = [];
+    //   collectionIdArr.forEach(id => {
+    //     var tempPromise = new Promise((resolve, reject) => {
+    //       collection.child(id).on('value', function(snap) {
+    //         resolve([id, snap.val()])
+    //       })
     //     })
+    //     arr.push(tempPromise);
     //   })
-    //   return obj
-    // }).then((data) => {
-    //   this.setState({collections: data})
+    //   return Promise.all(arr);
     // })
+    //.then(data => this.setState({collections: data}))
   }
-
-//   shouldComponentUpdate(nextProps, nextState) {
-//     if (nextState !== this.state) {
-//       return true;
-//     }
-//     return false;
-//   }
 
   render() {
     return(

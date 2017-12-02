@@ -2,6 +2,7 @@ import React from 'react';
 import CollectionEntry from './CollectionEntry';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
 
 
 class CollectionList extends React.Component {
@@ -9,10 +10,8 @@ class CollectionList extends React.Component {
     super(props)
     this.state = {
       categoryName:'',
-      collections: [{photoUrl: 'notworking', name: 'notworking'}],
-      test:[1,2,3,4]
+      collections: [['id', {photoUrl: 'notworking', name: 'notworking'}]],
     }
-    this.changeCollection = this.changeCollection.bind(this);
   }
 
   componentDidMount() {
@@ -29,7 +28,7 @@ class CollectionList extends React.Component {
       collectionIdArr.forEach(id => {
         var tempPromise = new Promise((resolve, reject) => {
           collection.child(id).on('value', function(snap) {
-            resolve(snap.val())
+            resolve([id, snap.val()])
           })
         })
         arr.push(tempPromise);
@@ -37,18 +36,11 @@ class CollectionList extends React.Component {
       return Promise.all(arr);
     }).then(data => this.setState({collections: data}))
   }
-  
-  changeCollection(data) {
-    this.setState({
-      collections: [{photoUrl: 'no', name: 'notw'}]
-    })
-  }
 
   render() {
     console.log('collections',this.state.collections)
-    let stuff = this.state.collections.map((colObj) => {
-      console.log('??', colObj)
-        return <CollectionEntry collection={colObj}/>
+    let stuff = this.state.collections.map((colArr) => {
+        return <Link to={`/items/:${colArr[0]}`} key={colArr[0]}><CollectionEntry collection={colArr[1]} /></Link>
       } )
     return(
       <div>
