@@ -40,7 +40,7 @@ class CollectionList extends React.Component {
   render() {
     console.log('collections',this.state.collections)
     let stuff = this.state.collections.map((colArr) => {
-        return <Link to={`/items/:${colArr[0]}`}><CollectionEntry id={colArr[0]} collection={colArr[1]}/></Link>
+        return <Link to={`/items/:${colArr[0]}`} key={colArr[0]}><CollectionEntry collection={colArr[1]} /></Link>
       } )
     return(
       <div>

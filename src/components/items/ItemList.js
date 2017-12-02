@@ -8,19 +8,25 @@ class ItemList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      collectionName:'',
+      items:[],
     }
   }
 
   componentDidMount() {
-    // let categoryId = this.props.match.params.categoryId.slice(1);
-    // new Promise((resolve, reject) => {
-    //   category.child(categoryId).on('value', (snap) => {
-    //     return resolve(snap.val())
-    //   })
-    // }).then((categoryObj) => {
-    //   this.setState({categoryName: categoryObj.name})
-    //   return Object.keys(categoryObj.collectionId)
-    // }).then((collectionIdArr) => {
+    let collectionId = this.props.match.params.collectionId.slice(1);
+    new Promise((resolve, reject) => {
+      collection.child(collectionId).on('value', (snap) => {
+        return resolve(snap.val())
+      })
+    })
+    // .then(data => console.log('this should be collection obj', data))
+    .then((collectionObj) => {
+      this.setState({collectionName: collectionObj.name})
+      return Object.keys(collectionObj.itemId)
+    })
+    .then(data => console.log('this shouldbe arr itemid', data))
+    //.then((collectionIdArr) => {
     //   var arr = [];
     //   collectionIdArr.forEach(id => {
     //     var tempPromise = new Promise((resolve, reject) => {
@@ -31,7 +37,8 @@ class ItemList extends React.Component {
     //     arr.push(tempPromise);
     //   })
     //   return Promise.all(arr);
-    // }).then(data => this.setState({collections: data}))
+    // })
+    //.then(data => this.setState({collections: data}))
   }
 
   render() {

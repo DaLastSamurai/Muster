@@ -84,6 +84,7 @@ export default class App extends React.Component {
           {this.state.authed
           ? (
            <div>
+              <Redirect exact from='/login' to='/'/>
               <ProtectedNav user={this.state.user} />
               <MyCollections
                 user={this.state.user}
@@ -98,7 +99,7 @@ export default class App extends React.Component {
               <AuthFrame user={this.props.user} isSigningUp={false} />} />
             <Route exact path='/' render={() => 
               <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />} />
-            <Route exact path='/profile/:curUser/:uid' component={ProfileFrame} />
+            <Route exact path='/profile/:uid' component={ProfileFrame} />
             <Route exact path='/addItems' render={() => <AddItems />} />
             <Route exact path='/collections/:categoryId' component={CollectionList} />
             <Route exact path='/items/:collectionId' component={ItemList} />
