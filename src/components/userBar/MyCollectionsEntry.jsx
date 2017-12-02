@@ -9,7 +9,7 @@ export default class MyCollectionsEntry extends React.Component {
     return(
       <div>
         <h5>
-          {this.props.name}
+          <a href={this.props.name}>{this.props.name}</a>
         </h5>
       </div>
     )

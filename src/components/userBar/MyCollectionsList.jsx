@@ -30,7 +30,6 @@ export default class MyCollectionsList extends React.Component {
           return <MyCollectionsEntry
           categoryId={collection.categoryId}
           name={collection.name}
-          photoUrl={collection.photoUrl}
           publicCat={collection.publicCat}
           />
         })}
