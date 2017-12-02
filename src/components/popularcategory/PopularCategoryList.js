@@ -4,25 +4,21 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 import CollectionList from '../collections/CollectionList';
 
 class PopularCategoryList extends React.Component {
-  constructor() {
-      super()
+  constructor(props) {
+      super(props)
   }
 
   render() {
     return(
       <div>
-          <div>popular list</div>
+          <h2>popular categories</h2>
           <div>
-            {Object.keys(this.props.popularCategoryList).map((popularCategory) => 
-            <Link to='/collections'>
-                <PopularCategoryEntry 
-                  popularCategory={this.props.popularCategoryList[popularCategory]} 
-                  handleClickFromPopularCat={this.props.handleClickFromPopularCat} 
-                  id={popularCategory}
-                  key={popularCategory}
-                />
-            </Link>
-            )}
+            {Object.keys(this.props.popularCategoryList).map((key) => {
+              return<Link to={`/collections/:${key}`} key={key}>
+                      <PopularCategoryEntry  
+                        category={this.props.popularCategoryList[key]} id={key} />
+                    </Link>;
+            })}
           </div>
       </div>
     )

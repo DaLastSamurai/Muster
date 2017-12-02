@@ -8,6 +8,7 @@ import PopularCategoryList from './popularcategory/PopularCategoryList';
 import MyCollections from './userBar/MyCollections.jsx'
 import AuthFrame from './authentication/AuthFrame';
 import CollectionList from './collections/CollectionList';
+import ItemList from './items/ItemList';
 
 import { checkAuthStatus } from './authentication/authenticationHelpers';
 import ProfileFrame from './profilePages/ProfileFrame';
@@ -22,71 +23,59 @@ export default class App extends React.Component {
       authed: false,
       user: null,
       popularCategoryList: [],
-      clickedCategory: ['default clicked cat'],
-      category: 'Board Games'
     };
 
-    this.checkAuthStatus = checkAuthStatus.bind(this); // Declared in authentication/authenticationHelpers
-    this.handleClickFromPopularCat = this.handleClickFromPopularCat.bind(this);
-
-    this.addNewCollection = addNewCollection.bind(this);// Declared in userBar/writeNewCollectionHelpers
-    this.addToClickedCategory = this.addToClickedCategory.bind(this);
+    this.checkAuthStatus = checkAuthStatus.bind(this);
+    this.addNewCollection = this.addNewCollection.bind(this);
   }
 
   componentDidMount() {
     this.checkAuthStatus()
-    rootRef.on('value', snap => {
-      // console.log('every db', snap.val())//will consolelog all data we have in db
-    })
-    collection.on('value', snap => {
-      // console.log('collection', snap.val())
-    })
     category.on('value', snap => {
-      // console.log('category', snap.val())
-      this.setState({'category': snap.val()})
       this.setState({popularCategoryList: snap.val()})
-      // console.log('popularcat from state', this.state.popularCategoryList)
-    })
-    item.on('value', snap => {
-      // console.log('item', snap.val())
+      // console.log('state popcat', this.state.popularCategoryList)
     })
   }
 
-  handleClickFromPopularCat(collectionIds) {
-    // let collectionInCat = [];
-    // collection.on('value', snap => {
-    //   let collections = snap.val()
-    //   collectionIds.forEach((id) =>
-    //     collectionInCat.push(collections[id]))
-    // })
-    //   this.setState({clickedCategory: collectionInCat})
-    //   // console.log(this.state.clickedCategory)
+  //retrieve the specific logged in users's UID > array of collection IDs
+  //add new collectionID key from push into that array
 
-    // console.log(this.state.clickedCategory)
-    collectionIds.map((id) =>
-      collection.orderByKey().equalTo(id).on("value", function(snapshot) {
-      // console.log(snapshot.key);
-      // console.log(snapshot.val())
-    }))
-    // console.log('>>', cococ)
+  //add to collection with collectionID key
+  //put in other stuff including uid
+
+  addNewCollection(addCollection, addCategory, photoURL) {
+    // console.log('new collection name', addCollection)
+    // console.log('new category name', addCategory)
+    // console.log('all collections', collection)
+    // console.log('currentUID retrieved from auth', firebase.auth().currentUser.uid)
+    // console.log('new hash for collection id', collection.push().key)
+
+    let newCollectionId = collection.push().key
+    let currentUID = firebase.auth().currentUser.uid
+
+    let updateCollections = function() {
+      let collectionData = {
+        categoryId: addCategory,
+        itemId:[0],
+        name:addCollection,
+        photoUrl:"",
+        public: true,
+        uid:[currentUID]
+      }
+      let updates = {};
+      updates[newCollectionId] = collectionData;
+      return collection.update(updates);
+    }
+
+    let updateUsers = function() {
+      let updates = {};
+      updates[currentUID + '/collectionIds/' + newCollectionId] = newCollectionId;
+      return users.update(updates)
+    }
+
+    updateCollections();
+    updateUsers();
   }
-
-  addToClickedCategory(newState) {
-    this.setState({clickedCategory: newState})
-    // console.log('sdsdsd', this.state.clickedCategory)
-  };
-
-  handleClickFromPopularCat(collectionIds, callback=this.addToClickedCategory) {
-    callback(
-      collectionIds.map((id) =>{
-        let obj = null;
-        collection.orderByKey().equalTo(id).on("value", function(snapshot) {
-          obj = snapshot.val();
-        })
-        return obj;
-      })
-    )
-  };
 
   render() {
     return (
@@ -95,7 +84,6 @@ export default class App extends React.Component {
           {this.state.authed
           ? (
            <div>
-              <Redirect exact from='/login' to='/popularcategory'/>
               <ProtectedNav user={this.state.user} />
               <MyCollections
                 user={this.state.user}
@@ -105,20 +93,15 @@ export default class App extends React.Component {
            )
           : (<UnprotectedNav />)
           }
-
           <Switch>
-            <Redirect exact from='/' to='/popularcategory'/>
-
-            <Route exact path='/popularcategory' render={() =>
-              <PopularCategoryList popularCategoryList={this.state.popularCategoryList}
-              handleClickFromPopularCat={this.handleClickFromPopularCat}/>} />
             <Route exact path='/login' render={() =>
               <AuthFrame user={this.props.user} isSigningUp={false} />} />
-            <Route exact path='/' render={() => <PopularCategoryList/>} />
-            <Route exact path='/profile/:uid' component={ProfileFrame} />
+            <Route exact path='/' render={() => 
+              <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />} />
+            <Route exact path='/profile/:curUser/:uid' component={ProfileFrame} />
             <Route exact path='/addItems' render={() => <AddItems />} />
-            <Route exact path='/collections' render={() =>
-              <CollectionList clickedCollectionList={this.state.clickedCategory}/>} />
+            <Route exact path='/collections/:categoryId' component={CollectionList} />
+            <Route exact path='/items/:collectionId' component={ItemList} />
           </Switch>
         </div>
       </Router>
