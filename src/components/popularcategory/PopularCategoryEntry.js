@@ -6,11 +6,9 @@ class PopularCategoryEntry extends React.Component {
   }
   render() {
     return( 
-      <div className='popular-category' onClick={() => 
-        this.props.handleClickFromPopularCat(this.props.popularCategory.collectionId)
-      }>
-        <img src={this.props.popularCategory.pictureurl}/>
-        <h4 key={this.props.id}>{this.props.popularCategory.name}</h4>
+      <div className='popular-category' key={this.props.id}>
+        <img src={this.props.category.pictureurl}/>
+        <h4>{this.props.category.name}</h4>
       </div>
     )
   }
