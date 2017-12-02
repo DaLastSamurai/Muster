@@ -5,21 +5,22 @@ import ImageUpload from '../helperElements/imageUploader';
 class AddItems extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       boughtFrom: '',
       collectionId: '',
       location: '',
       name: '',
       notes: '',
-      imageUrls: '',
+      imageUrl: '',
       price: '',
       productIds: '',
       purchaseTime: '',
       sell: '',
       uId: '',
-      // imageURL: null,
       collectionList: [['', 'loading collections...']]
     };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setImageState = this.setImageState.bind(this); 
@@ -31,10 +32,11 @@ class AddItems extends React.Component {
     else if (length > 5) return 'warning';
     else if (length > 0) return 'error';
     return null;
-  }
-  setImageState(imageUrls) {
-    this.state.imageUrls = imageUrls;
-  }
+  };
+
+  setImageState(imageUrl) {
+    this.state.imageUrl = imageUrl;
+  };
 
   handleChange(event) {
     event.preventDefault()
@@ -44,20 +46,17 @@ class AddItems extends React.Component {
     this.setState({
       [name]: value
     })
-  }
+  };
 
   handleSubmit(event) {
-    firebase.database().ref('/item').push(this.state)
-
     event.preventDefault();
+    firebase.database().ref('/item').push(this.state)
     event.target.reset();
-
-  }
+  };
 
   componentDidMount() {
     var collectionRef = firebase.database().ref('/collection');
     collectionRef.on("value", (snapshot) => {
-      // console.log('snapshot.val()', snapshot.val())
 
       var grabIdName = Object.keys(snapshot.val()).map((k, i) => {
         return [Object.keys(snapshot.val())[i], snapshot.val()[k].categoryId]
@@ -65,19 +64,17 @@ class AddItems extends React.Component {
 
       this.setState({ collectionList: grabIdName });
 
-    }, (error) => {
-      console.error(error);
-    });
+      }, (error) => {console.error(error)}
+    );
   }
 
   render() {
-    // console.log('COLLECTIONLIST:', this.state.collectionList)
-    console.log('THIS.STATE:', this.state)
+    // console.log('THIS.STATE:', this.state)
     return (
       <div className="col-sm-4 col-sm-offset-4">
-            <ImageUpload 
-              setImageState = {this.setImageState}
-            />
+
+        <ImageUpload setImageState = {this.setImageState}/>
+
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div className="form-group">
             
@@ -103,11 +100,11 @@ class AddItems extends React.Component {
               <div>
                 <input
                   className="form-control"
-                  name="imageUrls"
+                  name="imageUrl"
                   component="input"
                   type="text"
                   placeholder="http://"
-                  value={this.state.imageUrls}
+                  value={this.state.imageUrl}
                   onChange={this.handleChange}
                   required
                 />
@@ -219,7 +216,8 @@ class AddItems extends React.Component {
                   type="text"
                   placeholder="where did you buy this?"
                   value={this.state.purchaseTime}
-                  onChange={this.handleChange}                />
+                  onChange={this.handleChange}
+                />
               </div>
             </div>
 
@@ -246,6 +244,6 @@ class AddItems extends React.Component {
       </div>
     )
   }
-}
+};
 
 export default AddItems;
