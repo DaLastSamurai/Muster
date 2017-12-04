@@ -1,5 +1,6 @@
 import React from 'react';
 import * as firebase from 'firebase';
+import UserInfo from '../userBar/UserInfo.jsx';
 import ImageUpload from '../helperElements/imageUploader';
 
 class AddItems extends React.Component {
@@ -17,7 +18,7 @@ class AddItems extends React.Component {
       productIds: '',
       purchaseTime: '',
       sell: '',
-      uId: '',
+      uId: null,
       collectionList: [['', 'loading collections...']]
     };
 
@@ -49,36 +50,81 @@ class AddItems extends React.Component {
   };
 
   handleSubmit(event) {
-    event.preventDefault();
-    firebase.database().ref('/item').push(this.state)
+
+    let currentUID = firebase.auth().currentUser.uid
+
+    let postData = {
+      boughtFrom: this.state.boughtFrom,
+      collectionId: this.state.collectionId,
+      location: this.state.location,
+      name: this.state.name,
+      notes: this.state.notes,
+      imageUrl: this.state.imageUrl,
+      price: this.state.price,
+      productIds: this.state.productIds,
+      purchaseTime: this.state.purchaseTime,
+      sell: this.state.sell,
+      uId: currentUID
+    };
+    
+
+    //creates a new key for item
+    let newPostKey = firebase.database().ref('/item').push().key;
+    console.log('newPostKey:', newPostKey)
+
+    //simultaneously updates item and adds the item into collection's itemIds
+    let updates = {};
+    updates['/item/' + newPostKey] = postData;
+    updates['/collection/' + this.state.collectionId + '/itemId/' + newPostKey] = newPostKey;
+
+    return firebase.database().ref().update(updates);
+
     event.target.reset();
   };
 
   componentDidMount() {
-    var collectionRef = firebase.database().ref('/collection');
+    let collectionRef = firebase.database().ref('/collection');
     collectionRef.on("value", (snapshot) => {
 
-      var grabIdName = Object.keys(snapshot.val()).map((k, i) => {
-        return [Object.keys(snapshot.val())[i], snapshot.val()[k].categoryId]
+      let grabIdName = Object.keys(snapshot.val()).map((k, i) => {
+        console.log(snapshot.val())
+        return [Object.keys(snapshot.val())[i], snapshot.val()[k].name]
       });
 
       this.setState({ collectionList: grabIdName });
 
       }, (error) => {console.error(error)}
     );
-  }
 
+  }
+ 
   render() {
-    // console.log('THIS.STATE:', this.state)
+    console.log('THIS.STATE: ', this.state)
+    console.log('THIS.PROPS: ', this.props)
     return (
       <div className="col-sm-4 col-sm-offset-4">
-
         <ImageUpload setImageState = {this.setImageState}/>
 
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div className="form-group">
 
 
+            {/* <div>
+              <label>Image URL</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="imageUrl"
+                  component="input"
+                  type="text"
+                  placeholder="http://"
+                  value={this.state.imageUrl}
+                  onChange={this.handleChange}
+                  required
+                />
+              </div>
+            </div> */}
+            
             <div>
               <label>Name</label>
               <div>
@@ -89,22 +135,6 @@ class AddItems extends React.Component {
                   type="text"
                   placeholder="name..."
                   value={this.state.name}
-                  onChange={this.handleChange}
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label>Image URL</label>
-              <div>
-                <input
-                  className="form-control"
-                  name="imageUrl"
-                  component="input"
-                  type="text"
-                  placeholder="http://"
-                  value={this.state.imageUrl}
                   onChange={this.handleChange}
                   required
                 />
@@ -123,40 +153,10 @@ class AddItems extends React.Component {
                   onChange={this.handleChange}
                   required
                 >
+                <option></option>
                   {this.state.collectionList.map(collection =>
                     <option value={collection[0]}>{collection[1]}</option>)}
                 </select>
-              </div>
-            </div>
-
-            <div>
-              <label>Notes</label>
-              <div>
-                <input
-                  className="form-control"
-                  name="notes"
-                  component="text"
-                  placeholder="notes..."
-                  value={this.state.notes}
-                  onChange={this.handleChange}
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label>Price</label>
-              <div>
-                <input
-                  className="form-control"
-                  name="price"
-                  component="input"
-                  type="text"
-                  placeholder="$1.00"
-                  value={this.state.price}
-                  onChange={this.handleChange}
-                  required
-                />
               </div>
             </div>
 
@@ -172,6 +172,35 @@ class AddItems extends React.Component {
                   value={this.state.location}
                   onChange={this.handleChange}
                   required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label>Notes</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="notes"
+                  component="text"
+                  placeholder="notes..."
+                  value={this.state.notes}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label>Price</label>
+              <div>
+                <input
+                  className="form-control"
+                  name="price"
+                  component="input"
+                  type="text"
+                  placeholder="$1.00"
+                  value={this.state.price}
+                  onChange={this.handleChange}
                 />
               </div>
             </div>
