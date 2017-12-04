@@ -64,8 +64,3 @@ export const addNewCollection = function(addCollection, addCategory, photoURL) {
     updateCollections();
     updateUsers();
   }
-
-  export const searchMyCollections = function(input) {
-    console.log('you are searching something')
-    return 'something'
-  }

@@ -22,6 +22,7 @@ export default class MyCollections extends React.Component {
   render() {
     // console.log('print this user', this.props.user.uid)
     // console.log('input form toggle',this.state.showInputForm)
+    // console.log('>>>',this.props.addNewCollection)
     return(
       <div>
       This is the left-side userbar

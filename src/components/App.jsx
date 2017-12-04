@@ -14,7 +14,7 @@ import { checkAuthStatus } from './authentication/authenticationHelpers';
 import ProfileFrame from './profilePages/ProfileFrame';
 import UserInfo from './userBar/UserInfo.jsx'
 import AddItems from './addItems/addItems';
-import { addNewCollection, searchMyCollections} from './userBar/writeNewCollectionHelpers'
+import { addNewCollection } from './userBar/writeNewCollectionHelpers'
 
 
 
@@ -28,7 +28,7 @@ export default class App extends React.Component {
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
-    this.addNewCollection = this.addNewCollection.bind(this);
+    this.addNewCollection = addNewCollection.bind(this);
   }
 
   componentDidMount() {
@@ -45,39 +45,39 @@ export default class App extends React.Component {
   //add to collection with collectionID key
   //put in other stuff including uid
 
-  addNewCollection(addCollection, addCategory, photoURL) {
-    // console.log('new collection name', addCollection)
-    // console.log('new category name', addCategory)
-    // console.log('all collections', collection)
-    // console.log('currentUID retrieved from auth', firebase.auth().currentUser.uid)
-    // console.log('new hash for collection id', collection.push().key)
-
-    let newCollectionId = collection.push().key
-    let currentUID = firebase.auth().currentUser.uid
-
-    let updateCollections = function() {
-      let collectionData = {
-        categoryId: addCategory,
-        itemId:[0],
-        name:addCollection,
-        photoUrl:"",
-        public: true,
-        uid:[currentUID]
-      }
-      let updates = {};
-      updates[newCollectionId] = collectionData;
-      return collection.update(updates);
-    }
-
-    let updateUsers = function() {
-      let updates = {};
-      updates[currentUID + '/collectionIds/' + newCollectionId] = newCollectionId;
-      return users.update(updates)
-    }
-
-    updateCollections();
-    updateUsers();
-  }
+  // addNewCollection(addCollection, addCategory, photoURL) {
+  //   // console.log('new collection name', addCollection)
+  //   // console.log('new category name', addCategory)
+  //   // console.log('all collections', collection)
+  //   // console.log('currentUID retrieved from auth', firebase.auth().currentUser.uid)
+  //   // console.log('new hash for collection id', collection.push().key)
+  //
+  //   let newCollectionId = collection.push().key
+  //   let currentUID = firebase.auth().currentUser.uid
+  //
+  //   let updateCollections = function() {
+  //     let collectionData = {
+  //       categoryId: addCategory,
+  //       itemId:[0],
+  //       name:addCollection,
+  //       photoUrl:"",
+  //       public: true,
+  //       uid:[currentUID]
+  //     }
+  //     let updates = {};
+  //     updates[newCollectionId] = collectionData;
+  //     return collection.update(updates);
+  //   }
+  //
+  //   let updateUsers = function() {
+  //     let updates = {};
+  //     updates[currentUID + '/collectionIds/' + newCollectionId] = newCollectionId;
+  //     return users.update(updates)
+  //   }
+  //
+  //   updateCollections();
+  //   updateUsers();
+  // }
 
   render() {
     return (
