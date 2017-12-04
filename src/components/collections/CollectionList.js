@@ -25,10 +25,12 @@ class CollectionList extends React.Component {
       category.child(categoryId).on('value', (snap) => {
         return resolve(snap.val())
       })
-    }).then((categoryObj) => {
+    })
+    .then((categoryObj) => {
       this.setState({categoryName: categoryObj.name})
       return Object.keys(categoryObj.collectionId)
-    }).then((collectionIdArr) => {
+    })
+    .then((collectionIdArr) => {
       var arr = [];
       collectionIdArr.forEach(id => {
         var tempPromise = new Promise((resolve, reject) => {
@@ -39,7 +41,8 @@ class CollectionList extends React.Component {
         arr.push(tempPromise);
       })
       return Promise.all(arr);
-    }).then(data => {
+    })
+    .then(data => {
       if (data[0] !== null && data[1] !== null) {
         this.setState({collections: data})
       }
