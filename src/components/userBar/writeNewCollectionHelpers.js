@@ -44,14 +44,17 @@ export const addNewCollection = function(addCollection, addCategory, photoURL) {
     }
 
     let updateCategory = function() {
-      if(allCategories[addCategory]) {
+      let checkCategory = firebase.database().ref("category/addCategory");
+      if(checkCategory) {
         // console.log('this category already exists. Add collectionId to preexisting category');
         // console.log(this.state.category[addCategory])
         let updates = {};
         updates[addCategory + '/collectionId/' + newCollectionId] = addCollection
         console.log('runs update category1')
         return category.update(updates)
+
       } else {
+        console.log('over')
         //console.log('this category is new add. Create a new category object')
         let updates = {}
         // updates.collectionId = {newCollectionId:collectionName}; //we can't update collectionId from here because keys can't be interpreted as variables, only strings
@@ -61,6 +64,7 @@ export const addNewCollection = function(addCollection, addCategory, photoURL) {
         let collectionIdUpdate = {};
         collectionIdUpdate[addCategory + '/collectionId/' + newCollectionId] = addCollection;
         return category.update(collectionIdUpdate)
+        
       }
     }
     updateCollections();
