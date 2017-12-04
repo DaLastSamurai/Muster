@@ -17,9 +17,11 @@ export const addNewCollection = function(addCollection, addCategory, photoURL) {
     // console.log('all collections', collection)
     // console.log('currentUID retrieved from auth', firebase.auth().currentUser.uid)
     // console.log('new hash for collection id', collection.push().key)
+    let allCategories = category.on('value', snap => {
+      return snap.val()})
     let newCollectionId = collection.push().key
     let currentUID = firebase.auth().currentUser.uid
-    console.log('this works here',currentUID)
+    // console.log('this works here',currentUID)
 
     let updateCollections = function() {
       let collectionData = {
@@ -41,12 +43,13 @@ export const addNewCollection = function(addCollection, addCategory, photoURL) {
       return users.update(updates)
     }
 
-    let updateCategory = () => {
-      if(this.state.category[addCategory]) {
+    let updateCategory = function() {
+      if(allCategories[addCategory]) {
         // console.log('this category already exists. Add collectionId to preexisting category');
         // console.log(this.state.category[addCategory])
         let updates = {};
         updates[addCategory + '/collectionId/' + newCollectionId] = addCollection
+        console.log('runs update category1')
         return category.update(updates)
       } else {
         //console.log('this category is new add. Create a new category object')
@@ -60,7 +63,7 @@ export const addNewCollection = function(addCollection, addCategory, photoURL) {
         return category.update(collectionIdUpdate)
       }
     }
-    updateCategory();
     updateCollections();
     updateUsers();
+    updateCategory();
   }

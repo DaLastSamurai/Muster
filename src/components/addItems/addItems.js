@@ -23,7 +23,7 @@ class AddItems extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.setImageState = this.setImageState.bind(this); 
+    this.setImageState = this.setImageState.bind(this);
   }
 
   getValidationState() {
@@ -77,7 +77,7 @@ class AddItems extends React.Component {
 
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div className="form-group">
-            
+
 
             <div>
               <label>Name</label>
@@ -139,7 +139,7 @@ class AddItems extends React.Component {
                   placeholder="notes..."
                   value={this.state.notes}
                   onChange={this.handleChange}
-                  required 
+                  required
                 />
               </div>
             </div>

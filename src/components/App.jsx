@@ -28,7 +28,7 @@ export default class App extends React.Component {
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
-    this.addNewCollection = this.addNewCollection.bind(this);
+    this.addNewCollection = addNewCollection.bind(this);
   }
 
   componentDidMount() {
@@ -37,46 +37,6 @@ export default class App extends React.Component {
       this.setState({popularCategoryList: snap.val()})
       // console.log('state popcat', this.state.popularCategoryList)
     })
-  }
-
-  //retrieve the specific logged in users's UID > array of collection IDs
-  //add new collectionID key from push into that array
-
-  //add to collection with collectionID key
-  //put in other stuff including uid
-
-  addNewCollection(addCollection, addCategory, photoURL) {
-    // console.log('new collection name', addCollection)
-    // console.log('new category name', addCategory)
-    // console.log('all collections', collection)
-    // console.log('currentUID retrieved from auth', firebase.auth().currentUser.uid)
-    // console.log('new hash for collection id', collection.push().key)
-
-    let newCollectionId = collection.push().key
-    let currentUID = firebase.auth().currentUser.uid
-
-    let updateCollections = function() {
-      let collectionData = {
-        categoryId: addCategory,
-        itemId:[0],
-        name:addCollection,
-        photoUrl:"",
-        public: true,
-        uid:[currentUID]
-      }
-      let updates = {};
-      updates[newCollectionId] = collectionData;
-      return collection.update(updates);
-    }
-
-    let updateUsers = function() {
-      let updates = {};
-      updates[currentUID + '/collectionIds/' + newCollectionId] = newCollectionId;
-      return users.update(updates)
-    }
-
-    updateCollections();
-    updateUsers();
   }
 
   render() {
@@ -92,21 +52,21 @@ export default class App extends React.Component {
                 class="sidenav"
                 user={this.state.user}
                 addNewCollection={this.addNewCollection}
-                getMyCollections={this.getMyCollections}
+                searchMyCollections={this.searchMyCollections}
               />
            </div>
            )
           : (<UnprotectedNav />)
           }
           <Switch>
-            <Route exact path='/login' render={() =>
-              <AuthFrame user={this.props.user} isSigningUp={false} />} />
-            <Route exact path='/' render={() =>
-              <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />} />
-            <Route exact path='/profile/:uid' component={ProfileFrame} />
-            <Route exact path='/addItems' render={() => <AddItems />} />
-            <Route exact path='/collections/:categoryId' component={CollectionList} />
-            <Route exact path='/items/:collectionId' component={ItemList} />
+              <Route exact path='/login' render={() =>
+                <AuthFrame user={this.props.user} isSigningUp={false} />} />
+              <Route exact path='/' render={() =>
+                <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />} />
+              <Route exact path='/profile/:uid' component={ProfileFrame} />
+              <Route exact path='/addItems' render={() => <AddItems />} />
+              <Route exact path='/collections/:categoryId' component={CollectionList} />
+              <Route exact path='/items/:collectionId' component={ItemList} />
           </Switch>
         </div>
       </Router>
