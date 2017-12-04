@@ -6,11 +6,10 @@ class ItemEntry extends React.Component {
   }
 
   render() {
-    // console.log('itementry',this.props.item)
     return(
       <div>
-        <img src={this.props.item.photoUrls} /> 
-        {/* <h4>{this.props.item.name}</h4> */}
+        <img src={this.props.item.imageUrl ?  this.props.item.imageUrl : 'https://crestaproject.com/demo/nucleare-pro/wp-content/themes/nucleare-pro/images/no-image-box.png'} /> 
+        <h4>{this.props.item.name}</h4>
       </div>
     )
   }
