@@ -12,9 +12,14 @@ class CollectionList extends React.Component {
       categoryName:'',
       collections: [['id', {photoUrl: 'notworking', name: 'notworking'}]],
     }
+    this.getCollectionData = this.getCollectionData.bind(this)
   }
 
   componentDidMount() {
+    this.getCollectionData()
+  }
+
+  getCollectionData() {
     let categoryId = this.props.match.params.categoryId.slice(1);
     new Promise((resolve, reject) => {
       category.child(categoryId).on('value', (snap) => {
@@ -34,11 +39,14 @@ class CollectionList extends React.Component {
         arr.push(tempPromise);
       })
       return Promise.all(arr);
-    }).then(data => this.setState({collections: data}))
+    }).then(data => {
+      if (data[0] !== null && data[1] !== null) {
+        this.setState({collections: data})
+      }
+    })
   }
 
   render() {
-    // console.log('collections',this.state.collections)
     return(
       <div>
         <h2>{this.state.categoryName}</h2>
