@@ -14,11 +14,11 @@ class ItemList extends React.Component {
     }
     this.getItemData = this.getItemData.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.checkUser = this.checkUser.bind(this);
   }
 
   componentDidMount() {
     this.getItemData()
-    console.log('data rerender?', this.state)
   }
 
   getItemData() {
@@ -56,7 +56,14 @@ class ItemList extends React.Component {
     item.child(clickedItemId).remove()
     collection.child(collectionId + '/itemId').child(clickedItemId).remove()
     this.getItemData()
-    
+  }
+
+  checkUser(clickedItemId, clickedItemUser) {
+    if(firebaseAuth().currentUser.uid === clickedItemUser) {
+      this.deleteItem(clickedItemId)
+    }else {
+      console.log('user athentication fail')
+    }
   }
 
   render() {
@@ -64,12 +71,13 @@ class ItemList extends React.Component {
       this.getItemData()
       this.setState({params: this.props.match.params.collectionId.slice(1)})
     }
+    console.log(this.state.items)
     return(
       <div>
         <h2>{this.state.collectionName}</h2>
         
         {this.state.items.map((itemArr) => {
-          return <ItemEntry item={itemArr[1]} key={itemArr[0]} id={itemArr[0]} deleteItem={this.deleteItem} />
+          return <ItemEntry item={itemArr[1]} key={itemArr[0]} id={itemArr[0]} checkUser={this.checkUser} />
         })}
       </div>
     )
