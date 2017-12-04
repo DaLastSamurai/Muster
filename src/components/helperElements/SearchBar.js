@@ -11,7 +11,7 @@ export default class SearchBar extends React.Component {
   // read through helper functions to understand the following render.
 
   render() {
-    // console.log(this.state)
+    // console.log(this.props.search)
     return (
       <div className='SearchBar'>
         <input type="text" value={this.state.searchValue} onChange={(e) => {

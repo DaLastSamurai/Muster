@@ -11,9 +11,10 @@ export default class UserInfo extends React.Component {
   }
 
   render() {
-    console.log('this is the uid', this.props.user.uid)
+    // console.log('this is the uid', this.props.user.uid)
     return (
       <div>
+        <img src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-128.png" />
         <Link to={`/profile/${this.props.user.uid}`}>
           <LinkButton title={this.props.user.displayName}/>
         </Link>
