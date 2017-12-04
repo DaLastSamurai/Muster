@@ -18,8 +18,8 @@ export const checkAuthStatus = function() {
             }
             let profileInfo = {
               profilePhoto: 'http://bit.ly/2BoCV0Y', 
-              following: ['PVj0eR1eM7NyTOlsKUv2Qt9K6293'], // =seamus lol 
-              followers: ['PVj0eR1eM7NyTOlsKUv2Qt9K6293'], // =seamus lol 
+              following: ['AStkSi2lt3hFprd77H8GXoNq2KJ3'], // =seamus lol 
+              followers: ['AStkSi2lt3hFprd77H8GXoNq2KJ3'], // =seamus lol 
               bio: 'tell me about yourself...', 
               favoriteCategories: ['Baseball Cards'],
               username : user.email, 

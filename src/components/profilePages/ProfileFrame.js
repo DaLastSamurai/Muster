@@ -77,27 +77,23 @@ export default class ProfileFrame extends React.Component {
 
   sendUpdatedUserDataToDB(fieldData) {
     // takes in a string that is the field that needs to be 
-    console.log('this is what gets sent to sendUpdatedUserDataToDB:', fieldData)
     let update = {} 
     if (fieldData.text !== undefined) { // if the user name 
       update[`${this.state.profileUID}/profileInfo/username`] = fieldData.text
       // triggers re-render which will push new data to state with addUserDataToState
       users.update(update) 
-    } else { // if the bio. 
+    } 
+    if (fieldData.textarea !== undefined) {// if the bio. 
       update[`${this.state.profileUID}/profileInfo/bio`] = fieldData.textarea
       // triggers re-render which will push new data to state with addUserDataToState
       users.update(update)     
     }
-
-    // this addUserDataToState and thus needs to send the 
-    // the fieldData as an array. 
-    // this.addUserDataToState([fieldData]) 
   }
 
 
   render() {
     // console.log('this is the props', this.props)
-    console.log('this is the state', this.state)
+    // console.log('this is the state', this.state)
     // starts by checking to see if the state is loaded. 
     return this.state.bio === null ? (<div> loading... </div> ) : (
       <div>
@@ -118,7 +114,7 @@ export default class ProfileFrame extends React.Component {
                 propName="text"
                 validate={this.isStringAcceptable}
                 classLoading="loading"
-                // classInvalid="invalid"
+                classInvalid="invalid"
               />
               Bio (click to edit): 
               <RIETextArea
@@ -127,7 +123,7 @@ export default class ProfileFrame extends React.Component {
                 propName="textarea"
                 validate={this.isStringAcceptable}
                 classLoading="loading"
-                // classInvalid="invalid"
+                classInvalid="invalid"
               />
             </div>
           ) : (
