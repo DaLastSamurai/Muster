@@ -64,7 +64,7 @@ export default class App extends React.Component {
               <Route exact path='/' render={() =>
                 <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />} />
               <Route exact path='/profile/:uid' component={ProfileFrame} />
-              <Route exact path='/addItems' render={() => <AddItems />} />
+            <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
               <Route exact path='/collections/:categoryId' component={CollectionList} />
               <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} />} />
           </Switch>
