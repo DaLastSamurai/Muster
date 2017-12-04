@@ -1,5 +1,6 @@
 import React from 'react';
 import * as firebase from 'firebase';
+import UserInfo from '../userBar/UserInfo.jsx';
 import ImageUpload from '../helperElements/imageUploader';
 
 class AddItems extends React.Component {
@@ -17,7 +18,7 @@ class AddItems extends React.Component {
       productIds: '',
       purchaseTime: '',
       sell: '',
-      uId: '',
+      uId: null,
       collectionList: [['', 'loading collections...']]
     };
 
@@ -49,7 +50,10 @@ class AddItems extends React.Component {
   };
 
   handleSubmit(event) {
-    var postData = {
+
+    let currentUID = firebase.auth().currentUser.uid
+
+    let postData = {
       boughtFrom: this.state.boughtFrom,
       collectionId: this.state.collectionId,
       location: this.state.location,
@@ -60,15 +64,16 @@ class AddItems extends React.Component {
       productIds: this.state.productIds,
       purchaseTime: this.state.purchaseTime,
       sell: this.state.sell,
-      uId: this.state.uId
+      uId: currentUID
     };
     
+
     //creates a new key for item
-    var newPostKey = firebase.database().ref('/item').push().key;
+    let newPostKey = firebase.database().ref('/item').push().key;
     console.log('newPostKey:', newPostKey)
 
     //simultaneously updates item and adds the item into collection's itemIds
-    var updates = {};
+    let updates = {};
     updates['/item/' + newPostKey] = postData;
     updates['/collection/' + this.state.collectionId + '/itemId/' + newPostKey] = newPostKey;
 
@@ -78,10 +83,10 @@ class AddItems extends React.Component {
   };
 
   componentDidMount() {
-    var collectionRef = firebase.database().ref('/collection');
+    let collectionRef = firebase.database().ref('/collection');
     collectionRef.on("value", (snapshot) => {
 
-      var grabIdName = Object.keys(snapshot.val()).map((k, i) => {
+      let grabIdName = Object.keys(snapshot.val()).map((k, i) => {
         console.log(snapshot.val())
         return [Object.keys(snapshot.val())[i], snapshot.val()[k].name]
       });
@@ -90,10 +95,12 @@ class AddItems extends React.Component {
 
       }, (error) => {console.error(error)}
     );
-  }
 
+  }
+ 
   render() {
-    console.log('THIS.STATE:', this.state)
+    console.log('THIS.STATE: ', this.state)
+    console.log('THIS.PROPS: ', this.props)
     return (
       <div className="col-sm-4 col-sm-offset-4">
         <ImageUpload setImageState = {this.setImageState}/>
