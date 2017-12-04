@@ -10,12 +10,12 @@ class PopularCategoryList extends React.Component {
 
   render() {
     return(
-      <div>
+      <div style={{display: 'inline-block'}} className="container-fluid">
           <h2>popular categories</h2>
           <div>
             {Object.keys(this.props.popularCategoryList).map((key) => {
               return<Link to={`/collections/:${key}`} key={key}>
-                      <PopularCategoryEntry  
+                      <PopularCategoryEntry
                         category={this.props.popularCategoryList[key]} id={key} />
                     </Link>;
             })}
