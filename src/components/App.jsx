@@ -46,7 +46,9 @@ export default class App extends React.Component {
           {this.state.authed
           ? (
            <div>
+
               {/* <Redirect exact from='/login' to='/'/> */}
+
               <ProtectedNav user={this.state.user} />
               <MyCollections
                 class="sidenav"
