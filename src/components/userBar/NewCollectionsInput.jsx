@@ -18,7 +18,6 @@ export default class NewCollectionsInput extends React.Component {
 
   render() {
     // console.log(this.props.addNewCollection, this.state.collectionName, this.state.category)
-    console.log(this.props)
     return(
       <form onSubmit={(e)=>{
         e.preventDefault();

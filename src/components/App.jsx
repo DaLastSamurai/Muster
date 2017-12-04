@@ -39,46 +39,6 @@ export default class App extends React.Component {
     })
   }
 
-  //retrieve the specific logged in users's UID > array of collection IDs
-  //add new collectionID key from push into that array
-
-  //add to collection with collectionID key
-  //put in other stuff including uid
-
-  // addNewCollection(addCollection, addCategory, photoURL) {
-  //   // console.log('new collection name', addCollection)
-  //   // console.log('new category name', addCategory)
-  //   // console.log('all collections', collection)
-  //   // console.log('currentUID retrieved from auth', firebase.auth().currentUser.uid)
-  //   // console.log('new hash for collection id', collection.push().key)
-  //
-  //   let newCollectionId = collection.push().key
-  //   let currentUID = firebase.auth().currentUser.uid
-  //
-  //   let updateCollections = function() {
-  //     let collectionData = {
-  //       categoryId: addCategory,
-  //       itemId:[0],
-  //       name:addCollection,
-  //       photoUrl:"",
-  //       public: true,
-  //       uid:[currentUID]
-  //     }
-  //     let updates = {};
-  //     updates[newCollectionId] = collectionData;
-  //     return collection.update(updates);
-  //   }
-  //
-  //   let updateUsers = function() {
-  //     let updates = {};
-  //     updates[currentUID + '/collectionIds/' + newCollectionId] = newCollectionId;
-  //     return users.update(updates)
-  //   }
-  //
-  //   updateCollections();
-  //   updateUsers();
-  // }
-
   render() {
     return (
       <Router>
