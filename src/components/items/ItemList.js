@@ -8,6 +8,7 @@ class ItemList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      params: this.props.match.params.collectionId.slice(1),
       collectionName:'',
       items:[['id', {photoUrls: 'notworking', name: 'notworking'}]],
     }
@@ -49,14 +50,17 @@ class ItemList extends React.Component {
       return Promise.all(arr);
     })
     .then(data => {
-      if (data[0] && data[1]){
+      if (data[0] !== null && data[1]!== null){
         this.setState({items: data})
       }
     })
   }
 
   render() {
-    console.log('this is state of item',this.state.items)
+    if(this.props.match.params.collectionId.slice(1) !== this.state.params) {
+      this.getItemData()
+      this.setState({params: this.props.match.params.collectionId.slice(1)})
+    }
     return(
       <div>
         <h2>{this.state.collectionName}</h2>

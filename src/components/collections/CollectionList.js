@@ -40,7 +40,7 @@ class CollectionList extends React.Component {
       })
       return Promise.all(arr);
     }).then(data => {
-      if (data[0] && data[1]) {
+      if (data[0] !== null && data[1] !== null) {
         this.setState({collections: data})
       }
     })
