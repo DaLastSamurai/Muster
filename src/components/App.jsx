@@ -14,7 +14,7 @@ import { checkAuthStatus } from './authentication/authenticationHelpers';
 import ProfileFrame from './profilePages/ProfileFrame';
 import UserInfo from './userBar/UserInfo.jsx'
 import AddItems from './addItems/addItems';
-import { addNewCollection } from './userBar/writeNewCollectionHelpers'
+import { addNewCollection, searchMyCollections} from './userBar/writeNewCollectionHelpers'
 
 
 
@@ -92,7 +92,7 @@ export default class App extends React.Component {
                 class="sidenav"
                 user={this.state.user}
                 addNewCollection={this.addNewCollection}
-                getMyCollections={this.getMyCollections}
+                searchMyCollections={this.searchMyCollections}
               />
            </div>
            )
