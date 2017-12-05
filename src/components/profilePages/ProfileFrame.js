@@ -149,12 +149,15 @@ export default class ProfileFrame extends React.Component {
             />
           </div>
 
-          <ImageUpload setImageState = {this.setImageState}/>
-          <img src = {this.state.profilePhoto}/>
+
 
           {this.state.isUsersProfile
             ? (
               <div>
+              
+                <ImageUpload setImageState = {this.setImageState}/>
+                <img src = {this.state.profilePhoto}/>
+
                 Username (click to edit, one word only):
                 <RIEInput
                   value={this.state.username}
