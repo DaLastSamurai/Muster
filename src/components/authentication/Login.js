@@ -34,7 +34,6 @@ export default class Login extends React.Component {
   handleEmailSubmit(e) {
     e.preventDefault(); 
     // console.log('this is email and password in handleEmailSubmit: ', `\n ${this.state.email.value}`, `\n ${this.state.pw.value}`)
-
     // these are being retrieved from the form with thier refs. 
     firebaseAuth()
       .signInWithEmailAndPassword(this.state.email.value, this.state.pw.value)
