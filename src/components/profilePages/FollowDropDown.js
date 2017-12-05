@@ -1,22 +1,19 @@
 import React from 'react';
-
 import firebase from 'firebase';
 import { firebaseAuth } from '../../../config/firebaseCredentials'
 import Select from 'react-styled-select'
 import { Route, Redirect, Link } from 'react-router'
 import LinkButton from '../helperElements/LinkButton'
-// this is getting called by the profile
 
 export default class FollowersDropDown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       followersDataArr : null,
-      formattedData : null,
-      redirectURL: "", //TODO: this is not getting RESET!!!!
+      redirectURL: "",
     };
     this.handleDataToState = this.handleDataToState.bind(this)
-    this.handleSelect = this.handleSelect.bind(this)
+    this.handleSelectAndRedirect = this.handleSelectAndRedirect.bind(this)
   }
 
   componentDidMount() {
@@ -24,51 +21,54 @@ export default class FollowersDropDown extends React.Component {
   }
 
   componentWillReceiveProps() {
-    console.log('componentWillReceiveProps')
-    this.handleDataToState(this.props.users)
+    // console.log('componentWillReceiveProps in', this.props.title, 'is called')
+    if (this.props.users) {
+      this.handleDataToState(this.props.users, [], () => { this.setState({redirectURL : ""}) })
+    }
   }
 
-  handleDataToState(userIds, followersDataArr = []) {
+  handleDataToState(userIds, followersDataArr = [], cb = () => {}) {
     // takes in the userIds and then queries the db to create an array of
-    // followersData. This includes the follower's uid, picture and username.
-    // if this stops working, it is likely because the uids that are being looked
-    // up do not exist.
+    // followersData. The cb is passed last. 
     if (userIds.length === 0) {
-      return this.setState({followersDataArr})
+      this.setState({followersDataArr}, cb)
     }
     let userObj = {};
     let userToAdd = userIds.pop()
     let dbPath = `users/${userToAdd}/profileInfo`
-    userObj['value'] = userToAdd; // the 
+    userObj['value'] = userToAdd; // the uid. 
     firebase.database().ref(dbPath).on('value', (snapshot) => {
-      userObj['profilePhoto'] = snapshot.val().profilePhoto;
-      userObj['label'] = snapshot.val().username
+      // userObj['profilePhoto'] = snapshot.val().profilePhoto; // not currently used. 
+      userObj['label'] = snapshot.val().username // what the user sees in dropdown
       followersDataArr.push(userObj)
       this.handleDataToState(userIds, followersDataArr)
     })
   }
 
-  handleSelect(redirectURL) {
+  handleSelectAndRedirect(redirectURL) {
     // navigate to the profile of the selection
     this.props.updateProfileUID(redirectURL)
     this.setState({redirectURL})
+    // just rerendering the page by refreshing it. 
+    window.location.reload()
   }
 
   render() {
-    // console.log('this.state.redirectURL', this.state.redirectURL)
-    // console.log('this is the state in FollowersDropDown: ', this.state.followersDataArr)
-    return this.state.formattedData === null ? (<div> loading... </div>) :
-    this.state.redirectURL === ""
+    console.log('this is the state in', this.props.title , this.state)
+    return this.state.followersDataArr === null 
+    ? (<div> loading... </div>) 
+    : this.state.redirectURL == ""
     ? (
       <div className="col-sm-2">
         <Select
           placeholder={this.props.title}
-          options={this.state.formattedData}
-          onValueClick={this.handleSelect}
+          options={this.state.followersDataArr}
+          onValueClick={this.handleSelectAndRedirect}
           searchable={true}
         />
       </div>
-    ) : (
+    ) 
+    : (
       <div className="col-sm-2">
         <div>
           You have been redirected (this should disapear on re-render)
