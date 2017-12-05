@@ -19,6 +19,7 @@ class AddItems extends React.Component {
       purchaseTime: '',
       sell: '',
       uId: null,
+      showDetailed: false,
       collectionList: [{id: null, name: 'loading collections...'}]
     };
 
@@ -93,7 +94,7 @@ class AddItems extends React.Component {
           return { id: Object.keys(snapshot.val())[i], 
                   name: snapshot.val()[k].name, 
                   uId: snapshot.val()[k].uId }})
-        .filter(collection => collection.uId.includes(currentUID));
+        .filter(collection => collection.uId);
 
       this.setState({ collectionList: grabIdName });
 
@@ -180,7 +181,10 @@ class AddItems extends React.Component {
                 />
               </div>
             </div>
-
+            
+            {this.state.showDetailed ? 
+            (
+            <div>
             <div>
               <label>Notes</label>
               <div>
@@ -268,9 +272,24 @@ class AddItems extends React.Component {
                 />
               </div>
             </div>
+            </div>
+            ) : (<div></div>)}
 
             <div>
               <input type="submit" value="Submit" />
+              {this.state.showDetailed ? 
+                
+                (<a onClick={() => { 
+                  this.setState({ 
+                    showDetailed:  !this.state.showDetailed 
+                }) }}>Hide Detailed</a>) :
+
+                (<a onClick={() => { 
+                  this.setState({
+                    showDetailed: !this.state.showDetailed 
+                }) }}>Show Detailed</a>)
+              
+              }
             </div>
           </div>
         </form>

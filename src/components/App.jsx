@@ -25,22 +25,33 @@ export default class App extends React.Component {
       isOnAuthFrame: false,
 
       popularCategoryList: [],
+      collectionList:[/*['key', {not: 'working'}]*/],
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
     this.addNewCollection = addNewCollection.bind(this);
     this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this); 
     this.reloadPage = this.reloadPage.bind(this); 
+    this.getPopularCategory = this.getPopularCategory.bind(this);
+
   }
 
   componentDidMount() {
     this.checkAuthStatus()
+    this.getPopularCategory()
+  }
+
+  getPopularCategory() {
+    //need to update to get order by collectionId.length
+    //if no collectionid, done render???
     category.on('value', snap => {
       this.setState({popularCategoryList: snap.val()})
     })
   }
 
-  setIsOnAuthFrame(isOnAuthFrame) { this.setState({isOnAuthFrame}) }
+  setIsOnAuthFrame(isOnAuthFrame) { 
+    this.setState({isOnAuthFrame}) 
+  }
 
   reloadPage() {
     console.log("the reload page gets run")
@@ -60,6 +71,7 @@ export default class App extends React.Component {
                 user={this.state.user}
                 addNewCollection={this.addNewCollection}
                 searchMyCollections={this.searchMyCollections}
+                collectionList={this.state.collectionList}
               />
            </div>
           )
