@@ -54,7 +54,7 @@ export default class FollowersDropDown extends React.Component {
   }
 
   render() {
-    console.log('this is the state in', this.props.title , this.state)
+    // console.log('this is the state in', this.props.title , this.state)
     return this.state.followersDataArr === null 
     ? (<div> loading... </div>) 
     : this.state.redirectURL == ""

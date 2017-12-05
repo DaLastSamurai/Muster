@@ -121,7 +121,7 @@ export default class ProfileFrame extends React.Component {
 
   render() {
     // console.log('this is the props', this.props)
-    console.log('this is the state in profileFrame', this.state)
+    // console.log('this is the state in profileFrame', this.state)
     // starts by checking to see if the state is loaded.
     return Object.values(this.state).filter(el => el === null).length > 0
       ? (<div> loading... </div> ) 
@@ -156,7 +156,7 @@ export default class ProfileFrame extends React.Component {
               <div>
               
                 <ImageUpload setImageState = {this.setImageState}/>
-                <img src = {this.state.profilePhoto}/>
+                <img src = {this.state.profilePhoto} className = "profilePhoto"/>
 
                 Username (click to edit, one word only):
                 <RIEInput
@@ -179,8 +179,13 @@ export default class ProfileFrame extends React.Component {
               </div>
             ) : (
               <div>
-                bio: {this.state.bio}
-                Username: {this.state.username}
+                <h5> 
+                  bio: {this.state.bio}
+                </h5> 
+                <br /> 
+                <h5> 
+                  Username: {this.state.username}
+                </h5> 
               </div>
             )
           }
