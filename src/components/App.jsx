@@ -16,28 +16,30 @@ import UserInfo from './userBar/UserInfo.jsx'
 import AddItems from './addItems/addItems';
 import { addNewCollection } from './userBar/writeNewCollectionHelpers'
 
-
-
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
       authed: false,
       user: null,
+      isOnAuthFrame: false,
+
       popularCategoryList: [],
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
     this.addNewCollection = addNewCollection.bind(this);
+    this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this); 
   }
 
   componentDidMount() {
     this.checkAuthStatus()
     category.on('value', snap => {
       this.setState({popularCategoryList: snap.val()})
-      // console.log('state popcat', this.state.popularCategoryList)
     })
   }
+
+  setIsOnAuthFrame(isOnAuthFrame) { this.setState({isOnAuthFrame}) }
 
   render() {
     return (
@@ -46,9 +48,6 @@ export default class App extends React.Component {
           {this.state.authed
           ? (
            <div>
-
-              {/* <Redirect exact from='/login' to='/'/> */}
-
               <ProtectedNav user={this.state.user} />
               <MyCollections
                 class="sidenav"
@@ -57,15 +56,27 @@ export default class App extends React.Component {
                 searchMyCollections={this.searchMyCollections}
               />
            </div>
-           )
-          : (<UnprotectedNav />)
+          )
+          : (
+              <div> 
+                <UnprotectedNav setIsOnAuthFrame={this.setIsOnAuthFrame} />
+                <div>
+                  {this.state.isOnAuthFrame 
+                    ? (<AuthFrame user={this.props.user} isSigningUp={false} />)
+                    : (<div /> 
+                    )
+                  }
+                </div> 
+              </div>
+            )
           }
           <Switch>
-              <Route exact path='/login' render={() =>
-              <AuthFrame user={this.props.user} isSigningUp={false} />} />
               <Route exact path='/' render={() =>
-                <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />
-                }/>
+                this.state.isOnAuthFrame 
+                ? (<div />) 
+                : <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />
+                }
+              />
               <Route exact path='/profile/:uid' component={ProfileFrame} />
               <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
               <Route exact path='/collections/:categoryId' component={CollectionList} />

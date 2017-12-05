@@ -38,8 +38,12 @@ export default class UnprotectedNav extends React.Component {
                 </li>
 
                 <li className="link-button">
-                  <Link to="/login">
-                    <LinkButton title='Login' clickFunction={() => {}} />
+                  <Link to="/">
+                    <LinkButton title='Login' clickFunction={() => {
+                      // this needs to set state in the app that will cause the
+                      // auth frame to render and then unrender on rerender.
+                      this.props.setIsOnAuthFrame(true)
+                    }} />
                   </Link>
                 </li>
 

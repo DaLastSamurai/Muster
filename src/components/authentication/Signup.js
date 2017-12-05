@@ -35,8 +35,6 @@ export default class Signup extends React.Component {
 
   handleEmailSubmit(e) {
     e.preventDefault()
-    // console.log('state', this.state)
-    // console.log('these are the email and pw', this.state.email.value, this.state.pw.value)
     return firebaseAuth().createUserWithEmailAndPassword(this.state.email.value, this.state.pw.value)
       .catch(error => this.setState({error : error.toString()}))
   }
