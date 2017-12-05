@@ -48,12 +48,12 @@ class ImageUpload extends Component {
           this.props.setImageState(imageURL)
         })
       }).catch(err => console.log(err));
-    console.log('imageURL:', this.state.imageURL);
+    // console.log('imageURL:', this.state.imageURL);
 
   };
 
   render() {
-    console.log('IMAGEUPLOADER.THIS.STATE:', this.state)
+    // console.log('IMAGEUPLOADER.THIS.STATE:', this.state)
     return (
       <div>
         <form>

@@ -39,7 +39,7 @@ export default class ProfileFrame extends React.Component {
       // this is passed down.
       favoriteCategories: null,
 
-      // dataUpdated: false,
+      readyToRender: false,
     };
     this.isStringAcceptable = isStringAcceptable.bind(this) // imported from profileHelpers.js
     this.addUserDataToState = this.addUserDataToState.bind(this)
@@ -49,20 +49,19 @@ export default class ProfileFrame extends React.Component {
   }
 
   componentWillMount() {
-    console.log('the state has changed: ', this.state.profileUID)
+    // console.log('the state has changed: ', this.state.profileUID)
     this.setCurrentUserAndIsUsersProfile()
     this.addUserDataToState(["bio", "username", "profilePhoto", "following", "followers", "favoriteCategories"])
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('this is the current state: ', this.state)
-    console.log('this is the next state: ', nextState)
-    console.log('shouldComponentUpdate: ', !(JSON.stringify(nextState) === JSON.stringify(this.state)))
+    // console.log('this is the current state: ', this.state)
+    // console.log('this is the next state: ', nextState)
+    // console.log('shouldComponentUpdate: ', !(JSON.stringify(nextState) === JSON.stringify(this.state)))
     return (JSON.stringify(nextState) !== JSON.stringify(this.state))
   }
 
   componentDidUpdate() {
-    console.log('componentDidUpdate is running ')
     this.setCurrentUserAndIsUsersProfile()
     this.addUserDataToState(["bio", "username", "profilePhoto", "following", "followers", "favoriteCategories"])
   }
@@ -85,9 +84,7 @@ export default class ProfileFrame extends React.Component {
   addUserDataToState(fieldsToAddToState = [], stateObj = {}) {
     // takes in an array of fieldsToAddToState, queries the db and sets state with result
     // recursively calls each element in the array and renders it.
-    if (fieldsToAddToState.length === 0) {
-      return this.setState(stateObj, () => this.setState({dataUpdated : true}))
-    }
+    if (fieldsToAddToState.length === 0) {this.setState(stateObj)}
     else {
       let currentField = fieldsToAddToState.pop()
       let dbPath = `users/${this.state.profileUID}/profileInfo/${currentField}`
@@ -99,7 +96,6 @@ export default class ProfileFrame extends React.Component {
   }
 
   setImageState(profilePhoto) {
-    console.log('this is what imageUploader returns', profilePhoto)
     let dbPath = `${this.state.currentUser}/profileInfo/profilePhoto`;
     let update = {}; 
     update[dbPath] = profilePhoto; 
@@ -127,62 +123,67 @@ export default class ProfileFrame extends React.Component {
     // console.log('this is the props', this.props)
     console.log('this is the state in profileFrame', this.state)
     // starts by checking to see if the state is loaded.
-    return this.state.bio === null || this.state.profilePhoto === null ? (<div> loading... </div> ) : (
-      <div>
-        {this.state.isUsersProfile && this.state.currentUser !== 'none'
-          ? <div />
-          : <FollowButton 
-              currentUser={this.state.currentUser} 
-              following={this.state.following}
-              profileUID={this.state.profileUID}
+    return Object.values(this.state).filter(el => el === null).length > 0
+      ? (<div> loading... </div> ) 
+      : (
+        <div>
+          <div className = "followBar"> 
+            {this.state.isUsersProfile 
+              ? <div />
+              : <FollowButton 
+                  currentUser={this.state.currentUser} 
+                  following={this.state.following}
+                  profileUID={this.state.profileUID}
+                />
+            }
+          
+            <FollowDropDown
+              title = {"followers"}
+              users = {this.state.followers}
+              updateProfileUID = {this.updateProfileUID}
             />
-        }
-        
-        <ImageUpload setImageState = {this.setImageState}/>
-        <img src = {this.state.profilePhoto}/>
+            <FollowDropDown
+              title = {"following"}
+              users = {this.state.following}
+              updateProfileUID = {this.updateProfileUID}
+            />
+          </div>
 
-        <FollowDropDown
-          title = {"followers"}
-          users = {this.state.followers}
-          updateProfileUID = {this.updateProfileUID}
-        />
-        <FollowDropDown
-          title = {"following"}
-          users = {this.state.following}
-          updateProfileUID = {this.updateProfileUID}
-        />
-        {this.state.isUsersProfile
-          ? (
-            <div>
-              Username (click to edit, one word only):
-              <RIEInput
-                value={this.state.username}
-                change={this.sendUpdatedUserDataToDB}
-                propName="text"
-                validate={this.isStringAcceptable}
-                classLoading="loading"
-                classInvalid="invalid"
-              />
-              Bio (click to edit):
-              <RIETextArea
-                value={this.state.bio}
-                change={this.sendUpdatedUserDataToDB}
-                propName="textarea"
-                validate={this.isStringAcceptable}
-                classLoading="loading"
-                classInvalid="invalid"
-              />
-            </div>
-          ) : (
-            <div>
-              bio: {this.state.bio}
-              Username: {this.state.username}
-            </div>
-          )
-        }
-        {/* this is going to look like the bespintrest (hopefully) */}
-        <FavoriteCategories favoriteCategories={this.state.favoriteCategories} />
-      </div>
+          <ImageUpload setImageState = {this.setImageState}/>
+          <img src = {this.state.profilePhoto}/>
+
+          {this.state.isUsersProfile
+            ? (
+              <div>
+                Username (click to edit, one word only):
+                <RIEInput
+                  value={this.state.username}
+                  change={this.sendUpdatedUserDataToDB}
+                  propName="text"
+                  validate={this.isStringAcceptable}
+                  classLoading="loading"
+                  classInvalid="invalid"
+                />
+                Bio (click to edit):
+                <RIETextArea
+                  value={this.state.bio}
+                  change={this.sendUpdatedUserDataToDB}
+                  propName="textarea"
+                  validate={this.isStringAcceptable}
+                  classLoading="loading"
+                  classInvalid="invalid"
+                />
+              </div>
+            ) : (
+              <div>
+                bio: {this.state.bio}
+                Username: {this.state.username}
+              </div>
+            )
+          }
+
+          <FavoriteCategories favoriteCategories={this.state.favoriteCategories} />
+       </div>
     )
   }
 }
