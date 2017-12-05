@@ -29,11 +29,15 @@ export default class MyCollectionsList extends React.Component {
       <div>
         {this.state.collectionList.map((collection) => {
           // console.log('collection form',collection)
-          return <Link to={`/items/:${collection[0]}`} key={collection[0]}><MyCollectionsEntry
-          categoryId={collection[1].categoryId}
-          name={collection[1].name}
-          publicCat={collection[1].publicCat}
-          /></Link>
+          return (
+            <Link to={`/items/:${collection[0]}`} key={collection[0]}>
+              <MyCollectionsEntry
+                categoryId={collection[1].categoryId}
+                name={collection[1].name}
+                publicCat={collection[1].publicCat}
+              />
+            </Link>
+          )
         })}
       </div>
     )

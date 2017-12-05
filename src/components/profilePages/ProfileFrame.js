@@ -6,6 +6,7 @@ import { isStringAcceptable } from './profileHelpers.js'
 import FavoriteCategories from './FavoriteCategories'
 import FollowButton from './FollowButton'
 import FollowDropDown from './FollowDropDown' // for both followers and following.
+import ImageUpload from '../helperElements/imageUploader'
 // dynamic text editing:
 import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek'
 import _ from 'lodash'
@@ -38,12 +39,13 @@ export default class ProfileFrame extends React.Component {
       // this is passed down.
       favoriteCategories: null,
 
-      dataUpdated: false,
+      // dataUpdated: false,
     };
     this.isStringAcceptable = isStringAcceptable.bind(this) // imported from profileHelpers.js
     this.addUserDataToState = this.addUserDataToState.bind(this)
     this.sendUpdatedUserDataToDB = this.sendUpdatedUserDataToDB.bind(this)
     this.updateProfileUID = this.updateProfileUID.bind(this)
+    this.setImageState = this.setImageState.bind(this)
   }
 
   componentWillMount() {
@@ -56,15 +58,17 @@ export default class ProfileFrame extends React.Component {
     console.log('this is the current state: ', this.state)
     console.log('this is the next state: ', nextState)
     console.log('shouldComponentUpdate: ', !(JSON.stringify(nextState) === JSON.stringify(this.state)))
-    return !(JSON.stringify(nextState) === JSON.stringify(this.state))
+    return (JSON.stringify(nextState) !== JSON.stringify(this.state))
   }
 
   componentDidUpdate() {
+    console.log('componentDidUpdate is running ')
     this.setCurrentUserAndIsUsersProfile()
     this.addUserDataToState(["bio", "username", "profilePhoto", "following", "followers", "favoriteCategories"])
   }
 
   setCurrentUserAndIsUsersProfile() {
+    // precarious
     let currentUser = "none"
     if (firebase.auth().currentUser !== null) {
       currentUser = firebase.auth().currentUser.uid
@@ -72,6 +76,8 @@ export default class ProfileFrame extends React.Component {
     this.setState({currentUser}, () => {
       if (currentUser === this.props.match.params.uid) {
         this.setState({isUsersProfile : true})
+      } else {
+        this.setState({isUsersProfile : false})
       }
     })
   }
@@ -79,9 +85,8 @@ export default class ProfileFrame extends React.Component {
   addUserDataToState(fieldsToAddToState = [], stateObj = {}) {
     // takes in an array of fieldsToAddToState, queries the db and sets state with result
     // recursively calls each element in the array and renders it.
-    console.log('this is querying the db for data about: ', this.state.profileUID)
     if (fieldsToAddToState.length === 0) {
-      return this.setState(stateObj, this.setState({dataUpdated : true}))
+      return this.setState(stateObj, () => this.setState({dataUpdated : true}))
     }
     else {
       let currentField = fieldsToAddToState.pop()
@@ -93,23 +98,26 @@ export default class ProfileFrame extends React.Component {
     }
   }
 
-  updateProfileUID(profileUID) {
-    console.log('this gets called: ', profileUID)
-    this.setState({profileUID})
+  setImageState(profilePhoto) {
+    console.log('this is what imageUploader returns', profilePhoto)
+    let dbPath = `${this.state.currentUser}/profileInfo/profilePhoto`;
+    let update = {}; 
+    update[dbPath] = profilePhoto; 
+    users.update(update);
+    this.setState({profilePhoto});
   }
 
+  updateProfileUID(profileUID) { this.setState( {profileUID} ) }
+
   sendUpdatedUserDataToDB(fieldData) {
-    // takes in a string that is the field that needs to be
     let update = {}
     if (fieldData.text !== undefined) { // if the user name
       update[`${this.state.profileUID}/profileInfo/username`] = fieldData.text;
-      // triggers re-render which will push new data to state with addUserDataToState
       users.update(update);
     }
     // might need to replace this:
     if (fieldData.textarea !== undefined) { // if the bio.
       update[`${this.state.profileUID}/profileInfo/bio`] = fieldData.textarea;
-      // triggers re-render which will push new data to state with addUserDataToState
       users.update(update);
     }
   }
@@ -119,13 +127,20 @@ export default class ProfileFrame extends React.Component {
     // console.log('this is the props', this.props)
     console.log('this is the state in profileFrame', this.state)
     // starts by checking to see if the state is loaded.
-    return this.state.bio === null ? (<div> loading... </div> ) : (
+    return this.state.bio === null || this.state.profilePhoto === null ? (<div> loading... </div> ) : (
       <div>
         {this.state.isUsersProfile && this.state.currentUser !== 'none'
           ? <div />
-          : <FollowButton />
+          : <FollowButton 
+              currentUser={this.state.currentUser} 
+              following={this.state.following}
+              profileUID={this.state.profileUID}
+            />
         }
-        <img src={this.state.profilePhoto}/>
+        
+        <ImageUpload setImageState = {this.setImageState}/>
+        <img src = {this.state.profilePhoto}/>
+
         <FollowDropDown
           title = {"followers"}
           users = {this.state.followers}
@@ -139,7 +154,6 @@ export default class ProfileFrame extends React.Component {
         {this.state.isUsersProfile
           ? (
             <div>
-              This is where all of the editable text fields will go.
               Username (click to edit, one word only):
               <RIEInput
                 value={this.state.username}
