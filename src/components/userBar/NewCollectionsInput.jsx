@@ -21,11 +21,20 @@ export default class NewCollectionsInput extends React.Component {
           })
     } else {
       this.props.addNewCollection(this.state.collectionName, this.state.category);
+      this.setState({collectionName: 'collection', category: 'category'})
+      this.props.getUserCollection();
+      this.props.toggleInpurForm();
     }
   }
 
+  shouldComponentUpdate(nextState) {
+    if(nextState !== this.state) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
-    // console.log(this.props.addNewCollection, this.state.collectionName, this.state.category)
     return(
       <form onSubmit={(e)=>{
         e.preventDefault();
@@ -43,7 +52,7 @@ export default class NewCollectionsInput extends React.Component {
           onChange={(e)=>{this.setState({category:e.target.value})}}
         />
         </div>
-        <button type="submit" onClick={() => this.props.handleAddCollection()}> + </button>
+        <button type="submit"> + </button>
       </form>
     )
   }

@@ -47,7 +47,9 @@ export default class App extends React.Component {
     })
   }
 
-  setIsOnAuthFrame(isOnAuthFrame) { this.setState({isOnAuthFrame}) }
+  setIsOnAuthFrame(isOnAuthFrame) { 
+    this.setState({isOnAuthFrame}) 
+  }
 
   render() {
     return (

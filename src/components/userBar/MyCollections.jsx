@@ -21,7 +21,7 @@ export default class MyCollections extends React.Component {
       collectionList: [],
     };
     this.getUserCollection = this.getUserCollection.bind(this);
-    this.handleAddCollection = this.handleAddCollection.bind(this);
+    this.toggleInpurForm = this.toggleInpurForm.bind(this);
     this.deleteCollection = this.deleteCollection.bind(this);
   }
 
@@ -79,42 +79,46 @@ export default class MyCollections extends React.Component {
       this.getUserCollection()
     )
   }
-
-  handleAddCollection() {
-    this.getUSerCollection()
+  
+  toggleInpurForm() {
+    this.setState({showInputForm:!this.state.showInputForm})
   }
 
+  // handleAddCollection() {
+  //   this.getUSerCollection()
+  // }
+
   render() {
-    // console.log('print this user', this.props.user.uid)
-    // console.log('input form toggle',this.state.showInputForm)
-    // console.log('>>>',this.props.addNewCollection)
-    console.log('did I add collection',this.state.collectionList)
     return(
       <div style={{width: 220, float: 'left', margin: '1.5%'}} className="container-fluid">
-
-      <SideNav>
-        <Link to={`/profile/${this.props.user.uid}`}>
-          <UserInfo user={this.props.user} clickFunction={() => {}}/>
-        </Link>
-      </SideNav>
-      <SideNav>
-       
-      </SideNav>
-      <SideNav>
-        <button type="button" className="btn btn-outline-secondary bg-primary" onClick={()=>{this.setState({showInputForm:!this.state.showInputForm})}}>
-          New Collection
-        </button>
-          {this.state.showInputForm?(<NewCollectionsInput addNewCollection={this.props.addNewCollection} handleAddCollection={this.handleAddCollection} />):(<div/>)}
-      </SideNav>
-      <Link to={'/addItems/'}>
-          <button type="button" className="btn btn-outline-secondary bg-primary">Add Items</button>
-      </Link>
-      <SideNav>
-        <SearchBar search={(input) => 
-          { this.props.searchMyCollections(input) }} />
-      </SideNav>
-      {this.state.collectionList.length > 0 ? <MyCollectionsList deleteCollection={this.deleteCollection} collectionList={this.state.collectionList} /> : <h5>add collection</h5>}
+        <SideNav>
+          <Link to={`/profile/${this.props.user.uid}`}>
+            <UserInfo user={this.props.user} clickFunction={() => {}}/>
+          </Link>
+        </SideNav>
+        <SideNav>
+          <button type="button" className="btn btn-outline-secondary bg-primary" 
+            onClick={() => this.toggleInpurForm()}>
+            New Collection
+          </button>
+            {this.state.showInputForm ? 
+              (<NewCollectionsInput 
+                  addNewCollection={this.props.addNewCollection} 
+                  getUserCollection={this.getUserCollection} 
+                  toggleInpurForm={this.toggleInpurForm} />) : (<div> </div>)}
+        </SideNav>
+          <Link to={'/addItems/'}>
+            <button type="button" className="btn btn-outline-secondary bg-primary">Add Items</button>
+          </Link>
+        <SideNav>
+          <SearchBar search={(input) => { this.props.searchMyCollections(input) }} />
+        </SideNav>
+        <SideNav>
+        {(this.state.collectionList.length > 0) ? 
+          <MyCollectionsList deleteCollection={this.deleteCollection} 
+                            collectionList={this.state.collectionList} /> : <h5>add collection</h5>}
+        </SideNav>
       </div>
     )
   }
-}
+} 

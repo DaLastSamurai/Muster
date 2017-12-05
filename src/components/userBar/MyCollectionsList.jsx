@@ -7,24 +7,12 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 export default class MyCollectionsList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      
-    };
   }
 
   componentDidMount(){
-    // collection.orderByKey().limitToLast(10).on('value', snap => {
-    //   let array = [];
-    //   for(var key in snap.val()){
-    //     array.push([key ,snap.val()[key]])
-    //   }
-    //   // console.log(array)
-    //   this.setState({collectionList : array})
-    // })
   }
 
   render() {
-    // console.log('THIS IS STATE',this.state.collectionList)
     return (
       <div>
         {this.props.collectionList.map((collection) => {
