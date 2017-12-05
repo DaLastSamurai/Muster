@@ -25,19 +25,30 @@ export default class App extends React.Component {
       authed: false,
       user: null,
       popularCategoryList: [],
+      collectionList:[/*['key', {not: 'working'}]*/],
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
     this.addNewCollection = addNewCollection.bind(this);
+    // this.getUserCollection = this.getUserCollection.bind(this);
+    this.getPopularCategory = this.getPopularCategory.bind(this);
   }
 
   componentDidMount() {
     this.checkAuthStatus()
+    this.getPopularCategory()
+  }
+
+  getPopularCategory() {
+    //need to update to get order by collectionId.length
+    //if no collectionid, done render???
     category.on('value', snap => {
       this.setState({popularCategoryList: snap.val()})
       // console.log('state popcat', this.state.popularCategoryList)
     })
   }
+
+  
 
   render() {
     return (
@@ -55,6 +66,7 @@ export default class App extends React.Component {
                 user={this.state.user}
                 addNewCollection={this.addNewCollection}
                 searchMyCollections={this.searchMyCollections}
+                collectionList={this.state.collectionList}
               />
            </div>
            )

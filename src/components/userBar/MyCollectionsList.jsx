@@ -8,32 +8,38 @@ export default class MyCollectionsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      collectionList:[['key', {not: 'working'}]],
+      
     };
   }
 
   componentDidMount(){
-    collection.orderByKey().limitToLast(10).on('value', snap => {
-      let array = [];
-      for(var key in snap.val()){
-        array.push([key ,snap.val()[key]])
-      }
-      // console.log(array)
-      this.setState({collectionList : array})
-    })
+    // collection.orderByKey().limitToLast(10).on('value', snap => {
+    //   let array = [];
+    //   for(var key in snap.val()){
+    //     array.push([key ,snap.val()[key]])
+    //   }
+    //   // console.log(array)
+    //   this.setState({collectionList : array})
+    // })
   }
 
   render() {
     // console.log('THIS IS STATE',this.state.collectionList)
     return (
       <div>
-        {this.state.collectionList.map((collection) => {
+        {this.props.collectionList.map((collection) => {
           // console.log('collection form',collection)
-          return <Link to={`/items/:${collection[0]}`} key={collection[0]}><MyCollectionsEntry
-          categoryId={collection[1].categoryId}
-          name={collection[1].name}
-          publicCat={collection[1].publicCat}
-          /></Link>
+          return <div>
+            <Link to={`/items/:${collection[0]}`} key={collection[0]}>
+              <MyCollectionsEntry
+                categoryId={collection[1].categoryId}
+                name={collection[1].name}
+                publicCat={collection[1].publicCat}
+                id={collection[0]}
+              />
+            </Link>
+            <button onClick={() => {this.props.deleteCollection(collection[0])}}> x </button>
+          </div>
         })}
       </div>
     )
