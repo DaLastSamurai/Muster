@@ -38,7 +38,6 @@ export default class FollowersDropDown extends React.Component {
     let dbPath = `users/${userToAdd}/profileInfo`
     userObj['value'] = userToAdd; // the uid. 
     firebase.database().ref(dbPath).on('value', (snapshot) => {
-      // userObj['profilePhoto'] = snapshot.val().profilePhoto; // not currently used. 
       userObj['label'] = snapshot.val().username // what the user sees in dropdown
       followersDataArr.push(userObj)
       this.handleDataToState(userIds, followersDataArr)
@@ -54,6 +53,7 @@ export default class FollowersDropDown extends React.Component {
   }
 
   render() {
+    // console.log('this is the props in', this.props.title, this.props)
     // console.log('this is the state in', this.props.title , this.state)
     return this.state.followersDataArr === null 
     ? (<div> loading... </div>) 
