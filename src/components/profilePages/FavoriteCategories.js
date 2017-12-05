@@ -15,7 +15,6 @@ export default class FavoriteCategories extends React.Component {
   render() {
     return (
       <div>
-        This is the FavoriteCategories
       </div> 
     )
   }
