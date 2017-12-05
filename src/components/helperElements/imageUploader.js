@@ -22,7 +22,7 @@ class ImageUpload extends Component {
   };
 
   handleUploadStart() {
-    this.setState( { 
+    this.setState({ 
       isUploading: true, 
       progress: 0 
     });
