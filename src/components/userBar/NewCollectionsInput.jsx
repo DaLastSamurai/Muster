@@ -43,7 +43,7 @@ export default class NewCollectionsInput extends React.Component {
           onChange={(e)=>{this.setState({category:e.target.value})}}
         />
         </div>
-        <button type="submit"> + </button>
+        <button type="submit" onClick={() => this.props.handleAddCollection()}> + </button>
       </form>
     )
   }
