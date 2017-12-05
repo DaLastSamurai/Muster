@@ -19,7 +19,7 @@ class AddItems extends React.Component {
       purchaseTime: '',
       sell: '',
       uId: null,
-      collectionList: [['', 'loading collections...']]
+      collectionList: [{id: null, name: 'loading collections...'}]
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -85,11 +85,15 @@ class AddItems extends React.Component {
   componentDidMount() {
     let collectionRef = firebase.database().ref('/collection');
     collectionRef.on("value", (snapshot) => {
-
-      let grabIdName = Object.keys(snapshot.val()).map((k, i) => {
-        console.log(snapshot.val())
-        return [Object.keys(snapshot.val())[i], snapshot.val()[k].name]
-      });
+      // console.log('snapshot: ',snapshot.val())
+      let currentUID = firebase.auth().currentUser.uid;
+      console.log(currentUID)
+      let grabIdName = Object.keys(snapshot.val())
+        .map((k, i) => {
+          return { id: Object.keys(snapshot.val())[i], 
+                  name: snapshot.val()[k].name, 
+                  uId: snapshot.val()[k].uId }})
+        .filter(collection => collection.uId.includes(currentUID));
 
       this.setState({ collectionList: grabIdName });
 
@@ -99,10 +103,11 @@ class AddItems extends React.Component {
   }
  
   render() {
-    console.log('THIS.STATE: ', this.state)
-    console.log('THIS.PROPS: ', this.props)
+    // console.log('THIS.STATE: ', this.state)
+    // console.log('THIS.PROPS: ', this.props)
+    console.log('THIS.STATE.COLLECTIONLIST: ', this.state.collectionList)
     return (
-      <div className="col-sm-4 col-sm-offset-4">
+      <div className="col-sm-5 col-sm-offset-0">
         <ImageUpload setImageState = {this.setImageState}/>
 
         <form onSubmit={this.handleSubmit.bind(this)}>
@@ -155,7 +160,7 @@ class AddItems extends React.Component {
                 >
                 <option></option>
                   {this.state.collectionList.map(collection =>
-                    <option value={collection[0]}>{collection[1]}</option>)}
+                    <option value={collection.id}>{collection.name}</option>)}
                 </select>
               </div>
             </div>
