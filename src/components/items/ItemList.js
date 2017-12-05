@@ -10,7 +10,7 @@ class ItemList extends React.Component {
     this.state = {
       params: this.props.match.params.collectionId.slice(1),
       collectionName:'',
-      items:[['id', {photoUrls: 'notworking', name: 'notworking'}]],
+      items:[['id', {photoUrls: 'add Item!', name: 'add Item!'}]],
     }
     this.getItemData = this.getItemData.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
@@ -68,8 +68,9 @@ class ItemList extends React.Component {
 
   render() {
     if(this.props.match.params.collectionId.slice(1) !== this.state.params) {
-      this.getItemData()
-      this.setState({params: this.props.match.params.collectionId.slice(1)})
+      this.setState({items:[['id', {photoUrls: 'add Item!', name: 'add Item!'}]]});
+      this.getItemData();
+      this.setState({params: this.props.match.params.collectionId.slice(1)});
     }
     console.log(this.state.items)
     return(

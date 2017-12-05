@@ -21,11 +21,20 @@ export default class NewCollectionsInput extends React.Component {
           })
     } else {
       this.props.addNewCollection(this.state.collectionName, this.state.category);
+      this.setState({collectionName: 'collection', category: 'category'})
+      this.props.getUserCollection();
+      this.props.toggleInpurForm();
     }
   }
 
+  shouldComponentUpdate(nextState) {
+    if(nextState !== this.state) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
-    // console.log(this.props.addNewCollection, this.state.collectionName, this.state.category)
     return(
       <form onSubmit={(e)=>{
         e.preventDefault();
