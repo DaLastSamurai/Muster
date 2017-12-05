@@ -1,6 +1,5 @@
 import React from 'react';
 import { firebaseAuth, rootRef, collection} from '../../../config/firebaseCredentials';
-import DummyData from './DummyData.js'
 import MyCollectionsEntry from './MyCollectionsEntry.jsx';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 
