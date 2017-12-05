@@ -31,7 +31,9 @@ export default class App extends React.Component {
     this.checkAuthStatus = checkAuthStatus.bind(this);
     this.addNewCollection = addNewCollection.bind(this);
     this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this); 
+    this.reloadPage = this.reloadPage.bind(this); 
     this.getPopularCategory = this.getPopularCategory.bind(this);
+
   }
 
   componentDidMount() {
@@ -49,6 +51,11 @@ export default class App extends React.Component {
 
   setIsOnAuthFrame(isOnAuthFrame) { 
     this.setState({isOnAuthFrame}) 
+  }
+
+  reloadPage() {
+    console.log("the reload page gets run")
+    window.location.reload()
   }
 
   render() {
@@ -88,7 +95,7 @@ export default class App extends React.Component {
                 : <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />
                 }
               />
-              <Route exact path='/profile/:uid' component={ProfileFrame} />
+              <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
               <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
               <Route exact path='/collections/:categoryId' component={CollectionList} />
               <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} />} />

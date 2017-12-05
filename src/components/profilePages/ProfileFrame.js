@@ -39,7 +39,7 @@ export default class ProfileFrame extends React.Component {
       // this is passed down.
       favoriteCategories: null,
 
-      readyToRender: false,
+      reloaded: false,
     };
     this.isStringAcceptable = isStringAcceptable.bind(this) // imported from profileHelpers.js
     this.addUserDataToState = this.addUserDataToState.bind(this)
@@ -55,6 +55,7 @@ export default class ProfileFrame extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+
     // console.log('this is the current state: ', this.state)
     // console.log('this is the next state: ', nextState)
     // console.log('shouldComponentUpdate: ', !(JSON.stringify(nextState) === JSON.stringify(this.state)))
@@ -62,6 +63,7 @@ export default class ProfileFrame extends React.Component {
   }
 
   componentDidUpdate() {
+
     this.setCurrentUserAndIsUsersProfile()
     this.addUserDataToState(["bio", "username", "profilePhoto", "following", "followers", "favoriteCategories"])
   }
@@ -167,7 +169,7 @@ export default class ProfileFrame extends React.Component {
                   classLoading="loading"
                   classInvalid="invalid"
                 />
-                Bio (click to edit):
+                 Bio (click to edit):
                 <RIETextArea
                   value={this.state.bio}
                   change={this.sendUpdatedUserDataToDB}
