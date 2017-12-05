@@ -32,14 +32,8 @@ export default class UnprotectedNav extends React.Component {
                 </li>
 
                 <li className="link-button">
-                  <Link to="/addItems">
-                    <LinkButton title='Add Item' clickFunction={() => { }} />
-                  </Link>
-                </li>
-
-                <li className="link-button">
                   <Link to="/">
-                    <LinkButton title='Landing' clickFunction={() => {}}/>
+                    <LinkButton title='Home' clickFunction={() => {}}/>
                   </Link>
                 </li>
 
