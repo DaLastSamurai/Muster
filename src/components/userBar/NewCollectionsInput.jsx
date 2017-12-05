@@ -6,14 +6,22 @@ export default class NewCollectionsInput extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
-      collectionName:"",
-      category:""
+      collectionName:'collection',
+      category:'category'
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleSubmit(e){
-    this.props.addNewCollection(this.state.collectionName, this.state.category);
+    if (this.state.collectionName === 'collection' && this.state.category === 'category' ||
+        this.state.collectionName === 'add collection' && this.state.category === 'add category') {
+          this.setState({
+            collectionName: 'add collection',
+            category: 'add category'
+          })
+    } else {
+      this.props.addNewCollection(this.state.collectionName, this.state.category);
+    }
   }
 
   render() {
@@ -26,12 +34,12 @@ export default class NewCollectionsInput extends React.Component {
         <div className="category-input">
         <input
           type="text"
-          placeholder="Collection Name"
+          placeholder={this.state.collectionName}
           onChange={(e)=>{this.setState({collectionName:e.target.value})}}
         />
         <input
           type="text"
-          placeholder="Category"
+          placeholder={this.state.category}
           onChange={(e)=>{this.setState({category:e.target.value})}}
         />
         </div>
