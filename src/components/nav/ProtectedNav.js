@@ -36,7 +36,7 @@ export default class ProtectedNav extends React.Component {
 
                 <li className="link-button">
                   <Link to={`/profile/${this.props.user.uid}`}>
-                    <LinkButton title='Profile' clickFunction={() => { }} />
+                    <LinkButton title='Profile' clickFunction={() => {window.location.reload()}} />
                   </Link>
                 </li>
 

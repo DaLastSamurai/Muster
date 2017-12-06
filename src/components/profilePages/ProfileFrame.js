@@ -54,8 +54,11 @@ export default class ProfileFrame extends React.Component {
     this.addUserDataToState(["bio", "username", "profilePhoto", "following", "followers", "favoriteCategories"])
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  componentWillRecieveProps(props) {
+    console.log('these props are changing: ', props)
+  }
 
+  shouldComponentUpdate(nextProps, nextState) {
     // console.log('this is the current state: ', this.state)
     // console.log('this is the next state: ', nextState)
     // console.log('shouldComponentUpdate: ', !(JSON.stringify(nextState) === JSON.stringify(this.state)))
@@ -122,6 +125,7 @@ export default class ProfileFrame extends React.Component {
 
 
   render() {
+    console.log(this.props.match.params.uid)
     // console.log('this is the props', this.props)
     // console.log('this is the state in profileFrame', this.state)
     // starts by checking to see if the state is loaded.
