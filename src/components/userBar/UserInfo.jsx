@@ -28,7 +28,7 @@ export default class UserInfo extends React.Component {
       <div>
         <img src={this.state.profilePhoto} />
         <Link to={`/profile/${this.props.user.uid}`}>
-          <LinkButton title={this.state.username} clickFunction={() => {}} />
+          <LinkButton title={this.state.username} clickFunction={() => {window.location.reload()}} />
         </Link>
       </div>
     )
