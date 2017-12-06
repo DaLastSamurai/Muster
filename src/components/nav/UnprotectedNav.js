@@ -10,14 +10,7 @@ import AuthFrame from '../authentication/AuthFrame'
 export default class UnprotectedNav extends React.Component {
   constructor() {
     super();
-    this.state = {
-
-    }; 
-
-  }
-
-  componentDidMount() { 
-
+    this.state = {}; 
   }
 
   /* THIS IS THE UNPROTECTED NAV, MEANING ALL BUTTONS AND ROUTES WILL BE VISIBLE
@@ -56,20 +49,6 @@ export default class UnprotectedNav extends React.Component {
 
             </div>
           </nav>
-          {/* use react router to only show one of our components at a time */}
-          {/*  */}
-          {/* 
-            <Route exact path="/login" 
-              render={() => <AuthFrame user={this.props.user} isSigningUp={false}/>} 
-            />
-            <Route exact path="/a" 
-              render={() => <div> You clicked a button without a Route!</div> } 
-            />
-            <Route exact path="/b" 
-              render={() => <div> You clicked a button without a Route!</div>} 
-            />
-            <Route exact path='/popularcategory' render={() => <PopularCategoryList/>} />
-          */}
         </div>
     )
   }
