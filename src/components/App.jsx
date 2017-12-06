@@ -68,7 +68,7 @@ export default class App extends React.Component {
               <ProtectedNav user={this.state.user} />
               <MyCollections
                 class="sidenav"
-                user={this.state.user}
+                  user={this.state.user}
                 addNewCollection={this.addNewCollection}
                 searchMyCollections={this.searchMyCollections}
                 collectionList={this.state.collectionList}
