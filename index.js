@@ -1,5 +1,5 @@
 const algoliasearch = require('algoliasearch');
-const dotenv = require('dotenv');
+const dotenv = require('dotenv'); //configure algolia environment
 const firebase = require('firebase');
 
 // load values from the .env file in this directory into process.env
