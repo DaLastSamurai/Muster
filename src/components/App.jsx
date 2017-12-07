@@ -16,6 +16,8 @@ import UserInfo from './userBar/UserInfo.jsx'
 import AddItems from './addItems/addItems';
 import { addNewCollection } from './userBar/writeNewCollectionHelpers'
 
+import MessageFrame from './messaging/MessageFrame'
+
 export default class App extends React.Component {
   constructor() {
     super();

@@ -15,8 +15,10 @@ export default class ResetPassword extends React.Component {
   resetPassword(e) {
     e.preventDefault(); 
     firebaseAuth().sendPasswordResetEmail(this.state.email.value)
-      .then(() => this.setState({error : `Password reset email sent to ${this.state.email.value}.`}))
-      .catch(() => this.setState({error : `Email Address ${this.state.email.value} not found`}))
+      .then(() => this.setState({error : 
+        `Password reset email sent to ${this.state.email.value}.`}))
+      .catch(() => this.setState({error : 
+        `Email Address ${this.state.email.value} not found`}))
   }
 
   render() {
@@ -24,9 +26,15 @@ export default class ResetPassword extends React.Component {
       <div className="">
         <form onSubmit={this.resetPassword}>
           <div className="form-group">
-            <input className="form-control" ref={(email) => this.state.email = email} placeholder="Enter Your Email To Reset Password"/>
+            <input 
+              className="form-control" 
+              ref={(email) => this.state.email = email} 
+              placeholder="Enter Your Email To Reset Password"
+            />
           </div>
-          <button type="submit" className="btn btn-primary">Send Me Reset Password Instructions</button>
+          <button type="submit" className="btn btn-primary">
+            Send Me Reset Password Instructions
+          </button>
         </form>
         <div>
           {this.state.error}
