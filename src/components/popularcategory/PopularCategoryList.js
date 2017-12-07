@@ -7,12 +7,17 @@ import CollectionList from '../collections/CollectionList';
 class PopularCategoryList extends React.Component {
   constructor(props) {
       super(props)
+      this.handleLike = this.handleLike.bind(this);
   }
 
   componentDidMount() {
     category.on('value', function(snap) {
-      console.log('allcategory', snap.val())
+      // console.log('allcategory', snap.val())
     })
+  }
+
+  handleLike(e) {
+    this.props.addToFavCat(e.target.value);
   }
 
   render() {
@@ -21,10 +26,12 @@ class PopularCategoryList extends React.Component {
           <h2>popular categories</h2>
           <div>
             {Object.keys(this.props.popularCategoryList).map((key) => {
-              return<Link to={`/collections/:${key}`} key={key}>
+              return<div><Link to={`/collections/:${key}`} key={key}>
                       <PopularCategoryEntry
                         category={this.props.popularCategoryList[key]} id={key} />
-                    </Link>;
+                    </Link>
+                    <button value={key} onClick={this.handleLike}>Favorite!</button>
+                    </div>
             })}
           </div>
       </div>

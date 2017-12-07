@@ -19,7 +19,7 @@ import { addNewCollection } from './userBar/writeNewCollectionHelpers'
 import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch/dom';
 import { Search } from './helperElements/Search.jsx'
 import MessageFrame from './messaging/MessageFrame'
-
+import { addToFavCat } from './popularcategory/PopCatHelper.jsx'
 
 export default class App extends React.Component {
   constructor() {
@@ -38,7 +38,7 @@ export default class App extends React.Component {
     this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
     this.getPopularCategory = this.getPopularCategory.bind(this);
-
+    this.addToFavCat = addToFavCat.bind(this);
   }
 
   componentDidMount() {
@@ -102,7 +102,7 @@ export default class App extends React.Component {
                 <Route exact path='/' render={() =>
                   this.state.isOnAuthFrame
                   ? (<div />)
-                  : <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />
+                  : <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} addToFavCat={this.addToFavCat} />
                   }
                 />
                 <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
