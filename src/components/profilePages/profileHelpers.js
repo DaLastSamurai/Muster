@@ -5,7 +5,8 @@
 export const isStringAcceptable = (inputStr, requiredLength = 1) => {
   // takes in a string and returns a boolean true or false as to whether
   // the string is okay to write to the db. It also takes in an optional
-  // requiredLength arg. Set to 0 to not require a length. 
-  let invalid = /^[^ \\\/&%<>#()"']*$/
+  // requiredLength arg. Set to 0 to not require a length. Add to the 
+  // invalid as needed. I made it loose to allow most messages to work. 
+  let invalid = /^[^ \\\/<>]*$/
   return !!inputStr.match(invalid) && inputStr.length >= requiredLength
 }

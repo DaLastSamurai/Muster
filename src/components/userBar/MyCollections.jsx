@@ -7,6 +7,7 @@ import MyCollectionsList from './MyCollectionsList.jsx';
 import NewCollectionsInput from './NewCollectionsInput.jsx';
 import UserInfo from './UserInfo.jsx';
 import AddItems from '../addItems/addItems';
+import ChatRoomList from '../messaging/ChatRoomList'
 
 import { withRR4 } from 'react-sidenav';
 import { Link } from 'react-router-dom'
@@ -114,10 +115,17 @@ export default class MyCollections extends React.Component {
           <SearchBar search={(input) => { this.props.searchMyCollections(input) }} />
         </SideNav>
         <SideNav>
-        {(this.state.collectionList.length > 0) ? 
-          <MyCollectionsList deleteCollection={this.deleteCollection} 
-                            collectionList={this.state.collectionList} /> : <h5>add collection</h5>}
+        {(this.state.collectionList.length > 0) 
+          ? <MyCollectionsList 
+            deleteCollection={this.deleteCollection} 
+            collectionList={this.state.collectionList} 
+            /> 
+          : <h5>add collection</h5>}
         </SideNav>
+
+        <SideNav> 
+          <ChatRoomList /> 
+        </SideNav> 
       </div>
     )
   }
