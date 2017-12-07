@@ -13,6 +13,7 @@ export default class FavoriteCategories extends React.Component {
   }
 
   render() {
+    // THIS IS NOT CURRENTLY BEING USED
     return (
       <div>
       </div> 

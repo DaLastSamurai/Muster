@@ -10,6 +10,7 @@ import { SearchHits } from '../helperElements/Search.jsx'
 export default class UnprotectedNav extends React.Component {
   constructor() {
     super();
+
     this.state = {
 
     };
@@ -17,6 +18,9 @@ export default class UnprotectedNav extends React.Component {
   }
 
   componentDidMount() {
+
+
+    this.state = {}; 
 
   }
 
@@ -59,20 +63,7 @@ export default class UnprotectedNav extends React.Component {
 
             </div>
           </nav>
-          {/* use react router to only show one of our components at a time */}
-          {/*  */}
-          {/*
-            <Route exact path="/login"
-              render={() => <AuthFrame user={this.props.user} isSigningUp={false}/>}
-            />
-            <Route exact path="/a"
-              render={() => <div> You clicked a button without a Route!</div> }
-            />
-            <Route exact path="/b"
-              render={() => <div> You clicked a button without a Route!</div>}
-            />
-            <Route exact path='/popularcategory' render={() => <PopularCategoryList/>} />
-          */}
+
         </div>
     )
   }

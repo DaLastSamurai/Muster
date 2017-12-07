@@ -18,6 +18,8 @@ import { addNewCollection } from './userBar/writeNewCollectionHelpers'
 
 import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch/dom';
 import { Search } from './helperElements/Search.jsx'
+import MessageFrame from './messaging/MessageFrame'
+
 
 export default class App extends React.Component {
   constructor() {

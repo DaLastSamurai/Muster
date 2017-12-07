@@ -16,13 +16,8 @@ export default class ProtectedNav extends React.Component {
     this.state = {};
 
   }
-
-  componentDidMount() {
-
-  }
-
+  
   render() {
-    // console.log('this is the user', this.props.user.uid)
     return (
         <div>
           <nav className="navbar navbar-default">
@@ -61,19 +56,6 @@ export default class ProtectedNav extends React.Component {
 
             </div>
           </nav>
-          {/* use react router to only show one of our components at a time */}
-          {/* This takes the user back to the login page when they sign out
-              We may want to change this so that it redirects to the main page */}
-
-          {/* <Route exact path="/"
-            render={() => <AuthFrame />}
-          />
-          <Route exact path="/a"
-            render={() => <div> You clicked a button without a Route!</div> }
-          />
-          <Route exact path="/b"
-            render={() => <div> You clicked a button without a Route!</div>}
-          /> */}
         </div>
     )
   }
