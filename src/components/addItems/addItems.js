@@ -18,7 +18,7 @@ class AddItems extends React.Component {
       productIds: '',
       purchaseTime: '',
       sell: '',
-      uId: null,
+      uid: null,
       showDetailed: false,
       collectionList: [{id: null, name: 'loading collections...'}]
     };
@@ -65,7 +65,7 @@ class AddItems extends React.Component {
       productIds: this.state.productIds,
       purchaseTime: this.state.purchaseTime,
       sell: this.state.sell,
-      uId: currentUID
+      uid: currentUID
     };
     
 
@@ -86,16 +86,16 @@ class AddItems extends React.Component {
   componentDidMount() {
     let collectionRef = firebase.database().ref('/collection');
     collectionRef.on("value", (snapshot) => {
-      // console.log('snapshot: ',snapshot.val())
       let currentUID = firebase.auth().currentUser.uid;
-      console.log(currentUID)
+      // console.log(currentUID)
       let grabIdName = Object.keys(snapshot.val())
-        .map((k, i) => {
+      .map((k, i) => {
+        // console.log('snapshot: ',snapshot.val()[k])
           return { id: Object.keys(snapshot.val())[i], 
                   name: snapshot.val()[k].name, 
-                  uId: snapshot.val()[k].uId }})
-        .filter(collection => collection.uId);
-
+                  uid: snapshot.val()[k].uid }})
+        // .filter(collection => collection.uid.includes(currentUID));
+      console.log('grabIdName',grabIdName)
       this.setState({ collectionList: grabIdName });
 
       }, (error) => {console.error(error)}

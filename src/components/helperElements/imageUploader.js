@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import ImageUploader from 'react-firebase-image-uploader';
+import ImageRecog from './imageRecog';
 
 //component called in addItems
 
@@ -43,13 +44,16 @@ class ImageUpload extends Component {
     });
     // console.log('FILENAME:', filename);
     firebase.storage().ref('images').child(filename)
-      .getDownloadURL().then(imageURL => {
+      .getDownloadURL()
+      .then(imageURL => {
+
         this.setState({imageURL}, () => {
           this.props.setImageState(imageURL)
         })
-      }).catch(err => console.log(err));
-    // console.log('imageURL:', this.state.imageURL);
-
+        //Clarifai returns object of descriptions
+        ImageRecog(imageURL)
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
