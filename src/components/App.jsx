@@ -72,12 +72,12 @@ export default class App extends React.Component {
   }
 
   reloadPage() {
-    console.log("the reload page gets run")
+    // console.log("the reload page gets run")
     window.location.reload()
   }
 
   render() {
-    console.log('app',this.state.userId)
+    // console.log('app',this.state.userId)
     return (
       <Router>
         <div>

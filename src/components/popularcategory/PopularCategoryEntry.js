@@ -8,7 +8,7 @@ class PopularCategoryEntry extends React.Component {
     return( 
       <div className='popular-category' key={this.props.id}>
         <img src={this.props.category.pictureurl}/>
-        <h4>{this.props.category.name}</h4>
+        <h4>{this.props.id}</h4>
       </div>
     )
   }
