@@ -10,7 +10,10 @@ const app = new Clarifai.App({
 var ImageRecog = (imageUrl) => {
   console.log('ImageRecog Triggered!')
   app.models.predict(Clarifai.GENERAL_MODEL, imageUrl).then(
-    (res) => console.log('Clarifai Response:', JSON.stringify(res.outputs[0].data.concepts)),
+    (res) => {
+      var keywords = res.outputs[0].data.concepts.map(result => result.name)
+      console.log('Clarifai Response:', JSON.stringify(keywords))
+    },
     (err) => console.log('Clarifai Error:', err)
   );
 };
