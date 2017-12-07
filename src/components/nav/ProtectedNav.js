@@ -28,7 +28,7 @@ export default class ProtectedNav extends React.Component {
                 <li className="logo"><Logo />
                 </li>
 
-                <li className="/popularcategory">
+                <li className="popularcategory">
                   <Link to="/">
                     <LinkButton title='Home' clickFunction={() => {}}/>
                   </Link>
@@ -37,6 +37,12 @@ export default class ProtectedNav extends React.Component {
                 <li className="link-button">
                   <Link to={`/profile/${this.props.user.uid}`}>
                     <LinkButton title='Profile' clickFunction={() => {window.location.reload()}} />
+                  </Link>
+                </li>
+
+                <li className="manageinventory">
+                  <Link to='/manageinventory'>
+                    <LinkButton title='Manage Inventory' clickFunction={() => { }} />
                   </Link>
                 </li>
 

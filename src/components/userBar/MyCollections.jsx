@@ -2,6 +2,7 @@
 //show up on the left side and persist whenever user is logged in
 import React from 'react';
 import { firebaseAuth, rootRef, collection, category, item, users } from '../../../config/firebaseCredentials';
+import { addNewCollection } from './writeNewCollectionHelpers'
 import SearchBar from '../helperElements/SearchBar';
 import MyCollectionsList from './MyCollectionsList.jsx';
 import NewCollectionsInput from './NewCollectionsInput.jsx';
@@ -21,8 +22,9 @@ export default class MyCollections extends React.Component {
       collectionList: [],
     };
     this.getUserCollection = this.getUserCollection.bind(this);
-    this.toggleInpurForm = this.toggleInpurForm.bind(this);
+    this.handleAddCollection = this.handleAddCollection.bind(this);
     this.deleteCollection = this.deleteCollection.bind(this);
+    this.addNewCollection = addNewCollection.bind(this);
   }
 
   componentDidMount() {
@@ -32,7 +34,6 @@ export default class MyCollections extends React.Component {
   getUserCollection() {
     new Promise((resolve, reject) => {
       users.child(firebaseAuth().currentUser.uid).on('value',(snap) => {
-        console.log('running?')
         let array = [];
         for(var key in snap.val().collectionIds){
           if(key !== "0") {
@@ -50,14 +51,14 @@ export default class MyCollections extends React.Component {
             resolve([id, snap.val()])
           })
         })
-        arr.push(tempPromise)
+        arr.push(tempPromise);
       })
       return Promise.all(arr);
     })
     .then(data => {
       this.setState({collectionList: data})
     })
-    .catch(console.log('error: getUSerCollection function in App.jsx'))
+    // .catch(console.log('error: getUSerCollection function in Mycollections'))
   }
 
   deleteCollection(collectionId) {
@@ -79,14 +80,10 @@ export default class MyCollections extends React.Component {
       this.getUserCollection()
     )
   }
-  
-  toggleInpurForm() {
-    this.setState({showInputForm:!this.state.showInputForm})
-  }
 
-  // handleAddCollection() {
-  //   this.getUSerCollection()
-  // }
+  handleAddCollection() {
+    this.getUSerCollection()
+  }
 
   render() {
     return(
@@ -98,27 +95,26 @@ export default class MyCollections extends React.Component {
         </SideNav>
         <SideNav>
           <button type="button" className="btn btn-outline-secondary bg-primary" 
-            onClick={() => this.toggleInpurForm()}>
+            onClick={()=>{this.setState({showInputForm:!this.state.showInputForm})}}>
             New Collection
           </button>
             {this.state.showInputForm ? 
-              (<NewCollectionsInput 
-                  addNewCollection={this.props.addNewCollection} 
-                  getUserCollection={this.getUserCollection} 
-                  toggleInpurForm={this.toggleInpurForm} />) : (<div> </div>)}
+              (<NewCollectionsInput addNewCollection={this.addNewCollection} handleAddCollection={this.handleAddCollection} />) : 
+              (<div/>)}
         </SideNav>
-          <Link to={'/addItems/'}>
-            <button type="button" className="btn btn-outline-secondary bg-primary">Add Items</button>
-          </Link>
+        <Link to={'/addItems/'}>
+          <button type="button" className="btn btn-outline-secondary bg-primary">Add Items</button>
+        </Link>
         <SideNav>
-          <SearchBar search={(input) => { this.props.searchMyCollections(input) }} />
+          <SearchBar search={(input) => 
+            { this.props.searchMyCollections(input) }} />
         </SideNav>
         <SideNav>
-        {(this.state.collectionList.length > 0) ? 
-          <MyCollectionsList deleteCollection={this.deleteCollection} 
-                            collectionList={this.state.collectionList} /> : <h5>add collection</h5>}
+          {this.state.collectionList.length > 0 ? 
+            <MyCollectionsList deleteCollection={this.deleteCollection} collectionList={this.state.collectionList} /> : 
+            <h5>add collection</h5>}
         </SideNav>
       </div>
     )
   }
-} 
+}

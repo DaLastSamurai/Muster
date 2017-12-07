@@ -10,9 +10,6 @@ class PopularCategoryList extends React.Component {
   }
 
   componentDidMount() {
-    category.on('value', function(snap) {
-      console.log('allcategory', snap.val())
-    })
   }
 
   render() {
@@ -20,11 +17,11 @@ class PopularCategoryList extends React.Component {
       <div style={{display: 'inline-block'}} className="container-fluid">
           <h2>popular categories</h2>
           <div>
-            {Object.keys(this.props.popularCategoryList).map((key) => {
-              return<Link to={`/collections/:${key}`} key={key}>
+            {this.props.popularCategoryList.map((popularCategory) => {
+              return<Link to={`/collections/:${popularCategory[0]}`} key={popularCategory[0]}>
                       <PopularCategoryEntry
-                        category={this.props.popularCategoryList[key]} id={key} />
-                    </Link>;
+                        category={popularCategory[1]} id={popularCategory[0]} />
+                    </Link>
             })}
           </div>
       </div>
