@@ -1,16 +1,27 @@
-// This navbar will show up when the user is not logged in. 
+// This navbar will show up when the user is not logged in.
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
 import { firebaseAuth } from '../../../config/firebaseCredentials'
 import Logo from './Logo'
 import LinkButton from '../helperElements/LinkButton'
-import SearchBar from '../helperElements/SearchBar'
 import AuthFrame from '../authentication/AuthFrame'
+import { SearchHits } from '../helperElements/Search.jsx'
 
 export default class UnprotectedNav extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+
+    };
+
+  }
+
+  componentDidMount() {
+
+
     this.state = {}; 
+
   }
 
   /* THIS IS THE UNPROTECTED NAV, MEANING ALL BUTTONS AND ROUTES WILL BE VISIBLE
@@ -18,7 +29,7 @@ export default class UnprotectedNav extends React.Component {
   render() {
     return (
         <div>
-          <nav className="navbar navbar-default">     
+          <nav className="navbar navbar-default">
             <div className="container-fluid">
               <ul className="nav navbar-nav navbar-legt">
                 <li className="logo"><Logo />
@@ -41,14 +52,18 @@ export default class UnprotectedNav extends React.Component {
                 </li>
 
               </ul>
-              <ul className="nav navbar-nav">
+              <Link to="/searching">
+                <SearchHits />
+              </Link>
+              {/*<ul className="nav navbar-nav">
                 <li className="navbar-text navbar-center align-top search-bar">
                   <SearchBar search={(input) => {console.log(`you searched: ${input}, but this search function doesnt do shit`)}}/>
                 </li>
-              </ul>
+              </ul>*/}
 
             </div>
           </nav>
+
         </div>
     )
   }

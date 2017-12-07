@@ -4,8 +4,11 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 import { firebaseAuth } from '../../../config/firebaseCredentials'
 import Logo from './Logo'
 import LinkButton from '../helperElements/LinkButton'
-import SearchBar from '../helperElements/SearchBar'
+// import SearchBar from '../helperElements/SearchBar'
 import AuthFrame from '../authentication/AuthFrame'
+
+import {InstantSearch, SearchBox} from 'react-instantsearch/dom';
+import { SearchHits } from '../helperElements/Search.jsx'
 
 export default class ProtectedNav extends React.Component {
   constructor() {
@@ -42,11 +45,14 @@ export default class ProtectedNav extends React.Component {
                 </li>
 
               </ul>
-              <ul className="nav navbar-nav">
+              {/*<ul className="nav navbar-nav">
                 <li className="navbar-text navbar-center align-top search-bar">
                   <SearchBar search={(input) => {console.log(`you searched: ${input}, but this search function doesnt do shit`)}}/>
                 </li>
-              </ul>
+              </ul>*/}
+              <Link to="/searching">
+                <SearchHits/>
+              </Link>
 
             </div>
           </nav>
