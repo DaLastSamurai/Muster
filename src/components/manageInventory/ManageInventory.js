@@ -20,9 +20,42 @@ class ManageInventory extends React.Component {
     this.getItems(this.props.userId)
   }
 
-  getItems(id) {
-    console.log('getItem',id)
-    collection.child
+  getItems(userid) {
+    new Promise((resolve, reject) => {
+      users.child(userid).on('value',(snap) => {
+        let array = [];
+        for(var key in snap.val().collectionIds){
+          if(key !== "0") {
+            array.push(key)
+          }
+        }
+        return resolve(array)
+      })
+    })
+    .then((collectionIdArr) => {
+      var arr = [];
+      collectionIdArr.forEach(id => {
+        var tempPromise = new Promise((resolve, reject) => {
+          collection.child(id).on('value', (snap) => {
+            resolve([id, snap.val()])
+          })
+        })
+        arr.push(tempPromise);
+      })
+      return Promise.all(arr);
+    })
+    .then((data) => {
+      this.setState({collections: data})
+      return data
+    })
+    .then((collectionArr) => {
+      return collectionArr.map(eachCol => {
+        return eachCol[1];
+      })
+    })
+    .then((colObjs) => {
+      console.log('colobj',colObjs)
+    })
 
   }
 
