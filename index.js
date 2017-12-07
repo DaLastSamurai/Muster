@@ -19,7 +19,7 @@ const algolia = algoliasearch(
 const index = algolia.initIndex(process.env.ALGOLIA_INDEX_NAME);
 
 /////////////////////////////////////////////////////////////////////////////
-// Get allData from Firebase
+// One time get allData from Firebase
 // database.ref().once('value', allData => {
 //   // Build an array of all records to push to Algolia
 //   const records = [];
@@ -45,16 +45,16 @@ const index = algolia.initIndex(process.env.ALGOLIA_INDEX_NAME);
 //     });
 // });
 
-const rootRef = database.ref();
-rootRef.on('child_added', addOrUpdateIndexRecord);
-rootRef.on('child_changed', addOrUpdateIndexRecord);
-rootRef.on('child_removed', deleteIndexRecord);
+const items = database.ref('item/');
+items.on('child_added', addOrUpdateIndexRecord);
+items.on('child_changed', addOrUpdateIndexRecord);
+items.on('child_removed', deleteIndexRecord);
 
-function addOrUpdateIndexRecord(rootRef) {
+function addOrUpdateIndexRecord(items) {
   // Get Firebase object
-  const records = rootRef.val();
+  const records = items.val();
   // Specify Algolia's objectID using the Firebase object key
-  records.objectID = rootRef.key;
+  records.objectID = items.key;
   // Add or update object
   index
     .saveObject(records)
@@ -62,14 +62,14 @@ function addOrUpdateIndexRecord(rootRef) {
       console.log('Firebase object indexed in Algolia', records.objectID);
     })
     .catch(error => {
-      console.error('Error when indexing rootRef into Algolia', error);
+      console.error('Error when indexing items into Algolia', error);
       process.exit(1);
     });
 }
 
-function deleteIndexRecord(rootRef) {
+function deleteIndexRecord(items) {
   // Get Algolia's objectID from the Firebase object key
-  const objectID = rootRef.key;
+  const objectID = items.key;
   // Remove the object from Algolia
   index
     .deleteObject(objectID)
@@ -77,7 +77,7 @@ function deleteIndexRecord(rootRef) {
       console.log('Firebase object deleted from Algolia', objectID);
     })
     .catch(error => {
-      console.error('Error when deleting rootRef from Algolia', error);
+      console.error('Error when deleting items from Algolia', error);
       process.exit(1);
     });
 }

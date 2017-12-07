@@ -30,8 +30,8 @@ export default class App extends React.Component {
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
     this.addNewCollection = addNewCollection.bind(this);
-    this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this); 
-    this.reloadPage = this.reloadPage.bind(this); 
+    this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this);
+    this.reloadPage = this.reloadPage.bind(this);
     this.getPopularCategory = this.getPopularCategory.bind(this);
 
   }
@@ -49,13 +49,18 @@ export default class App extends React.Component {
     })
   }
 
-  setIsOnAuthFrame(isOnAuthFrame) { 
-    this.setState({isOnAuthFrame}) 
+  setIsOnAuthFrame(isOnAuthFrame) {
+    this.setState({isOnAuthFrame})
   }
 
   reloadPage() {
     console.log("the reload page gets run")
     window.location.reload()
+  }
+
+  passSearch() {
+    console.log('app is getting search results in helperElements/search');
+
   }
 
   render() {
@@ -76,22 +81,22 @@ export default class App extends React.Component {
            </div>
           )
           : (
-              <div> 
+              <div>
                 <UnprotectedNav setIsOnAuthFrame={this.setIsOnAuthFrame} />
                 <div>
-                  {this.state.isOnAuthFrame 
+                  {this.state.isOnAuthFrame
                     ? (<AuthFrame user={this.props.user} isSigningUp={false} />)
-                    : (<div /> 
+                    : (<div />
                     )
                   }
-                </div> 
+                </div>
               </div>
             )
           }
           <Switch>
               <Route exact path='/' render={() =>
-                this.state.isOnAuthFrame 
-                ? (<div />) 
+                this.state.isOnAuthFrame
+                ? (<div />)
                 : <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />
                 }
               />
@@ -99,6 +104,7 @@ export default class App extends React.Component {
               <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
               <Route exact path='/collections/:categoryId' component={CollectionList} />
               <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} />} />
+              <Route exact path='/searching' render={()=> <ReturnSearch/>}/>
           </Switch>
         </div>
       </Router>

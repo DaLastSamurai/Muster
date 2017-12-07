@@ -2,7 +2,7 @@
 //show up on the left side and persist whenever user is logged in
 import React from 'react';
 import { firebaseAuth, rootRef, collection, category, item, users } from '../../../config/firebaseCredentials';
-import SearchBar from '../helperElements/SearchBar';
+// import SearchBar from '../helperElements/SearchBar';
 import MyCollectionsList from './MyCollectionsList.jsx';
 import NewCollectionsInput from './NewCollectionsInput.jsx';
 import UserInfo from './UserInfo.jsx';
@@ -79,7 +79,7 @@ export default class MyCollections extends React.Component {
       this.getUserCollection()
     )
   }
-  
+
   toggleInpurForm() {
     this.setState({showInputForm:!this.state.showInputForm})
   }
@@ -97,28 +97,28 @@ export default class MyCollections extends React.Component {
           </Link>
         </SideNav>
         <SideNav>
-          <button type="button" className="btn btn-outline-secondary bg-primary" 
+          <button type="button" className="btn btn-outline-secondary bg-primary"
             onClick={() => this.toggleInpurForm()}>
             New Collection
           </button>
-            {this.state.showInputForm ? 
-              (<NewCollectionsInput 
-                  addNewCollection={this.props.addNewCollection} 
-                  getUserCollection={this.getUserCollection} 
+            {this.state.showInputForm ?
+              (<NewCollectionsInput
+                  addNewCollection={this.props.addNewCollection}
+                  getUserCollection={this.getUserCollection}
                   toggleInpurForm={this.toggleInpurForm} />) : (<div> </div>)}
         </SideNav>
           <Link to={'/addItems/'}>
             <button type="button" className="btn btn-outline-secondary bg-primary">Add Items</button>
           </Link>
         <SideNav>
-          <SearchBar search={(input) => { this.props.searchMyCollections(input) }} />
+          {/*<SearchBar search={(input) => { this.props.searchMyCollections(input) }} />*/}
         </SideNav>
         <SideNav>
-        {(this.state.collectionList.length > 0) ? 
-          <MyCollectionsList deleteCollection={this.deleteCollection} 
+        {(this.state.collectionList.length > 0) ?
+          <MyCollectionsList deleteCollection={this.deleteCollection}
                             collectionList={this.state.collectionList} /> : <h5>add collection</h5>}
         </SideNav>
       </div>
     )
   }
-} 
+}
