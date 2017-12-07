@@ -1,7 +1,6 @@
 import React from 'react';
 import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch/dom';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
-// import SearchList from './SearchList.jsx'
 
 function foundItem({hit}) {
   console.log('HITHITHIT',hit)
@@ -28,22 +27,9 @@ function passSearch () {
 export class SearchHits extends React.Component {
   constructor(props) {
     super(props);
-    // this.handleSearch.bind(this);
   }
-  this.handleSearch.bind(this);
-
-  passSearch() {
-    return (<Search/>)
-  }
-
-  handleSearch(
-    this.props.passSearch()
-  )
-
 
   render() {
-    // call props func and pass in <search>
-    this.handleSearch();
     return (
       <InstantSearch
       appId="9VH3I9OJWS"
@@ -51,7 +37,7 @@ export class SearchHits extends React.Component {
       indexName="item"
       >
         <SearchBox translations={{placeholder:'Search something'}} />
-
+        <Search />
       </InstantSearch>
     )
   }

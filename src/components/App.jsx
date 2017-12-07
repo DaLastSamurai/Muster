@@ -58,11 +58,6 @@ export default class App extends React.Component {
     window.location.reload()
   }
 
-  passSearch() {
-    console.log('app is getting search results in helperElements/search');
-
-  }
-
   render() {
     return (
       <Router>
@@ -104,7 +99,7 @@ export default class App extends React.Component {
               <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
               <Route exact path='/collections/:categoryId' component={CollectionList} />
               <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} />} />
-              <Route exact path='/searching' render={()=> <ReturnSearch/>}/>
+              <Route exact path='/searching' render={()=> <div/>}/>
           </Switch>
         </div>
       </Router>
