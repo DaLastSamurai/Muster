@@ -77,7 +77,7 @@ export default class App extends React.Component {
   }
 
   reloadPage() {
-    console.log("the reload page gets run")
+    // console.log("the reload page gets run")
     window.location.reload()
   }
 
@@ -129,6 +129,7 @@ export default class App extends React.Component {
                 <Route exact path='/collections/:categoryId' component={CollectionList} />
                 <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} />} />
                 <Route exact path='/searching' render={()=> <Search />}/>
+                <Route exact path='/manageinventory' render={() => <ManageInventory userId={this.state.userId}/>} />
             </Switch>
 
           </div>

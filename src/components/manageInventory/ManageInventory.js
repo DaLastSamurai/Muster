@@ -2,6 +2,10 @@ import React from 'react';
 import Dragula from 'react-dragula';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
+import InventoryCollection from './InventoryCollection';
+import InventoryLocation from './InventoryLocation';
+import InventoryCategory from './InventoryCategory';
 
 
 
@@ -12,17 +16,16 @@ class ManageInventory extends React.Component {
       categorys: {},
       collections: {},
       items: {},
-      sortBycategory: [],
-      sortBycollection: [],
-      sortBylocation: [],
+      sort: 'collection',
     }
     this.getCollection = this.getCollection.bind(this);
     this.getItem = this.getItem.bind(this);
-    // this.getCategory = this.getCategory.bind(this);
+    this.getCategory = this.getCategory.bind(this);
+    this.handleSortBy = this.handleSortBy.bind(this);
   }
  
   componentDidMount() {
-    this.props.userId ? this.getCollection(this.props.userId) : console.log('no props');
+    this.props.userId ? this.getCollection(this.props.userId) : null;
   }
 
   getCollection(userid) {
@@ -58,6 +61,7 @@ class ManageInventory extends React.Component {
       return tempObj;
     })
     .then((colObj) => {
+      console.log('from state collections', this.state.collections)
       var itemIdArr = [];
       Object.values(colObj).forEach((eachObj) => {
         if (eachObj.itemId) {
@@ -88,6 +92,7 @@ class ManageInventory extends React.Component {
       this.setState({items: tempObj})
     })
     .then(() => {
+      console.log('from state items', this.state.items)
     })
   }
 
@@ -109,90 +114,43 @@ class ManageInventory extends React.Component {
         tempObj[arr[0]] = arr[1]
       })
       this.setState({categorys: tempObj})
-      console.log('aaaaa', data)
+      console.log('get category from state', this.state.categorys)
     })
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if(this.props !== nextProps) {
-      if(this.props.userId !== null) {
-        this.getCollection(this.props.userId)
-      }
-      return true
-    }
-    return false
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if(this.props !== nextProps) {
+  //     if(this.props.userId !== null) {
+  //       this.getCollection(this.props.userId)
+  //     }
+  //     return true
+  //   }
+  //   return false
+  // }
+
+  handleSortBy(e) {
+    // console.log('sortt',(e.target.value))
+    this.setState({sort: e.target.value})
+    // console.log('from state', this.state.sort)
   }
-  
+
   render() {
+    // console.log('should rerender',this.state.collections)
     return(
       <div>
-        <select>
+        <select onChange={this.handleSortBy}>
           <option value="collection">by collection</option>
           <option value="location">by location</option>
           <option value="category">by category</option>
         </select>
+          {JSON.stringify(this.state.collections) !== "{}" && JSON.stringify(this.state.items) !== '{}' 
+          ? <InventoryCollection collectionList={this.state.collections} itemList={this.state.items} /> 
+          : 'loading'}
+          {/* <InventoryLocation />
+          <InventoryCategory /> */}
       </div>
     )
   }
 }
 
 export default ManageInventory;
-
-// import React from 'react';
-// import Dragula from 'react-dragula';
-// import firebase from 'firebase';
-// import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
-
-
-
-// class ManageInventory extends React.Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       dragNodes: [],
-//     }
-//     this.dragulaDecorator = this.dragulaDecorator.bind(this);
-//   }
- 
-//   componentDidMount() {
-//     var node = this.refs.node;
-//     var node2 = this.refs.node2;
-//     this.dragulaDecorator([node,node2])
-//   }
-
-//   dragulaDecorator(componentBackingInstance){
-//     if (componentBackingInstance) {
-//       let options = {};
-//       Dragula(componentBackingInstance, options).on('drag', function() {
-//         console.log('dragging')
-//       })
-//     }
-//   };
-  
-//   render() {
-//       return(
-//           <div>
-//             <div ref='node'>
-//               <div>Swap me around</div>
-//               <div>Swap her around</div>
-//               <div>Swap him around</div>
-//               <div>Swap them around</div>
-//               <div>Swap us around</div>
-//               <div>Swap things around</div>
-//               <div>Swap everything around</div>
-//             </div>
-//             <div ref='node2'>
-//               <div>me around</div>
-//               <div>her around</div>
-//               <div>him around</div>
-//               <div>them around</div>
-//               <div>us around</div>
-//               <div>things around</div>
-//               <div>everything around</div>
-//             </div>
-//           </div>
-//     )
-//   }
-// }
-
-// export default ManageInventory;
