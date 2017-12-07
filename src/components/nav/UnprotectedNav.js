@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 import { firebaseAuth } from '../../../config/firebaseCredentials'
 import Logo from './Logo'
 import LinkButton from '../helperElements/LinkButton'
-// import SearchBar from '../helperElements/SearchBar'
 import AuthFrame from '../authentication/AuthFrame'
+import { SearchHits } from '../helperElements/Search.jsx'
 
 export default class UnprotectedNav extends React.Component {
   constructor() {
@@ -48,6 +48,9 @@ export default class UnprotectedNav extends React.Component {
                 </li>
 
               </ul>
+              <Link to="/searching">
+                <SearchHits />
+              </Link>
               {/*<ul className="nav navbar-nav">
                 <li className="navbar-text navbar-center align-top search-bar">
                   <SearchBar search={(input) => {console.log(`you searched: ${input}, but this search function doesnt do shit`)}}/>

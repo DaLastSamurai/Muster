@@ -16,6 +16,9 @@ import UserInfo from './userBar/UserInfo.jsx'
 import AddItems from './addItems/addItems';
 import { addNewCollection } from './userBar/writeNewCollectionHelpers'
 
+import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch/dom';
+import { Search } from './helperElements/Search.jsx'
+
 export default class App extends React.Component {
   constructor() {
     super();
@@ -61,47 +64,54 @@ export default class App extends React.Component {
   render() {
     return (
       <Router>
-        <div>
-          {this.state.authed
-          ? (
-           <div>
-              <ProtectedNav user={this.state.user} />
-              <MyCollections
-                class="sidenav"
-                  user={this.state.user}
-                addNewCollection={this.addNewCollection}
-                searchMyCollections={this.searchMyCollections}
-                collectionList={this.state.collectionList}
-              />
-           </div>
-          )
-          : (
-              <div>
-                <UnprotectedNav setIsOnAuthFrame={this.setIsOnAuthFrame} />
-                <div>
-                  {this.state.isOnAuthFrame
-                    ? (<AuthFrame user={this.props.user} isSigningUp={false} />)
-                    : (<div />
-                    )
-                  }
-                </div>
-              </div>
+      <InstantSearch
+      appId="9VH3I9OJWS"
+      apiKey="289636a507e4853ef95cc5b7e4cac8d9"
+      indexName="item"
+      >
+          <div>
+            {this.state.authed
+            ? (
+             <div>
+                <ProtectedNav user={this.state.user} />
+                <MyCollections
+                  class="sidenav"
+                    user={this.state.user}
+                  addNewCollection={this.addNewCollection}
+                  searchMyCollections={this.searchMyCollections}
+                  collectionList={this.state.collectionList}
+                />
+             </div>
             )
-          }
-          <Switch>
-              <Route exact path='/' render={() =>
-                this.state.isOnAuthFrame
-                ? (<div />)
-                : <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />
-                }
-              />
-              <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
-              <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
-              <Route exact path='/collections/:categoryId' component={CollectionList} />
-              <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} />} />
-              <Route exact path='/searching' render={()=> <div/>}/>
-          </Switch>
-        </div>
+            : (
+                <div>
+                  <UnprotectedNav setIsOnAuthFrame={this.setIsOnAuthFrame} />
+                  <div>
+                    {this.state.isOnAuthFrame
+                      ? (<AuthFrame user={this.props.user} isSigningUp={false} />)
+                      : (<div />
+                      )
+                    }
+                  </div>
+                </div>
+              )
+            }
+            <Switch>
+                <Route exact path='/' render={() =>
+                  this.state.isOnAuthFrame
+                  ? (<div />)
+                  : <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} />
+                  }
+                />
+                <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
+                <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
+                <Route exact path='/collections/:categoryId' component={CollectionList} />
+                <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} />} />
+                <Route exact path='/searching' render={()=> <Search />}/>
+            </Switch>
+
+          </div>
+        </InstantSearch>
       </Router>
     )
   }
