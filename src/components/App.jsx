@@ -9,12 +9,12 @@ import MyCollections from './userBar/MyCollections.jsx'
 import AuthFrame from './authentication/AuthFrame';
 import CollectionList from './collections/CollectionList';
 import ItemList from './items/ItemList';
+import ManageInventory from './manageInventory/ManageInventory';
 
 import { checkAuthStatus } from './authentication/authenticationHelpers';
 import ProfileFrame from './profilePages/ProfileFrame';
 import UserInfo from './userBar/UserInfo.jsx'
 import AddItems from './addItems/addItems';
-import { addNewCollection } from './userBar/writeNewCollectionHelpers'
 
 import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch/dom';
 import { Search } from './helperElements/Search.jsx'
@@ -28,15 +28,14 @@ export default class App extends React.Component {
       authed: false,
       user: null,
       isOnAuthFrame: false,
-
       popularCategoryList: [],
-      collectionList:[/*['key', {not: 'working'}]*/],
+      collectionList:[],
+      userId: null,
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
-    this.addNewCollection = addNewCollection.bind(this);
-    this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this);
-    this.reloadPage = this.reloadPage.bind(this);
+    this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this); 
+    this.reloadPage = this.reloadPage.bind(this); 
     this.getPopularCategory = this.getPopularCategory.bind(this);
     this.addToFavCat = addToFavCat.bind(this);
   }
@@ -47,10 +46,29 @@ export default class App extends React.Component {
   }
 
   getPopularCategory() {
-    //need to update to get order by collectionId.length
-    //if no collectionid, done render???
-    category.on('value', snap => {
-      this.setState({popularCategoryList: snap.val()})
+    new Promise((resolve, reject) => {
+      category.on('value', (snap) => {
+        return resolve(snap.val())
+      })
+    })
+    .then((categoryObj) => {
+      var arr = [];
+      Object.keys(categoryObj).forEach((key) => {
+        var tempPromise = new Promise((resolve, reject) => {
+          let collectionCount = Object.keys(categoryObj[key]['collectionId']).length
+          resolve([key, categoryObj[key], collectionCount])
+        })
+        arr.push(tempPromise);
+      })
+      return Promise.all(arr);
+    })
+    .then((data) => {
+      return data.sort((a, b) => {
+        return b[2] - a[2];
+      })
+    })
+    .then(data => {
+      this.setState({popularCategoryList: data})
     })
   }
 
@@ -64,6 +82,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    console.log('app',this.state.userId)
     return (
       <Router>
       <InstantSearch

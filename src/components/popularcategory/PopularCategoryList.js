@@ -11,9 +11,6 @@ class PopularCategoryList extends React.Component {
   }
 
   componentDidMount() {
-    category.on('value', function(snap) {
-      // console.log('allcategory', snap.val())
-    })
   }
 
   handleLike(e) {

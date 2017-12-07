@@ -15,9 +15,8 @@ export default class MyCollectionsList extends React.Component {
     return (
       <div>
         {this.props.collectionList.map((collection) => {
-          // console.log('collection form',collection)
-          return <div>
-            <Link to={`/items/:${collection[0]}`} key={collection[0]}>
+          return <div key={collection[0]}>
+            <Link to={`/items/:${collection[0]}`} >
               <MyCollectionsEntry
                 categoryId={collection[1].categoryId}
                 name={collection[1].name}
