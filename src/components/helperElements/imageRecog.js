@@ -114,7 +114,7 @@ var ImageRecog = (imageUrl, cb = () => {}) => {
   // })
 
 
-}
+// }
 
 
 export default ImageRecog;
