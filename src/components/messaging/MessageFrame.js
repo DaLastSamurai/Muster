@@ -28,7 +28,7 @@ export default class MessageFrame extends React.Component {
     
     return  (
       <div style = {{'border-radius' : "1px"}}className = "MessageFrame">
-        This is where the messageFrame will go
+
         <MessageStatus chatRoomName = {this.props.chatRoomName}/> 
         <MessageInputField chatRoomName = {this.props.chatRoomName}/> 
         <MessageHistory chatRoomName = {this.props.chatRoomName} /> 
