@@ -16,7 +16,7 @@ import ProfileFrame from './profilePages/ProfileFrame';
 import UserInfo from './userBar/UserInfo.jsx'
 import AddItems from './addItems/addItems';
 
-import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch/dom';
+import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
 import { Search } from './helperElements/Search.jsx'
 import MessageFrame from './messaging/MessageFrame'
 import { addToFavCat, removeFromFavCat } from './popularcategory/PopCatHelper.jsx'

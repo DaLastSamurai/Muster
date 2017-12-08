@@ -18,6 +18,14 @@ const algolia = algoliasearch(
 );
 const index = algolia.initIndex(process.env.ALGOLIA_INDEX_NAME);
 
+index.setSettings({
+  searchableAttributes: [
+    'name',
+    'categories',
+    'users'
+  ]
+  // customRanking: ['desc(popularity)'],
+});
 /////////////////////////////////////////////////////////////////////////////
 // One time get allData from Firebase
 // database.ref('item/').once('value', items => {
