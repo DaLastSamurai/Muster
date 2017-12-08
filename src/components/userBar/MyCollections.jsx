@@ -33,7 +33,7 @@ export default class MyCollections extends React.Component {
   getUserCollection() {
     new Promise((resolve, reject) => {
       users.child(firebaseAuth().currentUser.uid).on('value',(snap) => {
-        console.log('running?')
+
         let array = [];
         for(var key in snap.val().collectionIds){
           if(key !== "0") {
