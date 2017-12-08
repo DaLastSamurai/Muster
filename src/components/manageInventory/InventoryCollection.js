@@ -19,10 +19,10 @@ class InventoryCollection extends React.Component {
   }
 
   dragulaDecorator(componentBackingInstance){
-    // let option = {
-    //   isContainer: function (el) {
-    //     return false; // only elements in drake.containers will be taken into account 
-    //   },
+    let option = {
+      isContainer: function (el) {
+        return false; // only elements in drake.containers will be taken into account 
+      },
     //   moves: function (el, source, handle, sibling) {
     //     return true; // elements are always draggable by default 
     //   },
@@ -32,16 +32,17 @@ class InventoryCollection extends React.Component {
     //   invalid: function (el, handle) {
     //     return false; // don't prevent any drags from initiating by default 
     //   }
-    //   // copy: false,                       // elements are moved by default, not copied 
+      // copy: false,                       // elements are moved by default, not copied 
     // // copySortSource: false,             // elements in copy-source containers can be reordered 
     // // revertOnSpill: true,              // spilling will put the element back where it was dragged from, if this is true 
     // // removeOnSpill: false,              // spilling will `.remove` the element, if this is true 
-    // // mirrorContainer: undefined    // set the element that gets mirror elements appended 
+    // mirrorContainer: document.body    // set the element that gets mirror elements appended 
     // // ignoreInputTextSelection: true     // allows users to select input text, see details below gu-transit  
-    // };
+    };
     if(componentBackingInstance) {
-      Dragula(componentBackingInstance)
+      let drake = Dragula(componentBackingInstance, option)
       .on('drop', function(el, target, source) {
+
         let clickedEl = el.className.slice(0, -11);
         let tempObj = {}
         tempObj[clickedEl] = clickedEl;
