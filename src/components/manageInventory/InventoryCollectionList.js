@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 import InventoryCollectionEntry from './InventoryCollectionEntry';
 
 class InventoryCollectionList extends React.Component {
@@ -13,9 +12,6 @@ class InventoryCollectionList extends React.Component {
   componentDidMount() {
     let node = this.refs.node;
     this.props.getNodes(node)
-    if($('.gu-mirror')) {
-      $('.gu-mirror').remove()
-    }
   }
   
   render() {
