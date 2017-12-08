@@ -18,12 +18,12 @@ class InventoryCollectionList extends React.Component {
     return(
       <div>
         <h4>{this.props.collection.name}</h4>
-        <div ref='node'>
+        <div className={`${this.props.collectionId}`} ref='node'>
         {this.props.collection.itemId 
         ? Object.keys(this.props.collection.itemId).map((id) => {
-          return <InventoryCollectionEntry itemInCol={this.props.itemList[id]} />
+          return <InventoryCollectionEntry key={id} itemId={id} itemInCol={this.props.itemList[id]} />
         })
-        : null }
+        : console.log(`no item in ${this.props.collection.name}`)}
         </div>
       </div>
     )
