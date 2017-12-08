@@ -11,8 +11,8 @@
     "local": "firebase serve",
     "deploy": "firebase deploy"
   },
-  "author": "Seamus Martin",
-  "license": "MIT",
+  "author": "Christine Ma, Seamus Martin, Sohee Lim, Yusaku Kasahara",
+  "license": "ISC",
   "dependencies": {
     "algoliasearch": "^3.24.7",
     "aws-sdk": "^2.165.0",
