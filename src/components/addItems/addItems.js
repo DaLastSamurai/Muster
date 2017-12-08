@@ -18,6 +18,8 @@ class AddItems extends React.Component {
       productIds: '',
       purchaseTime: '',
       sell: '',
+      keywords: [],
+      savedKeywords: [],
       uid: null,
       showDetailed: false,
       collectionList: [{id: null, name: 'loading collections...'}]
@@ -26,6 +28,7 @@ class AddItems extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setImageState = this.setImageState.bind(this);
+    this.setKeywordsState = this.setKeywordsState.bind(this);
   }
 
   getValidationState() {
@@ -39,6 +42,23 @@ class AddItems extends React.Component {
   setImageState(imageUrl) {
     this.state.imageUrl = imageUrl;
   };
+
+  setKeywordsState(keywords) {
+    this.state.keywords = keywords;
+    console.log('keywords in addItems', this.state.keywords)
+  };
+
+  addKeyword() {
+    this.setState({
+
+    })
+  }
+
+  removeKeyword() {
+    this.setState({
+
+    })
+  }
 
   handleChange(event) {
     event.preventDefault()
@@ -106,10 +126,22 @@ class AddItems extends React.Component {
   render() {
     // console.log('THIS.STATE: ', this.state)
     // console.log('THIS.PROPS: ', this.props)
-    console.log('THIS.STATE.COLLECTIONLIST: ', this.state.collectionList)
+    // console.log('THIS.STATE.COLLECTIONLIST: ', this.state.collectionList)
+    console.log('THIS.STATE.KEYWORDS: ', this.state.keywords);
+    console.log('THIS.STATE.SAVEDKEYWORDS: ', this.state.savedKeywords);
     return (
       <div className="col-sm-5 col-sm-offset-0">
-        <ImageUpload setImageState = {this.setImageState}/>
+        <ImageUpload setImageState={this.setImageState} setKeywordsState={this.setKeywordsState}/>
+
+        <div>
+          <label>Suggested Keywords</label>
+          <div>
+
+            <ul id="menu">
+              {this.state.keywords.map(keyword => <button class="c1">{keyword}</button>)}
+            </ul>
+          </div>
+        </div>
 
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div className="form-group">
@@ -131,6 +163,8 @@ class AddItems extends React.Component {
               </div>
             </div> */}
             
+
+
             <div>
               <label>Name</label>
               <div>

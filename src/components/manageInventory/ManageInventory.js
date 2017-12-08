@@ -1,13 +1,10 @@
 import React from 'react';
-import Dragula from 'react-dragula';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import InventoryCollection from './InventoryCollection';
 import InventoryLocation from './InventoryLocation';
 import InventoryCategory from './InventoryCategory';
-
-
 
 class ManageInventory extends React.Component {
   constructor(props) {
@@ -135,7 +132,6 @@ class ManageInventory extends React.Component {
   }
 
   render() {
-    // console.log('should rerender',this.state.collections)
     return(
       <div>
         <select onChange={this.handleSortBy}>
@@ -144,7 +140,7 @@ class ManageInventory extends React.Component {
           <option value="category">by category</option>
         </select>
           {JSON.stringify(this.state.collections) !== "{}" && JSON.stringify(this.state.items) !== '{}' 
-          ? <InventoryCollection collectionList={this.state.collections} itemList={this.state.items} /> 
+          ? <InventoryCollection collectionId={this.props.collectionId} collectionList={this.state.collections} itemList={this.state.items} /> 
           : 'loading'}
           {/* <InventoryLocation />
           <InventoryCategory /> */}

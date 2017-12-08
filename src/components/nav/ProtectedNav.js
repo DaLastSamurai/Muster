@@ -16,7 +16,7 @@ export default class ProtectedNav extends React.Component {
     this.state = {};
 
   }
-  
+
   render() {
     return (
         <div>

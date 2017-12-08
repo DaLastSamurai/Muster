@@ -1,33 +1,32 @@
 import React from 'react';
-import PopularCategoryEntry from './PopularCategoryEntry';
-import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
+import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
+
 import CollectionList from '../collections/CollectionList';
+import PopularCategoryEntry from './PopularCategoryEntry';
 
 class PopularCategoryList extends React.Component {
   constructor(props) {
       super(props)
-      this.handleLike = this.handleLike.bind(this);
-  }
-
-  componentDidMount() {
-  }
-
-  handleLike(e) {
-    this.props.addToFavCat(e.target.value);
+      this.state= {
+      }
   }
 
   render() {
+    console.log('popcatlist',this.props.popularCategoryList)
     return(
       <div style={{display: 'inline-block'}} className="container-fluid">
           <h2>popular categories</h2>
           <div>
             {Object.keys(this.props.popularCategoryList).map((key) => {
-              return<div><Link to={`/collections/:${key}`} key={key}>
+              return<div>
                       <PopularCategoryEntry
-                        category={this.props.popularCategoryList[key]} id={key} />
-                    </Link>
-                    <button value={key} onClick={this.handleLike}>Favorite!</button>
+                        category={this.props.popularCategoryList[key]}
+                        id={key}
+                        addToFavCat={this.props.addToFavCat}
+                        removeFromFavCat={this.props.removeFromFavCat}
+                        />
                     </div>
             })}
           </div>
@@ -35,5 +34,11 @@ class PopularCategoryList extends React.Component {
     )
   }
 }
-
+{/*<div>
+  {console.log('test', this.test())}
+    {this.checkIfFavCatContains(key)
+    ?(<button value={key} onClick={this.handleDislike}>Unlike</button>)
+    :(<button value={key} onClick={this.handleLike}>Like!</button>)
+  }
+</div>*/}
 export default PopularCategoryList;

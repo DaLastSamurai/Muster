@@ -13,7 +13,8 @@ class ImageUpload extends Component {
       image: '',
       isUploading: false,
       progress: 0,
-      imageURL: ''
+      imageURL: '',
+      keywords: []
     };
 
     this.handleUploadStart = this.handleUploadStart.bind(this);
@@ -29,7 +30,9 @@ class ImageUpload extends Component {
     });
   };
 
-  handleProgress(progress) { this.setState( { progress } ) };
+  handleProgress(progress) { 
+    this.setState( { progress } )
+  };
 
   handleUploadError(error) {
     this.setState( { isUploading: false } );
@@ -42,22 +45,22 @@ class ImageUpload extends Component {
       progress: 100,
       isUploading: false
     });
-    // console.log('FILENAME:', filename);
     firebase.storage().ref('images').child(filename)
       .getDownloadURL()
       .then(imageURL => {
-
         this.setState({imageURL}, () => {
           this.props.setImageState(imageURL)
         })
-        //Clarifai returns object of descriptions
-        ImageRecog(imageURL)
+        ImageRecog(imageURL, (keywords) => {
+          this.setState({ keywords }, () => {
+            this.props.setKeywordsState(keywords)
+          })
+        })
+        // AWSRekognize(imageURL)
       })
-      .catch(err => console.log(err));
   };
 
   render() {
-    // console.log('IMAGEUPLOADER.THIS.STATE:', this.state)
     return (
       <div>
         <form>

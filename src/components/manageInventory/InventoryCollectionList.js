@@ -11,23 +11,19 @@ class InventoryCollectionList extends React.Component {
  
   componentDidMount() {
     let node = this.refs.node;
-
     this.props.getNodes(node)
-    // console.log('adsfasdf......', node)
   }
   
   render() {
     return(
       <div>
         <h4>{this.props.collection.name}</h4>
-        <div ref='node'>
-        <p>node</p>
+        <div className={`${this.props.collectionId} dragulaContainer`} ref='node'>
         {this.props.collection.itemId 
         ? Object.keys(this.props.collection.itemId).map((id) => {
-          // console.log('itmeme', this.props.itemList[id])
-          return <InventoryCollectionEntry itemInCol={this.props.itemList[id]} />
+          return <InventoryCollectionEntry key={id} itemId={id} itemInCol={this.props.itemList[id]} />
         })
-        : console.log(`no item in ${this.props.collection.name}`) }
+        : console.log(`no item in${this.props.collection.name}`)/*<div className='additem'>add item!</div>*/}
         </div>
       </div>
     )

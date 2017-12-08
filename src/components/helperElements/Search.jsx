@@ -1,11 +1,12 @@
 import React from 'react';
-import { InstantSearch, SearchBox, Hits, Highlight } from 'react-instantsearch/dom';
+import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch/dom';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 
 function foundItem({hit}) {
-  console.log(hit)
+  console.log('HIT',hit)
   return(
-    <div>
+    <div style={{display:"grid"}}>
+      <img src={hit.imageUrl}/>
       {hit.name}
     </div>
   )
@@ -30,9 +31,9 @@ export class SearchHits extends React.Component {
 
   render() {
     return (
-        <SearchBox 
-          translations={{placeholder:'Search something'}} 
-        />
+      <header className="searchBar">
+        <SearchBox translations={{placeholder:'Search something'}} />
+      </header>
     )
   }
 }

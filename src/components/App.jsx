@@ -19,7 +19,7 @@ import AddItems from './addItems/addItems';
 import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch/dom';
 import { Search } from './helperElements/Search.jsx'
 import MessageFrame from './messaging/MessageFrame'
-import { addToFavCat } from './popularcategory/PopCatHelper.jsx'
+import { addToFavCat, removeFromFavCat } from './popularcategory/PopCatHelper.jsx'
 
 export default class App extends React.Component {
   constructor() {
@@ -34,10 +34,11 @@ export default class App extends React.Component {
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
-    this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this); 
-    this.reloadPage = this.reloadPage.bind(this); 
+    this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this);
+    this.reloadPage = this.reloadPage.bind(this);
     this.getPopularCategory = this.getPopularCategory.bind(this);
     this.addToFavCat = addToFavCat.bind(this);
+    this.removeFromFavCat = removeFromFavCat.bind(this);
   }
 
   componentDidMount() {
@@ -121,13 +122,13 @@ export default class App extends React.Component {
                 <Route exact path='/' render={() =>
                   this.state.isOnAuthFrame
                   ? (<div />)
-                  : <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} addToFavCat={this.addToFavCat} />
+                  : <PopularCategoryList popularCategoryList={this.state.popularCategoryList} addToFavCat={this.addToFavCat} removeFromFavCat={this.removeFromFavCat} />
                   }
                 />
                 <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
                 <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
                 <Route exact path='/collections/:categoryId' component={CollectionList} />
-                <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} />} />
+                <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} userId={this.state.userId} />} />
                 <Route exact path='/searching' render={()=> <Search />}/>
                 <Route exact path='/manageinventory' render={() => <ManageInventory userId={this.state.userId}/>} />
             </Switch>
