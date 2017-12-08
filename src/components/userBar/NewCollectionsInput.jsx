@@ -23,7 +23,7 @@ export default class NewCollectionsInput extends React.Component {
       this.props.addNewCollection(this.state.collectionName, this.state.category);
       this.setState({collectionName: 'collection', category: 'category'})
       this.props.getUserCollection();
-      this.props.toggleInpurForm();
+      this.props.toggleInputForm();
     }
   }
 
