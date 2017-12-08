@@ -25,6 +25,7 @@ export default class MyCollections extends React.Component {
     this.handleAddCollection = this.handleAddCollection.bind(this);
     this.deleteCollection = this.deleteCollection.bind(this);
     this.addNewCollection = addNewCollection.bind(this);
+    this.toggleInputForm = this.toggleInputForm.bind(this);
   }
 
   componentDidMount() {
@@ -82,7 +83,11 @@ export default class MyCollections extends React.Component {
   }
 
   handleAddCollection() {
-    this.getUSerCollection()
+    this.getUserCollection()
+  }
+
+  toggleInputForm() {
+    this.setState({showInputForm:!this.state.showInputForm})
   }
 
   render() {
@@ -95,11 +100,15 @@ export default class MyCollections extends React.Component {
         </SideNav>
         <SideNav>
           <button type="button" className="btn btn-outline-secondary bg-primary" 
-            onClick={()=>{this.setState({showInputForm:!this.state.showInputForm})}}>
+            onClick={()=>{this.toggleInputForm()}}>
             New Collection
           </button>
             {this.state.showInputForm ? 
-              (<NewCollectionsInput addNewCollection={this.addNewCollection} handleAddCollection={this.handleAddCollection} />) : 
+              (<NewCollectionsInput 
+                toggleInputForm={this.toggleInputForm}
+                getUserCollection={this.getUserCollection}
+                addNewCollection={this.addNewCollection} 
+                handleAddCollection={this.handleAddCollection} />) : 
               (<div/>)}
         </SideNav>
         <Link to={'/addItems/'}>
