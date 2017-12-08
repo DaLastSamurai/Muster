@@ -20,13 +20,13 @@ const index = algolia.initIndex(process.env.ALGOLIA_INDEX_NAME);
 
 /////////////////////////////////////////////////////////////////////////////
 // One time get allData from Firebase
-// database.ref().once('value', allData => {
+// database.ref('item/').once('value', items => {
 //   // Build an array of all records to push to Algolia
 //   const records = [];
-//   allData.forEach(allData => {
+//   items.forEach(items => {
 //     // get the key and data from the snapshot
-//     const childKey = allData.key;
-//     const childData = allData.val();
+//     const childKey = items.key;
+//     const childData = items.val();
 //     // We set the Algolia objectID as the Firebase .key
 //     childData.objectID = childKey;
 //     // Add object for indexing
@@ -37,24 +37,24 @@ const index = algolia.initIndex(process.env.ALGOLIA_INDEX_NAME);
 //   index
 //     .saveObjects(records)
 //     .then(() => {
-//       console.log('allData imported into Algolia');
+//       console.log('items imported into Algolia');
 //     })
 //     .catch(error => {
-//       console.error('Error when importing allData into Algolia', error);
+//       console.error('Error when importing items into Algolia', error);
 //       process.exit(1);
 //     });
 // });
 
-const rootRef = database.ref();
-rootRef.on('child_added', addOrUpdateIndexRecord);
-rootRef.on('child_changed', addOrUpdateIndexRecord);
-rootRef.on('child_removed', deleteIndexRecord);
+const items = database.ref('items/');
+items.on('child_added', addOrUpdateIndexRecord);
+items.on('child_changed', addOrUpdateIndexRecord);
+items.on('child_removed', deleteIndexRecord);
 
-function addOrUpdateIndexRecord(rootRef) {
+function addOrUpdateIndexRecord(items) {
   // Get Firebase object
-  const records = rootRef.val();
+  const records = items.val();
   // Specify Algolia's objectID using the Firebase object key
-  records.objectID = rootRef.key;
+  records.objectID = items.key;
   // Add or update object
   index
     .saveObject(records)
@@ -67,9 +67,9 @@ function addOrUpdateIndexRecord(rootRef) {
     });
 }
 
-function deleteIndexRecord(rootRef) {
+function deleteIndexRecord(items) {
   // Get Algolia's objectID from the Firebase object key
-  const objectID = rootRef.key;
+  const objectID = items.key;
   // Remove the object from Algolia
   index
     .deleteObject(objectID)

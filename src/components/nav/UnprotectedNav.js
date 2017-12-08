@@ -20,7 +20,7 @@ export default class UnprotectedNav extends React.Component {
   componentDidMount() {
 
 
-    this.state = {}; 
+    this.state = {};
 
   }
 
