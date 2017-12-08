@@ -19,31 +19,36 @@ class InventoryCollection extends React.Component {
   }
 
   dragulaDecorator(componentBackingInstance){
-    let option = {
-      isContainer: function (el) {
-        return false; // only elements in drake.containers will be taken into account 
-      },
-      moves: function (el, source, handle, sibling) {
-        return true; // elements are always draggable by default 
-      },
-      accepts: function (el, target, source, sibling) {
-        return true; // elements can be dropped in any of the `containers` by default 
-      },
-      invalid: function (el, handle) {
-        return false; // don't prevent any drags from initiating by default 
-      },
-      copy: false                       // elements are moved by default, not copied 
-    // copySortSource: false,             // elements in copy-source containers can be reordered 
-    // revertOnSpill: true,              // spilling will put the element back where it was dragged from, if this is true 
-    // removeOnSpill: false,              // spilling will `.remove` the element, if this is true 
-    // mirrorContainer: undefined    // set the element that gets mirror elements appended 
-    // ignoreInputTextSelection: true     // allows users to select input text, see details below 
-    };
+    // let option = {
+    //   isContainer: function (el) {
+    //     return false; // only elements in drake.containers will be taken into account 
+    //   },
+    //   moves: function (el, source, handle, sibling) {
+    //     return true; // elements are always draggable by default 
+    //   },
+    //   accepts: function (el, target, source, sibling) {
+    //     return true; // elements can be dropped in any of the `containers` by default 
+    //   },
+    //   invalid: function (el, handle) {
+    //     return false; // don't prevent any drags from initiating by default 
+    //   }
+    //   // copy: false,                       // elements are moved by default, not copied 
+    // // copySortSource: false,             // elements in copy-source containers can be reordered 
+    // // revertOnSpill: true,              // spilling will put the element back where it was dragged from, if this is true 
+    // // removeOnSpill: false,              // spilling will `.remove` the element, if this is true 
+    // // mirrorContainer: undefined    // set the element that gets mirror elements appended 
+    // // ignoreInputTextSelection: true     // allows users to select input text, see details below gu-transit  
+    // };
     if(componentBackingInstance) {
       Dragula(componentBackingInstance)
       .on('drop', function(el, target, source) {
-        console.log('drop', 'clicked el', el.className,'moved to ', target.className, 'coming from', source.className)
-        item.child(el.className).child
+        let clickedEl = el.className.slice(0, -11);
+        let tempObj = {}
+        tempObj[clickedEl] = clickedEl;
+        console.log('drop', 'clicked el', clickedEl,'moved to ', target.className, 'coming from', source.className)
+        item.child(clickedEl).child('collectionId').set(target.className)
+        collection.child(source.className).child('itemId').child(clickedEl).remove()
+        collection.child(target.className).child('itemId').update(tempObj)
       })
     }
     
@@ -56,7 +61,7 @@ class InventoryCollection extends React.Component {
   shouldComponentUpdate(nextState) {
     if(this.State !== nextState) {
       this.dragulaDecorator(this.state.node)
-      console.log('nodess', this.state.node)
+      // console.log('nodess', this.state.node)
       return true;
     }
     return false;
