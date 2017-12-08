@@ -54,10 +54,6 @@ export default class ProfileFrame extends React.Component {
     this.addUserDataToState(["bio", "username", "profilePhoto", "following", "followers", "favoriteCategories"])
   }
 
-  componentWillRecieveProps(props) {
-    console.log('these props are changing: ', props)
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     // console.log('this is the current state: ', this.state)
     // console.log('this is the next state: ', nextState)
@@ -75,7 +71,7 @@ export default class ProfileFrame extends React.Component {
     // precarious
     let currentUser = "none"
     if (firebase.auth().currentUser !== null) {
-      currentUser = firebase.auth().currentUser.uid
+      currentUser = firebaseAuth().currentUser.uid
     }
     this.setState({currentUser}, () => {
       if (currentUser === this.props.match.params.uid) {
@@ -125,11 +121,11 @@ export default class ProfileFrame extends React.Component {
 
 
   render() {
-    console.log(this.props.match.params.uid)
+    console.log('the uid from the url in profile frame', this.props.match.params.uid)
     // console.log('this is the props', this.props)
     // console.log('this is the state in profileFrame', this.state)
     // starts by checking to see if the state is loaded.
-    return Object.values(this.state).filter(el => el === null).length > 0
+    return Object.values(this.state).filter(el => el === null).length > 2
       ? (<div> loading... </div> ) 
       : (
         <div>
@@ -137,20 +133,18 @@ export default class ProfileFrame extends React.Component {
             {this.state.isUsersProfile 
               ? <div />
               : <FollowButton 
-                  currentUser={this.state.currentUser} 
-                  following={this.state.following}
                   profileUID={this.state.profileUID}
                 />
             }
           
             <FollowDropDown
               title = {"followers"}
-              users = {this.state.followers}
+              users = {this.state.followers || {}}
               updateProfileUID = {this.updateProfileUID}
             />
             <FollowDropDown
               title = {"following"}
-              users = {this.state.following}
+              users = {this.state.following || {}}
               updateProfileUID = {this.updateProfileUID}
             />
           </div>
