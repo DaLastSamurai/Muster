@@ -3,11 +3,11 @@ import firebase from 'firebase';
 import { firebaseAuth, users } from '../../../config/firebaseCredentials'
 import LinkButton from '../helperElements/LinkButton'
 import ChatRoomEntry from './ChatRoomEntry'
-import AddChatRoom from './AddChatRoom'
+import AddChatRoomFrame from './addRooms/AddChatRoomFrame'
 // THIS IS THE ENTRY POINT FOR THE CHAT FEATURE. 
 /*
 ChatRoomList (in userBar)
-  \___AddChatRoom (in userBar)
+  \___AddChatRoomFrame (in userBar) (see AddChatRoom for logic)
    \__ChatRoomEntry (in userBar)
         \__onClick___MessageFrame (pops out into currentPage?)
                         \___MessageStatus
@@ -48,7 +48,7 @@ export default class ChatRoomList extends React.Component {
   render() {
     return (
       <div> 
-        <AddChatRoom getUserChatRooms={this.getUserChatRooms} />
+        <AddChatRoomFrame userChatRoomData = {this.state.userChatRoomData} />
         
         {Object.keys(this.state.userChatRooms).length === 0 
         ? (<div> You don't have any chats yet </div>)

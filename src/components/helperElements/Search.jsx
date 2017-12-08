@@ -1,5 +1,5 @@
 import React from 'react';
-import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch/dom';
+import { InstantSearch, SearchBox, Hits, Highlight } from 'react-instantsearch/dom';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 
 function foundItem({hit}) {
@@ -30,7 +30,9 @@ export class SearchHits extends React.Component {
 
   render() {
     return (
-        <SearchBox translations={{placeholder:'Search something'}} />
+        <SearchBox 
+          translations={{placeholder:'Search something'}} 
+        />
     )
   }
 }
