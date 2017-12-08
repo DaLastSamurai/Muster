@@ -48,7 +48,7 @@ export default class MessageHistory extends React.Component {
         >
 
         {this.state.messageHistory
-          .reverse()
+          .sort((a, b) => b.createdAt - a.createdAt)
           .map(message => 
             <div> 
               {message['createdByUsername']} : {message['text']} 
