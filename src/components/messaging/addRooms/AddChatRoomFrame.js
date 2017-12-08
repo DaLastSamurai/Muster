@@ -41,17 +41,19 @@ export default class AddChatRoomFrame extends React.Component {
     // can only add users that are following them to the chat. 
     let uid = firebaseAuth().currentUser.uid
     let followersDbPath = `users/${uid}/profileInfo/followers`
-    firebase.database().ref(followersDbPath).on('value', followerUids => {
-      followerUids = followerUids.val()
-      followerUids.forEach(uid => {
-        firebase.database().ref(`users/${uid}/profileInfo/username`).on('value', 
-        (label) => {
-          let follwerObj = {}
-          follwerObj['label'] = label.val()
-          follwerObj['id'] = uid
-          let followerUsers = this.state.followerUsers.concat([follwerObj])
-          this.setState({followerUsers})
-        })
+    firebase.database().ref(followersDbPath).on('value', snap => {
+      let followerUids = snap.val() || {}
+      let followerUidArray = Object.keys(followerUids)
+      // console.log('these are the followerUidArray', followerUidArray)
+      followerUidArray.forEach(uid => {
+        firebase.database().ref(`users/${uid}/profileInfo/username`).on('value',
+          (label) => {
+            let follwerObj = {}
+            follwerObj['label'] = label.val()
+            follwerObj['id'] = uid
+            let followerUsers = this.state.followerUsers.concat([follwerObj])
+            this.setState({ followerUsers })
+          })
       })
     })
   }
