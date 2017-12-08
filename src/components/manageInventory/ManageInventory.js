@@ -6,8 +6,6 @@ import InventoryCollection from './InventoryCollection';
 import InventoryLocation from './InventoryLocation';
 import InventoryCategory from './InventoryCategory';
 
-
-
 class ManageInventory extends React.Component {
   constructor(props) {
     super(props)
