@@ -35,7 +35,7 @@ export default class MessageHistory extends React.Component {
 
 
   render() {
-    console.log('this is the state: ', this.state.messageHistory)
+    // console.log('this is the state: ', this.state.messageHistory)
     return  (
       <div>
         {/*=messageHistory=*/}

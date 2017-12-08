@@ -102,7 +102,7 @@ export default class AddChatRoomFrame extends React.Component {
     // console.log('this is the chatRoomMembers', this.state.chatRoomMembers)
     // console.log('this is the autocompleteText', this.state.autocompleteText)
     // console.log('this is the followerUsers in state', this.state.followerUsers)
-    console.log('this is the this.state.roomName',  this.state.roomName)
+    // console.log('this is the this.state.roomName',  this.state.roomName)
     return this.state.isAddingChatRoom 
     ? (
       <div>

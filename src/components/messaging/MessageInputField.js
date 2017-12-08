@@ -65,7 +65,7 @@ export default class MessageInputField extends React.Component {
       <div>
         {/*=messageInputField= */}
         <input
-          autocomplete="off"
+          autoComplete="off"
           className="form-control"
           name="location"
           type="text"
