@@ -1,13 +1,14 @@
 import React from 'react';
-import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch/dom';
+import {InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 
 function foundItem({hit}) {
   console.log('HIT',hit)
   return(
-    <div style={{display:"grid"}}>
+    <div style={{display:"grid"}} onClick={(e)=> console.log('this is what the click handler passes: ', hit)}>
       <img src={hit.imageUrl}/>
       {hit.name}
+      {hit.defaultsSet}
     </div>
   )
 }
@@ -18,6 +19,9 @@ function foundItem({hit}) {
     return (
       <div>
         <Hits hitComponent={foundItem} />
+        <div style={{float: "center"}}>
+        <Pagination showLast={true} />
+        </div>
       </div>
     )
   }

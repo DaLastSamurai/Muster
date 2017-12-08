@@ -56,9 +56,11 @@ export default class ProtectedNav extends React.Component {
                   <SearchBar search={(input) => {console.log(`you searched: ${input}, but this search function doesnt do shit`)}}/>
                 </li>
               </ul>*/}
+              <li style={{float: "right"}}>
               <Link to="/searching">
                 <SearchHits/>
               </Link>
+              </li>
 
             </div>
           </nav>

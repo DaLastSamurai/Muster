@@ -104,16 +104,16 @@ export default class MyCollections extends React.Component {
           </Link>
         </SideNav>
         <SideNav>
-          <button type="button" className="btn btn-outline-secondary bg-primary" 
+          <button type="button" className="btn btn-outline-secondary bg-primary"
             onClick={()=>{this.toggleInputForm()}}>
             New Collection
           </button>
-            {this.state.showInputForm ? 
-              (<NewCollectionsInput 
+            {this.state.showInputForm ?
+              (<NewCollectionsInput
                 toggleInputForm={this.toggleInputForm}
                 getUserCollection={this.getUserCollection}
-                addNewCollection={this.addNewCollection} 
-                handleAddCollection={this.handleAddCollection} />) : 
+                addNewCollection={this.addNewCollection}
+                handleAddCollection={this.handleAddCollection} />) :
               (<div/>)}
         </SideNav>
         <Link to={'/addItems/'}>
@@ -124,17 +124,17 @@ export default class MyCollections extends React.Component {
         </SideNav>
         <SideNav>
 
-        {(this.state.collectionList.length > 0) 
-          ? <MyCollectionsList 
-            deleteCollection={this.deleteCollection} 
-            collectionList={this.state.collectionList} 
-            /> 
+        {(this.state.collectionList.length > 0)
+          ? <MyCollectionsList
+            deleteCollection={this.deleteCollection}
+            collectionList={this.state.collectionList}
+            />
           : <h5>add collection</h5>}
         </SideNav>
 
-        <SideNav> 
-          <ChatRoomList /> 
-        </SideNav> 
+        <SideNav>
+          <ChatRoomList />
+        </SideNav>
       </div>
     )
   }
