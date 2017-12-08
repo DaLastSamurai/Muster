@@ -121,13 +121,13 @@ export default class App extends React.Component {
                 <Route exact path='/' render={() =>
                   this.state.isOnAuthFrame
                   ? (<div />)
-                  : <PopularCategoryList popularCategoryList={(this.state.popularCategoryList)} addToFavCat={this.addToFavCat} />
+                  : <PopularCategoryList popularCategoryList={this.state.popularCategoryList} addToFavCat={this.addToFavCat} />
                   }
                 />
                 <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
                 <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
                 <Route exact path='/collections/:categoryId' component={CollectionList} />
-                <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} />} />
+                <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} userId={this.state.userId} />} />
                 <Route exact path='/searching' render={()=> <Search />}/>
                 <Route exact path='/manageinventory' render={() => <ManageInventory userId={this.state.userId}/>} />
             </Switch>

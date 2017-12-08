@@ -5,7 +5,6 @@ class PopularCategoryEntry extends React.Component {
     super(props)
   }
   render() {
-    console.log('popcat id',this.props.category)
     return(
       <div className='popular-category' key={this.props.id}>
         <img src={this.props.category[1].pictureurl}/>
