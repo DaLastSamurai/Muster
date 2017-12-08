@@ -94,7 +94,7 @@ class AddItems extends React.Component {
           return { id: Object.keys(snapshot.val())[i], 
                   name: snapshot.val()[k].name, 
                   uid: snapshot.val()[k].uid }})
-        // .filter(collection => collection.uid.includes(currentUID));
+        .filter(collection => collection.uid.includes(currentUID));
       console.log('grabIdName',grabIdName)
       this.setState({ collectionList: grabIdName });
 
