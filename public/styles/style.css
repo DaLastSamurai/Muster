@@ -61,3 +61,14 @@ img {
 .profilePhoto {
 
 }
+
+.gu-mirror {
+  display: none;
+}
+
+.additem {
+  /* display: none; */
+}
+.dragulaContainer {
+  min-height: 10px;
+}
