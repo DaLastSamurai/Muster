@@ -142,7 +142,7 @@ class ManageInventory extends React.Component {
           <option value="category">by category</option>
         </select>
           {JSON.stringify(this.state.collections) !== "{}" && JSON.stringify(this.state.items) !== '{}' 
-          ? <InventoryCollection collectionList={this.state.collections} itemList={this.state.items} /> 
+          ? <InventoryCollection collectionId={this.props.collectionId} collectionList={this.state.collections} itemList={this.state.items} /> 
           : 'loading'}
           {/* <InventoryLocation />
           <InventoryCategory /> */}
