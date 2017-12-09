@@ -14,7 +14,7 @@ var ImageRecog = (imageUrl, cb = () => {}) => {
   app.models.predict(Clarifai.GENERAL_MODEL, imageUrl).then(
     (res) => {
       var keywords = res.outputs[0].data.concepts.map(result => result.name)
-      console.log('Clarifai Response:', JSON.stringify(keywords))
+      // console.log('Clarifai Response:', JSON.stringify(keywords))
       // this.setState({
       //   keywords: keywords
       // })

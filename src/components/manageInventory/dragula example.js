@@ -24,7 +24,7 @@ class ManageInventory extends React.Component {
     if (componentBackingInstance) {
       let options = {};
       Dragula(componentBackingInstance, options).on('drag', function() {
-        console.log('dragging')
+        // console.log('dragging')
       })
     }
   };
