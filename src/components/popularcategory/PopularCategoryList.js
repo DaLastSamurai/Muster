@@ -20,18 +20,19 @@ export default class PopularCategoryList extends React.Component {
   }
 
   render() {
-    console.log('these are the props in PopularCategoryList',this.props)
+    // console.log('these are the props in PopularCategoryList',this.props)
     return(
       <div style={{display: 'inline-block'}} className="container-fluid">
         <h2>Popular Categories</h2>
         <div>
           {Object.keys(this.props.popularCategoryList)
-            .map((key) => {
+            .map((id) => {
               return (
                 <div>
                   <PopularCategoryEntry
-                    category={this.props.popularCategoryList[key]}
-                    id={key}
+                    category={this.props.popularCategoryList[id]}
+                    id={id}
+                    key={id}
                   />
                 </div>
               )
@@ -42,10 +43,3 @@ export default class PopularCategoryList extends React.Component {
     )
   }
 }
-{/*<div>
-  {console.log('test', this.test())}
-    {this.checkIfFavCatContains(key)
-    ?(<button value={key} onClick={this.handleDislike}>Unlike</button>)
-    :(<button value={key} onClick={this.handleLike}>Like!</button>)
-  }
-</div>*/}
