@@ -12,13 +12,15 @@ import AuthFrame from './authentication/AuthFrame';
 import CollectionList from './collections/CollectionList';
 import ItemList from './items/ItemList';
 import ManageInventory from './manageInventory/ManageInventory';
-import MessageFrame from './messaging/MessageFrame';
-import AddItems from './addItems/addItems';
-import UserInfo from './userBar/UserInfo.jsx';
 import ProfileFrame from './profilePages/ProfileFrame';
-import { Search } from './helperElements/Search.jsx';
+import UserInfo from './userBar/UserInfo.jsx'
+import AddItems from './addItems/addItems';
+import MessageFrame from './messaging/MessageFrame'
 //helper
 import { checkAuthStatus } from './authentication/authenticationHelpers';
+import { Search } from './helperElements/Search.jsx'
+
+
 
 export default class App extends React.Component {
   constructor() {
