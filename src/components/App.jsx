@@ -76,7 +76,6 @@ export default class App extends React.Component {
   reloadPage() { window.location.reload() }
 
   render() {
-    console.log('this is the this.state.popularCategoryList', this.state.popularCategoryList)
     return (
       <Router>
         <InstantSearch

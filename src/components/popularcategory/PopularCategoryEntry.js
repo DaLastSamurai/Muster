@@ -58,10 +58,10 @@ export default class PopularCategoryEntry extends React.Component {
   }
   
   render() {
+    // add a carousel to these with images from the collections. 
     return(
-      <div className='popular-category' key={this.props.id}>
+      <div className='popular-category'>
       <Link to={`/collections/:${this.props.category[0]}`}>
-        <img src={this.props.category[1].pictureurl}/>
         <h4>{this.props.category[0]}</h4>
         </Link>
         <div>
