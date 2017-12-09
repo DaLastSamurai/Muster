@@ -28,11 +28,10 @@ export default class PopularCategoryList extends React.Component {
           {Object.keys(this.props.popularCategoryList)
             .map((id) => {
               return (
-                <div>
+                <div key={id}>
                   <PopularCategoryEntry
                     category={this.props.popularCategoryList[id]}
                     id={id}
-                    key={id}
                   />
                 </div>
               )
