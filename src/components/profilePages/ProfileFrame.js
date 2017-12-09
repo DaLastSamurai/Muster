@@ -121,7 +121,7 @@ export default class ProfileFrame extends React.Component {
 
 
   render() {
-    console.log('the uid from the url in profile frame', this.props.match.params.uid)
+    // console.log('the uid from the url in profile frame', this.props.match.params.uid)
     // console.log('this is the props', this.props)
     // console.log('this is the state in profileFrame', this.state)
     // starts by checking to see if the state is loaded.

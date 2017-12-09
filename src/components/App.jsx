@@ -19,7 +19,7 @@ import AddItems from './addItems/addItems';
 import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
 import { Search } from './helperElements/Search.jsx'
 import MessageFrame from './messaging/MessageFrame'
-import { addToFavCat, removeFromFavCat } from './popularcategory/PopCatHelper.jsx'
+
 
 export default class App extends React.Component {
   constructor() {
@@ -37,8 +37,6 @@ export default class App extends React.Component {
     this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
     this.getPopularCategory = this.getPopularCategory.bind(this);
-    this.addToFavCat = addToFavCat.bind(this);
-    this.removeFromFavCat = removeFromFavCat.bind(this);
   }
 
   componentDidMount() {
@@ -73,67 +71,62 @@ export default class App extends React.Component {
     })
   }
 
-  setIsOnAuthFrame(isOnAuthFrame) {
-    this.setState({isOnAuthFrame})
-  }
+  setIsOnAuthFrame(isOnAuthFrame) { this.setState({isOnAuthFrame}) }
 
-  reloadPage() {
-    // console.log("the reload page gets run")
-    window.location.reload()
-  }
+  reloadPage() { window.location.reload() }
 
   render() {
-    console.log('app',this.state.userId)
+    console.log('this is the this.state.popularCategoryList', this.state.popularCategoryList)
     return (
       <Router>
-      <InstantSearch
-      appId="9VH3I9OJWS"
-      apiKey="289636a507e4853ef95cc5b7e4cac8d9"
-      indexName="item"
-      >
-          <div>
-            {this.state.authed
-            ? (
-             <div>
-                <ProtectedNav user={this.state.user} />
-                <MyCollections
-                  class="sidenav"
-                    user={this.state.user}
-                  addNewCollection={this.addNewCollection}
-                  searchMyCollections={this.searchMyCollections}
-                  collectionList={this.state.collectionList}
-                />
-             </div>
-            )
-            : (
+        <InstantSearch
+        appId="9VH3I9OJWS"
+        apiKey="289636a507e4853ef95cc5b7e4cac8d9"
+        indexName="item"
+        >
+        <div>
+          {this.state.authed
+          ? (
+            <div>
+              <ProtectedNav user={this.state.user} />
+              <MyCollections
+                class="sidenav"
+                user={this.state.user}
+                addNewCollection={this.addNewCollection}
+                searchMyCollections={this.searchMyCollections}
+                collectionList={this.state.collectionList}
+              />
+            </div>
+          )
+          : (
+              <div>
+                <UnprotectedNav setIsOnAuthFrame={this.setIsOnAuthFrame} />
                 <div>
-                  <UnprotectedNav setIsOnAuthFrame={this.setIsOnAuthFrame} />
-                  <div>
-                    {this.state.isOnAuthFrame
-                      ? (<AuthFrame user={this.props.user} isSigningUp={false} />)
-                      : (<div />
-                      )
-                    }
-                  </div>
-                </div>
-              )
-            }
-            <Switch>
-                <Route exact path='/' render={() =>
-                  this.state.isOnAuthFrame
-                  ? (<div />)
-                  : <PopularCategoryList popularCategoryList={this.state.popularCategoryList} addToFavCat={this.addToFavCat} removeFromFavCat={this.removeFromFavCat} />
+                  {this.state.isOnAuthFrame
+                    ? (<AuthFrame user={this.props.user} isSigningUp={false} />)
+                    : (<div />
+                    )
                   }
-                />
-                <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
-                <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
-                <Route exact path='/collections/:categoryId' component={CollectionList} />
-                <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} userId={this.state.userId} />} />
-                <Route exact path='/searching' render={()=> <Search />}/>
-                <Route exact path='/manageinventory' render={() => <ManageInventory userId={this.state.userId}/>} />
-            </Switch>
+                </div>
+              </div>
+            )
+          }
+          <Switch>
+            <Route exact path='/' render={() =>
+              this.state.isOnAuthFrame
+              ? (<div />)
+              : <PopularCategoryList popularCategoryList={this.state.popularCategoryList} />
+              }
+            />
+            <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
+            <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
+            <Route exact path='/collections/:categoryId' component={CollectionList} />
+            <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} userId={this.state.userId} />} />
+            <Route exact path='/searching' render={()=> <Search />}/>
+            <Route exact path='/manageinventory' render={() => <ManageInventory userId={this.state.userId}/>} />
+          </Switch>
 
-          </div>
+        </div>
         </InstantSearch>
       </Router>
     )
