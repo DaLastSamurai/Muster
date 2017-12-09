@@ -19,6 +19,7 @@ class AddItems extends React.Component {
       purchaseTime: '',
       sell: '',
       keywords: [],
+      customeKeyword: '',
       savedKeywords: [],
       uid: null,
       showDetailed: false,
@@ -29,36 +30,42 @@ class AddItems extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setImageState = this.setImageState.bind(this);
     this.setKeywordsState = this.setKeywordsState.bind(this);
-  }
-
-  getValidationState() {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
-    return null;
+    this.addRemoveKeyword = this.addRemoveKeyword.bind(this);
+    this.addCustomeKeyword = this.addCustomeKeyword.bind(this);
   };
 
   setImageState(imageUrl) {
+    // this.setState({ imageUrl });
     this.state.imageUrl = imageUrl;
   };
 
   setKeywordsState(keywords) {
-    this.state.keywords = keywords;
-    console.log('keywords in addItems', this.state.keywords)
+    this.setState({ keywords });
   };
 
-  addKeyword() {
-    this.setState({
+  // getValidationState() {
+  //   const length = this.state.value.length;
+  //   if (length > 10) return 'success';
+  //   else if (length > 5) return 'warning';
+  //   else if (length > 0) return 'error';
+  //   return null;
+  // };
 
-    })
-  }
+  addRemoveKeyword(keyword) {
+    let savedKeywords = this.state.savedKeywords;
+    if (savedKeywords.includes(keyword)) {
+      let index = savedKeywords.indexOf(keyword);
+      if (index >= 0) { savedKeywords.splice(index, 1)};
+    } else {
+      savedKeywords = savedKeywords.concat(keyword);
+    }
+    this.setState({ savedKeywords });
+    this.setState({ customKeyword:'' })
+  };
 
-  removeKeyword() {
-    this.setState({
-
-    })
-  }
+  addCustomeKeyword(keyword){
+    this.addRemoveKeyword(keyword);
+  };
 
   handleChange(event) {
     event.preventDefault()
@@ -84,19 +91,17 @@ class AddItems extends React.Component {
       price: this.state.price,
       productIds: this.state.productIds,
       purchaseTime: this.state.purchaseTime,
+      savedKeywords: this.state.savedKeywords,
       sell: this.state.sell,
       uid: currentUID
     };
     
-
-    //creates a new key for item
     let newPostKey = firebase.database().ref('/item').push().key;
-    console.log('newPostKey:', newPostKey)
 
-    //simultaneously updates item and adds the item into collection's itemIds
     let updates = {};
     updates['/item/' + newPostKey] = postData;
-    updates['/collection/' + this.state.collectionId + '/itemId/' + newPostKey] = newPostKey;
+    updates['/collection/' + this.state.collectionId + 
+            '/itemId/' + newPostKey] = newPostKey;
 
     return firebase.database().ref().update(updates);
 
@@ -105,65 +110,72 @@ class AddItems extends React.Component {
 
   componentDidMount() {
     let collectionRef = firebase.database().ref('/collection');
+
     collectionRef.on("value", (snapshot) => {
       let currentUID = firebase.auth().currentUser.uid;
-      // console.log(currentUID)
-      let grabIdName = Object.keys(snapshot.val())
-      .map((k, i) => {
-        // console.log('snapshot: ',snapshot.val()[k])
+
+      let grabIdName = Object.keys(snapshot.val()).map((k, i) => {
           return { id: Object.keys(snapshot.val())[i], 
                   name: snapshot.val()[k].name, 
                   uid: snapshot.val()[k].uid }})
-        // .filter(collection => collection.uid.includes(currentUID));
-      console.log('grabIdName',grabIdName)
-      this.setState({ collectionList: grabIdName });
+        .filter(collection => collection.uid.includes(currentUID));
+
+      this.setState({ 
+        collectionList: grabIdName 
+      });
 
       }, (error) => {console.error(error)}
     );
-
   }
  
   render() {
-    // console.log('THIS.STATE: ', this.state)
-    // console.log('THIS.PROPS: ', this.props)
-    // console.log('THIS.STATE.COLLECTIONLIST: ', this.state.collectionList)
-    console.log('THIS.STATE.KEYWORDS: ', this.state.keywords);
-    console.log('THIS.STATE.SAVEDKEYWORDS: ', this.state.savedKeywords);
     return (
       <div className="col-sm-5 col-sm-offset-0">
-        <ImageUpload setImageState={this.setImageState} setKeywordsState={this.setKeywordsState}/>
-
         <div>
-          <label>Suggested Keywords</label>
+          <ImageUpload 
+            setImageState={this.setImageState} 
+            setKeywordsState={this.setKeywordsState}
+          />
+          
           <div>
-
-            <ul id="menu">
-              {this.state.keywords.map(keyword => <button class="c1">{keyword}</button>)}
-            </ul>
+            <label>Suggested Keywords</label>
+            <div>
+              <ul id="menu">
+                {this.state.keywords.map(keyword =>
+                  <button class="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{'+ ' + keyword}</button>)}
+              </ul>
+            </div>
           </div>
+
+          <div>
+            <label>Saved Keywords</label>
+            <div>
+              <ul id="menu">
+                {this.state.savedKeywords.map(keyword =>
+                  <button class="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{keyword + '  ̽'}</button>)}
+              </ul>
+
+              <input
+                className="form-control"
+                name="customKeyword"
+                component="input"
+                type="text"
+                placeholder="add a keyword"
+                value={this.state.customKeyword}
+                onChange={this.handleChange}
+                required
+              />
+
+              <button onClick={() => { this.addRemoveKeyword(this.state.customKeyword) }}>+</button>
+
+            </div>
+          </div>
+
+
         </div>
 
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div className="form-group">
-
-
-            {/* <div>
-              <label>Image URL</label>
-              <div>
-                <input
-                  className="form-control"
-                  name="imageUrl"
-                  component="input"
-                  type="text"
-                  placeholder="http://"
-                  value={this.state.imageUrl}
-                  onChange={this.handleChange}
-                  required
-                />
-              </div>
-            </div> */}
-            
-
 
             <div>
               <label>Name</label>
@@ -180,7 +192,6 @@ class AddItems extends React.Component {
                 />
               </div>
             </div>
-
 
             <div>
               <label>Collection</label>
@@ -311,8 +322,8 @@ class AddItems extends React.Component {
 
             <div>
               <input type="submit" value="Submit" />
+
               {this.state.showDetailed ? 
-                
                 (<a onClick={() => { 
                   this.setState({ 
                     showDetailed:  !this.state.showDetailed 
@@ -322,12 +333,11 @@ class AddItems extends React.Component {
                   this.setState({
                     showDetailed: !this.state.showDetailed 
                 }) }}>Show Detailed</a>)
-              
               }
+
             </div>
           </div>
         </form>
-
       </div>
     )
   }
