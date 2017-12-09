@@ -6,30 +6,38 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 import CollectionList from '../collections/CollectionList';
 import PopularCategoryEntry from './PopularCategoryEntry';
 
-class PopularCategoryList extends React.Component {
+// PopularCategoryList sends props to 
+  //PopularCategoryEntry
+// PopularCategoryList recieves props from
+  // App
+
+export default class PopularCategoryList extends React.Component {
   constructor(props) {
-      super(props)
-      this.state= {
-      }
+    super(props)
+    this.state= {
+    
+    }
   }
 
   render() {
-    console.log('popcatlist',this.props.popularCategoryList)
+    console.log('these are the props in PopularCategoryList',this.props)
     return(
       <div style={{display: 'inline-block'}} className="container-fluid">
-          <h2>popular categories</h2>
-          <div>
-            {Object.keys(this.props.popularCategoryList).map((key) => {
-              return<div>
-                      <PopularCategoryEntry
-                        category={this.props.popularCategoryList[key]}
-                        id={key}
-                        addToFavCat={this.props.addToFavCat}
-                        removeFromFavCat={this.props.removeFromFavCat}
-                        />
-                    </div>
-            })}
-          </div>
+        <h2>Popular Categories</h2>
+        <div>
+          {Object.keys(this.props.popularCategoryList)
+            .map((key) => {
+              return (
+                <div>
+                  <PopularCategoryEntry
+                    category={this.props.popularCategoryList[key]}
+                    id={key}
+                  />
+                </div>
+              )
+            })
+          }
+        </div>
       </div>
     )
   }
@@ -41,4 +49,3 @@ class PopularCategoryList extends React.Component {
     :(<button value={key} onClick={this.handleLike}>Like!</button>)
   }
 </div>*/}
-export default PopularCategoryList;
