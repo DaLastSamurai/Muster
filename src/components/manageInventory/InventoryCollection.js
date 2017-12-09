@@ -4,6 +4,7 @@ import Dragula from 'react-dragula';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import InventoryCollectionList from './InventoryCollectionList';
+import { checkAuthStatus } from '../authentication/authenticationHelpers';
 
 class InventoryCollection extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class InventoryCollection extends React.Component {
     let option = {
       isContainer: function (el) {
         return false; // only elements in drake.containers will be taken into account 
-      },
+      }
     //   moves: function (el, source, handle, sibling) {
     //     return true; // elements are always draggable by default 
     //   },
@@ -40,16 +41,27 @@ class InventoryCollection extends React.Component {
     // // ignoreInputTextSelection: true     // allows users to select input text, see details below gu-transit  
     };
     if(componentBackingInstance) {
-      let drake = Dragula(componentBackingInstance, option)
+      let drake = Dragula(componentBackingInstance)
       .on('drop', function(el, target, source) {
-
         let clickedEl = el.className.slice(0, -11);
+        let targetId = target.className.slice(0, -17);
+        let sourceId = source.className.slice(0, -17);
         let tempObj = {}
         tempObj[clickedEl] = clickedEl;
         console.log('drop', 'clicked el', clickedEl,'moved to ', target.className, 'coming from', source.className)
-        item.child(clickedEl).child('collectionId').set(target.className)
-        collection.child(source.className).child('itemId').child(clickedEl).remove()
-        collection.child(target.className).child('itemId').update(tempObj)
+        item.child(clickedEl).child('collectionId').set(targetId)
+        collection.child(sourceId).child('itemId').child(clickedEl).remove()
+        let checkPath = collection.child(targetId)
+        if (checkPath.itemId) {
+          console.log('has child')
+
+          console.log(targetId)
+          collection.child(targetId).child('itemId').update(tempObj)
+        } else {
+           console.log('nochild')
+          collection.child(targetId).update({'itemId': tempObj})
+        }
+        
       })
     }
     
