@@ -2,6 +2,8 @@ import React from 'react';
 import firebase from 'firebase';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../config/firebaseCredentials';
+import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
+//react component
 import UnprotectedNav from './nav/UnprotectedNav';
 import ProtectedNav from './nav/ProtectedNav';
 import PopularCategoryList from './popularcategory/PopularCategoryList';
@@ -10,15 +12,14 @@ import AuthFrame from './authentication/AuthFrame';
 import CollectionList from './collections/CollectionList';
 import ItemList from './items/ItemList';
 import ManageInventory from './manageInventory/ManageInventory';
-
-import { checkAuthStatus } from './authentication/authenticationHelpers';
 import ProfileFrame from './profilePages/ProfileFrame';
 import UserInfo from './userBar/UserInfo.jsx'
 import AddItems from './addItems/addItems';
-
-import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
-import { Search } from './helperElements/Search.jsx'
 import MessageFrame from './messaging/MessageFrame'
+//helper
+import { checkAuthStatus } from './authentication/authenticationHelpers';
+import { Search } from './helperElements/Search.jsx'
+
 
 
 export default class App extends React.Component {
