@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import firebase from 'firebase';
-
+import { users } from '../../../config/firebaseCredentials'
 // PopularCategoryEntry recieves props from popularCategoryList. 
 
 export default class PopularCategoryEntry extends React.Component {
@@ -11,9 +11,9 @@ export default class PopularCategoryEntry extends React.Component {
       likedCategories : []
     }
     this.handleLike = this.handleLike.bind(this);
-    // this.handleDislike = this.handleDislike.bind(this);
+    this.handleUnlike = this.handleUnlike.bind(this);
   }
-  
+
   componentWillMount() {
     this.fetchFavoriteCategories()
   }
@@ -25,31 +25,35 @@ export default class PopularCategoryEntry extends React.Component {
     firebase.database().ref(favCategoryPath).push(catObj)
   }
 
-//   handleDislike(e) {
-//     let categoryId = e.target.value
-
-//     removeFromFavCat = function(category) {
-//   let currentUID = firebase.auth().currentUser.uid;
-//   console.log('this should DELETE from your favorites')
-//   users.child(curUid) + currentUID+ "/profileInfo/favoriteCategories/" + category).remove()
-// }
-
-//     this.state[e.target.value] = !this.state[e.target.value];
-//   }
+  handleUnlike(e) {
+    let curUid = firebase.auth().currentUser.uid;
+    let catObj = this.props.category
+    firebase.database().ref(`users/${curUid}/profileInfo/favoriteCategories`)
+      .once('value', categories => {
+        // to accout for having no favorite categories, ternary to check for null
+        let categoriesVal = !categories.val() ? {} : categories.val(); 
+        let categoryValues = Object.values(categoriesVal)
+        let keyHashes = Object.keys(categoriesVal)
+        let match = categoryValues.reduce(
+          (acc, el, idx) => 
+            el[0] === this.props.category[0] ? keyHashes[idx] : acc, null)
+        users.child(curUid).child('profileInfo').child('favoriteCategories')
+             .child(match).remove()
+      })
+  }
 
   fetchFavoriteCategories() {
     let curUid = firebase.auth().currentUser.uid;
     firebase.database().ref(`users/${curUid}/profileInfo/favoriteCategories`)
       .on('value', catObj => {
-        let dataObj = Object.values(catObj.val())
+        // to accout for having no favorite categories, ternary to check for null
+        let dataObj = !catObj.val() ? [] : Object.values(catObj.val())
         let categoryNames = dataObj.map(cat => cat[0])
-        console.log('this is the categoryNames', categoryNames)
         this.setState( {likedCategories : categoryNames} )
       })
   }
   
   render() {
-    console.log('these are props in the PopularCategoryEntry', this.props)
     return(
       <div className='popular-category' key={this.props.id}>
       <Link to={`/collections/:${this.props.category[0]}`}>
@@ -60,7 +64,7 @@ export default class PopularCategoryEntry extends React.Component {
           {!!firebase.auth().currentUser ?
             ( 
               this.state.likedCategories.includes(this.props.category[0])
-                ? (<button value={this.props.category} onClick={this.handleDislike}>Unlike</button>)
+                ? (<button value={this.props.category} onClick={this.handleUnlike}>Unlike</button>)
                 : (<button value={this.props.category} onClick={this.handleLike}>Like!</button>)
             ) : <div /> 
           }
