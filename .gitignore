@@ -4,3 +4,4 @@ public/bundle.js
 firebase-debug.log
 .idea
 creds.json
+.DS_Store
