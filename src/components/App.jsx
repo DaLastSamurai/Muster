@@ -1,6 +1,6 @@
 import React from 'react';
-import firebase from 'firebase';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
+import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../config/firebaseCredentials';
 import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
 //react component
@@ -12,15 +12,13 @@ import AuthFrame from './authentication/AuthFrame';
 import CollectionList from './collections/CollectionList';
 import ItemList from './items/ItemList';
 import ManageInventory from './manageInventory/ManageInventory';
-import ProfileFrame from './profilePages/ProfileFrame';
-import UserInfo from './userBar/UserInfo.jsx'
+import MessageFrame from './messaging/MessageFrame';
 import AddItems from './addItems/addItems';
-import MessageFrame from './messaging/MessageFrame'
+import UserInfo from './userBar/UserInfo.jsx';
+import ProfileFrame from './profilePages/ProfileFrame';
+import { Search } from './helperElements/Search.jsx';
 //helper
 import { checkAuthStatus } from './authentication/authenticationHelpers';
-import { Search } from './helperElements/Search.jsx'
-
-
 
 export default class App extends React.Component {
   constructor() {
@@ -45,32 +43,32 @@ export default class App extends React.Component {
     this.getPopularCategory()
   }
 
-  getPopularCategory() {
-    new Promise((resolve, reject) => {
-      category.on('value', (snap) => {
-        return resolve(snap.val())
-      })
-    })
-    .then((categoryObj) => {
-      var arr = [];
-      Object.keys(categoryObj).forEach((key) => {
-        var tempPromise = new Promise((resolve, reject) => {
-          let collectionCount = Object.keys(categoryObj[key]['collectionId']).length
-          resolve([key, categoryObj[key], collectionCount])
-        })
-        arr.push(tempPromise);
-      })
-      return Promise.all(arr);
-    })
-    .then((data) => {
-      return data.sort((a, b) => {
-        return b[2] - a[2];
-      })
-    })
-    .then(data => {
-      this.setState({popularCategoryList: data})
-    })
-  }
+  // getPopularCategory() {
+  //   new Promise((resolve, reject) => {
+  //     category.on('value', (snap) => {
+  //       return resolve(snap.val())
+  //     })
+  //   })
+  //   .then((categoryObj) => {
+  //     var arr = [];
+  //     Object.keys(categoryObj).forEach((key) => {
+  //       var tempPromise = new Promise((resolve, reject) => {
+  //         let collectionCount = Object.keys(categoryObj[key]['collectionId']).length
+  //         resolve([key, categoryObj[key], collectionCount])
+  //       })
+  //       arr.push(tempPromise);
+  //     })
+  //     return Promise.all(arr);
+  //   })
+  //   .then((data) => {
+  //     return data.sort((a, b) => {
+  //       return b[2] - a[2];
+  //     })
+  //   })
+  //   .then(data => {
+  //     this.setState({popularCategoryList: data})
+  //   })
+  // }
 
   setIsOnAuthFrame(isOnAuthFrame) { this.setState({isOnAuthFrame}) }
 
