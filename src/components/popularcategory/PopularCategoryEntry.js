@@ -15,7 +15,11 @@ export default class PopularCategoryEntry extends React.Component {
   }
 
   componentWillMount() {
-    this.fetchFavoriteCategories()
+    // only fetch data if there is data to fetch. If not, just render the props
+    // without the like and unlike feature. 
+    if (firebase.auth().currentUser !== null) {
+      this.fetchAuthedUsersFavoriteCategories()
+    }
   }
 
   handleLike(e) {
@@ -42,7 +46,7 @@ export default class PopularCategoryEntry extends React.Component {
       })
   }
 
-  fetchFavoriteCategories() {
+  fetchAuthedUsersFavoriteCategories() {
     let curUid = firebase.auth().currentUser.uid;
     firebase.database().ref(`users/${curUid}/profileInfo/favoriteCategories`)
       .on('value', catObj => {
