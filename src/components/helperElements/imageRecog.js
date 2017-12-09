@@ -3,21 +3,14 @@ import AWS from 'aws-sdk';
 import apiKey from "../../../config/clarifaiCredentials";
 // var Auth = require("../../../config/creds.json");
 
-// console.log(apiKey);
-
 const app = new Clarifai.App({
   apiKey: apiKey
-})
+});
 
 var ImageRecog = (imageUrl, cb = () => {}) => {
-  // console.log('ImageRecog Triggered!')
-  app.models.predict(Clarifai.GENERAL_MODEL, imageUrl).then(
-    (res) => {
+  app.models.predict(Clarifai.GENERAL_MODEL, imageUrl)
+  .then(res => {
       var keywords = res.outputs[0].data.concepts.map(result => result.name)
-      console.log('Clarifai Response:', JSON.stringify(keywords))
-      // this.setState({
-      //   keywords: keywords
-      // })
       cb(keywords);
     }, 
     (err) => console.log('Clarifai Error:', err)
