@@ -1,5 +1,5 @@
 import React from 'react';
-import {InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
+import {InstantSearch, SearchBox, Hits, Highlight, Pagination, HitsPerPage, InfiniteHits } from 'react-instantsearch/dom';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 
 function foundItem({hit}) {
@@ -38,6 +38,10 @@ function foundItem({hit}) {
         <Hits hitComponent={foundItem} />
         <div style={{float: "center"}}>
         <Pagination showLast={true} />
+        <HitsPerPage
+        defaultRefinement={5} 
+        items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}]}
+        />
         </div>
       </div>
     )
