@@ -20,6 +20,8 @@ export default class SearchToggler extends React.Component {
 				<select onChange={this.searchByHandler}>
 					<option value="item">by items </option>
 					<option value="users">by users </option>
+					<option value="category">by category </option>
+					<option value="collection">by collection </option>
 				</select>
 			</div>
 		)

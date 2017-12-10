@@ -133,39 +133,76 @@ function deleteUserRecord(user) {
 }
 
 
-// const userRef = database.ref('users/');
-// userRef.on('child_added', addOrUpdateUserRecord);
-// userRef.on('child_changed', addOrUpdateUserRecord);
-// userRef.on('child_removed', deleteUserRecord);
+const categoryRef = database.ref('category/');
+categoryRef.on('child_added', addOrUpdateCategoryRecord);
+categoryRef.on('child_changed', addOrUpdateCategoryRecord);
+categoryRef.on('child_removed', deleteCategoryRecord);
 
-// function addOrUpdateUserRecord(user) {
-//   // Get Firebase object
-//   const records = user.val();
-//   // Specify Algolia's objectID using the Firebase object key
-//   records.objectID = user.key;
-//   // Add or update object
-//   users
-//     .saveObject(records)
-//     .then(() => {
-//       console.log('Firebase object indexed in Algolia', records.objectID);
-//     })
-//     .catch(error => {
-//       console.error('Error when indexing users into Algolia', error);
-//       process.exit(1);
-//     });
-// }
+function addOrUpdateCategoryRecord(category_) {
+  // Get Firebase object
+  const records = category_.val();
+  // Specify Algolia's objectID using the Firebase object key
+  records.objectID = category_.key;
+  // Add or update object
+  category
+    .saveObject(records)
+    .then(() => {
+      console.log('Firebase object indexed in Algolia', records.objectID);
+    })
+    .catch(error => {
+      console.error('Error when indexing users into Algolia', error);
+      process.exit(1);
+    });
+}
 
-// function deleteUserRecord(user) {
-//   // Get Algolia's objectID from the Firebase object key
-//   const objectID = user.key;
-//   // Remove the object from Algolia
-//   users
-//     .deleteObject(objectID)
-//     .then(() => {
-//       console.log('Firebase object deleted from Algolia', objectID);
-//     })
-//     .catch(error => {
-//       console.error('Error when deleting user from Algolia', error);
-//       process.exit(1);
-//     });
-// }
+function deleteCategoryRecord(category_) {
+  // Get Algolia's objectID from the Firebase object key
+  const objectID = category_.key;
+  // Remove the object from Algolia
+  category
+    .deleteObject(objectID)
+    .then(() => {
+      console.log('Firebase object deleted from Algolia', objectID);
+    })
+    .catch(error => {
+      console.error('Error when deleting category from Algolia', error);
+      process.exit(1);
+    });
+}
+
+const collectionRef = database.ref('collection/');
+collectionRef.on('child_added', addOrUpdateCollectionRecord);
+collectionRef.on('child_changed', addOrUpdateCollectionRecord);
+collectionRef.on('child_removed', deleteCollectionRecord);
+
+function addOrUpdateCollectionRecord(_collection) {
+  // Get Firebase object
+  const records = _collection.val();
+  // Specify Algolia's objectID using the Firebase object key
+  records.objectID = _collection.key;
+  // Add or update object
+  collection
+    .saveObject(records)
+    .then(() => {
+      console.log('Firebase object indexed in Algolia', records.objectID);
+    })
+    .catch(error => {
+      console.error('Error when indexing users into Algolia', error);
+      process.exit(1);
+    });
+}
+
+function deleteCollectionRecord(_collection) {
+  // Get Algolia's objectID from the Firebase object key
+  const objectID = _collection.key;
+  // Remove the object from Algolia
+  collection
+    .deleteObject(objectID)
+    .then(() => {
+      console.log('Firebase object deleted from Algolia', objectID);
+    })
+    .catch(error => {
+      console.error('Error when deleting category from Algolia', error);
+      process.exit(1);
+    });
+}

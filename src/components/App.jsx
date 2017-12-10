@@ -20,7 +20,6 @@ import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-ins
 import { Search } from './helperElements/Search.jsx'
 import MessageFrame from './messaging/MessageFrame'
 
-window.indexName = 'item';
 
 export default class App extends React.Component {
   constructor() {
@@ -78,9 +77,9 @@ export default class App extends React.Component {
 
   reloadPage() { window.location.reload() }
 
-  searchBy(attribute) {
+  searchBy(receiveIndexName) {
     console.log('this function changes indexName as state')
-    this.setState({indexName : attribute})
+    this.setState({indexName : receiveIndexName})
   }
 
   render() {
@@ -129,7 +128,7 @@ export default class App extends React.Component {
             <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
             <Route exact path='/collections/:categoryId' component={CollectionList} />
             <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} userId={this.state.userId} />} />
-            <Route exact path='/searching' render={()=> <Search indexNameState={this.state.indexName}/>}/>
+            <Route exact path='/searching' render={()=> <Search />}/>
             <Route exact path='/manageinventory' render={() => <ManageInventory userId={this.state.userId}/>} />
           </Switch>
 
