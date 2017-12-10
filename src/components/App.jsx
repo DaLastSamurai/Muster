@@ -31,12 +31,14 @@ export default class App extends React.Component {
       popularCategoryList: [],
       collectionList:[],
       userId: null,
+      indexName: 'item'
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
     this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
     this.getPopularCategory = this.getPopularCategory.bind(this);
+    this.searchBy = this.searchBy.bind(this);
   }
 
   componentDidMount() {
@@ -75,19 +77,24 @@ export default class App extends React.Component {
 
   reloadPage() { window.location.reload() }
 
+  searchBy(receiveIndexName) {
+    console.log('this function changes indexName as state')
+    this.setState({indexName : receiveIndexName})
+  }
+
   render() {
     return (
       <Router>
         <InstantSearch
         appId="9VH3I9OJWS"
         apiKey="289636a507e4853ef95cc5b7e4cac8d9"
-        indexName="item"
+        indexName={this.state.indexName}
         >
         <div>
           {this.state.authed
           ? (
             <div>
-              <ProtectedNav user={this.state.user} />
+              <ProtectedNav user={this.state.user} searchBy={this.searchBy}/>
               <MyCollections
                 class="sidenav"
                 user={this.state.user}

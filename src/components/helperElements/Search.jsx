@@ -3,19 +3,32 @@ import {InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-inst
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 
 function foundItem({hit}) {
-  console.log('HIT',hit)
+  console.log(hit)
   return(
-    <div style={{display:"grid"}} onClick={(e)=> console.log('this is what the click handler passes: ', hit)}>
-      <img src={hit.imageUrl}/>
-      {hit.name}
-      {hit.defaultsSet}
+    <div>
+      {window.indexName === 'item' &&
+      (<div style={{display:"grid"}} onClick={(e)=> console.log('this is what the click handler passes: ', hit)}>
+        <img src={hit.imageUrl}/>
+        {hit.name}
+      </div>)}
+
+      {window.indexName === 'users' &&
+        (<div>
+        <img src={hit.profileInfo.profilePhoto}/>
+        {hit.profileInfo.username}
+      </div>)}
+
+      {window.indexName === 'category' &&
+        (<div>
+        {hit.objectID}
+      </div>)}
+
     </div>
   )
 }
 
 //think of this as Search Result List component. it's like Search Result List Entry, maps and formats each found entry
- // function Search() {
-  export function Search(props) {
+  export function Search() {
     return (
       <div>
         <Hits hitComponent={foundItem} />
@@ -31,12 +44,10 @@ export class SearchHits extends React.Component {
     super(props);
   }
 
-
-
   render() {
     return (
       <header className="searchBar">
-        <SearchBox translations={{placeholder:'Search something'}} />
+        <SearchBox translations={{placeholder:'Search Me!'}} />
       </header>
     )
   }
