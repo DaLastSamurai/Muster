@@ -13,18 +13,15 @@ class ManageInventory extends React.Component {
       sort: 'collection',
     }
     this.handleSortBy = this.handleSortBy.bind(this);
-    // console.log('this props in manage inv', this.props)
   }
  
   componentDidMount() {
   }
 
   handleSortBy(e) {
-    // console.log('sortt',(e.target.value))
     this.setState({sort: e.target.value})
-    // console.log('from state', this.state.sort)
   }
-
+//>>>>>>when page out get data
   render() {
     return(
       <div>
@@ -35,17 +32,18 @@ class ManageInventory extends React.Component {
         </select>
           <InventoryCollection 
             userId={this.props.userId}
-            collectionId={this.props.collectionId} 
             collectionList={this.props.collections} 
             itemList={this.props.items}
             getData={this.props.getData} /> 
+          <InventoryCategory 
+            userID={this.props.userId}
+            collectionList={this.props.collections}
+            categoryList={this.props.categorys}
+            getData={this.props.getData} />
+          <InventoryLocation />
       </div>
     )
   }
 }
 
 export default ManageInventory;
-
-// {JSON.stringify(this.state.collections) !== "{}" && JSON.stringify(this.state.items) !== '{}' 
-// ? <InventoryCollection collectionId={this.props.collectionId} collectionList={this.props.collections} itemList={this.props.items} /> 
-// : 'loading'}

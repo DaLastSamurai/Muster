@@ -4,7 +4,6 @@ import Dragula from 'react-dragula';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import InventoryCollectionList from './InventoryCollectionList';
-import { checkAuthStatus } from '../authentication/authenticationHelpers';
 
 class InventoryCollection extends React.Component {
   constructor(props) {
@@ -65,18 +64,19 @@ class InventoryCollection extends React.Component {
   }
   
   render() {
-    // console.log('render props', this.props)
     return(
       <div>
         <h4>sort by collection</h4>
-        {Object.keys(this.props.collectionList).map((colKey) => {
-          return <InventoryCollectionList 
-            key={colKey} 
-            collectionId={colKey}
-            collection={this.props.collectionList[colKey]} 
-            itemList={this.props.itemList} 
-            getNodes={this.getNodes} />
-        })}
+        {Object.keys(this.props.collectionList).length > 0 
+          ? Object.keys(this.props.collectionList).map((colKey) => {
+              return <InventoryCollectionList 
+                key={colKey} 
+                collectionId={colKey}
+                collection={this.props.collectionList[colKey]} 
+                itemList={this.props.itemList} 
+                getNodes={this.getNodes} />
+            })
+          : console.log('no collection in your account')}
       </div>
     )
   }
