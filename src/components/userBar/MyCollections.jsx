@@ -3,7 +3,7 @@
 import React from 'react';
 import { firebaseAuth, rootRef, collection, category, item, users } from '../../../config/firebaseCredentials';
 import { addNewCollection } from './writeNewCollectionHelpers'
-import SearchBar from '../helperElements/SearchBar';
+// import SearchBar from '../helperElements/SearchBar';
 import MyCollectionsList from './MyCollectionsList.jsx';
 import NewCollectionsInput from './NewCollectionsInput.jsx';
 import UserInfo from './UserInfo.jsx';

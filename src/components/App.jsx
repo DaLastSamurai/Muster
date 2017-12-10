@@ -20,6 +20,7 @@ import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-ins
 import { Search } from './helperElements/Search.jsx'
 import MessageFrame from './messaging/MessageFrame'
 
+window.indexName = 'item';
 
 export default class App extends React.Component {
   constructor() {
@@ -31,12 +32,14 @@ export default class App extends React.Component {
       popularCategoryList: [],
       collectionList:[],
       userId: null,
+      indexName: 'item'
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
     this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
     this.getPopularCategory = this.getPopularCategory.bind(this);
+    this.searchBy = this.searchBy.bind(this);
   }
 
   componentDidMount() {
@@ -75,19 +78,24 @@ export default class App extends React.Component {
 
   reloadPage() { window.location.reload() }
 
+  searchBy(attribute) {
+    console.log('this function changes indexName as state')
+    this.setState({indexName : attribute})
+  }
+
   render() {
     return (
       <Router>
         <InstantSearch
         appId="9VH3I9OJWS"
         apiKey="289636a507e4853ef95cc5b7e4cac8d9"
-        indexName="item"
+        indexName={this.state.indexName}
         >
         <div>
           {this.state.authed
           ? (
             <div>
-              <ProtectedNav user={this.state.user} />
+              <ProtectedNav user={this.state.user} searchBy={this.searchBy}/>
               <MyCollections
                 class="sidenav"
                 user={this.state.user}
@@ -121,7 +129,7 @@ export default class App extends React.Component {
             <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
             <Route exact path='/collections/:categoryId' component={CollectionList} />
             <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} userId={this.state.userId} />} />
-            <Route exact path='/searching' render={()=> <Search />}/>
+            <Route exact path='/searching' render={()=> <Search indexNameState={this.state.indexName}/>}/>
             <Route exact path='/manageinventory' render={() => <ManageInventory userId={this.state.userId}/>} />
           </Switch>
 
