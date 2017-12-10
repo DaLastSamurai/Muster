@@ -3,9 +3,7 @@ import {InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-inst
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 
 function foundItem({hit}) {
-  console.log('HIT',hit)
-  // console.log('should be state passed',this.props)
-  console.log('window',window.indexName);
+  console.log(hit)
   return(
     <div>
       {window.indexName === 'item' &&
@@ -20,16 +18,9 @@ function foundItem({hit}) {
         {hit.profileInfo.username}
       </div>)}
 
-      {window.indexName === 'collection' &&
-        (<div>
-        <img src={hit.profileInfo.profilePhoto}/>
-        {hit.profileInfo.username}
-      </div>)}
-
       {window.indexName === 'category' &&
         (<div>
-        <img src={hit.profileInfo.profilePhoto}/>
-        {hit.profileInfo.username}
+        {hit.objectID}
       </div>)}
 
     </div>
@@ -37,7 +28,6 @@ function foundItem({hit}) {
 }
 
 //think of this as Search Result List component. it's like Search Result List Entry, maps and formats each found entry
- // function Search() {
   export function Search() {
     return (
       <div>
@@ -54,12 +44,10 @@ export class SearchHits extends React.Component {
     super(props);
   }
 
-
-
   render() {
     return (
       <header className="searchBar">
-        <SearchBox translations={{placeholder:'Search items'}} />
+        <SearchBox translations={{placeholder:'Search Me!'}} />
       </header>
     )
   }

@@ -55,7 +55,8 @@ export default class ProtectedNav extends React.Component {
                 <SearchHits/>
               </Link>
               </li>
-              <li>
+              <br/>
+              <li style={{float: "right"}}>
                 <SearchToggler searchBy={this.props.searchBy}/>
               </li>
               </ul>
