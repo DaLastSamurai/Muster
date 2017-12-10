@@ -23,6 +23,14 @@ function foundItem({hit}) {
         {hit.objectID}
       </div>)}
 
+<<<<<<< HEAD
+=======
+      {(<div style={{display:"grid"}} onClick={(e)=> console.log('this is what the click handler passes: ', hit)}>
+        <img src={hit.imageUrl}/>
+        {hit.name}
+      </div>)}
+
+>>>>>>> geomap
     </div>
   )
 }
