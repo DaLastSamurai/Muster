@@ -1,9 +1,10 @@
 import React from 'react';
 import { InstantSearch, SearchBox, Hits, Highlight, Pagination, HitsPerPage, InfiniteHits } from 'react-instantsearch/dom';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
-// import { connectHits } from 'react-instantsearch/connectors';
+import { connectHits } from 'react-instantsearch/connectors';
+
 function foundItem({hit}) {
-  // console.log(hit)
+  console.log(hit.objectID)
   return(
     <div>
       {window.indexName === 'item' &&
@@ -36,7 +37,7 @@ function foundItem({hit}) {
 }
 
 //think of this as Search Result List component. it's like Search Result List Entry, maps and formats each found entry
-  export function Search() {
+  function Search() {
     return (
       <div>
         <Hits hitComponent={foundItem} />
@@ -51,32 +52,8 @@ function foundItem({hit}) {
     )
   }
 
-  // export const CustomHits = connectHits(({ hits }) =>
-  // <div>
-  //   {hits.map(hit =>
-  //     <p key={hit.objectID}>
-  //       <Highlight attributeName="description" hit={hit} />
-  //     </p>
-  //   )}
-  // </div>
-  // );
-  
-
-// export class CustomHits extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-//   render(){
-//     console.log(this.props)
-//     return(
-//       <div>
-//         {this.props.hits.map((hit)=> {
-//           <p key={hit.objectID} />
-//           }
-//         )}
-//       </div>
-//     )}
-// }
+//place through higher order function
+export default connectHits(Search);
 
 export class SearchHits extends React.Component {
   constructor(props) {
@@ -84,7 +61,6 @@ export class SearchHits extends React.Component {
   }
 
   render() {
-    // console.log('searchHits', this.props)
     return (
       <header className="searchBar">
         <SearchBox translations={{placeholder:'Search Me!'}} />
@@ -92,3 +68,4 @@ export class SearchHits extends React.Component {
     )
   }
 }
+
