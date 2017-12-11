@@ -65,10 +65,14 @@ class ImageUpload extends Component {
       <div>
         <form>
 
-          {this.state.imageURL && 
+          {/* {this.state.imageURL && 
             <img src={this.state.imageURL}
+              style={{ width: 300 }} />} */}
+
+          {this.props.imageURL &&
+            <img src={this.props.imageURL}
               style={{ width: 300 }} />}
-        
+
           <div>
             <label>Image</label>
               {this.state.isUploading && 

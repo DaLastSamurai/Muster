@@ -9,6 +9,7 @@ class AddItems extends React.Component {
     super(props);
 
     this.state = {
+      id: null,
       boughtFrom: '',
       collectionId: '',
       location: '',
@@ -27,12 +28,13 @@ class AddItems extends React.Component {
       collectionList: [{id: null, name: 'loading collections...'}]
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.setImageState = this.setImageState.bind(this);
     this.setKeywordsState = this.setKeywordsState.bind(this);
+    this.setItemState = this.setItemState.bind(this);
     this.addRemoveKeyword = this.addRemoveKeyword.bind(this);
     this.addCustomeKeyword = this.addCustomeKeyword.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   };
 
   setImageState(imageUrl) {
@@ -42,6 +44,16 @@ class AddItems extends React.Component {
 
   setKeywordsState(keywords) {
     this.setState({ keywords });
+  };
+
+  setItemState(item) {
+    this.setState({
+      id: item.id,
+      name: item.name,
+      imageUrl: item.imageUrl,
+      collectionId: item.collectionId,
+      location: item.location
+    });
   };
 
   // getValidationState() {
@@ -97,7 +109,8 @@ class AddItems extends React.Component {
       uid: currentUID
     };
     
-    let newPostKey = firebase.database().ref('/item').push().key;
+    let newPostKey = this.state.id || 
+      firebase.database().ref('/item').push().key;
 
     let updates = {};
     updates['/item/' + newPostKey] = postData;
@@ -130,16 +143,19 @@ class AddItems extends React.Component {
   }
  
   render() {
+    console.log('state from addItems', this.state)
     return (
       <div className="col-sm-5 col-sm-offset-0">
 
-        <InProgressCarousel />
+        <InProgressCarousel 
+          setItemState={this.setItemState}/>
 
 
         <div>
           <ImageUpload 
             setImageState={this.setImageState} 
             setKeywordsState={this.setKeywordsState}
+            imageUrl={this.state.imageUrl}
           />
           
           <div>
