@@ -14,12 +14,22 @@ import ItemList from './items/ItemList';
 import ManageInventory from './manageInventory/ManageInventory';
 import MessageFrame from './messaging/MessageFrame';
 import AddItems from './addItems/addItems';
+
 import UserInfo from './userBar/UserInfo.jsx';
 import ProfileFrame from './profilePages/ProfileFrame';
 import { Search } from './helperElements/Search.jsx';
 //helper function
 import { checkAuthStatus } from './authentication/authenticationHelpers';
 import { getPopularCategory, getCollection, getItem, getCategory } from './helperElements/FetchData';
+
+
+import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
+import Search from './helperElements/Search.jsx' // importing default
+import { connectHits } from 'react-instantsearch/dom'
+
+import MessageFrame from './messaging/MessageFrame'
+
+
 
 export default class App extends React.Component {
   constructor() {

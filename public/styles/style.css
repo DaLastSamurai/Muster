@@ -78,6 +78,11 @@ img {
   min-height: 10px;
 }
 
+
 .container-fluid {
   display: inline-block;
 }
+
+/* Algolia-related components */
+.ais-HitsPerPage__root {} /* HitsPerPage */
+
