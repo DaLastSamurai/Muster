@@ -9,29 +9,37 @@ function foundItem({hit}) {
     <div>
       {window.indexName === 'item' &&
       (<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
-        {hit.name}
-        <img src={hit.imageUrl}/>
-        Price : {hit.price}
-        <br/>
+        <Link to={`/items/:${hit.collectionId}`}>
+          {hit.name}
+          <img src={hit.imageUrl}/>
+          Price : {hit.price}
+          <br/>
+        </Link>
       </div>)}
 
       {window.indexName === 'users' &&
         (<div onClick={(e)=> console.log('this is what the users click handler passes: ', hit)}>
-        {hit.profileInfo.username}
-        <img src={hit.profileInfo.profilePhoto}/>
+          <Link to={`/profile/`+ `${hit.objectID}`}>
+            {hit.profileInfo.username}
+            <img src={hit.profileInfo.profilePhoto}/>
+          </Link>
       </div>)}
 
       {window.indexName === 'category' &&
-        (<div onClick={(e)=> console.log('this is what the category click handler passes: ', hit)}>
-        {hit.objectID}
+          (<div onClick={(e)=> console.log('this is what the category click handler passes: ', hit)}>
+          <Link to={`/collections/` + `${hit.objectID}`}>
+            {hit.objectID}
+          </Link>
       </div>)}
 
       {(<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
-        {hit.name}
-        <img src={hit.imageUrl}/>
-        {/* Price : {hit.price} */}
-        <br/>
-      </div>)}
+          <Link to={`/items/:${hit.collectionId}`}>
+            {hit.name}
+            <img src={hit.imageUrl}/>
+            {/* Price : {hit.price} */}
+            <br/>
+          </Link>
+        </div>)}
     </div>
   )
 }
