@@ -17,20 +17,12 @@ import UserInfo from './userBar/UserInfo.jsx'
 import AddItems from './addItems/addItems';
 
 import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
-import { Search } from './helperElements/Search.jsx'
-// import { connectHits } from 'react-instantsearch/dom'
+import Search from './helperElements/Search.jsx' // importing default
+import { connectHits } from 'react-instantsearch/dom'
 
 import MessageFrame from './messaging/MessageFrame'
 
-// const CustomHits = connectHits(({hits}) =>
-//   <div>
-//     {hits.map(hit =>
-//     <p key={hit.objectID}>
-//       {/* <Highlight attributeName="description" hit={hit} /> */}
-//     </p>
-//     )}
-//   </div>
-//   );
+
 
 export default class App extends React.Component {
   constructor() {
