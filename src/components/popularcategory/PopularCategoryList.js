@@ -6,23 +6,20 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 import CollectionList from '../collections/CollectionList';
 import PopularCategoryEntry from './PopularCategoryEntry';
 
+// PopularCategoryList recieves props from
+  // App(state.popularCategoryList)
 // PopularCategoryList sends props to 
   //PopularCategoryEntry
-// PopularCategoryList recieves props from
-  // App
 
 export default class PopularCategoryList extends React.Component {
   constructor(props) {
     super(props)
-    this.state= {
-    
-    }
   }
 
   render() {
     // console.log('these are the props in PopularCategoryList',this.props)
     return(
-      <div style={{display: 'inline-block'}} className="container-fluid">
+      <div className="container-fluid">
         <h2>Popular Categories</h2>
         <div>
           {Object.keys(this.props.popularCategoryList)

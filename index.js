@@ -52,7 +52,7 @@ const collection  = algolia.initIndex('collection')
 //       console.log('items imported into Algolia');
 //     })
 //     .catch(error => {
-//       console.error('Error when importing items into Algolia', error);
+      console.error('Error when importing items into Algolia', error);
 //       process.exit(1);
 //     });
 // });
@@ -72,7 +72,7 @@ function addOrUpdateItemRecord(items) {
   item
     .saveObject(records)
     .then(() => {
-      console.log('Firebase object indexed in Algolia', records.objectID);
+      // console.log('Firebase object indexed in Algolia', records.objectID);
     })
     .catch(error => {
       console.error('Error when indexing items into Algolia', error);
@@ -162,7 +162,7 @@ function deleteCategoryRecord(category_) {
   category
     .deleteObject(objectID)
     .then(() => {
-      console.log('Firebase object deleted from Algolia', objectID);
+      // console.log('Firebase object deleted from Algolia', objectID);
     })
     .catch(error => {
       console.error('Error when deleting category from Algolia', error);
