@@ -78,3 +78,6 @@ img {
   min-height: 10px;
 }
 
+/* Algolia-related components */
+.ais-HitsPerPage__root {} /* HitsPerPage */
+
