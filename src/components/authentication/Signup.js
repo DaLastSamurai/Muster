@@ -25,7 +25,7 @@ export default class Signup extends React.Component {
     e.preventDefault(); 
     firebaseAuth().signInWithRedirect(provider)
       .then(function(result) {
-        console.log('this is the result of signing in with google: ', result)
+        // console.log('this is the result of signing in with google: ', result)
       })
       .catch(function(error) {
         this.setState({error: error.toString()})

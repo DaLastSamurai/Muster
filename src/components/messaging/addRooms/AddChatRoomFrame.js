@@ -87,14 +87,14 @@ export default class AddChatRoomFrame extends React.Component {
       this.state.roomName = 
         this.state.chatRoomMembers.map(user => user.label).join(', ') + ' chat'
     }
-    console.log('this is the updated this.state.roomName', this.state.roomName)
+    // console.log('this is the updated this.state.roomName', this.state.roomName)
     let uids = this.state.chatRoomMembers.map(user => user.id)
     uids.forEach((uid, i, uidsArr) => {
       let innerObj = {}
       innerObj['users'] = uidsArr; 
       let updateObj = {}; 
       updateObj[this.state.roomName] = innerObj
-      console.log('this is the updateObj', updateObj)
+      // console.log('this is the updateObj', updateObj)
       firebase.database().ref(`messages/${uid}`).update(updateObj)
     })
     // console.log('these are uids: ',uids)

@@ -59,11 +59,11 @@ class ItemList extends React.Component {
   }
 
   checkUser(clickedItemId, clickedItemUser) {
-    console.log('whwhwhwh', )
+    // console.log('whwhwhwh', )
     if(this.props.userId === clickedItemUser) {
       this.deleteItem(clickedItemId)
     }else {
-      console.log('user athentication fail')
+      // console.log('user athentication fail')
     }
   }
 
@@ -73,7 +73,7 @@ class ItemList extends React.Component {
       this.getItemData();
       this.setState({params: this.props.match.params.collectionId.slice(1)});
     }
-    console.log('this is item',this.state.items)
+    // console.log('this is item',this.state.items)
     return(
       <div>
         <h2>{this.state.collectionName}</h2>

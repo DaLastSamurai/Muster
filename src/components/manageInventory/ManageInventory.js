@@ -10,127 +10,18 @@ class ManageInventory extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      categorys: {},
-      collections: {},
-      items: {},
       sort: 'collection',
     }
-    this.getCollection = this.getCollection.bind(this);
-    this.getItem = this.getItem.bind(this);
-    this.getCategory = this.getCategory.bind(this);
     this.handleSortBy = this.handleSortBy.bind(this);
   }
  
   componentDidMount() {
-    this.props.userId ? this.getCollection(this.props.userId) : null;
   }
-
-  getCollection(userid) {
-    new Promise((resolve, reject) => {
-      users.child(userid).on('value',(snap) => {
-        let array = [];
-        for(var key in snap.val().collectionIds){
-          if(key !== "0") {
-            array.push(key)
-          }
-        }
-        return resolve(array)
-      })
-    })
-    .then((collectionIdArr) => {
-      var arr = [];
-      collectionIdArr.forEach(id => {
-        var tempPromise = new Promise((resolve, reject) => {
-          collection.child(id).on('value', (snap) => {
-            resolve([id, snap.val()])
-          })
-        })
-        arr.push(tempPromise);
-      })
-      return Promise.all(arr);
-    })
-    .then((colArr) => {
-      var tempObj = {};
-      colArr.forEach((col) => {
-        tempObj[col[0]] = col[1]
-      })
-      this.setState({collections: tempObj});
-      return tempObj;
-    })
-    .then((colObj) => {
-      console.log('from state collections', this.state.collections)
-      var itemIdArr = [];
-      Object.values(colObj).forEach((eachObj) => {
-        if (eachObj.itemId) {
-          itemIdArr = itemIdArr.concat(Object.keys(eachObj.itemId));
-        }
-      })
-      this.getItem(itemIdArr);
-      this.getCategory();
-    })
-  }
-
-  getItem(itemIdArr) {
-    let itemObjArr = [];
-    itemIdArr.forEach((itemId) => {
-      let tempPromise = new Promise((resolve, reject) => {
-        item.child(itemId).on('value', (snap) => {
-          resolve([itemId, snap.val()])
-        })
-      })
-      itemObjArr.push(tempPromise)
-    })
-    return Promise.all(itemObjArr)
-    .then((data) => {
-      let tempObj = {};
-      data.forEach((arr) => {
-        tempObj[arr[0]] = arr[1]
-      })
-      this.setState({items: tempObj})
-    })
-    .then(() => {
-      console.log('from state items', this.state.items)
-    })
-  }
-
-  getCategory() {
-    let categoryArr = [];
-    Object.values(this.state.collections).forEach((obj) => {
-      let catId = obj.categoryId
-      let temp = new Promise((resolve, reject) => {
-        category.child(catId).on('value', (snap) => {
-          resolve([catId, snap.val()])
-        })
-      })
-      categoryArr.push(temp);
-    })
-    return Promise.all(categoryArr)
-    .then((data) => {
-      let tempObj = {};
-      data.forEach((arr) => {
-        tempObj[arr[0]] = arr[1]
-      })
-      this.setState({categorys: tempObj})
-      console.log('get category from state', this.state.categorys)
-    })
-  }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if(this.props !== nextProps) {
-  //     if(this.props.userId !== null) {
-  //       this.getCollection(this.props.userId)
-  //     }
-  //     return true
-  //   }
-  //   return false
-  // }
 
   handleSortBy(e) {
-    // console.log('sortt',(e.target.value))
     this.setState({sort: e.target.value})
-    // console.log('from state', this.state.sort)
   }
-
+//>>>>>>when page out get data
   render() {
     return(
       <div>
@@ -139,11 +30,20 @@ class ManageInventory extends React.Component {
           <option value="location">by location</option>
           <option value="category">by category</option>
         </select>
-          {JSON.stringify(this.state.collections) !== "{}" && JSON.stringify(this.state.items) !== '{}' 
-          ? <InventoryCollection collectionId={this.props.collectionId} collectionList={this.state.collections} itemList={this.state.items} /> 
-          : 'loading'}
-          {/* <InventoryLocation />
-          <InventoryCategory /> */}
+          <InventoryCollection 
+            userId={this.props.userId}
+            collectionList={this.props.collections} 
+            itemList={this.props.items}
+            getData={this.props.getData} /> 
+          <InventoryCategory 
+            userId={this.props.userId}
+            collectionList={this.props.collections}
+            categoryList={this.props.categorys}
+            getData={this.props.getData} />
+          <InventoryLocation 
+            userId={this.props.userId}
+            itemList={this.props.items}
+            getData={this.props.getData}/>
       </div>
     )
   }

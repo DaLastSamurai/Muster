@@ -1,7 +1,7 @@
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import firebase from 'firebase'
 
-export const checkAuthStatus = function() {
+export const checkAuthStatus = function(callback) {
   firebaseAuth().onAuthStateChanged((user) => {
     if (user) {
       this.setState({
@@ -32,8 +32,10 @@ export const checkAuthStatus = function() {
             updates[user.uid + '/info'] = basicInfo;
             return users.update(updates)
           }
+          callback(user.uid)
         })
       })
+      
     } else {
       this.setState({
         authed : false,

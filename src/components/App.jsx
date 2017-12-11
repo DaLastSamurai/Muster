@@ -12,15 +12,14 @@ import AuthFrame from './authentication/AuthFrame';
 import CollectionList from './collections/CollectionList';
 import ItemList from './items/ItemList';
 import ManageInventory from './manageInventory/ManageInventory';
-import ProfileFrame from './profilePages/ProfileFrame';
-import UserInfo from './userBar/UserInfo.jsx'
+import MessageFrame from './messaging/MessageFrame';
 import AddItems from './addItems/addItems';
-import MessageFrame from './messaging/MessageFrame'
-//helper
+import UserInfo from './userBar/UserInfo.jsx';
+import ProfileFrame from './profilePages/ProfileFrame';
+import { Search } from './helperElements/Search.jsx';
+//helper function
 import { checkAuthStatus } from './authentication/authenticationHelpers';
-import { Search } from './helperElements/Search.jsx'
-
-
+import { getPopularCategory, getCollection, getItem, getCategory } from './helperElements/FetchData';
 
 export default class App extends React.Component {
   constructor() {
@@ -28,51 +27,30 @@ export default class App extends React.Component {
     this.state = {
       authed: false,
       user: null,
+      userId: null,
       isOnAuthFrame: false,
       popularCategoryList: [],
       collectionList:[],
-      userId: null,
-      indexName: 'item'
+      categorys: {},
+      collections: {},
+      items: {},
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
     this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
-    this.getPopularCategory = this.getPopularCategory.bind(this);
+    this.getPopularCategory = getPopularCategory.bind(this);
+    // this.getCurUserCollectionId = this.getCurUserCollectionId.bind(this);
     this.searchBy = this.searchBy.bind(this);
+    this.getCollection = getCollection.bind(this); //takes user id
+    this.getItem = getItem.bind(this); //takes item id array
+    this.getCategory = getCategory.bind(this); //takes collection object
   }
 
   componentDidMount() {
-    this.checkAuthStatus()
+    this.checkAuthStatus((this.getCollection))
     this.getPopularCategory()
   }
-
-  // getPopularCategory() {
-  //   new Promise((resolve, reject) => {
-  //     category.on('value', (snap) => {
-  //       return resolve(snap.val())
-  //     })
-  //   })
-  //   .then((categoryObj) => {
-  //     var arr = [];
-  //     Object.keys(categoryObj).forEach((key) => {
-  //       var tempPromise = new Promise((resolve, reject) => {
-  //         let collectionCount = Object.keys(categoryObj[key]['collectionId']).length
-  //         resolve([key, categoryObj[key], collectionCount])
-  //       })
-  //       arr.push(tempPromise);
-  //     })
-  //     return Promise.all(arr);
-  //   })
-  //   .then((data) => {
-  //     return data.sort((a, b) => {
-  //       return b[2] - a[2];
-  //     })
-  //   })
-  //   .then(data => {
-  //     this.setState({popularCategoryList: data})
-  //   })
-  // }
 
   setIsOnAuthFrame(isOnAuthFrame) { this.setState({isOnAuthFrame}) }
 
@@ -126,11 +104,18 @@ export default class App extends React.Component {
               }
             />
             <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
-            <Route exact path='/addItems' render={() => <AddItems user={this.state.user}/>} />
+            <Route exact path='/addItems' render={() => <AddItems user={this.state.user} userId={this.state.userId} />} />
             <Route exact path='/collections/:categoryId' component={CollectionList} />
             <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} userId={this.state.userId} />} />
             <Route exact path='/searching' render={()=> <Search />}/>
-            <Route exact path='/manageinventory' render={() => <ManageInventory userId={this.state.userId}/>} />
+            <Route exact path='/manageinventory' render={() => 
+              <ManageInventory 
+                // onEnter={() => {this.getCollection(this.state.userId)}}
+                categorys={this.state.categorys} 
+                collections={this.state.collections} 
+                items={this.state.items} 
+                userId={this.state.userId}
+                getData={this.getCollection} />} />
           </Switch>
 
         </div>

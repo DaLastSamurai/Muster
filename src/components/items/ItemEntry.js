@@ -6,7 +6,7 @@ class ItemEntry extends React.Component {
   }
 
   render() {
-    console.log('asdfasdf...',this.props.item)
+    // console.log('asdfasdf...',this.props.item)
     return(
       <div>
         <img src={this.props.item.imageUrl} /> 
