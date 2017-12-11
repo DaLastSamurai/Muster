@@ -43,6 +43,7 @@ export default class App extends React.Component {
     this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
     this.getPopularCategory = getPopularCategory.bind(this);
+    this.getUserCollection = this.getUserCollection.bind(this);
     // this.getCurUserCollectionId = this.getCurUserCollectionId.bind(this);
     this.searchBy = this.searchBy.bind(this);
     this.getCollection = getCollection.bind(this); //takes user id
@@ -53,6 +54,35 @@ export default class App extends React.Component {
   componentDidMount() {
     this.checkAuthStatus((this.getCollection))
     this.getPopularCategory()
+  }
+
+  getUserCollection() {
+    new Promise((resolve, reject) => {
+      users.child(firebaseAuth().currentUser.uid).on('value',(snap) => {
+        let array = [];
+        for(var key in snap.val().collectionIds){
+          if(key !== "0") {
+            array.push(key)
+          }
+        }
+        return resolve(array)
+      })
+    })
+    .then((collectionIdArr) => {
+      var arr = [];
+      collectionIdArr.forEach(id => {
+        var tempPromise = new Promise((resolve, reject) => {
+          collection.child(id).on('value', (snap) => {
+            resolve([id, snap.val()])
+          })
+        })
+        arr.push(tempPromise);
+      })
+      return Promise.all(arr);
+    })
+    .then(data => {
+      this.setState({collectionList: data})
+    })
   }
 
   setIsOnAuthFrame(isOnAuthFrame) { this.setState({isOnAuthFrame}) }
@@ -83,6 +113,7 @@ export default class App extends React.Component {
                 addNewCollection={this.addNewCollection}
                 searchMyCollections={this.searchMyCollections}
                 collectionList={this.state.collectionList}
+                getUserCollection={this.getUserCollection}
               />
             </div>
           )
@@ -107,9 +138,11 @@ export default class App extends React.Component {
               }
             />
             <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
-            <Route exact path='/addItems' render={() => <AddItems user={this.state.user} userId={this.state.userId} />} />
+            <Route exact path='/addItems' render={() => 
+              <AddItems user={this.state.user} userId={this.state.userId} />} />
             <Route exact path='/collections/:categoryId' component={CollectionList} />
-            <Route exact path='/items/:collectionId' component={(props) =>  <ItemList {...props} userId={this.state.userId} />} />
+            <Route exact path='/items/:collectionId' component={(props) =>  
+              <ItemList {...props} userId={this.state.userId} />} />
             <Route exact path='/searching' render={()=> <Search />}/>
             <Route exact path='/manageinventory' render={() => 
               <ManageInventory 
@@ -118,7 +151,8 @@ export default class App extends React.Component {
                 collections={this.state.collections} 
                 items={this.state.items} 
                 userId={this.state.userId}
-                getData={this.getCollection} />} />
+                getData={this.getCollection} />}
+                getUserCollection={this.getUserCollection} />
           </Switch>
 
         </div>

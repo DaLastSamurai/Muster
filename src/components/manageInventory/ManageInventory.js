@@ -13,9 +13,62 @@ class ManageInventory extends React.Component {
       sort: 'collection',
     }
     this.handleSortBy = this.handleSortBy.bind(this);
+    this.deleteCollection = this.deleteCollection.bind(this);
   }
- 
-  componentDidMount() {
+
+  deleteCollection(collectionId, itemIdObj) {
+    let answer = confirm('are you sure?');
+    if (answer === true) {
+      new Promise((resolve, reject) => {
+        collection.child(collectionId).child('categoryId').on('value', (snap) => {
+          resolve(snap.val())
+        })
+      })
+      .then((categoryId )=> {
+        category.child(categoryId).child('collectionId').child(collectionId).remove()
+      })
+      .then(() =>
+        users.child(this.props.userId).child('collectionIds').child(collectionId).remove()
+      )
+      .then(() =>
+        collection.child(collectionId).remove()
+      )
+      .then(() => {
+        if (itemObj) {
+          Object.keys(itemIdObj).forEach((itemId) => {
+            item.child(itemId).remove()
+          })
+        } else {
+          this.props.getData(this.props.userId)
+          this.props.getUserCollection()
+        }
+      })
+      .then(() => {
+        console.log('this should run')
+        this.props.getData(this.props.userId)
+        this.props.getUserCollection()
+      })
+    }
+  }
+
+  deleteItem(clickedItemId) {
+    let answer = confirm('are you sure?');
+    if (answer === true) {
+      new Promise((resolve, reject) => {
+        item.child(clickedItemId).child('collectionId').on('value', (snap) => {
+          resolve(snap.val())
+        })
+      })
+      .then((colId) => {
+        collection.child(colId).child('itemId').child(clickedItemId).remove()
+      })
+      .then(() => {
+        item.child(clickedItemId).remove()
+      })
+  
+      this.props.getData()
+    }
+    
   }
 
   handleSortBy(e) {
@@ -30,20 +83,29 @@ class ManageInventory extends React.Component {
           <option value="location">by location</option>
           <option value="category">by category</option>
         </select>
-          <InventoryCollection 
-            userId={this.props.userId}
-            collectionList={this.props.collections} 
-            itemList={this.props.items}
-            getData={this.props.getData} /> 
-          <InventoryCategory 
-            userId={this.props.userId}
-            collectionList={this.props.collections}
-            categoryList={this.props.categorys}
-            getData={this.props.getData} />
-          <InventoryLocation 
-            userId={this.props.userId}
-            itemList={this.props.items}
-            getData={this.props.getData}/>
+          {this.state.sort === 'collection'
+            ? <InventoryCollection 
+                userId={this.props.userId}
+                collectionList={this.props.collections} 
+                itemList={this.props.items}
+                getData={this.props.getData}
+                deleteCollection={this.deleteCollection}
+                deleteItem={this.deleteItem} />
+            : null} 
+          {this.state.sort === 'category'
+            ? <InventoryCategory 
+                userId={this.props.userId}
+                collectionList={this.props.collections}
+                categoryList={this.props.categorys}
+                getData={this.props.getData} />
+            : null}
+          {this.state.sort === 'location'
+            ? <InventoryLocation 
+                userId={this.props.userId}
+                itemList={this.props.items}
+                getData={this.props.getData}
+                deleteItem={this.deleteItem} />
+            : null}
       </div>
     )
   }

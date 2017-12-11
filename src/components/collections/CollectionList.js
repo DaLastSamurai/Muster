@@ -10,7 +10,7 @@ class CollectionList extends React.Component {
     super(props)
     this.state = {
       categoryName:'',
-      collections: [['id', {photoUrl: 'notworking', name: 'notworking'}]],
+      collections: [],
     }
     this.getCollectionData = this.getCollectionData.bind(this)
   }
@@ -23,11 +23,11 @@ class CollectionList extends React.Component {
     let categoryId = this.props.match.params.categoryId.slice(1);
     new Promise((resolve, reject) => {
       category.child(categoryId).on('value', (snap) => {
+        this.setState({categoryName: categoryId})
         return resolve(snap.val())
       })
     })
     .then((categoryObj) => {
-      this.setState({categoryName: categoryObj.name})
       return Object.keys(categoryObj.collectionId)
     })
     .then((collectionIdArr) => {
@@ -42,6 +42,20 @@ class CollectionList extends React.Component {
       })
       return Promise.all(arr);
     })
+    .then((collectionArr) => {
+      var resultArr = [];
+      collectionArr.forEach((arr) => {
+        var tempPromise = new Promise((resolve, reject) => {
+          let userId = arr[1]['uid']
+          users.child(userId[0]).on('value', (snap) => {
+            arr = arr.concat(snap.val())
+            resolve(arr)
+          })
+        })
+        resultArr.push(tempPromise)
+      })
+      return Promise.all(resultArr)
+    })
     .then(data => {
       if (data[0] !== null && data[1] !== null) {
         this.setState({collections: data})
@@ -51,12 +65,20 @@ class CollectionList extends React.Component {
 
   render() {
     return(
-      <div>
-        <h2>{this.state.categoryName}</h2>
-        {this.state.collections.map((colArr) => {
-        return <Link to={`/items/:${colArr[0]}`} key={colArr[0]}><CollectionEntry collection={colArr[1]} /></Link>
-      } )}
-      </div>
+      this.state.collections.length > 0
+       ? <div>
+          <h2>{this.state.categoryName}</h2>
+          {this.state.collections.map((colArr) => {
+            return <div>
+                    <Link to={`/items/:${colArr[0]}`} key={colArr[0]}>
+                      <CollectionEntry collection={colArr[1]} />
+                    </Link>
+                    <p>{colArr[2]['profileInfo']['username']}</p>
+                  </div>
+            })
+          }
+        </div>
+      : 'loading'
     )
   }
 }

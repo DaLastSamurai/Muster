@@ -24,7 +24,6 @@ export default class MyCollectionsList extends React.Component {
                 id={collection[0]}
               />
             </Link>
-            <button onClick={() => {this.props.deleteCollection(collection[0])}}> x </button>
           </div>
         })}
       </div>
