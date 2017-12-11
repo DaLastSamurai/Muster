@@ -22,14 +22,14 @@ const category  = algolia.initIndex('category')
 const collection  = algolia.initIndex('collection')
 ////////////////////////////////////////////
 
-// item.setSettings({
-//   searchableAttributes: [
-//     'name',
-//     'categories',
-//     'users'
-//   ]
-  // customRanking: ['desc(popularity)'],
-// });
+item.setSettings({
+  searchableAttributes: [
+    'name',
+    'location',
+    'savedKeywords'
+  ]
+});
+
 
 ///////////////////////////////////////////////////////////////////////////// INitial Import / One time get allData from Firebase
 // database.ref('users/').once('value', item => {
