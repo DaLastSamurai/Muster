@@ -19,7 +19,13 @@ class InProgressEntry extends React.Component {
         this.state.inProgress.map(item =>
           <div value={item.id}>{item.name}</div>)
       } */}
-        <img src='https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F48620956-5174-40e8-8ca5-1f8559b775e2.jpeg?alt=media&token=c1b7dff5-918d-43a2-b894-cfec3cb305a3'/>
+        <div><img src='https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F48620956-5174-40e8-8ca5-1f8559b775e2.jpeg?alt=media&token=c1b7dff5-918d-43a2-b894-cfec3cb305a3' /></div>
+        <div><img src='https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F48620956-5174-40e8-8ca5-1f8559b775e2.jpeg?alt=media&token=c1b7dff5-918d-43a2-b894-cfec3cb305a3' /></div>
+        <div><img src='https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F48620956-5174-40e8-8ca5-1f8559b775e2.jpeg?alt=media&token=c1b7dff5-918d-43a2-b894-cfec3cb305a3' /></div>
+        <div><img src='https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F48620956-5174-40e8-8ca5-1f8559b775e2.jpeg?alt=media&token=c1b7dff5-918d-43a2-b894-cfec3cb305a3' /></div>
+        <div><img src='https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F48620956-5174-40e8-8ca5-1f8559b775e2.jpeg?alt=media&token=c1b7dff5-918d-43a2-b894-cfec3cb305a3' /></div>
+        <div><img src='https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F48620956-5174-40e8-8ca5-1f8559b775e2.jpeg?alt=media&token=c1b7dff5-918d-43a2-b894-cfec3cb305a3' /></div>
+        <div><img src='https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F48620956-5174-40e8-8ca5-1f8559b775e2.jpeg?alt=media&token=c1b7dff5-918d-43a2-b894-cfec3cb305a3' /></div>
       </div>
     )
   };

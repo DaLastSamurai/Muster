@@ -6,18 +6,21 @@ class InProgressCarousel extends React.Component {
   render() {
     const settings = {
       className: 'center',
-      infinite: true,
-      centerPadding: '60px',
-      slidesToShow: 3,
-      swipeToSlide: true,
+      infinite: false,
+      centerPadding: '0px',
+      dots: true,
+      slidesToShow: 5,
+      focusOnSelect: true,
       afterChange: function (index) {
         console.log(`Slider Changed to: ${index + 1}, background: #222; color: #bada55`);
       }
     };
     return (
-      <Slider { ...settings }>
-        <InProgressEntry />
-      </Slider>
+      <div className="carousel-container">
+        <Slider { ...settings }>
+          <InProgressEntry />
+        </Slider>
+      </div>
     );
   }
 }; 
