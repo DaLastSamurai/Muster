@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 import { connectHits } from 'react-instantsearch/connectors';
 
 function foundItem({hit}) {
-  console.log(hit.objectID)
+  // console.log(hit.objectID)
   return(
     <div>
       {window.indexName === 'item' &&
