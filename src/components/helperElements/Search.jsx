@@ -4,24 +4,36 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 import { connectHits } from 'react-instantsearch/connectors';
 
 function foundItem({hit}) {
-  // console.log(hit.objectID)
+  console.log(hit.savedKeywords)
+  console.log('INDEXNAME',window.indexName)
   return(
     <div>
+      {window.indexName === undefined &&
+        (<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
+          <Link to={`/items/:${hit.collectionId}`}>
+            <img src={hit.imageUrl}/>
+            {hit.name}<br/>
+          </Link>
+            ${hit.price || 'message user'}<br/>
+            Tags : {hit.savedKeywords}
+            <br/>
+        </div>)}
       {window.indexName === 'item' &&
       (<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
         <Link to={`/items/:${hit.collectionId}`}>
-          {hit.name}
           <img src={hit.imageUrl}/>
-          Price : {hit.price}
-          <br/>
+          {hit.name}<br/>
         </Link>
+          ${hit.price || 'message user'}<br/>
+          Tags : {hit.savedKeywords}
+          <br/>
       </div>)}
 
       {window.indexName === 'users' &&
         (<div onClick={(e)=> console.log('this is what the users click handler passes: ', hit)}>
           <Link to={`/profile/`+ `${hit.objectID}`}>
-            {hit.profileInfo.username}
             <img src={hit.profileInfo.profilePhoto}/>
+            {hit.profileInfo.username}
           </Link>
       </div>)}
 
@@ -32,14 +44,7 @@ function foundItem({hit}) {
           </Link>
       </div>)}
 
-      {(<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
-          <Link to={`/items/:${hit.collectionId}`}>
-            {hit.name}
-            <img src={hit.imageUrl}/>
-            {/* Price : {hit.price} */}
-            <br/>
-          </Link>
-        </div>)}
+
     </div>
   )
 }

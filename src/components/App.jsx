@@ -36,6 +36,7 @@ export default class App extends React.Component {
       categorys: {},
       collections: {},
       items: {},
+      indexName: 'item'
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
