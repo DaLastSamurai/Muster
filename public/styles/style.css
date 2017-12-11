@@ -86,3 +86,12 @@ img {
 /* Algolia-related components */
 .ais-HitsPerPage__root {} /* HitsPerPage */
 
+
+
+/* carousel */
+
+.carousel-container {
+  width: 100px; 
+  height: 100px;
+}
+
