@@ -47,21 +47,12 @@ class InventoryCategory extends React.Component {
         let clickedEl = el.className.split(' ')[0];
         let targetId = target.className.split(' ')[0];
         let sourceId = source.className.split(' ')[0];
-        console.log('>>inv cat on drop', clickedEl, targetId, sourceId)
         collection.child(clickedEl).child('categoryId').set(targetId)
         let updates = {};
         let collectionName = this.props.collectionList[clickedEl]['name'];
-        console.log('this is col name',collectionName)
         updates['/category/' + targetId + '/collectionId/' + clickedEl] = collectionName;
         firebase.database().ref().update(updates);
         category.child(sourceId).child('collectionId').child(clickedEl).remove()
-
-        // item.child(clickedEl).child('collectionId').set(targetId)
-        // collection.child(sourceId).child('itemId').child(clickedEl).remove()
-        // let updates = {};
-        // updates['/collection/' + targetId + '/itemId/' + clickedEl] = clickedEl;
-        // firebase.database().ref().update(updates);
-
       })
     }
   };

@@ -36,11 +36,14 @@ class ManageInventory extends React.Component {
             itemList={this.props.items}
             getData={this.props.getData} /> 
           <InventoryCategory 
-            userID={this.props.userId}
+            userId={this.props.userId}
             collectionList={this.props.collections}
             categoryList={this.props.categorys}
             getData={this.props.getData} />
-          <InventoryLocation />
+          <InventoryLocation 
+            userId={this.props.userId}
+            itemList={this.props.items}
+            getData={this.props.getData}/>
       </div>
     )
   }
