@@ -1,47 +1,59 @@
 import React from 'react';
-import {InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
+import { InstantSearch, SearchBox, Hits, Highlight, Pagination, HitsPerPage, InfiniteHits } from 'react-instantsearch/dom';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
+import { connectHits } from 'react-instantsearch/connectors';
 
 function foundItem({hit}) {
-  console.log(hit)
+  console.log(hit.objectID)
   return(
     <div>
       {window.indexName === 'item' &&
-      (<div style={{display:"grid"}} onClick={(e)=> console.log('this is what the click handler passes: ', hit)}>
-        <img src={hit.imageUrl}/>
+      (<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
         {hit.name}
+        <img src={hit.imageUrl}/>
+        Price : {hit.price}
+        <br/>
       </div>)}
 
       {window.indexName === 'users' &&
-        (<div>
-        <img src={hit.profileInfo.profilePhoto}/>
+        (<div onClick={(e)=> console.log('this is what the users click handler passes: ', hit)}>
         {hit.profileInfo.username}
+        <img src={hit.profileInfo.profilePhoto}/>
       </div>)}
 
       {window.indexName === 'category' &&
-        (<div>
+        (<div onClick={(e)=> console.log('this is what the category click handler passes: ', hit)}>
         {hit.objectID}
       </div>)}
 
-      {(<div style={{display:"grid"}} onClick={(e)=> console.log('this is what the click handler passes: ', hit)}>
-        <img src={hit.imageUrl}/>
+      {(<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
         {hit.name}
+        <img src={hit.imageUrl}/>
+        {/* Price : {hit.price} */}
+        <br/>
       </div>)}
     </div>
   )
 }
 
 //think of this as Search Result List component. it's like Search Result List Entry, maps and formats each found entry
-  export function Search() {
+  function Search() {
     return (
       <div>
         <Hits hitComponent={foundItem} />
         <div style={{float: "center"}}>
         <Pagination showLast={true} />
+        <HitsPerPage
+        defaultRefinement={5} 
+        items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}]}
+        />
         </div>
       </div>
     )
   }
+
+//place through higher order function
+export default connectHits(Search);
 
 export class SearchHits extends React.Component {
   constructor(props) {
@@ -56,3 +68,4 @@ export class SearchHits extends React.Component {
     )
   }
 }
+

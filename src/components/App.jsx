@@ -17,8 +17,11 @@ import UserInfo from './userBar/UserInfo.jsx'
 import AddItems from './addItems/addItems';
 
 import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
-import { Search } from './helperElements/Search.jsx'
+import Search from './helperElements/Search.jsx' // importing default
+import { connectHits } from 'react-instantsearch/dom'
+
 import MessageFrame from './messaging/MessageFrame'
+
 
 
 export default class App extends React.Component {
