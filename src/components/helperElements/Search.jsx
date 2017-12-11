@@ -27,7 +27,7 @@ function foundItem({hit}) {
 
       {window.indexName === 'category' &&
           (<div onClick={(e)=> console.log('this is what the category click handler passes: ', hit)}>
-          <Link to={`/collections/` + `${hit.objectID}`}>
+          <Link to={`/collections/:` + `${hit.objectID}`}>
             {hit.objectID}
           </Link>
       </div>)}
