@@ -2,6 +2,7 @@ import React from 'react';
 import * as firebase from 'firebase';
 import UserInfo from '../userBar/UserInfo.jsx';
 import ImageUpload from '../helperElements/imageUploader';
+import InProgressCarousel from './inProgressCarousel';
 
 class AddItems extends React.Component {
   constructor(props) {
@@ -131,6 +132,10 @@ class AddItems extends React.Component {
   render() {
     return (
       <div className="col-sm-5 col-sm-offset-0">
+
+        <InProgressCarousel />
+
+
         <div>
           <ImageUpload 
             setImageState={this.setImageState} 
