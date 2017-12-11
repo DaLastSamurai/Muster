@@ -10,16 +10,24 @@ class ItemList extends React.Component {
     this.state = {
       params: this.props.match.params.collectionId.slice(1),
       collectionName:'',
-      items:[['id', {photoUrls: 'add Item!', name: 'add Item!'}]],
+      userInfo: null,
+      items:[],
+      rerender: null,
     }
     this.getItemData = this.getItemData.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-    this.checkUser = this.checkUser.bind(this);
   }
 
   componentDidMount() {
     this.getItemData()
   }
+
+  componentWillReceiveProps(nextProps){
+    if(this.props.match.params.collectionId.slice(1) !== nextProps.match.params.collectionId.slice(1)) {
+      this.setState({params: this.props.match.params.collectionId.slice(1)}, () => {
+        this.getItemData()
+      });
+    }
+ }
 
   getItemData() {
     let collectionId = this.props.match.params.collectionId.slice(1);
@@ -30,7 +38,11 @@ class ItemList extends React.Component {
     })
     .then((collectionObj) => {
       this.setState({collectionName: collectionObj.name})
-      return Object.keys(collectionObj.itemId);
+      if (collectionObj.itemId) {
+        return Object.keys(collectionObj.itemId);
+      } else {
+        this.setState({items: []})
+      }
     })
     .then((itemIdArr) => {
       var arr = [];
@@ -44,6 +56,16 @@ class ItemList extends React.Component {
       })
       return Promise.all(arr);
     })
+    .catch((error) => {
+      console.log('no item in collection')
+    })
+    .then((itemArr) => {
+      let userId = itemArr[0][1]['uid'];
+      users.child(userId).on('value', (snap) => {
+        this.setState({userInfo: snap.val()})
+      })
+      return itemArr
+    })
     .then(data => {
       if (data[0] !== null && data[1]!== null){
         this.setState({items: data})
@@ -51,37 +73,17 @@ class ItemList extends React.Component {
     })
   }
 
-  deleteItem(clickedItemId) {
-    let collectionId = this.props.match.params.collectionId.slice(1);
-    item.child(clickedItemId).remove()
-    collection.child(collectionId + '/itemId').child(clickedItemId).remove()
-    this.getItemData()
-  }
-
-  checkUser(clickedItemId, clickedItemUser) {
-    // console.log('whwhwhwh', )
-    if(this.props.userId === clickedItemUser) {
-      this.deleteItem(clickedItemId)
-    }else {
-      // console.log('user athentication fail')
-    }
-  }
-
   render() {
-    if(this.props.match.params.collectionId.slice(1) !== this.state.params) {
-      this.setState({items:[['id', {photoUrls: 'add Item!', name: 'add Item!'}]]});
-      this.getItemData();
-      this.setState({params: this.props.match.params.collectionId.slice(1)});
-    }
-    // console.log('this is item',this.state.items)
     return(
-      <div>
-        <h2>{this.state.collectionName}</h2>
-        
-        {this.state.items.map((itemArr) => {
-          return <ItemEntry item={itemArr[1]} key={itemArr[0]} id={itemArr[0]} checkUser={this.checkUser} />
-        })}
-      </div>
+      this.state.items.length > 0
+      ? <div>
+          <h2>{this.state.collectionName}</h2>
+          <p>{this.state.userInfo.profileInfo.username}</p>
+          {this.state.items.map((itemArr) => {
+            return <ItemEntry item={itemArr[1]} key={itemArr[0]} id={itemArr[0]} />
+          })}
+        </div>
+      : 'add item'
     )
   }
 }

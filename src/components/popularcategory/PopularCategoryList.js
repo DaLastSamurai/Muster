@@ -22,16 +22,14 @@ export default class PopularCategoryList extends React.Component {
       <div className="container-fluid">
         <h2>Popular Categories</h2>
         <div>
-          {Object.keys(this.props.popularCategoryList)
-            .map((id) => {
+          {Object.keys(this.props.popularCategoryList).map((id) => {
               return (
                 <div key={id}>
                   <PopularCategoryEntry
                     category={this.props.popularCategoryList[id]}
-                    id={id}
-                  />
+                    id={id} />
                 </div>
-              )
+                )
             })
           }
         </div>

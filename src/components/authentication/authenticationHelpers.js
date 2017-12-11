@@ -7,8 +7,9 @@ export const checkAuthStatus = function(callback) {
       this.setState({
         authed: true,
         user: user,
-        userId: user.uid,
+        userId: user.uid, 
       }, () => {
+        this.getUserCollection();
         firebase.database().ref(`/users/${user.uid}/defaultsSet`).on('value', (snapshot) => {
           // if the defaults have not been set: 
           if (!snapshot.val()) { 

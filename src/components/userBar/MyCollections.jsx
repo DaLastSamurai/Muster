@@ -20,75 +20,75 @@ export default class MyCollections extends React.Component {
     super(props);
     this.state={
       showInputForm: false,
-      collectionList: [],
+      // collectionList: [],
     };
-    this.getUserCollection = this.getUserCollection.bind(this);
+    // this.getUserCollection = this.getUserCollection.bind(this);
     this.handleAddCollection = this.handleAddCollection.bind(this);
-    this.deleteCollection = this.deleteCollection.bind(this);
+    // this.deleteCollection = this.deleteCollection.bind(this);
     this.addNewCollection = addNewCollection.bind(this);
     this.toggleInputForm = this.toggleInputForm.bind(this);
   }
 
   componentDidMount() {
-    this.getUserCollection()
+    // this.getUserCollection()
   }
 
-  getUserCollection() {
-    new Promise((resolve, reject) => {
-      users.child(firebaseAuth().currentUser.uid).on('value',(snap) => {
-        let array = [];
-        for(var key in snap.val().collectionIds){
-          if(key !== "0") {
-            array.push(key)
-          }
-        }
-        return resolve(array)
-      })
-    })
-    .then((collectionIdArr) => {
-      var arr = [];
-      collectionIdArr.forEach(id => {
-        var tempPromise = new Promise((resolve, reject) => {
-          collection.child(id).on('value', (snap) => {
-            resolve([id, snap.val()])
-          })
-        })
-        arr.push(tempPromise);
-      })
-      return Promise.all(arr);
-    })
-    .then(data => {
-      this.setState({collectionList: data})
-    })
-    // .catch(console.log('error: getUSerCollection function in Mycollections'))
-  }
+  // getUserCollection() {
+  //   new Promise((resolve, reject) => {
+  //     users.child(firebaseAuth().currentUser.uid).on('value',(snap) => {
+  //       let array = [];
+  //       for(var key in snap.val().collectionIds){
+  //         if(key !== "0") {
+  //           array.push(key)
+  //         }
+  //       }
+  //       return resolve(array)
+  //     })
+  //   })
+  //   .then((collectionIdArr) => {
+  //     var arr = [];
+  //     collectionIdArr.forEach(id => {
+  //       var tempPromise = new Promise((resolve, reject) => {
+  //         collection.child(id).on('value', (snap) => {
+  //           resolve([id, snap.val()])
+  //         })
+  //       })
+  //       arr.push(tempPromise);
+  //     })
+  //     return Promise.all(arr);
+  //   })
+  //   .then(data => {
+  //     this.setState({collectionList: data})
+  //   })
+  //   // .catch(console.log('error: getUSerCollection function in Mycollections'))
+  // }
 
-  deleteCollection(collectionId) {
-    new Promise((resolve, reject) => {
-      collection.child(collectionId).child('categoryId').on('value', (snap) => {
-        resolve(snap.val())
-      })
-    })
-    .then((categoryId )=> {
-      category.child(categoryId).child('collectionId').child(collectionId).remove()
-    })
-    .then(() =>
-      users.child(firebaseAuth().currentUser.uid).child('collectionIds').child(collectionId).remove()
-    )
-    .then(() =>
-      collection.child(collectionId).remove()
-    )
-    .then(() =>
-      this.getUserCollection()
-    )
-  }
+  // deleteCollection(collectionId) {
+  //   new Promise((resolve, reject) => {
+  //     collection.child(collectionId).child('categoryId').on('value', (snap) => {
+  //       resolve(snap.val())
+  //     })
+  //   })
+  //   .then((categoryId )=> {
+  //     category.child(categoryId).child('collectionId').child(collectionId).remove()
+  //   })
+  //   .then(() =>
+  //     users.child(firebaseAuth().currentUser.uid).child('collectionIds').child(collectionId).remove()
+  //   )
+  //   .then(() =>
+  //     collection.child(collectionId).remove()
+  //   )
+  //   .then(() =>
+  //     this.getUserCollection()
+  //   )
+  // }
 
   toggleInpurForm() {
     this.setState({showInputForm:!this.state.showInputForm})
   }
 
   handleAddCollection() {
-    this.getUserCollection()
+    this.props.getUserCollection()
   }
 
   toggleInputForm() {
@@ -111,7 +111,7 @@ export default class MyCollections extends React.Component {
             {this.state.showInputForm ?
               (<NewCollectionsInput
                 toggleInputForm={this.toggleInputForm}
-                getUserCollection={this.getUserCollection}
+                getUserCollection={this.props.getUserCollection}
                 addNewCollection={this.addNewCollection}
                 handleAddCollection={this.handleAddCollection} />) :
               (<div/>)}
@@ -124,10 +124,9 @@ export default class MyCollections extends React.Component {
         </SideNav>
         <SideNav>
 
-        {(this.state.collectionList.length > 0)
+        {(this.props.collectionList.length > 0)
           ? <MyCollectionsList
-            deleteCollection={this.deleteCollection}
-            collectionList={this.state.collectionList}
+            collectionList={this.props.collectionList}
             />
           : <h5>add collection</h5>}
         </SideNav>
