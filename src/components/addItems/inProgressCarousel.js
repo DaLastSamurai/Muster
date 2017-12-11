@@ -1,6 +1,5 @@
 import React from 'react';
 import Slider from 'react-slick';
-import InProgressEntry from './inProgressEntry';
 import * as firebase from 'firebase';
 import UserInfo from '../userBar/UserInfo.jsx';
 
@@ -11,13 +10,24 @@ class InProgressCarousel extends React.Component {
     this.state = {
       inProgress: []
     };
-    // this.handleSomething = this.handleSomething.bind(this);
+    this.populateFields = this.populateFields.bind(this);
   };
 
-  componentDidMount() {
-    let collectionRef = firebase.database().ref('/items-scanned');
+  populateFields(item) {
+    this.props.setItemState(item);
+    //take the item and pass it to addItems
+    //
+  };
 
-    collectionRef.on("value", (snapshot) => {
+  // removeFromInprogress() {
+  //   let inProgressRef = firebase.database().ref('/items-scanned');
+  //   inProgressRef.update()
+  // };
+
+  componentDidMount() {
+    let inProgressRef = firebase.database().ref('/items-scanned');
+
+    inProgressRef.on("value", (snapshot) => {
       let currentUID = firebase.auth().currentUser.uid;
 
       let grabIdName = Object.keys(snapshot.val()).map((k, i) => {
@@ -25,6 +35,8 @@ class InProgressCarousel extends React.Component {
           id: Object.keys(snapshot.val())[i],
           name: snapshot.val()[k].name,
           imageUrl: snapshot.val()[k].imageUrl,
+          location: snapshot.val()[k].location,
+          collectionId: snapshot.val()[k].collectionId,
           uid: snapshot.val()[k].uid
         }
       })
@@ -53,7 +65,9 @@ class InProgressCarousel extends React.Component {
         <Slider {...settings}>
           {
             this.state.inProgress.map(item =>
-              <div>
+              <div onClick={() => {
+                this.populateFields(item);
+              }}>
                 <img src={item.imageUrl}/>
                 <h5>{item.name}</h5>
               </div>)
