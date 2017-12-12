@@ -21,7 +21,7 @@ import { checkAuthStatus } from './authentication/authenticationHelpers';
 import { getPopularCategory, getCollection, getItem, getCategory } from './helperElements/FetchData';
 import Search from './helperElements/Search.jsx' // importing default
 import { connectHits } from 'react-instantsearch/dom'
-
+import Map from './map/map.jsx'
 
 export default class App extends React.Component {
   constructor() {
@@ -119,6 +119,14 @@ export default class App extends React.Component {
                 items={this.state.items} 
                 userId={this.state.userId}
                 getData={this.getCollection} />} />
+            <Route exact path='/map' render={() =>
+            <Map 
+              containerElement={<div style={{ height: `400px` }} />}
+              mapElement={<div style={{ height: `100%` }} />}
+              googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.29&key=AIzaSyCvQC9D22yi5n1gEdQka4j0MdDu2cq95dM"
+              // googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvQC9D22yi5n1gEdQka4j0MdDu2cq95dM&v=3.exp&libraries=geometry,drawing,places"              
+              loadingElement={<div style={{ height: '100%' }} />}
+            />} />
           </Switch>
 
         </div>
@@ -127,3 +135,5 @@ export default class App extends React.Component {
     )
   }
 }
+
+

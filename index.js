@@ -52,7 +52,7 @@ item.setSettings({
 //       console.log('items imported into Algolia');
 //     })
 //     .catch(error => {
-      console.error('Error when importing items into Algolia', error);
+      // console.error('Error when importing items into Algolia', error);
 //       process.exit(1);
 //     });
 // });
