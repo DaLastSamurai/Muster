@@ -44,6 +44,12 @@ export default class ProtectedNav extends React.Component {
                   </Link>
                 </li>
 
+                <li className="trade">
+                  <Link to='/trade'>
+                    <LinkButton title='Trade' clickFunction={() => { }} />
+                  </Link>
+                </li>
+
                 <li className="link-button">
                   <Link to="/">
                     <LinkButton title='Logout' clickFunction={() => {firebaseAuth().signOut()}} />
