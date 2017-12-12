@@ -161,6 +161,7 @@ export default class App extends React.Component {
                 getUserCollection={this.getUserCollection} />
             <Route exact path='/trade' render={() => 
               <Trade 
+                searchBy={this.searchBy}
                 userId={this.state.userId}
                 getRequestData={this.getRequestData} />}/>
                 getData={this.getCollection} />} />

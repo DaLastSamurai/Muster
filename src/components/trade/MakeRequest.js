@@ -1,6 +1,8 @@
 import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
+import { TradeSearch, Search } from './TradeSearch.jsx'
+import SearchToggler from '../helperElements/SearchToggler.jsx'
 
 class MakeRequest extends React.Component {
   constructor(props) {
@@ -14,12 +16,14 @@ class MakeRequest extends React.Component {
       message: '',
       trade: false,
       pay: false,
-
+      showSearch: false,
+      selectedItem: [],
     }
   this.handleRequest = this.handleRequest.bind(this);
   this.handleChange = this.handleChange.bind(this);
   this.getUser = this.getUser.bind(this);
   this.toggleCheckbox = this.toggleCheckbox.bind(this);
+  this.toggleShowSearch = this.toggleShowSearch.bind(this);
   }
 
 handleChange(e) {
@@ -57,20 +61,35 @@ toggleCheckbox(e) {
   })
 }
 
+toggleShowSearch() {
+  this.setState({showSearch: true})
+}
+
+setSelectedItem() {
+  this.setState({selectedItem: [hit.objectID, hit]})
+}
+
   render() {
+    console.log('this should be true',this.state.showSearch)
     return(
       <div>
         <h5>search</h5>
-        <input name="searchUser"
-               type="text"
-               placeholder="search for user"
-               value={this.state.searchUser}
-               onChange={this.handleChange}/>
+
+        {/* <input name="searchUser"
+          type="text"
+          placeholder="search for user"
+          value={this.state.searchUser}
+          onChange={this.handleChange}/>
 
         <button onClick={() => {
           this.setState({searchUser: ''})
           return this.getUser(this.state.searchUser)
-          }}>search</button>
+          }}>search</button> */}
+          
+        <SearchToggler searchBy={this.props.searchBy} toggleShowSearch={this.toggleShowSearch}/>
+
+        {this.state.showSearch ? (< TradeSearch/>) : null }
+        {this.state.showSearch ? < Search /> : null }
 
         <h5>offer</h5>
         <label>trade</label>

@@ -23,7 +23,7 @@ class Trade extends React.Component {
     return(
       <div>
         <button onClick={this.toggleMakeRequest}>Make Request</button>
-        {this.state.showMR ? <MakeRequest /> : null}
+        {this.state.showMR ? <MakeRequest searchBy={this.props.searchBy}/> : null}
         <h2>Trade Request You Made</h2>
         <RequestMade />
         <h2>Trade Request You Received</h2>
