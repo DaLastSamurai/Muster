@@ -3,7 +3,8 @@ import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import ItemEntry from './ItemEntry';
 
-
+//if collection params.pop is 1 === sort by category
+//if collection params.pop is 2 === sort by person
 class ItemList extends React.Component {
   constructor(props) {
     super(props)

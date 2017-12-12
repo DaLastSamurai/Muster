@@ -14,6 +14,7 @@ import ItemList from './items/ItemList';
 import ManageInventory from './manageInventory/ManageInventory';
 import MessageFrame from './messaging/MessageFrame';
 import AddItems from './addItems/addItems';
+import Trade from './trade/Trade';
 
 import UserInfo from './userBar/UserInfo.jsx';
 import ProfileFrame from './profilePages/ProfileFrame';
@@ -49,11 +50,16 @@ export default class App extends React.Component {
     this.getCollection = getCollection.bind(this); //takes user id
     this.getItem = getItem.bind(this); //takes item id array
     this.getCategory = getCategory.bind(this); //takes collection object
+    this.getRequestData = this.getRequestData.bind(this);
   }
 
   componentDidMount() {
     this.checkAuthStatus((this.getCollection))
     this.getPopularCategory()
+  }
+
+  getRequestData() {
+    
   }
 
   getUserCollection() {
@@ -153,6 +159,10 @@ export default class App extends React.Component {
                 userId={this.state.userId}
                 getData={this.getCollection} />}
                 getUserCollection={this.getUserCollection} />
+            <Route exact path='/trade' render={() => 
+              <Trade 
+                userId={this.state.userId}
+                getRequestData={this.getRequestData} />}/>
           </Switch>
 
         </div>
