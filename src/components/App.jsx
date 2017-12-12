@@ -157,14 +157,12 @@ export default class App extends React.Component {
                 collections={this.state.collections} 
                 items={this.state.items} 
                 userId={this.state.userId}
-<<<<<<< HEAD
                 getData={this.getCollection} />}
                 getUserCollection={this.getUserCollection} />
             <Route exact path='/trade' render={() => 
               <Trade 
                 userId={this.state.userId}
                 getRequestData={this.getRequestData} />}/>
-=======
                 getData={this.getCollection} />} />
             <Route exact path='/map' render={() =>
             <Map 
@@ -174,7 +172,6 @@ export default class App extends React.Component {
               // googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvQC9D22yi5n1gEdQka4j0MdDu2cq95dM&v=3.exp&libraries=geometry,drawing,places"              
               loadingElement={<div style={{ height: '100%' }} />}
             />} />
->>>>>>> reactmap
           </Switch>
 
         </div>
