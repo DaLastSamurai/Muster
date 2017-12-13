@@ -36,6 +36,7 @@ export default class App extends React.Component {
       categorys: {},
       collections: {},
       items: {},
+      editItem: '',
       indexName: 'item'
     };
 
@@ -49,11 +50,19 @@ export default class App extends React.Component {
     this.getCollection = getCollection.bind(this); //takes user id
     this.getItem = getItem.bind(this); //takes item id array
     this.getCategory = getCategory.bind(this); //takes collection object
+    this.getItem = getItem.bind(this);
+    this.editItem = this.editItem.bind(this);
   }
 
   componentDidMount() {
     this.checkAuthStatus((this.getCollection))
     this.getPopularCategory()
+  }
+
+  editItem(clickedItem) {
+    this.setState({
+      editItem: clickedItem
+    })
   }
 
   getUserCollection() {
@@ -139,7 +148,11 @@ export default class App extends React.Component {
             />
             <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
             <Route exact path='/addItems' render={() => 
-              <AddItems user={this.state.user} userId={this.state.userId} />} />
+              <AddItems 
+                user={this.state.user} 
+                userId={this.state.userId} 
+                editItem={this.state.editItem}
+              />} />
             <Route exact path='/collections/:categoryId' component={CollectionList} />
             <Route exact path='/items/:collectionId' component={(props) =>  
               <ItemList {...props} userId={this.state.userId} />} />
@@ -147,6 +160,7 @@ export default class App extends React.Component {
             <Route exact path='/manageinventory' render={() => 
               <ManageInventory 
                 // onEnter={() => {this.getCollection(this.state.userId)}}
+                editItem={this.editItem}
                 categorys={this.state.categorys} 
                 collections={this.state.collections} 
                 items={this.state.items} 
