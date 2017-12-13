@@ -1,6 +1,8 @@
 import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
+import TradeSearchToggler from './TradeSearchToggler.jsx';
+import { TradeSearch, Search } from './TradeSearch.jsx';
 
 class MakeRequest extends React.Component {
   constructor(props) {
@@ -19,6 +21,8 @@ class MakeRequest extends React.Component {
       initPrice:'',
       lateFee: '',
       message: '',
+      showSearchBox : false,
+      selectedItem : window.selectedItem,
     }
   this.handleRequest = this.handleRequest.bind(this);
   this.handleChange = this.handleChange.bind(this);
@@ -26,6 +30,7 @@ class MakeRequest extends React.Component {
   this.toggleCheckbox = this.toggleCheckbox.bind(this);
   this.handleSelect = this.handleSelect.bind(this);
   this.handletradeItem = this.handletradeItem.bind(this);
+  this.handleshowSearchBox = this.handleshowSearchBox.bind(this);
   }
 
 handleChange(e) {
@@ -151,10 +156,15 @@ handleRequest() {
   }
 }
 
+handleshowSearchBox() {
+  this.setState({showSearchBox:true})
+}
+
   render() {
+    console.log(this.state.showSearchBox)
     return(<div>
         <h4>search</h4>
-        <input name="searchUser"
+        {/* <input name="searchUser"
                type="text"
                placeholder="search for user"
                value={this.state.searchUser}
@@ -162,8 +172,26 @@ handleRequest() {
 
         <button onClick={() => {
           this.setState({searchUser: ''})
-          return this.getUser(this.state.searchUser)}}>search</button>
+          return this.getUser(this.state.searchUser)}}>search</button> */}
+/////////////////////////////////////////////////////////////////////////////////////////////
+          <TradeSearchToggler 
+            handleshowSearchBox={this.handleshowSearchBox}
+            getIndexName={this.props.getIndexName}
+          />
 
+          {this.state.showSearchBox ?
+          (<TradeSearch />) : (<div/>)
+          }
+          {window.indexName ?
+          (<Search />) : (<div/>)
+          }
+
+          <button onClick={()=>this.setState({selectedItem : window.selectedItem})}> 
+            set the state
+          </button>
+          <button onClick={()=>console.log(this.state.selectedItem)}> show me the state</button>
+<br/>
+/////////////////////////////////////////////////////////////////////////////////////////////
         <h4>offer</h4>
 
         <label>buy</label>
