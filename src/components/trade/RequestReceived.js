@@ -5,20 +5,93 @@ import { firebaseAuth, rootRef, collection, category, item, users} from '../../.
 class RequestReceived extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      address: '',
+      tracking: '',
+    }
+    this.handleAccept = this.handleAccept.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.sendAddress = this.sendAddress.bind(this);
+    this.sendTracking = this.sendTracking.bind(this);
+  }
+
+  handleChange(e) {
+    e.preventDefault()
+    let name = e.target.name;
+    let value = e.target.value;
+    this.setState({[name]: value})
+  };
+
+  sendAddress() {
+    firebase.database().ref('/request').child(this.props.reqRec.exchangee[0]).child('made').child(this.props.reqRec.item[0]).child('exaddress').set(this.state.address)
+  }
+  sendTracking() {
+    firebase.database().ref('/request').child(this.props.reqRec.exchangee[0]).child('made').child(this.props.reqRec.item[0]).child('tracking').set(this.state.tracking)
+  }
+
+  handleAccept(e) {
+    console.log(e.target.name)
+    let accVal = null;
+    e.target.name === 'true' ? (accVal = true) : (accVal = false)
+    firebase.database().ref('/request').child(this.props.userId).child('received').child(this.props.reqRec.item[0]).child('accept').set(accVal)
+    firebase.database().ref('/request').child(this.props.reqRec.exchangee[0]).child('made').child(this.props.reqRec.item[0]).child('accept').set(accVal)
   }
 
   render() {
-    return(
+    return(this.props.reqRec ? 
       <div>
-        <div>exchangee</div>
-        <div>item</div>
-        <div>offer you got</div>
-        <div>reject button</div>
-        <div>accept button</div>
-        <div>(if you accept, show processing || if exchange, drop down send address )</div>
-        <div>(after get paied sent button shows)</div>
-        <div>after sent button clicked, ask delete trade item if you exchenged, ask you want to add into yout collection</div>
+        <div>{this.props.reqRec.date}</div>
+        <div>{this.props.reqRec.exchangee[1]['profileInfo']['username']}</div>
+        <img src={this.props.reqRec.item[1]['imageUrl']}/>
+        <div>{this.props.reqRec.item[1]['name']}</div>
+        <div>{this.props.reqRec.buy ? 'purchase ' : null}{this.props.reqRec.trade ? 'trade ' : null}{this.props.reqRec.loan ? 'rent ' : null}</div>
+        {this.props.reqRec.loan
+          ? <div>
+              <div>return date</div>
+              <div>{this.props.reqRec.dueDate}</div>
+              <div>late fee</div>
+              <div>{this.props.reqRec.lateFee}</div>
+            </div>
+          : null}
+        {this.props.reqRec.trade
+          ? <div>
+              <div>trading item</div>
+              <img sre={this.props.reqRec.tradeItem[1]['imageUrl']}/>
+              <div>{this.props.reqRec.tradeItem[1]['name']}</div>
+            </div>
+          : null}
+        {this.props.reqRec.accept === 'pro' 
+          ? <div>
+              <button name="true" onClick={this.handleAccept}>accept</button>
+              <button name="false" onClick={this.handleAccept}>reject</button> 
+            </div>
+          : (this.props.reqRec.accept ? 'accepted' : 'rejected')}
+        {this.props.reqRec.accept && this.props.reqRec.trade 
+          ? <div>
+              <h4>address</h4>
+              <input name="address" 
+                     type="text" 
+                     placeholder="write address" 
+                     onChange={this.handleChange}
+                     value={this.state.address}/>
+              <button onClick={this.sendAddress}>send your address</button>
+            </div>
+          : null}
+        {(this.props.reqRec.trade && this.props.reqRec.exaddress.length > 0) || (this.props.reqRec.paied && this.props.reqRec.exaddress.length > 0)
+          ? <div>
+              <h5>address to send</h5>
+              <div>{this.props.reqRec.exaddress}</div>
+              <h5>after sent trading item submit tracking number</h5>
+              <input name="tracking" 
+                          type="text" 
+                          placeholder="write tracking number" 
+                          onChange={this.handleChange}
+                          value={this.state.tracking}/>
+              <button>submit</button>
+            </div>
+          : null}
       </div>
+      : null
     )
   }
 }
