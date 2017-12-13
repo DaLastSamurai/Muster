@@ -11,7 +11,6 @@ function foundItem({hit}) {
       {window.indexName === undefined &&
         (<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
           <Link to={`/items/:${hit.collectionId}`}>
-            <img src={hit.imageUrl}/>
             {hit.name}<br/>
           </Link>
             ${hit.price || 'message user'}<br/>
@@ -21,7 +20,6 @@ function foundItem({hit}) {
       {window.indexName === 'item' &&
       (<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
         <Link to={`/items/:${hit.collectionId}`}>
-          <img src={hit.imageUrl}/>
           {hit.name}<br/>
         </Link>
           ${hit.price || 'message user'}<br/>
@@ -32,7 +30,6 @@ function foundItem({hit}) {
       {window.indexName === 'users' &&
         (<div onClick={(e)=> console.log('this is what the users click handler passes: ', hit)}>
           <Link to={`/profile/`+ `${hit.objectID}`}>
-            <img src={hit.profileInfo.profilePhoto}/>
             {hit.profileInfo.username}
           </Link>
       </div>)}
@@ -50,7 +47,7 @@ function foundItem({hit}) {
 }
 
 //think of this as Search Result List component. it's like Search Result List Entry, maps and formats each found entry
-  function Search() {
+export function Search() {
     return (
       <div>
         <Hits hitComponent={foundItem} />
@@ -61,7 +58,6 @@ function foundItem({hit}) {
   }
 
 //place through higher order function
-export default connectHits(Search);
 
 export class TradeSearch extends React.Component {
   constructor(props) {
