@@ -3,77 +3,62 @@ import { InstantSearch, SearchBox, Hits, Highlight, Pagination, HitsPerPage, Inf
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import { connectHits } from 'react-instantsearch/connectors';
 
+
+//on click run some function that sets state to window and passes up 
+
 function foundItem({hit}) {
-  console.log(hit.savedKeywords)
-  console.log('INDEXNAME',window.indexName)
   return(
-    <div>
+    <div 
+    onClick={(e)=>{window.selectedItem = [hit.objectID, hit];
+    console.log('this is in search', window.selectedItem)}}
+    >
       {window.indexName === undefined &&
-        (<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
-          <Link to={`/items/:${hit.collectionId}`}>
-            <img src={hit.imageUrl}/>
+        (<div> 
             {hit.name}<br/>
-          </Link>
-            ${hit.price || 'message user'}<br/>
-            Tags : {hit.savedKeywords}
-            <br/>
         </div>)}
       {window.indexName === 'item' &&
       (<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
-        <Link to={`/items/:${hit.collectionId}`}>
-          <img src={hit.imageUrl}/>
           {hit.name}<br/>
-        </Link>
-          ${hit.price || 'message user'}<br/>
-          Tags : {hit.savedKeywords}
-          <br/>
       </div>)}
 
       {window.indexName === 'users' &&
         (<div onClick={(e)=> console.log('this is what the users click handler passes: ', hit)}>
-          <Link to={`/profile/`+ `${hit.objectID}`}>
-            <img src={hit.profileInfo.profilePhoto}/>
             {hit.profileInfo.username}
-          </Link>
       </div>)}
 
       {window.indexName === 'category' &&
           (<div onClick={(e)=> console.log('this is what the category click handler passes: ', hit)}>
-          <Link to={`/collections/:` + `${hit.objectID}`}>
             {hit.objectID}
-          </Link>
       </div>)}
-
-
     </div>
   )
 }
 
 //think of this as Search Result List component. it's like Search Result List Entry, maps and formats each found entry
-  function Search() {
-    return (
-      <div>
-        <Hits hitComponent={foundItem} />
-        <div style={{float: "center"}}>
-        </div>
-      </div>
-    )
-  }
+export default function Search() {
+  return (
+    <div>
+      <Hits hitComponent={foundItem} />
+      <div style={{float: "center"}}> 
+      <HitsPerPage
+      defaultRefinement={5} 
+      items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}]}
+      />
+    </div>
+    </div>
+  )
+}  
 
 //place through higher order function
-export default connectHits(Search);
 
 export class TradeSearch extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <header className="searchBar">
-        <SearchBox translations={{placeholder:'Search Me!'}} />
+        <SearchBox translations={{placeholder:'mmmmmmmmm search me'}} />
       </header>
     )
   }
 }
 
+console.log(window.selectedItem, 'selectedItem')

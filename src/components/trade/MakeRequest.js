@@ -1,6 +1,10 @@
 import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
+import { TradeSearch } from './TradeSearch.jsx'
+import Search from './TradeSearch.jsx'
+import SearchToggler from '../helperElements/SearchToggler.jsx'
+
 
 class MakeRequest extends React.Component {
   constructor(props) {
@@ -8,7 +12,7 @@ class MakeRequest extends React.Component {
     this.state = {
       searchUser: '',
       exUserObj:[],
-      selectedItem:['123', {uid: '123123', imageUrl: 'ooo', name: 'test'}],
+      selectedItem: window.selectedItem,
       trade: false,
       tradeItem: {}, //items id that user selected to trade with
       buy: false,
@@ -26,6 +30,7 @@ class MakeRequest extends React.Component {
   this.toggleCheckbox = this.toggleCheckbox.bind(this);
   this.handleSelect = this.handleSelect.bind(this);
   this.handletradeItem = this.handletradeItem.bind(this);
+  this.toggleShowSearch = this.toggleShowSearch.bind(this);
   }
 
 handleChange(e) {
@@ -67,6 +72,10 @@ handletradeItem(e) {
      this.setState({tradeItem: obj})
   }
 }
+// handleRequest() {
+//   this.setState({selectedItem: window.selectedItem})
+//   console.log('state', this.state.selectedItem)
+// }
 
 toggleCheckbox(e) {
   let name = e.target.name;
@@ -150,23 +159,36 @@ handleRequest() {
   }
 }
 
+
+toggleShowSearch() {
+  this.setState({showSearch: true})
+}
+
+
   render() {
-    return(<div>
-        <h4>search</h4>
-        <input name="searchUser"
-               type="text"
-               placeholder="search for user"
-               value={this.state.searchUser}
-               onChange={this.handleChange}/>
+    return(
+      <div>
+        <h3>search</h3>
+
+        {/* <input name="searchUser"
+          type="text"
+          placeholder="search for user"
+          value={this.state.searchUser}
+          onChange={this.handleChange}/>
 
         <button onClick={() => {
           this.setState({searchUser: ''})
-          return this.getUser(this.state.searchUser)}}>search</button>
+          return this.getUser(this.state.searchUser)
+          }}>search</button> */}
+          
+        <SearchToggler searchBy={this.props.searchBy} toggleShowSearch={this.toggleShowSearch}/>
 
-        <h4>offer</h4>
+        {this.state.showSearch ? (< TradeSearch/>) : null } 
+        {this.state.showSearch ? < Search /> : null }
 
-        <label>buy</label>
-        <input name="buy"
+        <h3>offer</h3>
+        <label>trade</label>
+        <input name="trade"
                type="checkbox"
                checked={this.state.buy}
                onChange={this.toggleCheckbox}/>
