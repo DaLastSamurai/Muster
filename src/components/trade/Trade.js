@@ -34,7 +34,6 @@ class Trade extends React.Component {
                 ? <div>
                     <h4>date</h4>  <h4>item owner</h4>  <h4>item</h4>  <h4>trade type</h4>  <h4>status</h4>
                     {Object.keys(this.props.request.made).map((reqItem) => {
-                      console.log('aaaaa',reqItem, this.props.request.made)
                       return <RequestMade key={reqItem} id={reqItem} reqMade={this.props.request['made'][reqItem]} />
                     })}
                   </div>
