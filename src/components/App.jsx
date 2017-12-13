@@ -37,7 +37,7 @@ export default class App extends React.Component {
       categorys: {},
       collections: {},
       items: {},
-      request: {}
+      request: {},
       editItem: '',
       indexName: 'item'
     };
@@ -66,7 +66,8 @@ export default class App extends React.Component {
     console.log(this.state.userId)
     rootRef.child('request').child(this.state.userId).on('value', (snap) => {
       this.setState({request: snap.val()})
-  }
+  })
+}
   
   editItem(clickedItem) {
     this.setState({
@@ -111,6 +112,7 @@ export default class App extends React.Component {
     console.log('this function changes indexName as state')
     this.setState({indexName : receiveIndexName})
   }
+  
 
   render() {
     return (
@@ -178,6 +180,7 @@ export default class App extends React.Component {
                 getUserCollection={this.getUserCollection} />
             <Route exact path='/trade' render={() => 
               <Trade 
+                searchBy={this.searchBy}
                 userId={this.state.userId}
                 getData={this.getCollection}
                 getRequestData={this.getRequestData}

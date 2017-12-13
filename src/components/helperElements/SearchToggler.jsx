@@ -17,7 +17,10 @@ export default class SearchToggler extends React.Component {
 	render() {
 		return(
 			<div>
-				<select onChange={this.searchByHandler}>
+				<select 
+				onChange={this.searchByHandler}
+				onChange={this.props.toggleShowSearch}>
+					<option value="" selected disabled hidden>Begin Search</option>
 					<option value="item">by items </option>
 					<option value="users">by users </option>
 					<option value="category">by category </option>
