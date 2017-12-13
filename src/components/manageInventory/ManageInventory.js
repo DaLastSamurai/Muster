@@ -90,7 +90,8 @@ class ManageInventory extends React.Component {
                 itemList={this.props.items}
                 getData={this.props.getData}
                 deleteCollection={this.deleteCollection}
-                deleteItem={this.deleteItem} />
+                deleteItem={this.deleteItem}
+                editItem={this.props.editItem} />
             : null} 
           {this.state.sort === 'category'
             ? <InventoryCategory 

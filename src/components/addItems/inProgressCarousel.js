@@ -53,11 +53,12 @@ class InProgressCarousel extends React.Component {
   render() {
     console.log('this.state', this.state)
     const settings = {
+      dots: false,
       infinite: true,
-      slidesToShow: 5,
+      slidesToShow: 3,
       slidesToScroll: 1,
-      dots: true,
-      speed: 500
+      vertical: true,
+      verticalSwiping: true
     };
     return (
       <div className="carousel-container">
