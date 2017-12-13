@@ -8,7 +8,7 @@ class MakeRequest extends React.Component {
     this.state = {
       searchUser: '',
       exUserObj:[],
-      selectedItem:['123', {uid: '123123', imageUrl: 'ooo', name: 'test'}],
+      selectedItem:['-L05bY3TFt2wbfh5TtOf', {uid: '1ra2wZZt7aYguQMpjKwtZ0HRIpMh1', imageUrl: "https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F9f1f7675-9a93-4555-b70d-1ca1f40e446a.jpg?alt=media&token=7c42873c-18fc-4f42-91a5-2f354325cb35", name: "onion"}],
       trade: false,
       tradeItem: {}, //items id that user selected to trade with
       buy: false,
@@ -83,7 +83,8 @@ handleRequest() {
     let tradeItemObj = null;
     new Promise((resolve, request) => {
       users.child(this.state.selectedItem[1]['uid']).on('value', (snap) => {
-        userObj = snap.val()
+        console.log('>>>>',snap.val())
+        mduserObj = snap.val()
         resolve(snap.val())
       })
     })
@@ -95,7 +96,7 @@ handleRequest() {
     .then(() =>{
       let dataMade = {
         item: this.state.selectedItem,
-        exchangee: [this.state.selectedItem[1]['uid'], userObj],
+        exchangee: [this.state.selectedItem[1]['uid'], mduserObj],
         trade: this.state.trade,
         tradeItem: [Object.keys(this.state.tradeItem)[0], tradeItemObj],
         buy: this.state.buy,
