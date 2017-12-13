@@ -28,7 +28,6 @@ class Trade extends React.Component {
   }
 
   render() {
-    console.log(this.state.indexName)
     return(
       <InstantSearch
       appId="9VH3I9OJWS"
@@ -41,7 +40,9 @@ class Trade extends React.Component {
             ? <MakeRequest collections={this.props.collections}
                           getIndexName={this.getIndexName} 
                           items={this.props.items} 
-                          userId={this.props.userId} /> 
+                          userId={this.props.userId}
+                          indexName={this.state.indexName}
+                          /> 
             : null}
             <div>
               <h2>Trade Request You Made</h2>

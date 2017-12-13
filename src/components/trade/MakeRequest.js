@@ -22,6 +22,7 @@ class MakeRequest extends React.Component {
       lateFee: '',
       message: '',
       showSearchBox : false,
+      selectedItem : window.selectedItem,
     }
   this.handleRequest = this.handleRequest.bind(this);
   this.handleChange = this.handleChange.bind(this);
@@ -181,12 +182,17 @@ handleshowSearchBox() {
           {this.state.showSearchBox ?
           (<TradeSearch />) : (<div/>)
           }
-          {true ?
+          {window.indexName ?
           (<Search />) : (<div/>)
           }
 
+          <button onClick={()=>this.setState({selectedItem : window.selectedItem})}> 
+            set the state
+          </button>
+          <button onClick={()=>console.log(this.state.selectedItem)}> show me the state</button>
+<br/>
 /////////////////////////////////////////////////////////////////////////////////////////////
-        {/* <h4>offer</h4>
+        <h4>offer</h4>
 
         <label>buy</label>
         <input name="buy"
@@ -254,7 +260,7 @@ handleshowSearchBox() {
                      placeholder="write message" 
                      onChange={this.handleChange}
                      value={this.state.message}/>
-        <button onClick={this.handleRequest}>Make Request</button> */}
+        <button onClick={this.handleRequest}>Make Request</button>
       </div>
     )
   }
