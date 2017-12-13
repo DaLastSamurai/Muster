@@ -37,7 +37,8 @@ export default class App extends React.Component {
       categorys: {},
       collections: {},
       items: {},
-      indexName: 'item'
+      indexName: 'item',
+      request: {}
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
@@ -59,7 +60,10 @@ export default class App extends React.Component {
   }
 
   getRequestData() {
-    
+    console.log(this.state.userId)
+    rootRef.child('request').child(this.state.userId).on('value', (snap) => {
+      this.setState({request: snap.val()})
+    })
   }
 
   getUserCollection() {
@@ -162,7 +166,10 @@ export default class App extends React.Component {
             <Route exact path='/trade' render={() => 
               <Trade 
                 userId={this.state.userId}
-                getRequestData={this.getRequestData} />}/>
+                getRequestData={this.getRequestData}
+                collections={this.state.collections}
+                items={this.state.items}
+                request={this.state.request} />}/>
           </Switch>
 
         </div>
