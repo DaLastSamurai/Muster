@@ -1,8 +1,10 @@
 import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
-import { TradeSearch, Search } from './TradeSearch.jsx'
+import { TradeSearch } from './TradeSearch.jsx'
+import Search from './TradeSearch.jsx'
 import SearchToggler from '../helperElements/SearchToggler.jsx'
+
 
 class MakeRequest extends React.Component {
   constructor(props) {
@@ -24,6 +26,7 @@ class MakeRequest extends React.Component {
   this.getUser = this.getUser.bind(this);
   this.toggleCheckbox = this.toggleCheckbox.bind(this);
   this.toggleShowSearch = this.toggleShowSearch.bind(this);
+  this.getItem = this.getItem.bind(this);
   }
 
 handleChange(e) {
@@ -65,12 +68,12 @@ toggleShowSearch() {
   this.setState({showSearch: true})
 }
 
-setSelectedItem() {
-  this.setState({selectedItem: [hit.objectID, hit]})
+getItem(objectID, itemObject) {
+  this.setState({selectedItem: [objectID, itemObject]})
 }
 
   render() {
-    console.log('this should be true',this.state.showSearch)
+    console.log('selectedItem',this.state.setSelectedItem)
     return(
       <div>
         <h5>search</h5>
@@ -89,7 +92,7 @@ setSelectedItem() {
         <SearchToggler searchBy={this.props.searchBy} toggleShowSearch={this.toggleShowSearch}/>
 
         {this.state.showSearch ? (< TradeSearch/>) : null }
-        {this.state.showSearch ? < Search /> : null }
+        {this.state.showSearch ? < Search/> : null }
 
         <h5>offer</h5>
         <label>trade</label>
