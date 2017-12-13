@@ -17,6 +17,7 @@ class AddItems extends React.Component {
       name: '',
       notes: '',
       imageUrl: '',
+      thumbnailUrl: '',
       price: '',
       productIds: '',
       purchaseTime: '',
@@ -54,7 +55,8 @@ class AddItems extends React.Component {
       imageUrl: item.imageUrl,
       collectionId: item.collectionId,
       location: item.location,
-      keywords: []
+      keywords: [],
+      savedKeywords: []
     });
   };
 
@@ -198,8 +200,11 @@ class AddItems extends React.Component {
               imageUrl={this.state.imageUrl}
             />
             
+
+            {
+            (this.state.keywords.length > 0) ?
             <div>
-              <label>Suggested Keywords</label>
+              <label>Suggested</label>
               <div>
                 <ul id="menu">
                   {this.state.keywords.map(keyword =>
@@ -207,9 +212,12 @@ class AddItems extends React.Component {
                 </ul>
               </div>
             </div>
+            :
+            <div></div>
+            }
 
             <div>
-              <label>Saved Keywords</label>
+              <label>Keywords</label>
               <div>
                 <ul id="menu">
                   {this.state.savedKeywords.map(keyword =>
