@@ -79,45 +79,74 @@ handleRequest() {
   if (Object.keys(this.state.tradeItem).length > 1) {
     alert('you can only exchange one item')
   } else {
-    let dataMade = {
-      item: this.state.selectedItem,
-      exchangee: this.state.selectedItem[1]['uid'],
-      trade: this.state.trade,
-      tradeItem: Object.keys(this.state.tradeItem)[0],
-      buy: this.state.buy,
-      price: this.state.price,
-      loan: this.state.loan,
-      dueDate: this.state.dueDate,
-      initialPrice: this.state.initPrice,
-      lateFee: this.state.lateFee,
-      message: this.state.message,
-      accept: "pro",
-      date: new Date(),
-      paied: false,
-
-    }
-    let updateMade = {};
-    updateMade['/request/' + this.props.userId + '/made/' + this.state.selectedItem[0]] = dataMade;
-    firebase.database().ref().update(updateMade)
-    let dateRec = {
-      item: this.state.selectedItem,
-      exchangee: this.props.userId,
-      trade: this.state.trade,
-      tradeItem: Object.keys(this.state.tradeItem)[0],
-      buy: this.state.buy,
-      price: this.state.price,
-      loan: this.state.loan,
-      dueDate: this.state.dueDate,
-      initialPrice: this.state.initPrice,
-      lateFee: this.state.lateFee,
-      message: this.state.message,
-      accept: "pro",
-      date: new Date(),
-      paied: false,
-    }
-    let updateRec = {};
-    updateRec['/request/' + this.state.selectedItem[1]['uid'] + '/received/' + this.state.selectedItem[0]] = dateRec;
-    firebase.database().ref().update(updateRec)
+    let mduserObj = null;
+    let tradeItemObj = null;
+    new Promise((resolve, request) => {
+      users.child(this.state.selectedItem[1]['uid']).on('value', (snap) => {
+        userObj = snap.val()
+        resolve(snap.val())
+      })
+    })
+    .then(() => {
+      item.child(Object.keys(this.state.tradeItem)[0]).on('value', (snap) => {
+        tradeItemObj = snap.val()
+      })
+    })
+    .then(() =>{
+      let dataMade = {
+        item: this.state.selectedItem,
+        exchangee: [this.state.selectedItem[1]['uid'], userObj],
+        trade: this.state.trade,
+        tradeItem: [Object.keys(this.state.tradeItem)[0], tradeItemObj],
+        buy: this.state.buy,
+        price: this.state.price,
+        loan: this.state.loan,
+        dueDate: this.state.dueDate,
+        initialPrice: this.state.initPrice,
+        lateFee: this.state.lateFee,
+        message: this.state.message,
+        accept: "pro",
+        date: new Date(),
+        paied: false,
+        sentItem: false,
+        receivedItem: false,
+        sentTradeItem: false,
+        receivedTradeItem: false,
+      }
+      let updateMade = {};
+      updateMade['/request/' + this.props.userId + '/made/' + this.state.selectedItem[0]] = dataMade;
+      firebase.database().ref().update(updateMade)
+    })
+    .then(() => {
+      users.child(this.props.userId).on('value', (snap) => {
+        return snap.val()
+      })
+    })
+    .then((rquserObj) => {
+      let dateRec = {
+        item: this.state.selectedItem,
+        exchangee: [this.props.userId, rquserObj],
+        trade: this.state.trade,
+        tradeItem: [Object.keys(this.state.tradeItem)[0], tradeItemObj],
+        buy: this.state.buy,
+        price: this.state.price,
+        loan: this.state.loan,
+        dueDate: this.state.dueDate,
+        initialPrice: this.state.initPrice,
+        lateFee: this.state.lateFee,
+        message: this.state.message,
+        accept: "pro",
+        date: new Date(),
+        paied: false,
+        sentItem: false,
+        receivedItem: false,
+        sentTradeItem: false,
+        receivedTradeItem: false,
+      }
+      let updateRec = {};
+      updateRec['/request/' + this.state.selectedItem[1]['uid'] + '/received/' + this.state.selectedItem[0]] = dateRec;
+      firebase.database().ref().update(updateRec)
+    })
   }
 }
 

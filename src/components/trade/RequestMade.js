@@ -7,15 +7,16 @@ class RequestMade extends React.Component {
     super(props)
   }
 
-  render() {console.log('>>>>>>Reqm',this.props.reqMade)
+  render() {
     return(this.props.reqMade ? 
       <div>
-        {/* <h4>date</h4>  <h4>item owner</h4>  <h4>item</h4>  <h4>trade type</h4>  <h4>status</h4> */}
         <div>{this.props.reqMade.date}</div>
-        <div>{'should be user name(need to be clickable)'}</div>
-        <div>{'item pic and name should be clickable'}</div>
+        {/* <div>{this.props.reqMade.exchangee[1]['profileInfo']['username']}</div> */}
+        <img src={this.props.reqMade.item[1['imageUrl']]}/>
+        <div>{this.props.reqMade.item[1]['name']}</div>
         <div>{this.props.reqMade.buy ? 'purchase ' : null}{this.props.reqMade.trade ? 'trade ' : null}{this.props.reqMade.loan ? 'rent ' : null}</div>
         <div>{this.props.reqMade.accept === 'pro' ? 'sent request' : (this.props.reqMade.accept ? 'accepted' : 'rejected')}</div>
+        {this.props.reqMade.accept === 'accepted' ? }
       </div>
       : null
     )
