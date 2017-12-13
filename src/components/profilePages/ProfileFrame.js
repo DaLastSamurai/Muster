@@ -157,7 +157,7 @@ export default class ProfileFrame extends React.Component {
               
                 <ImageUpload setImageState = {this.setImageState}/>
                 <img src = {this.state.profilePhoto} className = "profilePhoto"/>
-
+                <div>
                 Username (click to edit, one word only):
                 <RIEInput
                   value={this.state.username}
@@ -167,6 +167,8 @@ export default class ProfileFrame extends React.Component {
                   classLoading="loading"
                   classInvalid="invalid"
                 />
+                </div>
+                <div>
                  Bio (click to edit):
                 <RIETextArea
                   value={this.state.bio}
@@ -176,16 +178,20 @@ export default class ProfileFrame extends React.Component {
                   classLoading="loading"
                   classInvalid="invalid"
                 />
+                </div>
               </div>
             ) : (
               <div>
-                <h5> 
-                  bio: {this.state.bio}
-                </h5> 
-                <br /> 
-                <h5> 
-                  Username: {this.state.username}
-                </h5> 
+                <div>
+                  <h3> 
+                    bio: {this.state.bio}
+                  </h3> 
+                </div>
+                <div> 
+                  <h3> 
+                    Username: {this.state.username}
+                  </h3> 
+                </div>
               </div>
             )
           }

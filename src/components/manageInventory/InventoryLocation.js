@@ -70,7 +70,8 @@ class InventoryLocation extends React.Component {
                 location={location}
                 itemList={this.props.itemList}
                 getNodes={this.getNodes}
-                deleteItem={this.props.deleteItem} />
+                deleteItem={this.props.deleteItem}
+                editItem={this.props.editItem} />
             })
           : console.log('no items in your account')}
       </div>
