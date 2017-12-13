@@ -17,48 +17,36 @@ class Trade extends React.Component {
 
   toggleMakeRequest() {
    this.setState({showMR: !this.state.showMR})
-  }
+  }  
 
   render() {
     return(
       <div>
         <button onClick={this.toggleMakeRequest}>Make Request</button>
-        {this.state.showMR ? <MakeRequest /> : null}
-        <h2>Trade Request You Made</h2>
-        <RequestMade />
-        <h2>Trade Request You Received</h2>
-        <RequestReceived />
+        {this.state.showMR 
+          ? <MakeRequest collections={this.props.collections} 
+                         items={this.props.items} 
+                         userId={this.props.userId} /> 
+          : null}
+          <div>
+            <h2>Trade Request You Made</h2>
+              {this.props.request.made 
+                ? <div>
+                    <h4>date</h4>  <h4>item owner</h4>  <h4>item</h4>  <h4>trade type</h4>  <h4>status</h4>
+                    {Object.keys(this.props.request.made).map((reqItem) => {
+                      console.log('aaaaa',reqItem, this.props.request.made)
+                      return <RequestMade key={reqItem} id={reqItem} reqMade={this.props.request['made'][reqItem]} />
+                    })}
+                  </div>
+                : 'no request'}
+            <h2>Trade Request You Received</h2>
+              {this.props.request.received 
+                ? <RequestReceived reqRec={this.props.request.received} /> 
+                : 'no request'}
+          </div>
       </div>
     )
   }
 }
 
 export default Trade;
-
-// data structure
-// request: 
-//   userId: {
-//     made: {
-//       item: {itemId: itemId, itemId:itemId},
-//       exchangee: 'uid',
-//       lend: date,
-//       offer: {itemId: itemId, itemId: itemId  }|| price,
-//       accepted: true || false,
-//       message: '',
-//       received: true || false,
-//       sent: true || false,
-//       address: '',
-//       paied: false,
-//     },
-//     received: {
-//       item: {itemId: itemId, itemId:itemId},
-//       exchangee: 'uid',
-//       rent: date,
-//       offer: {itemId: itemId, itemId: itemId  }|| price,
-//       accept: true || false,
-//       message: '',
-//       sent: true || false,
-//       received: false,
-//       address: '',
-//     }
-//   }
