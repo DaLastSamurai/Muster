@@ -37,7 +37,8 @@ class InventoryCollectionList extends React.Component {
             key={id} 
             itemId={id} 
             itemInCol={this.props.itemList[id]} 
-            deleteItem={this.props.deleteItem} />
+            deleteItem={this.props.deleteItem}
+            editItem={this.props.editItem} />
         })
         : console.log(`no item in${this.props.collection.name}`)}
         </div>

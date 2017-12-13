@@ -37,8 +37,9 @@ export default class App extends React.Component {
       categorys: {},
       collections: {},
       items: {},
-      indexName: 'item',
       request: {}
+      editItem: '',
+      indexName: 'item'
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
@@ -52,6 +53,8 @@ export default class App extends React.Component {
     this.getItem = getItem.bind(this); //takes item id array
     this.getCategory = getCategory.bind(this); //takes collection object
     this.getRequestData = this.getRequestData.bind(this);
+    this.getItem = getItem.bind(this);
+    this.editItem = this.editItem.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +66,11 @@ export default class App extends React.Component {
     console.log(this.state.userId)
     rootRef.child('request').child(this.state.userId).on('value', (snap) => {
       this.setState({request: snap.val()})
+  }
+  
+  editItem(clickedItem) {
+    this.setState({
+      editItem: clickedItem
     })
   }
 
@@ -149,7 +157,11 @@ export default class App extends React.Component {
             />
             <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
             <Route exact path='/addItems' render={() => 
-              <AddItems user={this.state.user} userId={this.state.userId} />} />
+              <AddItems 
+                user={this.state.user} 
+                userId={this.state.userId} 
+                editItem={this.state.editItem}
+              />} />
             <Route exact path='/collections/:categoryId' component={CollectionList} />
             <Route exact path='/items/:collectionId' component={(props) =>  
               <ItemList {...props} userId={this.state.userId} />} />
@@ -157,6 +169,7 @@ export default class App extends React.Component {
             <Route exact path='/manageinventory' render={() => 
               <ManageInventory 
                 // onEnter={() => {this.getCollection(this.state.userId)}}
+                editItem={this.editItem}
                 categorys={this.state.categorys} 
                 collections={this.state.collections} 
                 items={this.state.items} 

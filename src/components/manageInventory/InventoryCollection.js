@@ -77,7 +77,8 @@ class InventoryCollection extends React.Component {
                 itemList={this.props.itemList} 
                 getNodes={this.getNodes}
                 deleteCollection={this.props.deleteCollection}
-                deleteItem={this.props.deleteItem} />
+                deleteItem={this.props.deleteItem} 
+                editItem={this.props.editItem} />
             })
           : console.log('no collection in your account')}
       </div>
