@@ -3,6 +3,7 @@ import * as firebase from 'firebase';
 import UserInfo from '../userBar/UserInfo.jsx';
 import ImageUpload from '../helperElements/imageUploader';
 import InProgressCarousel from './inProgressCarousel';
+import ImageRecog from '../helperElements/imageRecog';
 
 class AddItems extends React.Component {
   constructor(props) {
@@ -52,7 +53,8 @@ class AddItems extends React.Component {
       name: item.name,
       imageUrl: item.imageUrl,
       collectionId: item.collectionId,
-      location: item.location
+      location: item.location,
+      keywords: []
     });
   };
 
@@ -144,30 +146,42 @@ class AddItems extends React.Component {
 
     }, (error) => { console.error(error) }
     );
-    
+  
+
     if (this.props.editItem) {
       let clickedItem = this.props.editItem;
       let itemRef = firebase.database().ref('/item/' + clickedItem);
 
       itemRef.on("value", (snapshot) => {
         console.log('snapshot in componentdidmount', snapshot.val())
-        // this.setState({
-        //   id: this.props.editItem,
-        //   boughtFrom: snapshot.val().boughtFrom,
-        //   collectionId: snapshot.val().collectionId,
-        //   location: snapshot.val().location,
-        //   name: snapshot.val().name,
-        //   notes: snapshot.val().notes,
-        //   imageUrl: snapshot.val().imageUrl,
-        //   price: snapshot.val().price,
-        //   productIds: snapshot.val().productIds,
-        //   purchaseTime: snapshot.val().purchaseTime,
-        //   savedKeywords: snapshot.val().savedKeywords,
-        //   sell: snapshot.val().sell
-        // });
+        this.setState({
+          id: this.props.editItem,
+          boughtFrom: snapshot.val().boughtFrom,
+          collectionId: snapshot.val().collectionId,
+          location: snapshot.val().location,
+          name: snapshot.val().name,
+          notes: snapshot.val().notes,
+          imageUrl: snapshot.val().imageUrl,
+          price: snapshot.val().price,
+          productIds: snapshot.val().productIds,
+          purchaseTime: snapshot.val().purchaseTime,
+          savedKeywords: snapshot.val().savedKeywords || [],
+          sell: snapshot.val().sell
+        });
       }, (error) => { console.error(error) });
     }
-  
+  }
+
+  componentDidUpdate(){
+    if (this.state.keywords.length > 0) {
+      console.log('Keywords loaded!')
+    } else {
+      if (this.state.imageUrl) {
+        ImageRecog(this.state.imageUrl, (keywords) => {
+          this.setState({ keywords })
+        }); 
+      }
+    };
   }
  
   render() {

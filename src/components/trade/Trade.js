@@ -28,7 +28,7 @@ class Trade extends React.Component {
                          items={this.props.items} 
                          userId={this.props.userId} /> 
           : null}
-          <div>
+          {/* <div>
             <h2>Trade Request You Made</h2>
               {this.props.request.made 
                 ? <div>
@@ -42,7 +42,7 @@ class Trade extends React.Component {
               {this.props.request.received 
                 ? <RequestReceived reqRec={this.props.request.received} /> 
                 : 'no request'}
-          </div>
+          </div> */}
       </div>
     )
   }

@@ -28,7 +28,8 @@ class InventoryLocationList extends React.Component {
               key={itemKey} 
               itemId={itemKey} 
               itemInLocation={this.props.itemList[itemKey]}
-              deleteItem={this.props.deleteItem} />
+              deleteItem={this.props.deleteItem}
+              editItem={this.props.editItem}/>
         })
         : console.log(`no item in ${this.props.location}`)}
         </div>
