@@ -16,7 +16,7 @@ class RequestMade extends React.Component {
         <div>{this.props.reqMade.item[1]['name']}</div>
         <div>{this.props.reqMade.buy ? 'purchase ' : null}{this.props.reqMade.trade ? 'trade ' : null}{this.props.reqMade.loan ? 'rent ' : null}</div>
         <div>{this.props.reqMade.accept === 'pro' ? 'sent request' : (this.props.reqMade.accept ? 'accepted' : 'rejected')}</div>
-        {this.props.reqMade.accept === 'accepted' ? }
+        {/* {this.props.reqMade.accept === 'accepted' ? } */}
       </div>
       : null
     )

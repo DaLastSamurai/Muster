@@ -37,7 +37,7 @@ export default class App extends React.Component {
       categorys: {},
       collections: {},
       items: {},
-      request: {}
+      request: {},
       editItem: '',
       indexName: 'item'
     };
@@ -66,6 +66,7 @@ export default class App extends React.Component {
     console.log(this.state.userId)
     rootRef.child('request').child(this.state.userId).on('value', (snap) => {
       this.setState({request: snap.val()})
+    })
   }
   
   editItem(clickedItem) {
