@@ -99,6 +99,7 @@ export default class App extends React.Component {
     console.log('this function changes indexName as state')
     this.setState({indexName : receiveIndexName})
   }
+  
 
   render() {
     return (

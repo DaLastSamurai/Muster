@@ -19,14 +19,13 @@ class MakeRequest extends React.Component {
       trade: false,
       pay: false,
       showSearch: false,
-      selectedItem: [],
+      selectedItem: window.selectedItem,
     }
   this.handleRequest = this.handleRequest.bind(this);
   this.handleChange = this.handleChange.bind(this);
   this.getUser = this.getUser.bind(this);
   this.toggleCheckbox = this.toggleCheckbox.bind(this);
   this.toggleShowSearch = this.toggleShowSearch.bind(this);
-  this.getItem = this.getItem.bind(this);
   }
 
 handleChange(e) {
@@ -54,7 +53,8 @@ getUser(userName) {
 }
 
 handleRequest() {
- 
+  this.setState({selectedItem: window.selectedItem})
+  console.log('state', this.state.selectedItem)
 }
 
 toggleCheckbox(e) {
@@ -68,15 +68,11 @@ toggleShowSearch() {
   this.setState({showSearch: true})
 }
 
-getItem(objectID, itemObject) {
-  this.setState({selectedItem: [objectID, itemObject]})
-}
 
   render() {
-    console.log('selectedItem',this.state.setSelectedItem)
     return(
       <div>
-        <h5>search</h5>
+        <h3>search</h3>
 
         {/* <input name="searchUser"
           type="text"
@@ -91,10 +87,10 @@ getItem(objectID, itemObject) {
           
         <SearchToggler searchBy={this.props.searchBy} toggleShowSearch={this.toggleShowSearch}/>
 
-        {this.state.showSearch ? (< TradeSearch/>) : null }
-        {this.state.showSearch ? < Search/> : null }
+        {this.state.showSearch ? (< TradeSearch/>) : null } 
+        {this.state.showSearch ? < Search /> : null }
 
-        <h5>offer</h5>
+        <h3>offer</h3>
         <label>trade</label>
         <input name="trade"
                type="checkbox"
