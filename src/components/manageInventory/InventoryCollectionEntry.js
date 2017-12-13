@@ -1,6 +1,6 @@
 import React from 'react';
 import AddItems from '../addItems/addItems';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 
 class InventoryCollectionEntry extends React.Component {
@@ -24,7 +24,6 @@ class InventoryCollectionEntry extends React.Component {
 
         <Link to={'/addItems/'}>
           <button onClick={() => {
-            console.log('THISSSI>>>>>>>>>>>>>>>', this)
             this.props.editItem(this.props.itemId)
           }
           } type="button">edit</button>
