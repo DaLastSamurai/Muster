@@ -40,6 +40,8 @@
     "react-select": "^1.1.0",
     "react-sidenav": "^2.1.2",
     "react-slick": "^0.16.0",
+    "react-stripe-checkout": "^2.6.3",
+    "react-stripe-elements": "^1.2.1",
     "react-styled-select": "^2.2.2-beta",
     "react-ui-dropdown": "^0.3.4",
     "riek": "^1.1.0",
