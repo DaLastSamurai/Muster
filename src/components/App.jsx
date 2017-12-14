@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../config/firebaseCredentials';
 import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-instantsearch/dom';
+
 //react component
 import UnprotectedNav from './nav/UnprotectedNav';
 import ProtectedNav from './nav/ProtectedNav';
@@ -169,7 +170,6 @@ export default class App extends React.Component {
             <Route exact path='/searching' render={()=> <Search />}/>
             <Route exact path='/manageinventory' render={() => 
               <ManageInventory 
-                // onEnter={() => {this.getCollection(this.state.userId)}}
                 editItem={this.editItem}
                 categorys={this.state.categorys} 
                 collections={this.state.collections} 
@@ -177,14 +177,14 @@ export default class App extends React.Component {
                 userId={this.state.userId}
                 getData={this.getCollection} />}
                 getUserCollection={this.getUserCollection} />
-            <Route exact path='/trade' render={() => 
-              <Trade 
-                userId={this.state.userId}
-                getData={this.getCollection}
-                getRequestData={this.getRequestData}
-                collections={this.state.collections}
-                items={this.state.items}
-                request={this.state.request} />}/>
+            <Route exact path='/trade' render={() =>
+                <Trade 
+                  userId={this.state.userId}
+                  getData={this.getCollection}
+                  getRequestData={this.getRequestData}
+                  collections={this.state.collections}
+                  items={this.state.items}
+                  request={this.state.request} />}/>
             <Route exact path='/map' render={() =>
             <Map 
               containerElement={<div style={{ height: `400px` }} />}
