@@ -45,20 +45,25 @@ class Trade extends React.Component {
                           /> 
             : null}
             <div>
-              <h2>Trade Request You Made</h2>
-                {this.props.request && this.props.request.made 
-                  ? <div>
-                      <h4>date</h4>  <h4>item owner</h4>  <h4>item</h4>  <h4>trade type</h4>  <h4>status</h4>
-                      {Object.keys(this.props.request.made).map((reqItem) => {
-                        return <RequestMade key={reqItem} id={reqItem} reqMade={this.props.request['made'][reqItem]} />
-                      })}
-                    </div>
-                  : 'no request'}
-              <h2>Trade Request You Received</h2>
-                {this.props.request && this.props.request.received 
-                  ? <RequestReceived reqRec={this.props.request.received} /> 
-                  : 'no request'}
-            </div>
+            <h2>Trade Request You Made</h2>
+              {this.props.request && this.props.request.made 
+                ? <div>
+                    <h4>date</h4>  <h4>item owner</h4>  <h4>item</h4>  <h4>trade type</h4>  <h4>status</h4>
+                    {Object.keys(this.props.request.made).map((reqItem) => {
+                      return <RequestMade userId={this.props.userId} key={reqItem} id={reqItem} reqMade={this.props.request['made'][reqItem]} />
+                    })}
+                  </div>
+                : 'no request'}
+            <h2>Trade Request You Received</h2>
+              {this.props.request && this.props.request.received 
+                ? <div>
+                  <h4>date</h4>  <h4>person who offer</h4>  <h4>item</h4>  <h4>trade type</h4>  <h4>status</h4>
+                  {Object.keys(this.props.request.received).map((reqItem) => {
+                    return <RequestReceived userId={this.props.userId} key={reqItem} id={reqItem} reqRec={this.props.request['received'][reqItem]} />
+                  })}
+                  </div> 
+                : 'no request'}
+          </div>
         </div>
       </InstantSearch>
     )

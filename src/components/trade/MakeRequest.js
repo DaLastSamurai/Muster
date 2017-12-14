@@ -10,7 +10,7 @@ class MakeRequest extends React.Component {
     this.state = {
       searchUser: '',
       exUserObj:[],
-      selectedItem:['-L05bY3TFt2wbfh5TtOf', {uid: '1ra2wZZt7aYguQMpjKwtZ0HRIpMh1', imageUrl: "https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F9f1f7675-9a93-4555-b70d-1ca1f40e446a.jpg?alt=media&token=7c42873c-18fc-4f42-91a5-2f354325cb35", name: "onion"}],
+      selectedItem:['-L05bY3TFt2wbfh5TtOf', {uid: 'ra2wZZt7aYguQMpjKwtZ0HRIpMh1', imageUrl: "https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F9f1f7675-9a93-4555-b70d-1ca1f40e446a.jpg?alt=media&token=7c42873c-18fc-4f42-91a5-2f354325cb35", name: "onion"}],
       trade: false,
       tradeItem: {}, //items id that user selected to trade with
       buy: false,
@@ -81,29 +81,36 @@ toggleCheckbox(e) {
 }
 
 handleRequest() {
+  console.log('aaaaaaa',this.state)
   if (Object.keys(this.state.tradeItem).length > 1) {
     alert('you can only exchange one item')
   } else {
     let mduserObj = null;
     let tradeItemObj = null;
+    let rquserObj = null;
     new Promise((resolve, request) => {
-      users.child(this.state.selectedItem[1]['uid']).on('value', (snap) => {
-        console.log('>>>>',snap.val())
+      let userKey = this.state.selectedItem[1]['uid']
+      users.child(userKey).on('value', (snap) => {
+        // console.log('>>>>',snap.val())
         mduserObj = snap.val()
         resolve(snap.val())
       })
     })
     .then(() => {
-      item.child(Object.keys(this.state.tradeItem)[0]).on('value', (snap) => {
-        tradeItemObj = snap.val()
-      })
+      if (this.state.trade) {
+        item.child(Object.keys(this.state.tradeItem)[0]).on('value', (snap) => {
+          tradeItemObj = snap.val()
+        })
+      } else {
+        tradeItemObj = null;
+      }
+      
     })
     .then(() =>{
       let dataMade = {
         item: this.state.selectedItem,
         exchangee: [this.state.selectedItem[1]['uid'], mduserObj],
         trade: this.state.trade,
-        tradeItem: [Object.keys(this.state.tradeItem)[0], tradeItemObj],
         buy: this.state.buy,
         price: this.state.price,
         loan: this.state.loan,
@@ -118,22 +125,32 @@ handleRequest() {
         receivedItem: false,
         sentTradeItem: false,
         receivedTradeItem: false,
+        exaddress: '',
+        tracking:'',
       }
+
+      if (Object.keys(this.state.tradeItem)[0]) {
+        dataMade['tradeItem'] = [Object.keys(this.state.tradeItem)[0], tradeItemObj]
+      } else {
+        dataMade['tradeItem'] = {}
+      }
+      
       let updateMade = {};
       updateMade['/request/' + this.props.userId + '/made/' + this.state.selectedItem[0]] = dataMade;
-      firebase.database().ref().update(updateMade)
+      return firebase.database().ref().update(updateMade)
     })
     .then(() => {
       users.child(this.props.userId).on('value', (snap) => {
+        console.log(snap.val())
+        rquserObj = snap.val()
         return snap.val()
       })
     })
-    .then((rquserObj) => {
+    .then(() => {
       let dateRec = {
         item: this.state.selectedItem,
         exchangee: [this.props.userId, rquserObj],
         trade: this.state.trade,
-        tradeItem: [Object.keys(this.state.tradeItem)[0], tradeItemObj],
         buy: this.state.buy,
         price: this.state.price,
         loan: this.state.loan,
@@ -148,10 +165,21 @@ handleRequest() {
         receivedItem: false,
         sentTradeItem: false,
         receivedTradeItem: false,
+        exaddress: '',
+        tracking: '',
       }
+
+      if (Object.keys(this.state.tradeItem)[0]) {
+        dateRec['tradeItem'] = [Object.keys(this.state.tradeItem)[0], tradeItemObj]
+      } else {
+        dateRec['tradeItem'] = {}
+      }
+
       let updateRec = {};
+      console.log('///',dateRec)
       updateRec['/request/' + this.state.selectedItem[1]['uid'] + '/received/' + this.state.selectedItem[0]] = dateRec;
-      firebase.database().ref().update(updateRec)
+      console.log(updateRec)
+      return firebase.database().ref().update(updateRec)
     })
   }
 }
@@ -203,6 +231,7 @@ handleshowSearchBox() {
         {this.state.buy 
           ? <input name="price"
                    type="text"
+                   onChange={this.handleChange}
                    placeholder="type your offer price"/>
           : null}
 
