@@ -20,7 +20,17 @@ const item = algolia.initIndex('item');
 const users  = algolia.initIndex('users')
 const category  = algolia.initIndex('category')
 const collection  = algolia.initIndex('collection')
-////////////////////////////////////////////
+const dummyData = algolia.initIndex('geoSearchDummy')
+//////////////////////////////////////////// configure search settings
+
+dummyData.setSettings({
+  searchableAttributes: [
+    'name',
+    'location',
+    'savedKeywords',
+    '_geoloc'
+  ]
+})
 
 item.setSettings({
   searchableAttributes: [

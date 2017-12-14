@@ -22,12 +22,12 @@ li a {
    padding: 14px 16px;
 }
 
-/* img {
+img {
   border-radius: 5px;
   display: flex;
   max-width: 100px;
-  max-height: 100px;
-} */
+  /* max-height: 100px; */
+}
 
 .logo {
 }
@@ -93,4 +93,14 @@ li a {
 .carousel-container {
   /* width: 100px;  */
   /* height: fit-content; */
+}
+
+em {
+  color: red;
+  font-style: normal
+}
+
+#map {
+  width: 600px;
+  height: 600px;
 }
