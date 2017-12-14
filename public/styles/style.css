@@ -128,3 +128,13 @@ img {
 .reqrest {
   grid-column: 1/6;
 } */
+
+em {
+  color: red;
+  font-style: normal
+}
+
+#map {
+  width: 600px;
+  height: 600px;
+}
