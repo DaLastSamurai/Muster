@@ -40,12 +40,25 @@ class RequestReceived extends React.Component {
 
   render() {
     return(this.props.reqRec ? 
-      <div>
-        <div>{this.props.reqRec.date}</div>
-        <div>{this.props.reqRec.exchangee[1]['profileInfo']['username']}</div>
-        <img src={this.props.reqRec.item[1]['imageUrl']}/>
-        <div>{this.props.reqRec.item[1]['name']}</div>
-        <div>{this.props.reqRec.buy ? 'purchase ' : null}{this.props.reqRec.trade ? 'trade ' : null}{this.props.reqRec.loan ? 'rent ' : null}</div>
+      <div className="req-containerdiv">
+        <div className="reqdate">{this.props.reqRec.date}</div>
+        <div className="requser">{this.props.reqRec.exchangee[1]['profileInfo']['username']}</div>
+        <div className="reqitem">
+          <img src={this.props.reqRec.item[1]['imageUrl']}/>
+          <div>{this.props.reqRec.item[1]['name']}</div>
+        </div>
+        <div className="reqtype">
+          {this.props.reqRec.buy ? 'purchase ' : null}{this.props.reqRec.trade ? 'trade ' : null}{this.props.reqRec.loan ? 'rent ' : null}
+        </div>
+        <div className="req-containerdiv">
+          {this.props.reqRec.accept === 'pro' 
+            ? <div>
+                <button name="true" onClick={this.handleAccept}>accept</button>
+                <button name="false" onClick={this.handleAccept}>reject</button> 
+              </div>
+            : (this.props.reqRec.accept ? 'accepted' : 'rejected')}
+        </div>
+        <div className="reqrest">
         {this.props.reqRec.price.length > 0 
           ? <div>
               <div>offer price</div> 
@@ -69,12 +82,6 @@ class RequestReceived extends React.Component {
               <div>{this.props.reqRec.tradeItem[1]['name']}</div>
             </div>
           : null}
-        {this.props.reqRec.accept === 'pro' 
-          ? <div>
-              <button name="true" onClick={this.handleAccept}>accept</button>
-              <button name="false" onClick={this.handleAccept}>reject</button> 
-            </div>
-          : (this.props.reqRec.accept ? 'accepted' : 'rejected')}
         {this.props.reqRec.accept && this.props.reqRec.trade 
           ? <div>
               <h4>address</h4>
@@ -105,6 +112,7 @@ class RequestReceived extends React.Component {
               <div>{this.props.reqRec.tracking}</div>
             </div>
           : null}
+        </div>
       </div>
       : null
     )

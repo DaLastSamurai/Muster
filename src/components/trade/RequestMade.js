@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
+import Payments from '../payments/Payments.js';
 
 class RequestMade extends React.Component {
   constructor(props) {
@@ -87,6 +88,10 @@ class RequestMade extends React.Component {
               <div>{this.props.reqMade.tracking}</div>
             </div>
           : null}
+          <Payments 
+            userName={this.props.userObj.profileInfo.username}
+            description={`$${this.props.reqMade.price.length > 0 ? this.props.reqMade.price : this.props.reqMade.initialPrice} for ${this.props.reqMade.item[1]['name']}`}
+            amount={this.props.reqMade.price.length > 0 ? parseInt(this.props.reqMade.price) * 100 : parseInt(this.props.reqMade.initialPrice) * 100} />
       </div>
       : null
     )

@@ -94,3 +94,37 @@ img {
   /* width: 100px;  */
   /* height: fit-content; */
 }
+/* .req-container {
+  display: grid;
+  grid-template-columns: 30px, 30px, 30px, 30px, 30px;
+  grid-gap: 5px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.req-containerdiv {
+  grid-column: 1/6;
+  display: grid; 
+  grid-template-columns: 30px, 30px, 30px, 30px, 30px; 
+  grid-gap: 5px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.reqdate {
+  grid-column: 1/2;
+}
+.requser {
+  grid-column: 2/3;
+}
+.reqitem {
+  grid-column: 3/4;
+}
+.reqtype {
+  grid-column: 4/5;
+}
+.reqstatus {
+  grid-column: 5/6;
+}
+
+.reqrest {
+  grid-column: 1/6;
+} */

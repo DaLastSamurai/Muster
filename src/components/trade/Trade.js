@@ -14,9 +14,16 @@ class Trade extends React.Component {
     this.state = {
       showMR: false,
       indexName: 'item',
+      userObj: {},
     }
     this.toggleMakeRequest = this.toggleMakeRequest.bind(this);
     this.getIndexName = this.getIndexName.bind(this);
+  }
+
+  componentWillMount() {
+    users.child(this.props.userId).on('value', (snap) => {
+      this.setState({userObj: snap.val()})
+    })
   }
 
   toggleMakeRequest() {
@@ -27,7 +34,7 @@ class Trade extends React.Component {
     this.setState({indexName : indexName})
   }
 
-  render() {
+  render() {console.log('trade>>>>', this.props)
     return(
       <InstantSearch
       appId="9VH3I9OJWS"
@@ -45,23 +52,34 @@ class Trade extends React.Component {
                           /> 
             : null}
             <div>
-            <h2>Trade Request You Made</h2>
-              {this.props.request && this.props.request.made 
-                ? <div>
-                    <h4>date</h4>  <h4>item owner</h4>  <h4>item</h4>  <h4>trade type</h4>  <h4>status</h4>
-                    {Object.keys(this.props.request.made).map((reqItem) => {
-                      return <RequestMade userId={this.props.userId} key={reqItem} id={reqItem} reqMade={this.props.request['made'][reqItem]} />
+              <h2>Trade Request You Made</h2>
+                {this.props.request && this.props.request.made 
+                  ? <div className="req-container">
+                      <h4 className="reqdate">date</h4>  <h4 className="requser">item owner</h4>  
+                      <h4 className="reqitem">item</h4>  <h4 className="reqtype">trade type</h4>  <h4 className="reqstatus">status</h4>
+                      {Object.keys(this.props.request.made).map((reqItem) => {
+                        return <RequestMade 
+                                 userId={this.props.userId} 
+                                 key={reqItem} 
+                                 id={reqItem} 
+                                 reqMade={this.props.request['made'][reqItem]} 
+                                 userObj={this.state.userObj} />
+                      })}
+                    </div>
+                  : 'no request'}
+              <h2>Trade Request You Received</h2>
+                {this.props.request && this.props.request.received 
+                  ? <div className="req-container">
+                    <h4 className="reqdate">date</h4>  <h4 className="requser">person who offer</h4>  
+                    <h4 className="reqitem">item</h4>  <h4 className="reqtype">trade type</h4>  <h4 className="reqstatus">status</h4>
+                    {Object.keys(this.props.request.received).map((reqItem) => {
+                      return <RequestReceived 
+                               userId={this.props.userId} 
+                               key={reqItem} 
+                               id={reqItem} 
+                               reqRec={this.props.request['received'][reqItem]} />
                     })}
-                  </div>
-                : 'no request'}
-            <h2>Trade Request You Received</h2>
-              {this.props.request && this.props.request.received 
-                ? <div>
-                  <h4>date</h4>  <h4>person who offer</h4>  <h4>item</h4>  <h4>trade type</h4>  <h4>status</h4>
-                  {Object.keys(this.props.request.received).map((reqItem) => {
-                    return <RequestReceived userId={this.props.userId} key={reqItem} id={reqItem} reqRec={this.props.request['received'][reqItem]} />
-                  })}
-                  </div> 
+                    </div> 
                 : 'no request'}
           </div>
         </div>
