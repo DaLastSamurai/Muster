@@ -10,24 +10,36 @@ class AddItems extends React.Component {
     super(props);
 
     this.state = {
+      //new book fields
+      uid: null,
+      title: '',
+      images: [],
+      notes: '',
+      upc: '',
+      onlinePrice: '',
+      storeLinks: {},
+      subject: '',
+      
+      //component fields
       id: null,
+      keywords: [],
+      customKeyword: '',
+      savedKeywords: [],
+      showDetailed: false,
+      collectionList: [{id: null, name: 'loading collections...'}],
+      
+      //depricated fields
+      sell: '',
       boughtFrom: '',
       collectionId: '',
       location: '',
       name: '',
-      notes: '',
       imageUrl: '',
       thumbnailUrl: '',
       price: '',
       productIds: '',
       purchaseTime: '',
-      sell: '',
-      keywords: [],
-      customeKeyword: '',
-      savedKeywords: [],
-      uid: null,
-      showDetailed: false,
-      collectionList: [{id: null, name: 'loading collections...'}]
+      uid: null
     };
 
     this.setImageState = this.setImageState.bind(this);
@@ -50,9 +62,17 @@ class AddItems extends React.Component {
 
   setItemState(item) {
     this.setState({
+      title: item.title,
+      images: item.images,
+      notes: item.notes,
+      upc: item.upc,
+      onlinePrice: item.onlinePrice,
+      storeLinks: item.storeLinks,
+      subject: item.subject,
+
       id: item.id,
       name: item.name,
-      imageUrl: item.imageUrl,
+      imageUrl: item.images[0],
       collectionId: item.collectionId,
       location: item.location,
       keywords: [],
@@ -155,7 +175,6 @@ class AddItems extends React.Component {
       let itemRef = firebase.database().ref('/item/' + clickedItem);
 
       itemRef.on("value", (snapshot) => {
-        console.log('snapshot in componentdidmount', snapshot.val())
         this.setState({
           id: this.props.editItem,
           boughtFrom: snapshot.val().boughtFrom,
@@ -187,7 +206,6 @@ class AddItems extends React.Component {
   }
  
   render() {
-    console.log('this.props.editItem>>>>>>>>>', this.props.editItem)
     return (
       <div className="container">
 
@@ -200,7 +218,6 @@ class AddItems extends React.Component {
               imageUrl={this.state.imageUrl}
             />
             
-
             {
             (this.state.keywords.length > 0) ?
             <div>
@@ -208,7 +225,7 @@ class AddItems extends React.Component {
               <div>
                 <ul id="menu">
                   {this.state.keywords.map(keyword =>
-                    <button class="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{'+ ' + keyword}</button>)}
+                    <button className="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{'+ ' + keyword}</button>)}
                 </ul>
               </div>
             </div>
@@ -221,7 +238,7 @@ class AddItems extends React.Component {
               <div>
                 <ul id="menu">
                   {this.state.savedKeywords.map(keyword =>
-                    <button class="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{keyword + '  ̽'}</button>)}
+                    <button className="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{keyword + '  ̽'}</button>)}
                 </ul>
 
                 <input
@@ -240,22 +257,69 @@ class AddItems extends React.Component {
               </div>
             </div>
 
-
           </div>
 
           <form onSubmit={this.handleSubmit.bind(this)}>
             <div className="form-group">
 
               <div>
-                <label>Name</label>
+                <label>Title</label>
                 <div>
                   <input
                     className="form-control"
-                    name="name"
+                    name="title"
                     component="input"
                     type="text"
-                    placeholder="name..."
-                    value={this.state.name}
+                    placeholder="title of book..."
+                    value={this.state.title}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label>UPC</label>
+                <div>
+                  <input
+                    className="form-control"
+                    name="UPC"
+                    component="input"
+                    type="text"
+                    placeholder="UPC of book..."
+                    value={this.state.upc}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label>Online Price</label>
+                <div>
+                  <input
+                    className="form-control"
+                    name="subject"
+                    component="input"
+                    type="text"
+                    placeholder="Price of book..."
+                    value={this.state.subject}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label>Subject</label>
+                <div>
+                  <input
+                    className="form-control"
+                    name="subject"
+                    component="input"
+                    type="text"
+                    placeholder="subject"
+                    value={this.state.subject}
                     onChange={this.handleChange}
                     required
                   />
@@ -279,27 +343,43 @@ class AddItems extends React.Component {
                   </select>
                 </div>
               </div>
-
-              <div>
-                <label>Location</label>
-                <div>
-                  <input
-                    className="form-control"
-                    name="location"
-                    component="input"
-                    type="text"
-                    placeholder="current location?"
-                    value={this.state.location}
-                    onChange={this.handleChange}
-                    required
-                  />
-                </div>
-              </div>
               
               {this.state.showDetailed ? 
               (
               <div>
               <div>
+                <div>
+                  <label>Name</label>
+                  <div>
+                    <input
+                      className="form-control"
+                      name="name"
+                      component="input"
+                      type="text"
+                      placeholder="name..."
+                      value={this.state.name}
+                      onChange={this.handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label>Location</label>
+                  <div>
+                    <input
+                      className="form-control"
+                      name="location"
+                      component="input"
+                      type="text"
+                      placeholder="current location?"
+                      value={this.state.location}
+                      onChange={this.handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
                 <label>Notes</label>
                 <div>
                   <input
@@ -411,7 +491,8 @@ class AddItems extends React.Component {
 
         <div className="col-sm-3 col-sm-offset-0">
           <InProgressCarousel
-            setItemState={this.setItemState} />
+            setItemState={this.setItemState} 
+            currentUserId={this.props.userId}/>
         </div>
 
       </div>
