@@ -206,7 +206,6 @@ class AddItems extends React.Component {
   }
  
   render() {
-    console.log('addItem - this.props.userId', this.props.userId)
     return (
       <div className="container">
 
@@ -219,7 +218,6 @@ class AddItems extends React.Component {
               imageUrl={this.state.imageUrl}
             />
             
-
             {
             (this.state.keywords.length > 0) ?
             <div>
@@ -227,7 +225,7 @@ class AddItems extends React.Component {
               <div>
                 <ul id="menu">
                   {this.state.keywords.map(keyword =>
-                    <button class="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{'+ ' + keyword}</button>)}
+                    <button className="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{'+ ' + keyword}</button>)}
                 </ul>
               </div>
             </div>
@@ -240,7 +238,7 @@ class AddItems extends React.Component {
               <div>
                 <ul id="menu">
                   {this.state.savedKeywords.map(keyword =>
-                    <button class="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{keyword + '  ̽'}</button>)}
+                    <button className="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{keyword + '  ̽'}</button>)}
                 </ul>
 
                 <input
@@ -258,7 +256,6 @@ class AddItems extends React.Component {
 
               </div>
             </div>
-
 
           </div>
 

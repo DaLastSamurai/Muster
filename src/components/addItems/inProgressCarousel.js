@@ -51,7 +51,6 @@ class InProgressCarousel extends React.Component {
 
   render() {
 
-    console.log('carousel - this.props.currentUserId', this.props.currentUserId)
     const settings = {
       dots: false,
       // infinite: true,
