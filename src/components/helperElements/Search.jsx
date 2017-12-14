@@ -2,6 +2,8 @@ import React from 'react';
 import { InstantSearch, SearchBox, Hits, Highlight, Pagination, HitsPerPage, InfiniteHits } from 'react-instantsearch/dom';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import { connectHits } from 'react-instantsearch/connectors';
+import MapContainer from '../Map/MapContainer.jsx'
+
 
 function foundItem({hit}) {
   // console.log(hit.savedKeywords)
@@ -51,7 +53,7 @@ function foundItem({hit}) {
 
 //think of this as Search Result List component. it's like Search Result List Entry, maps and formats each found entry
   function Search(props) {
-    console.log('props in Search:', props)
+    // console.log('props in Search:', props)
     return (
       <div>
         <Hits hitComponent={foundItem} />
@@ -61,6 +63,7 @@ function foundItem({hit}) {
         defaultRefinement={5} 
         items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}]}
         />
+        <MapContainer hits={JSON.stringify(props)}/>
         </div>
       </div>
     )
