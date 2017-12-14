@@ -17,7 +17,7 @@ export default class PopularCategoryList extends React.Component {
   }
 
   render() {
-    // console.log('these are the props in PopularCategoryList',this.props)
+    console.log('these are the props in PopularCategoryList',this.props)
     return(
       <div className="container-fluid">
         <h2>Popular Categories</h2>
