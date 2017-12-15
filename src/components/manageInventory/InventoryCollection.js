@@ -11,13 +11,10 @@ class InventoryCollection extends React.Component {
     super(props)
     this.state = {
       node: [],
+      test:null,
     }
     this.dragulaDecorator = this.dragulaDecorator.bind(this);
     this.getNodes = this.getNodes.bind(this);
-    // this.handleDrag = this.handleDrag.bind(this);
-  }
- 
-  componentDidMount() {
   }
 
   dragulaDecorator(componentBackingInstance){
@@ -49,16 +46,28 @@ class InventoryCollection extends React.Component {
         let targetId = target.className.split(' ')[0];
         let sourceId = source.className.split(' ')[0];
 
-        item.child(clickedEl).child('collectionId').set(targetId)
-        collection.child(sourceId).child('itemId').child(clickedEl).remove()
-        let updates = {};
-        updates['/collection/' + targetId + '/itemId/' + clickedEl] = clickedEl;
-        firebase.database().ref().update(updates);
-        // this.props.getData(this.props.userId)
+        
+
+        let p1 = new Promise((resolve, reject) => {
+          resolve(item.child(clickedEl).child('collectionId').set(targetId))
+        }) 
+        let p2 = new Promise((resolve, reject) => {
+          resolve(collection.child(sourceId).child('itemId').child(clickedEl).remove())
+        }) 
+        let p3 = new Promise((resolve, reject) => {
+          let updates = {};
+          updates['/collection/' + targetId + '/itemId/' + clickedEl] = clickedEl;
+          resolve(firebase.database().ref().update(updates))
+        }) 
+
+        Promise.all([p1,p2,p3]).then(() => {
+          // this.props.getData(this.props.userId)
+        })
+
       })
     }
   };
-
+  
   getNodes(n) {
     this.setState({node: this.state.node.push(n)})
     this.dragulaDecorator(this.state.node)
