@@ -20,7 +20,6 @@ class InProgressCarousel extends React.Component {
     let currentUID = this.props.currentUserId
 
     let scannedRef = firebase.database().ref(`/items-scanned/${currentUID}/`);
-    console.log('John Was Here')
     scannedRef.on("value", (snapshot) => {
       let grabItems = Object.keys(snapshot.val()).map((k, i) => {
         return {

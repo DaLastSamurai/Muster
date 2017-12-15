@@ -19,27 +19,27 @@ class AddItems extends React.Component {
       onlinePrice: '',
       storeLinks: {},
       subject: '',
+      _geoloc: '',
       
-      //component fields
+      //component fields (used in addItems)
       id: null,
       keywords: [],
+      collectionId: '',
       customKeyword: '',
       savedKeywords: [],
       showDetailed: false,
       collectionList: [{id: null, name: 'loading collections...'}],
-      
-      //depricated fields
       sell: '',
-      boughtFrom: '',
-      collectionId: '',
+      
+      // //depricated fields
       location: '',
+      boughtFrom: '',
       name: '',
       imageUrl: '',
       thumbnailUrl: '',
       price: '',
       productIds: '',
-      purchaseTime: '',
-      uid: null
+      purchaseTime: ''
     };
 
     this.setImageState = this.setImageState.bind(this);
@@ -88,6 +88,7 @@ class AddItems extends React.Component {
   //   return null;
   // };
 
+  //Handles dynamically adding and removing keywords from suggested to saved
   addRemoveKeyword(keyword) {
     let savedKeywords = this.state.savedKeywords;
     if (savedKeywords.includes(keyword)) {
@@ -113,46 +114,57 @@ class AddItems extends React.Component {
       [name]: value
     })
   };
-
+  
+  //Submits information in fields to the database
   handleSubmit(event) {
-
+    
     let currentUID = firebase.auth().currentUser.uid
 
     let postData = {
-      boughtFrom: this.state.boughtFrom,
-      collectionId: this.state.collectionId,
-      location: this.state.location,
-      name: this.state.name,
+      //new book fields
+      uid: currentUID,
+      title: this.state.title,
+      images: this.state.images,
       notes: this.state.notes,
-      imageUrl: this.state.imageUrl,
-      price: this.state.price,
-      productIds: this.state.productIds,
-      purchaseTime: this.state.purchaseTime,
+      upc: this.state.upc,
+      onlinePrice: this.state.onlinePrice,
+      storeLinks: this.state.storeLinks,
+      subject: this.state.subject,
+      _geoloc: this.state._geoloc,
+      collectionId: this.state.collectionId,
       savedKeywords: this.state.savedKeywords,
       sell: this.state.sell,
-      uid: currentUID
+      
+      //depricated fields
+      // location: this.state.location,
+      // productIds: this.state.productIds,
+      // purchaseTime: this.state.purchaseTime,
+      // boughtFrom: this.state.boughtFrom,
+      // name: this.state.name,
+      // imageUrl: this.state.imageUrl,
+      // price: this.state.price
     };
     
     let newPostKey = this.state.id || 
       firebase.database().ref('/item').push().key;
 
     let updates = {};
+    updates['/users/' + currentUID + '/itemIds/' + newPostKey] = newPostKey;
     updates['/item/' + newPostKey] = postData;
     updates['/collection/' + this.state.collectionId + 
             '/itemId/' + newPostKey] = newPostKey;
 
     return firebase.database().ref().update(updates);
 
-    event.target.reset();
+    // event.target.reset();
   };
 
   componentDidMount() {
 
+    //Checks database for collections owned by the user
     let collectionRef = firebase.database().ref('/collection');
-
     collectionRef.on("value", (snapshot) => {
       let currentUID = firebase.auth().currentUser.uid;
-
       let grabIdName = Object.keys(snapshot.val()).map((k, i) => {
         return {
           id: Object.keys(snapshot.val())[i],
@@ -161,7 +173,6 @@ class AddItems extends React.Component {
         }
       })
         .filter(collection => collection.uid.includes(currentUID));
-
       this.setState({
         collectionList: grabIdName
       });
@@ -169,31 +180,47 @@ class AddItems extends React.Component {
     }, (error) => { console.error(error) }
     );
   
-
+    //Checks for props from the edit button in inventory manager
     if (this.props.editItem) {
       let clickedItem = this.props.editItem;
       let itemRef = firebase.database().ref('/item/' + clickedItem);
 
       itemRef.on("value", (snapshot) => {
         this.setState({
+          //new boook fields
           id: this.props.editItem,
-          boughtFrom: snapshot.val().boughtFrom,
-          collectionId: snapshot.val().collectionId,
-          location: snapshot.val().location,
-          name: snapshot.val().name,
+          title: snapshot.val().title,
+          images: snapshot.val().images,
           notes: snapshot.val().notes,
+          upc: snapshot.val().upc,
+          onlinePrice: snapshot.val().onlinePrice,
+          storeLinks: snapshot.val().storeLinks,
+          subject: snapshot.val().subject,
+          _geoloc: snapshot.val()._geoloc,
+
+          
+          //component fields (used in addItems)
+          savedKeywords: snapshot.val().savedKeywords || [],
+          collectionId: snapshot.val().collectionId,
+          sell: snapshot.val().sell,
+          userPrice: snapshot.val().price,
+          
+          //depricated fields 
+          name: snapshot.val().name,
+          location: snapshot.val().location,
           imageUrl: snapshot.val().imageUrl,
-          price: snapshot.val().price,
           productIds: snapshot.val().productIds,
           purchaseTime: snapshot.val().purchaseTime,
-          savedKeywords: snapshot.val().savedKeywords || [],
-          sell: snapshot.val().sell
+          boughtFrom: snapshot.val().boughtFrom
+          
         });
       }, (error) => { console.error(error) });
     }
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
+
+    //Checks if keywords are empty, if so, loads them using ImageRecog
     if (this.state.keywords.length > 0) {
       console.log('Keywords loaded!')
     } else {
