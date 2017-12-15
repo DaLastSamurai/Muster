@@ -65,7 +65,7 @@ export default class FollowButton extends React.Component {
   }
 
   render() {
-    console.log('this is the props in follow button', this.props)
+    // console.log('this is the props in follow button', this.props)
     return this.state.isFollowing 
     ? (
       <div>
