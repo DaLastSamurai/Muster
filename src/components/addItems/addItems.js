@@ -20,6 +20,8 @@ class AddItems extends React.Component {
       storeLinks: {},
       subject: '',
       _geoloc: '',
+      _geolocImage: null,
+      price: '',
       
       //component fields (used in addItems)
       id: null,
@@ -37,7 +39,6 @@ class AddItems extends React.Component {
       name: '',
       imageUrl: '',
       thumbnailUrl: '',
-      price: '',
       productIds: '',
       purchaseTime: ''
     };
@@ -49,6 +50,7 @@ class AddItems extends React.Component {
     this.addCustomeKeyword = this.addCustomeKeyword.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.geoFindMe = this.geoFindMe.bind(this);
   };
 
   setImageState(imageUrl) {
@@ -134,6 +136,7 @@ class AddItems extends React.Component {
       collectionId: this.state.collectionId,
       savedKeywords: this.state.savedKeywords,
       sell: this.state.sell,
+      price: this.state.price
       
       //depricated fields
       // location: this.state.location,
@@ -142,7 +145,6 @@ class AddItems extends React.Component {
       // boughtFrom: this.state.boughtFrom,
       // name: this.state.name,
       // imageUrl: this.state.imageUrl,
-      // price: this.state.price
     };
     
     let newPostKey = this.state.id || 
@@ -158,6 +160,33 @@ class AddItems extends React.Component {
 
     // event.target.reset();
   };
+
+  //Gets user geolocation
+  geoFindMe() {
+    var output = document.getElementById("out");
+    if (!navigator.geolocation) {
+      output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+      return;
+    }
+    function success(position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+
+      output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+
+      var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+
+      this.setState({
+        _geolocImage: img,
+        _geoloc: {lat: latitude, long: longitude}
+      })
+    }
+    function error() {
+      output.innerHTML = "Unable to retrieve your location";
+    }
+    output.innerHTML = "<p>Locating…</p>";
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
 
   componentDidMount() {
 
@@ -197,21 +226,18 @@ class AddItems extends React.Component {
           storeLinks: snapshot.val().storeLinks,
           subject: snapshot.val().subject,
           _geoloc: snapshot.val()._geoloc,
-
-          
-          //component fields (used in addItems)
           savedKeywords: snapshot.val().savedKeywords || [],
           collectionId: snapshot.val().collectionId,
           sell: snapshot.val().sell,
-          userPrice: snapshot.val().price,
+          price: snapshot.val().price,
           
           //depricated fields 
-          name: snapshot.val().name,
-          location: snapshot.val().location,
-          imageUrl: snapshot.val().imageUrl,
-          productIds: snapshot.val().productIds,
-          purchaseTime: snapshot.val().purchaseTime,
-          boughtFrom: snapshot.val().boughtFrom
+          // name: snapshot.val().name,
+          // location: snapshot.val().location,
+          // imageUrl: snapshot.val().imageUrl,
+          // productIds: snapshot.val().productIds,
+          // purchaseTime: snapshot.val().purchaseTime,
+          // boughtFrom: snapshot.val().boughtFrom
           
         });
       }, (error) => { console.error(error) });
@@ -330,7 +356,7 @@ class AddItems extends React.Component {
                     component="input"
                     type="text"
                     placeholder="Price of book..."
-                    value={this.state.subject}
+                    value={this.state.onlinePrice}
                     onChange={this.handleChange}
                     required
                   />
@@ -375,38 +401,30 @@ class AddItems extends React.Component {
               (
               <div>
               <div>
-                <div>
-                  <label>Name</label>
-                  <div>
-                    <input
-                      className="form-control"
-                      name="name"
-                      component="input"
-                      type="text"
-                      placeholder="name..."
-                      value={this.state.name}
-                      onChange={this.handleChange}
-                      required
-                    />
-                  </div>
-                </div>
 
                 <div>
                   <label>Location</label>
                   <div>
                     <input
                       className="form-control"
-                      name="location"
+                      name="_geoloc"
                       component="input"
                       type="text"
-                      placeholder="current location?"
-                      value={this.state.location}
+                      placeholder="item location?"
+                      value={this.state._geoloc}
                       onChange={this.handleChange}
                       required
                     />
                   </div>
                 </div>
 
+                <a onClick={this.geoFindMe}>Use my current location</a>
+                {(this.state._geolocImage !== null) ? 
+                <div id="out"><img src={this.state._geolocImage}/></div> : 
+                <div id="out"></div>}
+                <p>
+                {JSON.stringify(this.state._geolocImage)}
+                </p>
                 <label>Notes</label>
                 <div>
                   <input
@@ -421,7 +439,7 @@ class AddItems extends React.Component {
               </div>
 
               <div>
-                <label>Price</label>
+                <label>Your Selling Price</label>
                 <div>
                   <input
                     className="form-control"
@@ -434,7 +452,7 @@ class AddItems extends React.Component {
                   />
                 </div>
               </div>
-
+{/* 
               <div>
                 <label>Bought From</label>
                 <div>
@@ -478,7 +496,7 @@ class AddItems extends React.Component {
                     onChange={this.handleChange}
                   />
                 </div>
-              </div>
+              </div> */}
 
               <div>
                 <div>
