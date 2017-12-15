@@ -25,7 +25,7 @@ class InProgressCarousel extends React.Component {
         return {
           uid: currentUID,
           title: snapshot.val()[k].title,
-          images: snapshot.val()[k].images,
+          images: snapshot.val()[k].images || ['https://i5.walmartimages.com/asr/f752abb3-1b49-4f99-b68a-7c4d77b45b40_1.39d6c524f6033c7c58bd073db1b99786.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF'],
           notes: snapshot.val()[k].notes,
           upc: snapshot.val()[k].upc,
           onlinePrice: snapshot.val()[k].onlinePrice,
@@ -46,20 +46,18 @@ class InProgressCarousel extends React.Component {
 
     const settings = {
       dots: false,
-      infinite: true,
+      infinite: false,
       slidesToShow: 2,
       slidesToScroll: 1,
       speed: 500,
-      // centerMode: true,
       vertical: true,
-      // variableHeight: true,
-      // adaptiveHeight: true,
       verticalSwiping: true
     };
     return (
       <div className="carousel-container">
         <h5>Scanned Items</h5>
         <Slider {...settings}>
+
           {
             this.state.inProgress.map(item =>
               <div style={{height: 200}} onClick={() => {

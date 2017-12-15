@@ -19,8 +19,8 @@ class AddItems extends React.Component {
       onlinePrice: '',
       storeLinks: {},
       subject: '',
-      _geoloc: '',
-      _geolocImage: null,
+      _geoloc: {lat: 0, lng: 0},
+      _geolocImage: '',
       price: '',
       
       //component fields (used in addItems)
@@ -51,10 +51,10 @@ class AddItems extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.geoFindMe = this.geoFindMe.bind(this);
+    // this.setGeoImage = this.setGeoImage.bind(this);
   };
 
   setImageState(imageUrl) {
-    // this.setState({ imageUrl });
     this.state.imageUrl = imageUrl;
   };
 
@@ -169,16 +169,17 @@ class AddItems extends React.Component {
       return;
     }
     function success(position) {
-      var latitude = position.coords.latitude;
-      var longitude = position.coords.longitude;
+      var x = position.coords.latitude;
+      var y = position.coords.longitude;
+      var position = {lat: x, lng: y, }
 
-      output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+      output.innerHTML = '<p>Latitude is ' + x + '° <br>Longitude is ' + y + '°</p>';
 
-      var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+      var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + x + "," + y + "&zoom=13&size=300x300&sensor=false";
 
       this.setState({
-        _geolocImage: img,
-        _geoloc: {lat: latitude, long: longitude}
+        _geoloc: position,
+        _geolocImage: img
       })
     }
     function error() {
@@ -259,6 +260,7 @@ class AddItems extends React.Component {
   }
  
   render() {
+    console.log('location', this.state._geolocImage)
     return (
       <div className="container">
 
@@ -316,6 +318,24 @@ class AddItems extends React.Component {
             <div className="form-group">
 
               <div>
+                <label>Collection</label>
+                <div>
+                  <select
+                    className="form-control"
+                    name="collectionId"
+                    component="select"
+                    value={this.state.collectionId}
+                    onChange={this.handleChange}
+                    required
+                  >
+                    <option></option>
+                    {this.state.collectionList.map(collection =>
+                      <option value={collection.id}>{collection.name}</option>)}
+                  </select>
+                </div>
+              </div>
+
+              <div>
                 <label>Title</label>
                 <div>
                   <input
@@ -325,38 +345,6 @@ class AddItems extends React.Component {
                     type="text"
                     placeholder="title of book..."
                     value={this.state.title}
-                    onChange={this.handleChange}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label>UPC</label>
-                <div>
-                  <input
-                    className="form-control"
-                    name="UPC"
-                    component="input"
-                    type="text"
-                    placeholder="UPC of book..."
-                    value={this.state.upc}
-                    onChange={this.handleChange}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label>Online Price</label>
-                <div>
-                  <input
-                    className="form-control"
-                    name="subject"
-                    component="input"
-                    type="text"
-                    placeholder="Price of book..."
-                    value={this.state.onlinePrice}
                     onChange={this.handleChange}
                     required
                   />
@@ -380,23 +368,21 @@ class AddItems extends React.Component {
               </div>
 
               <div>
-                <label>Collection</label>
+                <label>Online Price</label>
                 <div>
-                  <select
+                  <input
                     className="form-control"
-                    name="collectionId"
-                    component="select"
-                    value={this.state.collectionId}
+                    name="subject"
+                    component="input"
+                    type="text"
+                    placeholder="Price of book..."
+                    value={this.state.onlinePrice}
                     onChange={this.handleChange}
                     required
-                  >
-                  <option></option>
-                    {this.state.collectionList.map(collection =>
-                      <option value={collection.id}>{collection.name}</option>)}
-                  </select>
+                  />
                 </div>
               </div>
-              
+
               {this.state.showDetailed ? 
               (
               <div>
@@ -419,12 +405,10 @@ class AddItems extends React.Component {
                 </div>
 
                 <a onClick={this.geoFindMe}>Use my current location</a>
-                {(this.state._geolocImage !== null) ? 
+                {(this.state._geolocImage !== '') ? 
                 <div id="out"><img src={this.state._geolocImage}/></div> : 
                 <div id="out"></div>}
-                <p>
-                {JSON.stringify(this.state._geolocImage)}
-                </p>
+
                 <label>Notes</label>
                 <div>
                   <input
@@ -434,6 +418,22 @@ class AddItems extends React.Component {
                     placeholder="notes..."
                     value={this.state.notes}
                     onChange={this.handleChange}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label>UPC</label>
+                <div>
+                  <input
+                    className="form-control"
+                    name="UPC"
+                    component="input"
+                    type="text"
+                    placeholder="UPC of book..."
+                    value={this.state.upc}
+                    onChange={this.handleChange}
+                    required
                   />
                 </div>
               </div>

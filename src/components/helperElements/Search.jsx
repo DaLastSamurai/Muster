@@ -60,7 +60,7 @@ function foundItem({hit}) {
         <div style={{float: "center"}}>
         <Pagination showLast={true} />
         <HitsPerPage
-        defaultRefinement={5} 
+        defaultRefinement={20} 
         items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}]}
         />
         <MapContainer hits={JSON.stringify(props)}/>
