@@ -8,8 +8,8 @@ class ItemEntry extends React.Component {
   render() {
     return(
       <div>
-        <img src={this.props.item.imageUrl} /> 
-        <h4>{this.props.item.name}</h4>
+        <img src={this.props.item.images} /> 
+        <h4>{this.props.item.title}</h4>
       </div>
     )
   }

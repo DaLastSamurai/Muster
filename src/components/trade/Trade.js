@@ -54,24 +54,28 @@ class Trade extends React.Component {
             <div>
               <h2>Trade Request You Made</h2>
                 {this.props.request && this.props.request.made 
-                  ? <div className="req-container">
-                      <h4 className="reqdate">date</h4>  <h4 className="requser">item owner</h4>  
-                      <h4 className="reqitem">item</h4>  <h4 className="reqtype">trade type</h4>  <h4 className="reqstatus">status</h4>
+                  ? <div>
+                      <div className="req-container">
+                        <h4 className="reqdate">date</h4>  <h4 className="requser">item owner</h4>  
+                        <h4 className="reqitem">item</h4>  <h4 className="reqtype">trade type</h4>  <h4 className="reqstatus">status</h4>
+                      </div>
                       {Object.keys(this.props.request.made).map((reqItem) => {
                         return <RequestMade 
-                                 userId={this.props.userId} 
-                                 key={reqItem} 
-                                 id={reqItem} 
-                                 reqMade={this.props.request['made'][reqItem]} 
-                                 userObj={this.state.userObj} />
+                                userId={this.props.userId} 
+                                key={reqItem} 
+                                id={reqItem} 
+                                reqMade={this.props.request['made'][reqItem]} 
+                                userObj={this.state.userObj} />
                       })}
                     </div>
                   : 'no request'}
               <h2>Trade Request You Received</h2>
                 {this.props.request && this.props.request.received 
-                  ? <div className="req-container">
-                    <h4 className="reqdate">date</h4>  <h4 className="requser">person who offer</h4>  
-                    <h4 className="reqitem">item</h4>  <h4 className="reqtype">trade type</h4>  <h4 className="reqstatus">status</h4>
+                  ? <div>
+                      <div className="req-container">
+                        <h4 className="reqdate">date</h4>  <h4 className="requser">person who offer</h4>  
+                        <h4 className="reqitem">item</h4>  <h4 className="reqtype">trade type</h4>  <h4 className="reqstatus">status</h4>
+                      </div>
                     {Object.keys(this.props.request.received).map((reqItem) => {
                       return <RequestReceived 
                                userId={this.props.userId} 
