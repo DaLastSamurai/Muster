@@ -125,6 +125,7 @@ export default class ProfileFrame extends React.Component {
     // console.log('this is the props', this.props)
     // console.log('this is the state in profileFrame', this.state)
     // starts by checking to see if the state is loaded.
+    // console.log('>>>>>>>>>>>profileframe fav cat state',this.state.favoriteCategories)
     return Object.values(this.state).filter(el => el === null).length > 2
       ? (<div> loading... </div> ) 
       : (
