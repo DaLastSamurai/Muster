@@ -6,7 +6,6 @@ class InProgressCarousel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // currentUID: '',
       inProgress: []
     };
     this.populateFields = this.populateFields.bind(this);
@@ -16,17 +15,12 @@ class InProgressCarousel extends React.Component {
     this.props.setItemState(item);
   };
 
-  // removeFromInprogress() {
-  //   let inProgressRef = firebase.database().ref('/items-scanned');
-  //   inProgressRef.update()
-  // };
-
   componentWillReceiveProps() {
     
     let currentUID = this.props.currentUserId
 
     let scannedRef = firebase.database().ref(`/items-scanned/${currentUID}/`);
-
+    console.log('John Was Here')
     scannedRef.on("value", (snapshot) => {
       let grabItems = Object.keys(snapshot.val()).map((k, i) => {
         return {
@@ -53,10 +47,14 @@ class InProgressCarousel extends React.Component {
 
     const settings = {
       dots: false,
-      // infinite: true,
-      slidesToShow: 3,
+      infinite: true,
+      slidesToShow: 2,
       slidesToScroll: 1,
+      speed: 500,
+      // centerMode: true,
       vertical: true,
+      // variableHeight: true,
+      // adaptiveHeight: true,
       verticalSwiping: true
     };
     return (
@@ -65,7 +63,7 @@ class InProgressCarousel extends React.Component {
         <Slider {...settings}>
           {
             this.state.inProgress.map(item =>
-              <div onClick={() => {
+              <div style={{height: 200}} onClick={() => {
                 this.populateFields(item);
               }}>
                 <img src={item.images[0]} />
