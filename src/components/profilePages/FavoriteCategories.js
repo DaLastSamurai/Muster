@@ -1,7 +1,9 @@
 import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, users, category, collection } from '../../../config/firebaseCredentials';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import Slider from 'react-slick';
+
 
 export default class FavoriteCategories extends React.Component {
   constructor(props) {
@@ -47,7 +49,9 @@ export default class FavoriteCategories extends React.Component {
             // console.log(ranCollectionHashes)
             // console.log('random collection >>>>',randomCollection)
             // console.log('collection photoUrl',this.state.collection[ranCollectionHashes].photoUrl)
-            this.state.favoriteCategories.push([currentCat, this.state.collection[ranCollectionHashes].photoUrl])
+            let currentCollectionId = this.state.allCategories[currentCat].collectionId;
+            console.log('>>>',randomCollection)
+            this.state.favoriteCategories.push([currentCat, this.state.collection[ranCollectionHashes].photoUrl, randomCollection])
           }
         }
       }
@@ -60,8 +64,9 @@ export default class FavoriteCategories extends React.Component {
       dots: false,
       slidesToShow: 3,
       slidesToScroll: 1,
-      vertical: true,
-      verticalSwiping: true
+      horizontal: true,
+      horizontalSwiping: true,
+      infinite: false,      
     };
     console.log(this.state.favoriteCategories)
     return (
@@ -71,9 +76,10 @@ export default class FavoriteCategories extends React.Component {
           {
             this.state.favoriteCategories.map((category) =>
               <div>
-                {()=> {'>>>>>' + console.log(category)}}
+              <Link to={`/collections/:` + category[2]}>
                 <img src={category[1]!== ''? category[1] : "http://www.wrbh.org/wp-content/uploads/2017/02/ReadyPlayerONe.jpg"}/>
-                {/* <img src={"http://www.wrbh.org/wp-content/uploads/2017/02/ReadyPlayerONe.jpg"}/> */}
+                <h5>{category[0]}</h5>
+              </Link>
               </div>
             )
           }
