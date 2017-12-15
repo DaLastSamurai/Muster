@@ -4,7 +4,7 @@ import firebase from 'firebase';
 import { users } from '../../../config/firebaseCredentials'
 // PopularCategoryEntry recieves props from popularCategoryList. 
 
-export default class PopularCategoryEntry extends React.Component {
+class CategoryEntry extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -78,3 +78,4 @@ export default class PopularCategoryEntry extends React.Component {
   }
 }
 
+export default CategoryEntry;

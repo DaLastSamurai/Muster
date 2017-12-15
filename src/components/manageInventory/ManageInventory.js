@@ -74,6 +74,9 @@ class ManageInventory extends React.Component {
   handleSortBy(e) {
     this.setState({sort: e.target.value})
   }
+
+  
+  
 //>>>>>>when page out get data
   render() {
     return(

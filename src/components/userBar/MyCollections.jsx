@@ -97,7 +97,7 @@ export default class MyCollections extends React.Component {
 
   render() {
     return(
-      <div style={{width: 220, float: 'left', margin: '1.5%'}} className="container-fluid">
+      <div className="container-fluid">
         <SideNav>
           <Link to={`/profile/${this.props.user.uid}`}>
             <UserInfo user={this.props.user} clickFunction={() => {}}/>

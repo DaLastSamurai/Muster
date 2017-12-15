@@ -1,3 +1,4 @@
+
 /*save for last day*/
 
 
@@ -94,17 +95,24 @@ img {
   /* width: 100px;  */
   /* height: fit-content; */
 }
-/* .req-container {
-  display: grid;
-  grid-template-columns: 30px, 30px, 30px, 30px, 30px;
-  grid-gap: 5px;
-  grid-auto-rows: minmax(100px, auto);
+
+
+em {
+  color: red;
+  font-style: normal
 }
 
-.req-containerdiv {
-  grid-column: 1/6;
-  display: grid; 
-  grid-template-columns: 30px, 30px, 30px, 30px, 30px; 
+#map {
+  width: 600px;
+  height: 600px;
+}
+
+
+
+
+.req-container {
+  display: grid;
+  grid-template-columns: 30px, 30px, 30px, 30px, 30px;
   grid-gap: 5px;
   grid-auto-rows: minmax(100px, auto);
 }
@@ -127,4 +135,7 @@ img {
 
 .reqrest {
   grid-column: 1/6;
-} */
+} 
+
+
+

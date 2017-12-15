@@ -29,7 +29,6 @@ export const getPopularCategory = function() {
   };
 
   export const getCollection = function(userid) {
-    console.log('get collection running!!!!!!!!', userid)
     new Promise((resolve, reject) => {
       users.child(userid).on('value',(snap) => {
         let array = [];

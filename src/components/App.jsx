@@ -7,11 +7,13 @@ import { InstantSearch, SearchBox, Hits, Highlight, Pagination } from 'react-ins
 //react component
 import UnprotectedNav from './nav/UnprotectedNav';
 import ProtectedNav from './nav/ProtectedNav';
-import PopularCategoryList from './popularcategory/PopularCategoryList';
+import CategoryList from './popularcategory/CategoryList';
+import CollectionList from './popularcategory/CollectionList';
+import ItemList from './popularcategory/ItemList';
 import MyCollections from './userBar/MyCollections.jsx'
 import AuthFrame from './authentication/AuthFrame';
-import CollectionList from './collections/CollectionList';
-import ItemList from './items/ItemList';
+// import CollectionList from './collections/CollectionList';
+// import ItemList from './items/ItemList';
 import ManageInventory from './manageInventory/ManageInventory';
 import MessageFrame from './messaging/MessageFrame';
 import AddItems from './addItems/addItems';
@@ -113,6 +115,7 @@ export default class App extends React.Component {
     console.log('this function changes indexName as state')
     this.setState({indexName : receiveIndexName})
   }
+  
 
   render() {
     return (
@@ -122,7 +125,7 @@ export default class App extends React.Component {
         apiKey="289636a507e4853ef95cc5b7e4cac8d9"
         indexName={this.state.indexName}
         >
-        <div>
+        <div className="main">
           {this.state.authed
           ? (
             <div>
@@ -154,9 +157,12 @@ export default class App extends React.Component {
             <Route exact path='/' render={() =>
               this.state.isOnAuthFrame
               ? (<div />)
-              : <PopularCategoryList popularCategoryList={this.state.popularCategoryList} />
-              }
-            />
+              : <CategoryList popularCategoryList={this.state.popularCategoryList} />
+              } />
+            <Route exact path='/collections/:categoryId' component={CollectionList} />
+            <Route exact path='/items/:collectionId' component={(props) =>  
+            <ItemList {...props} userId={this.state.userId} />} />
+
             <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
             <Route exact path='/addItems' render={() => 
               <AddItems 
@@ -164,12 +170,9 @@ export default class App extends React.Component {
                 userId={this.state.userId} 
                 editItem={this.state.editItem}
               />} />
-            <Route exact path='/collections/:categoryId' component={CollectionList} />
-            <Route exact path='/items/:collectionId' component={(props) =>  
-              <ItemList {...props} userId={this.state.userId} />} />
             <Route exact path='/searching' render={()=> <Search />}/>
             <Route exact path='/manageinventory' render={() => 
-              <ManageInventory 
+              <ManageInventory
                 editItem={this.editItem}
                 categorys={this.state.categorys} 
                 collections={this.state.collections} 
@@ -178,13 +181,13 @@ export default class App extends React.Component {
                 getData={this.getCollection} />}
                 getUserCollection={this.getUserCollection} />
             <Route exact path='/trade' render={() =>
-                <Trade 
-                  userId={this.state.userId}
-                  getData={this.getCollection}
-                  getRequestData={this.getRequestData}
-                  collections={this.state.collections}
-                  items={this.state.items}
-                  request={this.state.request} />}/>
+              <Trade 
+                userId={this.state.userId}
+                getData={this.getCollection}
+                getRequestData={this.getRequestData}
+                collections={this.state.collections}
+                items={this.state.items}
+                request={this.state.request} />}/>
             <Route exact path='/map' render={() =>
             <Map 
               containerElement={<div style={{ height: `400px` }} />}

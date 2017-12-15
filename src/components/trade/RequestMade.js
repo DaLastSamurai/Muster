@@ -39,59 +39,69 @@ class RequestMade extends React.Component {
   render() {
     return(this.props.reqMade ? 
       <div>
-        <div>{this.props.reqMade.date}</div>
-        <div>{this.props.reqMade.exchangee[1]['profileInfo']['username']}</div>
-        <img src={this.props.reqMade.item[1]['imageUrl']}/>
-        <div>{this.props.reqMade.item[1]['name']}</div>
-        <div>{this.props.reqMade.buy ? 'purchase ' : null}{this.props.reqMade.trade ? 'trade ' : null}{this.props.reqMade.loan ? 'rent ' : null}</div>
-        <div>{this.props.reqMade.accept === 'pro' ? 'sent request' : (this.props.reqMade.accept ? 'accepted' : 'rejected')}</div>
-        {this.props.reqMade.accept === true 
-          ? <div>
-              <h4>address</h4>
-              <input name="address" 
-                          type="text" 
-                          placeholder="write address" 
-                          onChange={this.handleChange}
-                          value={this.state.address}/>
-              <button onClick={this.sendAddress}>send your address</button>
-            </div>
-          : null}
-        {this.props.reqMade.trade && this.props.reqMade.exaddress.length > 0 
-          ? <div>
-              <h5>address to send</h5>
-              <div>{this.props.reqMade.exaddress}</div>
-              <h5>after sent trading item submit tracking number</h5>
-              <input name="tracking" 
-                          type="text" 
-                          placeholder="write tracking number" 
-                          onChange={this.handleChange}
-                          value={this.state.tracking}/>
-              <button onClick={this.sendTracking}>submit</button>
-            </div>
-          : null}
-        {this.props.reqMade.loan
-          ? <div>
-              <div>return date</div>
-              <div>{this.props.reqMade.dueDate}</div>
-              <div>initial price</div>
-              <div>{this.props.reqMade.initialPrice}</div>
-              <div>late fee</div>
-              <div>{this.props.reqMade.lateFee}</div>
-            </div>
-          : null}
-        {(this.props.reqMade.buy && (this.props.reqMade.accept === true)) || (this.props.reqMade.initialPrice.length > 0 && (this.props.reqMade.accept === true)) 
-          ? <button onClick={this.handlePayment}>pay</button>
-          : null}
-        {this.props.reqMade.tracking.length > 0 
-          ? <div>
-              <h5>your item is on the way</h5>
-              <div>{this.props.reqMade.tracking}</div>
-            </div>
-          : null}
-          <Payments 
-            userName={this.props.userObj.profileInfo.username}
-            description={`$${this.props.reqMade.price.length > 0 ? this.props.reqMade.price : this.props.reqMade.initialPrice} for ${this.props.reqMade.item[1]['name']}`}
-            amount={this.props.reqMade.price.length > 0 ? parseInt(this.props.reqMade.price) * 100 : parseInt(this.props.reqMade.initialPrice) * 100} />
+        <div className="req-container">
+          <div className="reqdate">{this.props.reqMade.date}</div>
+          <div className="requser">{this.props.reqMade.exchangee[1]['profileInfo']['username']}</div>
+          <div className="reqitem">
+            <img src={this.props.reqMade.item[1]['images'][0]}/>
+            <div>{this.props.reqMade.item[1]['name']}</div>
+          </div>
+          <div className="reqtype">
+            {this.props.reqMade.buy ? 'purchase ' : null}{this.props.reqMade.trade ? 'trade ' : null}{this.props.reqMade.loan ? 'rent ' : null}
+          </div>
+          <div className="reqstatus">
+            {this.props.reqMade.accept === 'pro' ? 'sent request' : (this.props.reqMade.accept ? 'accepted' : 'rejected')}
+          </div>
+        </div>
+        <div>
+          {this.props.reqMade.accept === true 
+            ? <div>
+                <h4>address</h4>
+                <input name="address" 
+                            type="text" 
+                            placeholder="write address" 
+                            onChange={this.handleChange}
+                            value={this.state.address}/>
+                <button onClick={this.sendAddress}>send your address</button>
+              </div>
+            : null}
+          {this.props.reqMade.trade && this.props.reqMade.exaddress.length > 0 
+            ? <div>
+                <h5>address to send</h5>
+                <div>{this.props.reqMade.exaddress}</div>
+                <h5>after sent trading item submit tracking number</h5>
+                <input name="tracking" 
+                            type="text" 
+                            placeholder="write tracking number" 
+                            onChange={this.handleChange}
+                            value={this.state.tracking}/>
+                <button onClick={this.sendTracking}>submit</button>
+              </div>
+            : null}
+          {this.props.reqMade.loan
+            ? <div>
+                <div>return date</div>
+                <div>{this.props.reqMade.dueDate}</div>
+                <div>initial price</div>
+                <div>{this.props.reqMade.initialPrice}</div>
+                <div>late fee</div>
+                <div>{this.props.reqMade.lateFee}</div>
+              </div>
+            : null}
+          {(this.props.reqMade.buy && (this.props.reqMade.accept === true)) || (this.props.reqMade.initialPrice.length > 0 && (this.props.reqMade.accept === true)) 
+            ? <button onClick={this.handlePayment}>pay</button>
+            : null}
+          {this.props.reqMade.tracking.length > 0 
+            ? <div>
+                <h5>your item is on the way</h5>
+                <div>{this.props.reqMade.tracking}</div>
+              </div>
+            : null}
+            <Payments 
+              userName={this.props.userObj.profileInfo.username}
+              description={`$${this.props.reqMade.price.length > 0 ? this.props.reqMade.price : this.props.reqMade.initialPrice} for ${this.props.reqMade.item[1]['name']}`}
+              amount={this.props.reqMade.price.length > 0 ? parseInt(this.props.reqMade.price) * 100 : parseInt(this.props.reqMade.initialPrice) * 100} />
+        </div>
       </div>
       : null
     )
