@@ -39,6 +39,7 @@
     "react-router-dom": "^4.2.2",
     "react-select": "^1.1.0",
     "react-sidenav": "^2.1.2",
+    "react-simple-card": "^1.0.11",
     "react-slick": "^0.16.0",
     "react-stripe-checkout": "^2.6.3",
     "react-stripe-elements": "^1.2.1",
