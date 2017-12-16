@@ -13,7 +13,7 @@ export default class MyCollectionsList extends React.Component {
       <div>
         {Object.keys(this.props.collectionList).map((id) => {
           return <div key={id}>
-            <Link to={`/items/:${this.props.collectionList[id]}`} >
+            <Link to={`/items/:${id}`} >
               <MyCollectionsEntry
                 categoryId={this.props.collectionList[id].categoryId}
                 name={this.props.collectionList[id].name}

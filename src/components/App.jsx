@@ -59,9 +59,8 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.checkAuthStatus(this.getCollection, this.getUserObj, this.getRequestData)
-    this.getPopularCategory()
-    
+    this.checkAuthStatus(this.getCollection, this.getUserObj, this.getRequestData);
+    this.getPopularCategory();
   }
 
   getUserObj(userId) {
@@ -100,7 +99,7 @@ export default class App extends React.Component {
         apiKey="289636a507e4853ef95cc5b7e4cac8d9"
         indexName={this.state.indexName}
         >
-        <div className="main">
+        <div>
           {this.state.authed
           ? (
             <div>
@@ -108,9 +107,11 @@ export default class App extends React.Component {
               <MyCollections
                 class="sidenav"
                 user={this.state.user}
+                userId={this.state.userId}
                 addNewCollection={this.addNewCollection}
                 searchMyCollections={this.searchMyCollections}
                 collectionList={this.state.collections}
+                getCollection={this.getCollection}
                 // getUserCollection={this.getUserCollection}
               />
             </div>

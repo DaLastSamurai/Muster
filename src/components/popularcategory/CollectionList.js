@@ -15,7 +15,7 @@ class CollectionList extends React.Component {
     this.getCollectionData = this.getCollectionData.bind(this)
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.getCollectionData()
   }
 
@@ -63,7 +63,7 @@ class CollectionList extends React.Component {
     })
   }
 
-  render() {
+  render() {console.log('collection list', this.state)
     return(
       this.state.collections.length > 0
        ? <div>
