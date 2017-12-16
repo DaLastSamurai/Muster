@@ -14,16 +14,9 @@ class Trade extends React.Component {
     this.state = {
       showMR: false,
       indexName: 'item',
-      userObj: {},
     }
     this.toggleMakeRequest = this.toggleMakeRequest.bind(this);
     this.getIndexName = this.getIndexName.bind(this);
-  }
-
-  componentWillMount() {
-    users.child(this.props.userId).on('value', (snap) => {
-      this.setState({userObj: snap.val()})
-    })
   }
 
   toggleMakeRequest() {
@@ -49,6 +42,7 @@ class Trade extends React.Component {
                           items={this.props.items} 
                           userId={this.props.userId}
                           indexName={this.state.indexName}
+                          toggleMakeRequest={this.toggleMakeRequest}
                           /> 
             : null}
             <div>
@@ -65,7 +59,7 @@ class Trade extends React.Component {
                                 key={reqItem} 
                                 id={reqItem} 
                                 reqMade={this.props.request['made'][reqItem]} 
-                                userObj={this.state.userObj} />
+                                userObj={this.props.userObj} />
                       })}
                     </div>
                   : 'no request'}

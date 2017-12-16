@@ -81,7 +81,7 @@ toggleCheckbox(e) {
 }
 
 handleRequest() {
-  console.log('aaaaaaa',this.state)
+  this.props.toggleMakeRequest()
   if (Object.keys(this.state.tradeItem).length > 1) {
     alert('you can only exchange one item')
   } else {
@@ -91,7 +91,6 @@ handleRequest() {
     new Promise((resolve, request) => {
       let userKey = this.state.selectedItem[1]['uid']
       users.child(userKey).on('value', (snap) => {
-        // console.log('>>>>',snap.val())
         mduserObj = snap.val()
         resolve(snap.val())
       })
@@ -127,6 +126,8 @@ handleRequest() {
         receivedTradeItem: false,
         exaddress: '',
         tracking:'',
+        address:'',
+        sentTracking: '',
       }
 
       if (Object.keys(this.state.tradeItem)[0]) {
@@ -167,6 +168,8 @@ handleRequest() {
         receivedTradeItem: false,
         exaddress: '',
         tracking: '',
+        address:'',
+        sentTracking: '',
       }
 
       if (Object.keys(this.state.tradeItem)[0]) {
@@ -229,10 +232,13 @@ handleshowSearchBox() {
                onChange={this.toggleCheckbox}/>
 
         {this.state.buy 
-          ? <input name="price"
-                   type="text"
-                   onChange={this.handleChange}
-                   placeholder="type your offer price"/>
+          ? <div>
+              <p>$</p>
+              <input name="price"
+                    type="text"
+                    onChange={this.handleChange}
+                    placeholder="type your offer price"/>
+            </div>
           : null}
 
         <label>trade</label>
@@ -241,37 +247,39 @@ handleshowSearchBox() {
                checked={this.state.trade}
                onChange={this.toggleCheckbox}/>
         
-        {this.props.collections && this.state.trade ?
-        <div>
-          <select onChange={this.handleSelect}> 
-            <option value='' defaultValue>select your collection</option>
-            {Object.keys(this.props.collections).map((col) => {
-              return <option value={col} key={col}>
-                      {this.props.collections[col]['name']}
-                    </option> 
-            })}
-          </select>
+        {this.props.collections && this.state.trade
+          ? <div>
+              <select onChange={this.handleSelect}> 
+                <option value='' defaultValue>select your collection</option>
+                {Object.keys(this.props.collections).map((col) => {
+                  return <option value={col} key={col}>
+                          {this.props.collections[col]['name']}
+                        </option> 
+                })}
+              </select>
 
-          {this.state.tradeCol.length > 0 ? 
-            Object.keys(this.props.collections[this.state.tradeCol]['itemId']).map((itemid) => {
-              return <div key={itemid}>
-                      <img src={this.props.items[itemid]['imageUrl']}/>
-                      <p>{this.props.items[itemid]['name']}</p>
-                      <input name={itemid} type="checkbox" onChange={this.handletradeItem}/>
-                    </div>
-            })
+              {this.state.tradeCol.length > 0 
+                ? Object.keys(this.props.collections[this.state.tradeCol]['itemId']).map((itemid) => {
+                    return <div key={itemid}>
+                            <img src={this.props.items[itemid]['imageUrl']}/>
+                            <p>{this.props.items[itemid]['name']}</p>
+                            <input name={itemid} type="checkbox" onChange={this.handletradeItem}/>
+                          </div>
+                  })
+                : null}
+            </div>
           : null}
-        </div>
-        : null}
         <label>loan</label>
         <input name="loan" type="checkbox" onChange={this.toggleCheckbox}/>
         {this.state.loan 
           ? <div>
+              <p>$</p>
               <input name="initPrice" 
                      type="text" 
                      placeholder="initial price" 
                      onChange={this.handleChange}
                      value={this.state.initPrice}/>
+              <p>$</p>
               <input name="lateFee" 
                      type="text" 
                      placeholder="late fee" 
@@ -289,41 +297,10 @@ handleshowSearchBox() {
                      placeholder="write message" 
                      onChange={this.handleChange}
                      value={this.state.message}/>
-        <button onClick={this.handleRequest}>Make Request</button>
+        <button onClick={this.handleRequest}>Send Offer</button>
       </div>
     )
   }
 }
 
 export default MakeRequest;
-// data structure
-// request: 
-//   userId: {
-//     made: {
-//       itemid: {item: itemId,
-//              exchangee: 'uid',
-//              rent: {dueDate: 123, initialPrice: 0},
-//              offer: {itemId: itemId, itemId: itemId  }|| price,
-//              accept: true || false,
-//              message: '',
-//              received: true || false,
-//              sent: true || false,
-//              address: '',
-//              paied: false,
-//              date: ''
-//              requestId:''},
-//           }
-//     received: {
-//       itemid : {item: itemId,
-//               exchangee: 'uid',
-//               rent: {dueDate: 123, initialPrice: 0},
-//               offer: {itemId: itemId, itemId: itemId  }|| price,
-//               accept: true || false,
-//               message: '',
-//               sent: true || false,
-//               received: false,
-//               address: ''
-//               date: ''
-//               requestId:''},
-//             }
-//   }

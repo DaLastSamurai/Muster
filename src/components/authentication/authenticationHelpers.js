@@ -1,7 +1,7 @@
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import firebase from 'firebase'
 
-export const checkAuthStatus = function(callback) {
+export const checkAuthStatus = function(cb1, cb2, cb3) {
   firebaseAuth().onAuthStateChanged((user) => {
     if (user) {
       this.setState({
@@ -9,8 +9,6 @@ export const checkAuthStatus = function(callback) {
         user: user,
         userId: user.uid, 
       }, () => {
-        this.getRequestData();
-        this.getUserCollection();
         firebase.database().ref(`/users/${user.uid}/defaultsSet`).on('value', (snapshot) => {
           // if the defaults have not been set: 
           if (!snapshot.val()) { 
@@ -34,7 +32,9 @@ export const checkAuthStatus = function(callback) {
             updates[user.uid + '/info'] = basicInfo;
             return users.update(updates)
           }
-          callback(user.uid)
+          cb1(user.uid)
+          cb2(user.uid)
+          cb3(user.uid)
         })
       })
       
