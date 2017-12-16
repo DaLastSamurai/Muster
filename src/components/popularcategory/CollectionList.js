@@ -4,7 +4,6 @@ import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
 
-
 class CollectionList extends React.Component {
   constructor(props) {
     super(props)
@@ -62,6 +61,7 @@ class CollectionList extends React.Component {
       }
     })
   }
+  
 
   render() {console.log('collection list', this.state)
     return(

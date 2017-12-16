@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card, CardHeader, CardBody, CardFooter, ImageHeader } from "react-simple-card";
 
 class ItemEntry extends React.Component {
   constructor(props) {
@@ -6,10 +7,16 @@ class ItemEntry extends React.Component {
   }
 
   render() {
+    console.log(this.props.item)
     return(
       <div>
-        <img src={this.props.item.images} /> 
-        <h4>{this.props.item.title}</h4>
+        <Card>
+        <CardBody>
+          <ImageHeader imageSrc={ this.props.item.images } />       
+          <h3>{ this.props.item.title }</h3>
+          { this.props.item.notes } 
+        </CardBody>
+        </Card>
       </div>
     )
   }
