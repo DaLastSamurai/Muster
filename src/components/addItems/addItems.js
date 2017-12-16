@@ -31,6 +31,7 @@ class AddItems extends React.Component {
       savedKeywords: [],
       showDetailed: false,
       collectionList: [{id: null, name: 'loading collections...'}],
+      locationList: [{ lat: null, lng: null, name: 'no saved locations' }],
       sell: '',
       
       // //depricated fields
@@ -168,25 +169,24 @@ class AddItems extends React.Component {
       output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
       return;
     }
-    function success(position) {
+    output.innerHTML = "<p>Locating…</p>";
+    navigator.geolocation.getCurrentPosition((position) => {
       var x = position.coords.latitude;
       var y = position.coords.longitude;
-      var position = {lat: x, lng: y, }
+      var position = {lat: x, lng: y}
 
       output.innerHTML = '<p>Latitude is ' + x + '° <br>Longitude is ' + y + '°</p>';
 
-      var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + x + "," + y + "&zoom=13&size=300x300&sensor=false";
+      var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + x + "," + y + "&zoom=17&size=400x400&sensor=false";
 
       this.setState({
         _geoloc: position,
         _geolocImage: img
       })
-    }
-    function error() {
+    },
+    () => {
       output.innerHTML = "Unable to retrieve your location";
-    }
-    output.innerHTML = "<p>Locating…</p>";
-    navigator.geolocation.getCurrentPosition(success, error);
+    })
   }
 
   componentDidMount() {
@@ -209,7 +209,26 @@ class AddItems extends React.Component {
 
     }, (error) => { console.error(error) }
     );
-  
+
+    //Checks database for collections owned by the user
+    let locationRef = firebase.database().ref(`/user/${this.props.userId}/locations`);
+    locationRef.on("value", (snapshot) => {
+      let currentUID = this.props.userId
+      let grabIdName = Object.keys(snapshot.val()).map((k, i) => {
+        return {
+          id: Object.keys(snapshot.val())[i],
+          name: snapshot.val()[k].name,
+          uid: snapshot.val()[k].uid
+        }
+      })
+        .filter(collection => collection.uid.includes(currentUID));
+      this.setState({
+        collectionList: grabIdName
+      });
+
+    }, (error) => { console.error(error) }
+    );
+
     //Checks for props from the edit button in inventory manager
     if (this.props.editItem) {
       let clickedItem = this.props.editItem;
@@ -249,7 +268,6 @@ class AddItems extends React.Component {
 
     //Checks if keywords are empty, if so, loads them using ImageRecog
     if (this.state.keywords.length > 0) {
-      console.log('Keywords loaded!')
     } else {
       if (this.state.imageUrl) {
         ImageRecog(this.state.imageUrl, (keywords) => {
@@ -260,7 +278,7 @@ class AddItems extends React.Component {
   }
  
   render() {
-    console.log('location', this.state._geolocImage)
+    console.log('location', JSON.stringify(this.state._geolocImage))
     return (
       <div className="container">
 
@@ -391,6 +409,24 @@ class AddItems extends React.Component {
                 <div>
                   <label>Location</label>
                   <div>
+                    <select
+                      className="form-control"
+                      name="collectionId"
+                      component="select"
+                      value={this.state._geoloc}
+                      onChange={this.handleChange}
+                      required
+                    >
+                      <option></option>
+                      {this.state.locationList.map(location =>
+                        <option value={location}>{location.name}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label>Location</label>
+                  <div>
                     <input
                       className="form-control"
                       name="_geoloc"
@@ -406,7 +442,26 @@ class AddItems extends React.Component {
 
                 <a onClick={this.geoFindMe}>Use my current location</a>
                 {(this.state._geolocImage !== '') ? 
-                <div id="out"><img src={this.state._geolocImage}/></div> : 
+                  <div id="out">
+                    <img src={this.state._geolocImage}/>    
+                      
+                      <div>
+                        <label>Save Location</label>
+                          <div>
+                            <input
+                              className="form-control"
+                              name="saveLocation"
+                              component="text"
+                              placeholder="notes..."
+                              value={this.state.saveLocation}
+                              onChange={this.handleChange}
+                            />
+                          </div>
+                        </div>
+                      </div> 
+                
+                : 
+                
                 <div id="out"></div>}
 
                 <label>Notes</label>
