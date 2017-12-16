@@ -34,9 +34,9 @@ export default class App extends React.Component {
       authed: false,
       user: null,
       userId: null,
+      userObj: {},
       isOnAuthFrame: false,
       popularCategoryList: [],
-      collectionList:[],
       categorys: {},
       collections: {},
       items: {},
@@ -49,8 +49,6 @@ export default class App extends React.Component {
     this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
     this.getPopularCategory = getPopularCategory.bind(this);
-    this.getUserCollection = this.getUserCollection.bind(this);
-    // this.getCurUserCollectionId = this.getCurUserCollectionId.bind(this);
     this.searchBy = this.searchBy.bind(this);
     this.getCollection = getCollection.bind(this); //takes user id
     this.getItem = getItem.bind(this); //takes item id array
@@ -58,16 +56,23 @@ export default class App extends React.Component {
     this.getRequestData = this.getRequestData.bind(this);
     this.getItem = getItem.bind(this);
     this.editItem = this.editItem.bind(this);
+    this.getUserObj = this.getUserObj.bind(this);
   }
 
   componentDidMount() {
-    this.checkAuthStatus((this.getCollection))
+    this.checkAuthStatus(this.getCollection, this.getUserObj, this.getRequestData)
     this.getPopularCategory()
+    
   }
 
-  getRequestData() {
-    console.log(this.state.userId)
-    rootRef.child('request').child(this.state.userId).on('value', (snap) => {
+  getUserObj(userId) {
+    users.child(userId).on('value', (snap) => {
+      this.setState({userObj: snap.val()})
+    })
+  }
+
+  getRequestData(userId) {
+    rootRef.child('request').child(userId).on('value', (snap) => {
       this.setState({request: snap.val()})
     })
   }
@@ -75,35 +80,6 @@ export default class App extends React.Component {
   editItem(clickedItem) {
     this.setState({
       editItem: clickedItem
-    })
-  }
-
-  getUserCollection() {
-    new Promise((resolve, reject) => {
-      users.child(firebaseAuth().currentUser.uid).on('value',(snap) => {
-        let array = [];
-        for(var key in snap.val().collectionIds){
-          if(key !== "0") {
-            array.push(key)
-          }
-        }
-        return resolve(array)
-      })
-    })
-    .then((collectionIdArr) => {
-      var arr = [];
-      collectionIdArr.forEach(id => {
-        var tempPromise = new Promise((resolve, reject) => {
-          collection.child(id).on('value', (snap) => {
-            resolve([id, snap.val()])
-          })
-        })
-        arr.push(tempPromise);
-      })
-      return Promise.all(arr);
-    })
-    .then(data => {
-      this.setState({collectionList: data})
     })
   }
 
@@ -117,7 +93,7 @@ export default class App extends React.Component {
   }
   
 
-  render() {
+  render() {console.log('app', this.state)
     return (
       <Router>
         <InstantSearch
@@ -135,8 +111,8 @@ export default class App extends React.Component {
                 user={this.state.user}
                 addNewCollection={this.addNewCollection}
                 searchMyCollections={this.searchMyCollections}
-                collectionList={this.state.collectionList}
-                getUserCollection={this.getUserCollection}
+                collectionList={this.state.collections}
+                // getUserCollection={this.getUserCollection}
               />
             </div>
           )
@@ -182,6 +158,7 @@ export default class App extends React.Component {
                 getUserCollection={this.getUserCollection} />
             <Route exact path='/trade' render={() =>
               <Trade 
+                userObj={this.state.userObj}
                 userId={this.state.userId}
                 getData={this.getCollection}
                 getRequestData={this.getRequestData}
