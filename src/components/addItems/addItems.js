@@ -4,6 +4,8 @@ import UserInfo from '../userBar/UserInfo.jsx';
 import ImageUpload from '../helperElements/imageUploader';
 import InProgressCarousel from './inProgressCarousel';
 import ImageRecog from '../helperElements/imageRecog';
+import FormDropDown from './FormDropDown';
+
 
 class AddItems extends React.Component {
   constructor(props) {
@@ -19,9 +21,14 @@ class AddItems extends React.Component {
       onlinePrice: '',
       storeLinks: {},
       subject: '',
-      _geoloc: {lat: 0, lng: 0},
-      _geolocImage: '',
       price: '',
+
+      //location states
+      _geoloc: {},
+      _geolocPosition: null,
+      _geolocName: 'your location',
+      _geoSavingName: false,
+      _geolocImage: '',
       
       //component fields (used in addItems)
       id: null,
@@ -31,7 +38,7 @@ class AddItems extends React.Component {
       savedKeywords: [],
       showDetailed: false,
       collectionList: [{id: null, name: 'loading collections...'}],
-      locationList: [{ lat: null, lng: null, name: 'no saved locations' }],
+      locationList: [],
       sell: '',
       
       // //depricated fields
@@ -52,6 +59,7 @@ class AddItems extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.geoFindMe = this.geoFindMe.bind(this);
+    this.geoAddName = this.geoAddName.bind(this);
     // this.setGeoImage = this.setGeoImage.bind(this);
   };
 
@@ -82,14 +90,6 @@ class AddItems extends React.Component {
       savedKeywords: []
     });
   };
-
-  // getValidationState() {
-  //   const length = this.state.value.length;
-  //   if (length > 10) return 'success';
-  //   else if (length > 5) return 'warning';
-  //   else if (length > 0) return 'error';
-  //   return null;
-  // };
 
   //Handles dynamically adding and removing keywords from suggested to saved
   addRemoveKeyword(keyword) {
@@ -180,7 +180,7 @@ class AddItems extends React.Component {
       var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + x + "," + y + "&zoom=17&size=400x400&sensor=false";
 
       this.setState({
-        _geoloc: position,
+        _geolocPosition: position,
         _geolocImage: img
       })
     },
@@ -189,41 +189,52 @@ class AddItems extends React.Component {
     })
   }
 
+  geoAddName(){
+
+    let updates = {};
+    updates['/users/' + this.props.userId + '/locations/' + this.state._geolocName] = this.state._geolocPosition;
+
+    return firebase.database().ref().update(updates);
+  }
+
   componentDidMount() {
 
     //Checks database for collections owned by the user
     let collectionRef = firebase.database().ref('/collection');
     collectionRef.on("value", (snapshot) => {
       let currentUID = firebase.auth().currentUser.uid;
-      let grabIdName = Object.keys(snapshot.val()).map((k, i) => {
+      // let currentUID = this.props.userId;
+      let grabIdName = Object.keys(snapshot.val()).map((key, i) => {
         return {
           id: Object.keys(snapshot.val())[i],
-          name: snapshot.val()[k].name,
-          uid: snapshot.val()[k].uid
+          name: snapshot.val()[key].name,
+          uid: snapshot.val()[key].uid,
+          value: Object.keys(snapshot.val())[i],
+          label: snapshot.val()[key].name
+
         }
       })
         .filter(collection => collection.uid.includes(currentUID));
       this.setState({
-        collectionList: grabIdName
+        collectionList: grabIdName,
+        uid: currentUID
       });
 
     }, (error) => { console.error(error) }
     );
 
-    //Checks database for collections owned by the user
-    let locationRef = firebase.database().ref(`/user/${this.props.userId}/locations`);
+    let locationRef = firebase.database().ref(`/users/${this.state.uid}/locations/`);
     locationRef.on("value", (snapshot) => {
-      let currentUID = this.props.userId
-      let grabIdName = Object.keys(snapshot.val()).map((k, i) => {
+      let grabLocations = Object.keys(snapshot.val()).map((key, i) => {
         return {
-          id: Object.keys(snapshot.val())[i],
-          name: snapshot.val()[k].name,
-          uid: snapshot.val()[k].uid
+          lat: snapshot.val()[key].lat,
+          lng: snapshot.val()[key].lng,
+          name: key
         }
-      })
-        .filter(collection => collection.uid.includes(currentUID));
+      });
+
       this.setState({
-        collectionList: grabIdName
+        locationList: grabLocations
       });
 
     }, (error) => { console.error(error) }
@@ -278,13 +289,15 @@ class AddItems extends React.Component {
   }
  
   render() {
-    console.log('location', JSON.stringify(this.state._geolocImage))
     return (
       <div className="container">
 
         <div className="col-sm-5 col-sm-offset-0">
 
           <div>
+
+            <FormDropDown arrayOfObjects={this.state.collectionList}/>
+
             <ImageUpload 
               setImageState={this.setImageState} 
               setKeywordsState={this.setKeywordsState}
@@ -384,85 +397,58 @@ class AddItems extends React.Component {
                   />
                 </div>
               </div>
-
               <div>
-                <label>Online Price</label>
+                <label>Location</label>
                 <div>
-                  <input
+                  <select
                     className="form-control"
-                    name="subject"
-                    component="input"
-                    type="text"
-                    placeholder="Price of book..."
-                    value={this.state.onlinePrice}
+                    name="locationList"
+                    component="select"
+                    value={this.state._geoloc}
                     onChange={this.handleChange}
                     required
-                  />
+                  >
+                    <option></option>
+                    {this.state.locationList.map(location =>
+                      <option value={location}>{location.name}</option>)}
+                  </select>
                 </div>
               </div>
+
+              <a onClick={this.geoFindMe}>Use my current location</a>
+
+              {
+
+                (this.state._geolocPosition !== null) ?
+                  <div id="out">
+                    {/* <img src={this.state._geolocImage}/>     */}
+
+                    <div>
+                      <label>Name of Location</label>
+                      <div>
+                        <input
+                          className="form-control"
+                          name="_geolocName"
+                          component="text"
+                          placeholder="Name of location"
+                          value={this.state._geolocName}
+                          onChange={this.handleChange}
+                        />
+                      </div>
+                    </div>
+                    <a onClick={this.geoAddName}>Save to Location List</a>
+                  </div>
+
+                  :
+
+                  <div id="out"></div>
+
+              }
 
               {this.state.showDetailed ? 
               (
               <div>
               <div>
-
-                <div>
-                  <label>Location</label>
-                  <div>
-                    <select
-                      className="form-control"
-                      name="collectionId"
-                      component="select"
-                      value={this.state._geoloc}
-                      onChange={this.handleChange}
-                      required
-                    >
-                      <option></option>
-                      {this.state.locationList.map(location =>
-                        <option value={location}>{location.name}</option>)}
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label>Location</label>
-                  <div>
-                    <input
-                      className="form-control"
-                      name="_geoloc"
-                      component="input"
-                      type="text"
-                      placeholder="item location?"
-                      value={this.state._geoloc}
-                      onChange={this.handleChange}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <a onClick={this.geoFindMe}>Use my current location</a>
-                {(this.state._geolocImage !== '') ? 
-                  <div id="out">
-                    <img src={this.state._geolocImage}/>    
-                      
-                      <div>
-                        <label>Save Location</label>
-                          <div>
-                            <input
-                              className="form-control"
-                              name="saveLocation"
-                              component="text"
-                              placeholder="notes..."
-                              value={this.state.saveLocation}
-                              onChange={this.handleChange}
-                            />
-                          </div>
-                        </div>
-                      </div> 
-                
-                : 
-                
-                <div id="out"></div>}
 
                 <label>Notes</label>
                 <div>
@@ -477,7 +463,7 @@ class AddItems extends React.Component {
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <label>UPC</label>
                 <div>
                   <input
@@ -487,6 +473,22 @@ class AddItems extends React.Component {
                     type="text"
                     placeholder="UPC of book..."
                     value={this.state.upc}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </div>
+              </div> */}
+              
+              <div>
+                <label>Online Price</label>
+                <div>
+                  <input
+                    className="form-control"
+                    name="subject"
+                    component="input"
+                    type="text"
+                    placeholder="Price of book..."
+                    value={this.state.onlinePrice}
                     onChange={this.handleChange}
                     required
                   />
