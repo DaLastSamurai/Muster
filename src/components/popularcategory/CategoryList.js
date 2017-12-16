@@ -2,7 +2,6 @@ import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 import CategoryEntry from './CategoryEntry';
 
@@ -17,10 +16,8 @@ class CategoryList extends React.Component {
   }
 
   render() {
-    console.log(Card)
-    console.log('these are the props in PopularCategoryList',this.props)
+    // console.log('these are the props in PopularCategoryList',this.props)
     return(
-      <Card>
         <div className="container-fluid">
           <h2>Popular Categories</h2>
           <div>
@@ -36,7 +33,6 @@ class CategoryList extends React.Component {
             }
           </div>
         </div>
-      </Card>
     )
   }
 }
