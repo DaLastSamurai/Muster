@@ -25,7 +25,6 @@ import { checkAuthStatus } from './authentication/authenticationHelpers';
 import { getPopularCategory, getCollection, getItem, getCategory } from './helperElements/FetchData';
 import Search from './helperElements/Search.jsx' // importing default
 import { connectHits } from 'react-instantsearch/dom'
-import MapContainer from './Map/MapContainer.jsx'
 
 export default class App extends React.Component {
   constructor() {
@@ -188,9 +187,6 @@ export default class App extends React.Component {
                 collections={this.state.collections}
                 items={this.state.items}
                 request={this.state.request} />}/>
-            <Route exact path='/map' render={() =>
-              <MapContainer />}
-            />
           </Switch>
 
         </div>
