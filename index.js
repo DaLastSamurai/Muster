@@ -36,7 +36,12 @@ item.setSettings({
   searchableAttributes: [
     'name',
     'location',
-    'savedKeywords'
+    'savedKeywords', 
+    'notes',
+    'author',
+    'storeLinks',
+    'subject',
+    'title'
   ]
 });
 

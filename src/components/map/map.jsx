@@ -17,6 +17,7 @@ class Map extends React.Component {
   }
 
   componentWillReceiveProps() {
+    // console.log('>>>>> map hits >>>>>>' + this.props.hits.hits )
     this.setState({filteredSearches : this.props.hits.hits.filter((hit)=>{
       return hit._geoloc !== undefined})})
   }
@@ -28,11 +29,11 @@ class Map extends React.Component {
   render() {
     // const markers = this.props.filteredSearches || [];
     // console.log(this.props.userLoc ? 'yes' : 'no');
-    console.log(this.state.filteredSearches)
+    console.log(this.state.filteredSearches.length)
     return (
       <div>
         <GoogleMap
-          defaultZoom={5}
+          defaultZoom={12}
           center={this.props.userLoc}
           defaultCenter={{ lat:-30.363882, lng:150.044922 }}          
           >
@@ -45,7 +46,7 @@ class Map extends React.Component {
                 options={{ closeBoxURL: ``, enableEventPropagation: true }}
               >
 
-                <div style={{ backgroundColor: `white`, opacity: 0.5, padding: `12px` }}>
+                <div style={{ backgroundColor: `white`, opacity: 0.5, padding: `6px` }}>
                   <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
                     {itemLoc.title}
                    
