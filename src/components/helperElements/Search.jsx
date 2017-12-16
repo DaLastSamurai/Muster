@@ -8,28 +8,36 @@ import MapContainer from '../Map/MapContainer.jsx'
 function foundItem({hit}) {
   // console.log(hit.savedKeywords)
   // console.log('INDEXNAME',window.indexName)
+  // console.log(hit.collectionId)
+  // console.log('has an image?',hit.images[0])
   return(
     <div>
-      {window.indexName === undefined &&
-        (<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
-          <Link to={`/items/:${hit.collectionId}`}>
-            <img src={hit.imageUrl}/>
-            {hit.name}<br/>
-          </Link>
-            ${hit.price || 'message user'}<br/>
-            Tags : {hit.savedKeywords}
-            <br/>
-        </div>)}
-      {window.indexName === 'item' &&
-      (<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
+      {window.indexName === undefined && (
+      <div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
         <Link to={`/items/:${hit.collectionId}`}>
           <img src={hit.imageUrl}/>
           {hit.name}<br/>
         </Link>
-          ${hit.price || 'message user'}<br/>
-          Tags : {hit.savedKeywords}
+
+          {hit.price ? <p> ${hit.price} </p> :<p> price upon request </p>}
           <br/>
-      </div>)}
+          {hit.savedKeywords ? <p> Tags : {hit.savedKeywords} </p> : null}
+          <br/>
+        </div>
+      )}
+
+      {window.indexName === 'item' && (
+        <div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
+          <Link to={`/items/:${hit.collectionId}`}>
+            <img src={hit.imageUrl}/>
+            {hit.name}<br/>
+          </Link>
+
+          ${hit.price || 'message user'}<br/>
+          {hit.savedKeywords ? <p> Tags : {hit.savedKeywords} </p> : null}
+          <br/>
+        </div>
+      )}
 
       {window.indexName === 'users' &&
         (<div onClick={(e)=> console.log('this is what the users click handler passes: ', hit)}>
@@ -60,7 +68,7 @@ function foundItem({hit}) {
         <div style={{float: "center"}}>
         <Pagination showLast={true} />
         <HitsPerPage
-        defaultRefinement={20} 
+        defaultRefinement={5} 
         items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}]}
         />
         <MapContainer hits={JSON.stringify(props)}/>

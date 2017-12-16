@@ -32,7 +32,7 @@ class Map extends React.Component {
     return (
       <div>
         <GoogleMap
-          defaultZoom={5}
+          defaultZoom={12}
           center={this.props.userLoc}
           defaultCenter={{ lat:-30.363882, lng:150.044922 }}          
           >
@@ -45,7 +45,7 @@ class Map extends React.Component {
                 options={{ closeBoxURL: ``, enableEventPropagation: true }}
               >
 
-                <div style={{ backgroundColor: `white`, opacity: 0.5, padding: `12px` }}>
+                <div style={{ backgroundColor: `white`, opacity: 0.5, padding: `6px` }}>
                   <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
                     {itemLoc.title}
                    
