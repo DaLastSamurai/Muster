@@ -1,14 +1,61 @@
 
 /*save for last day*/
+body {
+  margin:0;
+  padding: 0;
+}
 
+nav {
+  border: solid black;
+  height: 140px;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #ffffff;
+  height: 50px;
+}
+
+.logo {
+  order: -1;
+  position: absolute;
+  align-content: space-around;
+  top: 0;
+  left: 0;
+
+  font-family: sans-serif;
+  font-size: 20px;
+  color: black;
+}
+
+.content {
+}
+
+.content li {
+  margin-top: 10px;
+  margin-left:10px;
+  margin-right:10px;
+  font-family: sans-serif;
+  font-size: 20px;
+  color: black;
+}
+  
+aside {
+  border: solid red;
+  float: left;
+  height: 100%;
+  width: 180px;
+}
 
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #FFFFFF;
-  display:inline;
+  /* background-color: #FFFFFF; */
+  display:block;
 }
 
 
@@ -16,11 +63,15 @@ li {
   float: left;
 }
 
+.search {
+  display: block;
+}
+
 li a {
-   display: block;
+   /* display: block;
    color: white;
    text-align: center;
-   padding: 14px 16px;
+   padding: 14px 16px; */
 }
 
 img {
@@ -46,17 +97,17 @@ img {
 }
 
 .sidenav {
-  background-color: '#2c3e50';
-  width: 220;
+  /* background-color: '#2c3e50';
+  width: 220; */
 }
 
 
 
 .followBar {
-  display: block; 
+  /* display: block; 
   right : 0px;
   margin: auto;
-  width: 80%; 
+  width: 80%;  */
 }
 
 .profilePhoto {
@@ -65,7 +116,7 @@ img {
 
 
 .c1 {
-  color : rgb(94, 94, 94);
+  /* color : rgb(94, 94, 94); */
 }
 
 .gu-mirror {

@@ -16,17 +16,17 @@ class CategoryList extends React.Component {
   }
 
   render() {
-    console.log('these are the props in PopularCategoryList',this.props)
+    // console.log('these are the props in PopularCategoryList',this.props)
     return(
       <div className="container-fluid">
         <h2>Popular Categories</h2>
         <div>
-          {Object.keys(this.props.popularCategoryList).map((id) => {
+          {Object.keys(this.props.popularCategoryList).map((cat) => {
               return (
-                <div key={id}>
+                <div key={cat[0]}>
                   <CategoryEntry
-                    category={this.props.popularCategoryList[id]}
-                    id={id} />
+                    category={this.props.popularCategoryList[cat]}
+                    id={cat[0]} />
                 </div>
                 )
             })

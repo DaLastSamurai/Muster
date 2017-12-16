@@ -76,7 +76,7 @@ class ItemList extends React.Component {
 
   render() {
     return(
-      this.state.items.length > 0
+      this.state.items.length > 0 && this.state.userInfo
       ? <div>
           <h2>{this.state.collectionName}</h2>
           <p>{this.state.userInfo.profileInfo.username}</p>

@@ -41,7 +41,8 @@ export default class MyCollections extends React.Component {
 
   render() {
     return(
-      <div className="container-fluid">
+      <aside>
+      {/*  <div className="container-fluid"> */}
         <SideNav>
           <Link to={`/profile/${this.props.user.uid}`}>
             <UserInfo user={this.props.user} clickFunction={() => {}}/>
@@ -78,7 +79,8 @@ export default class MyCollections extends React.Component {
         <SideNav>
           <ChatRoomList />
         </SideNav>
-      </div>
+      {/*  </div> */}
+      </aside>
     )
   }
 }

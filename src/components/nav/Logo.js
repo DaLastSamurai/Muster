@@ -17,6 +17,6 @@ export default class Logo extends React.Component {
   }
 
   render() {
-    return (<h3> mustr. </h3>)
+    return (<h3 className="logo"> mustr. </h3>)
   }
 }
