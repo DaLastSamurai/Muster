@@ -19,27 +19,29 @@ class AddItems extends React.Component {
       onlinePrice: '',
       storeLinks: {},
       subject: '',
+      _geoloc: {lat: 0, lng: 0},
+      _geolocImage: '',
+      price: '',
       
-      //component fields
+      //component fields (used in addItems)
       id: null,
       keywords: [],
+      collectionId: '',
       customKeyword: '',
       savedKeywords: [],
       showDetailed: false,
       collectionList: [{id: null, name: 'loading collections...'}],
-      
-      //depricated fields
+      locationList: [{ lat: null, lng: null, name: 'no saved locations' }],
       sell: '',
-      boughtFrom: '',
-      collectionId: '',
+      
+      // //depricated fields
       location: '',
+      boughtFrom: '',
       name: '',
       imageUrl: '',
       thumbnailUrl: '',
-      price: '',
       productIds: '',
-      purchaseTime: '',
-      uid: null
+      purchaseTime: ''
     };
 
     this.setImageState = this.setImageState.bind(this);
@@ -49,10 +51,11 @@ class AddItems extends React.Component {
     this.addCustomeKeyword = this.addCustomeKeyword.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.geoFindMe = this.geoFindMe.bind(this);
+    // this.setGeoImage = this.setGeoImage.bind(this);
   };
 
   setImageState(imageUrl) {
-    // this.setState({ imageUrl });
     this.state.imageUrl = imageUrl;
   };
 
@@ -88,6 +91,7 @@ class AddItems extends React.Component {
   //   return null;
   // };
 
+  //Handles dynamically adding and removing keywords from suggested to saved
   addRemoveKeyword(keyword) {
     let savedKeywords = this.state.savedKeywords;
     if (savedKeywords.includes(keyword)) {
@@ -113,46 +117,84 @@ class AddItems extends React.Component {
       [name]: value
     })
   };
-
+  
+  //Submits information in fields to the database
   handleSubmit(event) {
-
+    
     let currentUID = firebase.auth().currentUser.uid
 
     let postData = {
-      boughtFrom: this.state.boughtFrom,
-      collectionId: this.state.collectionId,
-      location: this.state.location,
-      name: this.state.name,
+      //new book fields
+      uid: currentUID,
+      title: this.state.title,
+      images: this.state.images,
       notes: this.state.notes,
-      imageUrl: this.state.imageUrl,
-      price: this.state.price,
-      productIds: this.state.productIds,
-      purchaseTime: this.state.purchaseTime,
+      upc: this.state.upc,
+      onlinePrice: this.state.onlinePrice,
+      storeLinks: this.state.storeLinks,
+      subject: this.state.subject,
+      _geoloc: this.state._geoloc,
+      collectionId: this.state.collectionId,
       savedKeywords: this.state.savedKeywords,
       sell: this.state.sell,
-      uid: currentUID
+      price: this.state.price
+      
+      //depricated fields
+      // location: this.state.location,
+      // productIds: this.state.productIds,
+      // purchaseTime: this.state.purchaseTime,
+      // boughtFrom: this.state.boughtFrom,
+      // name: this.state.name,
+      // imageUrl: this.state.imageUrl,
     };
     
     let newPostKey = this.state.id || 
       firebase.database().ref('/item').push().key;
 
     let updates = {};
+    updates['/users/' + currentUID + '/itemIds/' + newPostKey] = newPostKey;
     updates['/item/' + newPostKey] = postData;
     updates['/collection/' + this.state.collectionId + 
             '/itemId/' + newPostKey] = newPostKey;
 
     return firebase.database().ref().update(updates);
 
-    event.target.reset();
+    // event.target.reset();
   };
+
+  //Gets user geolocation
+  geoFindMe() {
+    var output = document.getElementById("out");
+    if (!navigator.geolocation) {
+      output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+      return;
+    }
+    output.innerHTML = "<p>Locating…</p>";
+    navigator.geolocation.getCurrentPosition((position) => {
+      var x = position.coords.latitude;
+      var y = position.coords.longitude;
+      var position = {lat: x, lng: y}
+
+      output.innerHTML = '<p>Latitude is ' + x + '° <br>Longitude is ' + y + '°</p>';
+
+      var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + x + "," + y + "&zoom=17&size=400x400&sensor=false";
+
+      this.setState({
+        _geoloc: position,
+        _geolocImage: img
+      })
+    },
+    () => {
+      output.innerHTML = "Unable to retrieve your location";
+    })
+  }
 
   componentDidMount() {
 
+    //Checks database for collections owned by the user
     let collectionRef = firebase.database().ref('/collection');
-
     collectionRef.on("value", (snapshot) => {
       let currentUID = firebase.auth().currentUser.uid;
-
       let grabIdName = Object.keys(snapshot.val()).map((k, i) => {
         return {
           id: Object.keys(snapshot.val())[i],
@@ -161,41 +203,71 @@ class AddItems extends React.Component {
         }
       })
         .filter(collection => collection.uid.includes(currentUID));
-
       this.setState({
         collectionList: grabIdName
       });
 
     }, (error) => { console.error(error) }
     );
-  
 
+    //Checks database for collections owned by the user
+    let locationRef = firebase.database().ref(`/user/${this.props.userId}/locations`);
+    locationRef.on("value", (snapshot) => {
+      let currentUID = this.props.userId
+      let grabIdName = Object.keys(snapshot.val()).map((k, i) => {
+        return {
+          id: Object.keys(snapshot.val())[i],
+          name: snapshot.val()[k].name,
+          uid: snapshot.val()[k].uid
+        }
+      })
+        .filter(collection => collection.uid.includes(currentUID));
+      this.setState({
+        collectionList: grabIdName
+      });
+
+    }, (error) => { console.error(error) }
+    );
+
+    //Checks for props from the edit button in inventory manager
     if (this.props.editItem) {
       let clickedItem = this.props.editItem;
       let itemRef = firebase.database().ref('/item/' + clickedItem);
 
       itemRef.on("value", (snapshot) => {
         this.setState({
+          //new boook fields
           id: this.props.editItem,
-          boughtFrom: snapshot.val().boughtFrom,
-          collectionId: snapshot.val().collectionId,
-          location: snapshot.val().location,
-          name: snapshot.val().name,
+          title: snapshot.val().title,
+          images: snapshot.val().images,
           notes: snapshot.val().notes,
-          imageUrl: snapshot.val().imageUrl,
-          price: snapshot.val().price,
-          productIds: snapshot.val().productIds,
-          purchaseTime: snapshot.val().purchaseTime,
+          upc: snapshot.val().upc,
+          onlinePrice: snapshot.val().onlinePrice,
+          storeLinks: snapshot.val().storeLinks,
+          subject: snapshot.val().subject,
+          _geoloc: snapshot.val()._geoloc,
           savedKeywords: snapshot.val().savedKeywords || [],
-          sell: snapshot.val().sell
+          collectionId: snapshot.val().collectionId,
+          sell: snapshot.val().sell,
+          price: snapshot.val().price,
+          
+          //depricated fields 
+          // name: snapshot.val().name,
+          // location: snapshot.val().location,
+          // imageUrl: snapshot.val().imageUrl,
+          // productIds: snapshot.val().productIds,
+          // purchaseTime: snapshot.val().purchaseTime,
+          // boughtFrom: snapshot.val().boughtFrom
+          
         });
       }, (error) => { console.error(error) });
     }
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
+
+    //Checks if keywords are empty, if so, loads them using ImageRecog
     if (this.state.keywords.length > 0) {
-      console.log('Keywords loaded!')
     } else {
       if (this.state.imageUrl) {
         ImageRecog(this.state.imageUrl, (keywords) => {
@@ -206,6 +278,7 @@ class AddItems extends React.Component {
   }
  
   render() {
+    console.log('location', JSON.stringify(this.state._geolocImage))
     return (
       <div className="container">
 
@@ -263,6 +336,24 @@ class AddItems extends React.Component {
             <div className="form-group">
 
               <div>
+                <label>Collection</label>
+                <div>
+                  <select
+                    className="form-control"
+                    name="collectionId"
+                    component="select"
+                    value={this.state.collectionId}
+                    onChange={this.handleChange}
+                    required
+                  >
+                    <option></option>
+                    {this.state.collectionList.map(collection =>
+                      <option value={collection.id}>{collection.name}</option>)}
+                  </select>
+                </div>
+              </div>
+
+              <div>
                 <label>Title</label>
                 <div>
                   <input
@@ -272,38 +363,6 @@ class AddItems extends React.Component {
                     type="text"
                     placeholder="title of book..."
                     value={this.state.title}
-                    onChange={this.handleChange}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label>UPC</label>
-                <div>
-                  <input
-                    className="form-control"
-                    name="UPC"
-                    component="input"
-                    type="text"
-                    placeholder="UPC of book..."
-                    value={this.state.upc}
-                    onChange={this.handleChange}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label>Online Price</label>
-                <div>
-                  <input
-                    className="form-control"
-                    name="subject"
-                    component="input"
-                    type="text"
-                    placeholder="Price of book..."
-                    value={this.state.subject}
                     onChange={this.handleChange}
                     required
                   />
@@ -327,40 +386,41 @@ class AddItems extends React.Component {
               </div>
 
               <div>
-                <label>Collection</label>
+                <label>Online Price</label>
                 <div>
-                  <select
+                  <input
                     className="form-control"
-                    name="collectionId"
-                    component="select"
-                    value={this.state.collectionId}
+                    name="subject"
+                    component="input"
+                    type="text"
+                    placeholder="Price of book..."
+                    value={this.state.onlinePrice}
                     onChange={this.handleChange}
                     required
-                  >
-                  <option></option>
-                    {this.state.collectionList.map(collection =>
-                      <option value={collection.id}>{collection.name}</option>)}
-                  </select>
+                  />
                 </div>
               </div>
-              
+
               {this.state.showDetailed ? 
               (
               <div>
               <div>
+
                 <div>
-                  <label>Name</label>
+                  <label>Location</label>
                   <div>
-                    <input
+                    <select
                       className="form-control"
-                      name="name"
-                      component="input"
-                      type="text"
-                      placeholder="name..."
-                      value={this.state.name}
+                      name="collectionId"
+                      component="select"
+                      value={this.state._geoloc}
                       onChange={this.handleChange}
                       required
-                    />
+                    >
+                      <option></option>
+                      {this.state.locationList.map(location =>
+                        <option value={location}>{location.name}</option>)}
+                    </select>
                   </div>
                 </div>
 
@@ -369,16 +429,40 @@ class AddItems extends React.Component {
                   <div>
                     <input
                       className="form-control"
-                      name="location"
+                      name="_geoloc"
                       component="input"
                       type="text"
-                      placeholder="current location?"
-                      value={this.state.location}
+                      placeholder="item location?"
+                      value={this.state._geoloc}
                       onChange={this.handleChange}
                       required
                     />
                   </div>
                 </div>
+
+                <a onClick={this.geoFindMe}>Use my current location</a>
+                {(this.state._geolocImage !== '') ? 
+                  <div id="out">
+                    <img src={this.state._geolocImage}/>    
+                      
+                      <div>
+                        <label>Save Location</label>
+                          <div>
+                            <input
+                              className="form-control"
+                              name="saveLocation"
+                              component="text"
+                              placeholder="notes..."
+                              value={this.state.saveLocation}
+                              onChange={this.handleChange}
+                            />
+                          </div>
+                        </div>
+                      </div> 
+                
+                : 
+                
+                <div id="out"></div>}
 
                 <label>Notes</label>
                 <div>
@@ -394,7 +478,23 @@ class AddItems extends React.Component {
               </div>
 
               <div>
-                <label>Price</label>
+                <label>UPC</label>
+                <div>
+                  <input
+                    className="form-control"
+                    name="UPC"
+                    component="input"
+                    type="text"
+                    placeholder="UPC of book..."
+                    value={this.state.upc}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label>Your Selling Price</label>
                 <div>
                   <input
                     className="form-control"
@@ -407,7 +507,7 @@ class AddItems extends React.Component {
                   />
                 </div>
               </div>
-
+{/* 
               <div>
                 <label>Bought From</label>
                 <div>
@@ -451,7 +551,7 @@ class AddItems extends React.Component {
                     onChange={this.handleChange}
                   />
                 </div>
-              </div>
+              </div> */}
 
               <div>
                 <div>
