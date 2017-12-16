@@ -9,22 +9,23 @@ class Map extends React.Component {
     };
   }
   componentDidMount() {
-    console.log('Map component should be array of hits', this.props.hits.hits)
+    // console.log('Map component should be array of hits', this.props.hits.hits)
     // console.log(Array.isArray(this.props.hits.hits))
     this.setState({filteredSearches : this.props.hits.hits.filter((hit)=>{
       return hit._geoloc !== undefined})
     })
   }
 
-
-
   render() {
     // const markers = this.props.filteredSearches || [];
+    // console.log(this.props.userLoc ? 'yes' : 'no');
+    console.log('userLoc from map.jsx', this.state.userLoc)
     return (
       <div>
         <GoogleMap
-          defaultZoom={3}
-          defaultCenter={{ lat:-25.363882, lng:131.044922 }}
+          defaultZoom={5}
+          center={this.props.userLoc}
+          defaultCenter={{ lat:-30.363882, lng:150.044922 }}          
           >
           {this.state.filteredSearches.map((itemLoc)=>{
             return <div><Marker position={itemLoc._geoloc}/></div>
