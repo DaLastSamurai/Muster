@@ -17,6 +17,7 @@ class Map extends React.Component {
   }
 
   componentWillReceiveProps() {
+    // console.log('>>>>> map hits >>>>>>' + this.props.hits.hits )
     this.setState({filteredSearches : this.props.hits.hits.filter((hit)=>{
       return hit._geoloc !== undefined})})
   }
@@ -28,7 +29,7 @@ class Map extends React.Component {
   render() {
     // const markers = this.props.filteredSearches || [];
     // console.log(this.props.userLoc ? 'yes' : 'no');
-    console.log(this.state.filteredSearches)
+    console.log(this.state.filteredSearches.length)
     return (
       <div>
         <GoogleMap
