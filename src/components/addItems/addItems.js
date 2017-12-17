@@ -229,7 +229,9 @@ class AddItems extends React.Component {
         return {
           lat: snapshot.val()[key].lat,
           lng: snapshot.val()[key].lng,
-          name: key
+          name: key,
+          value: {lat: snapshot.val()[key].lat, lng: snapshot.val()[key].lng},
+          label: snapshot.val()[key].name
         }
       });
 
@@ -290,9 +292,9 @@ class AddItems extends React.Component {
  
   render() {
     return (
-      <div className="container">
+      <div className="additems-container">
 
-        <div className="col-sm-5 col-sm-offset-0">
+        <div className="">
 
           <div>
 
@@ -591,7 +593,7 @@ class AddItems extends React.Component {
           </form>
         </div>
 
-        <div className="col-sm-3 col-sm-offset-0">
+        <div className="additems-carousel">
           <InProgressCarousel
             setItemState={this.setItemState} 
             currentUserId={this.props.userId}/>

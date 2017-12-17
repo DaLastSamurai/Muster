@@ -34,7 +34,7 @@ class Trade extends React.Component {
       apiKey="289636a507e4853ef95cc5b7e4cac8d9"
       indexName={this.state.indexName || 'item'}
       >
-        <div>
+        <div className="main-container" >
           <button onClick={this.toggleMakeRequest}>Make Request</button>
           {this.state.showMR 
             ? <MakeRequest collections={this.props.collections}

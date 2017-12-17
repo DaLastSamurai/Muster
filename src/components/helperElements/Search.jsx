@@ -71,16 +71,30 @@ function foundItem({hit}) {
   function Search(props) {
     // console.log('props in Search:', props)
     return (
-      <div>
-        <Hits hitComponent={foundItem} />
-        <div style={{float: "center"}}>
-        <Pagination showLast={true} />
-        <HitsPerPage
-        defaultRefinement={5} 
-        items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}]}
-        />
-        <MapContainer hits={JSON.stringify(props)}/>
+      <div className="search-container">
+        
+        <div className="search-hits-per-page">
+          <HitsPerPage
+          defaultRefinement={5} 
+          items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}]}
+          />
         </div>
+
+        <div className="search-entry">
+          <Hits hitComponent={foundItem} />
+        </div>
+
+        <div style={{ float: "center" }}>
+
+        <div className="search-pagination">
+          <Pagination showLast={true} />
+        </div>
+
+        <div className="search-map">
+          <MapContainer hits={JSON.stringify(props)}/>
+        </div>
+        
+      </div>
       </div>
     )
   }
@@ -96,9 +110,8 @@ export class SearchHits extends React.Component {
   render() {
     return (
       <header className="searchBar">
-        <SearchBox translations={{placeholder:'Search Me!'}} />
+        <SearchBox translations={{placeholder:'Search'}} />
       </header>
     )
   }
 }
-

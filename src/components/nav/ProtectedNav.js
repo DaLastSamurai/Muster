@@ -9,6 +9,8 @@ import AuthFrame from '../authentication/AuthFrame'
 import {InstantSearch, SearchBox} from 'react-instantsearch/dom';
 import { SearchHits } from '../helperElements/Search.jsx'
 import SearchToggler from '../helperElements/SearchToggler.jsx'
+import UserInfo from '../userBar/UserInfo.jsx';
+
 
 export default class ProtectedNav extends React.Component {
   constructor(props) {
@@ -19,34 +21,62 @@ export default class ProtectedNav extends React.Component {
 
   render() {
     return (
-      <nav>
-        <div  className="navbar">
+      <div className="protectednavbar-container">
+
+
+        <div>
           <Link to="/">
             <Logo />
           </Link>
-          <ul className="content">
-            <Link to={`/profile/${this.props.user.uid}`}>
-              <LinkButton title='Profile' clickFunction={() => {window.location.reload()}} />
-            </Link>
-            <Link to='/manageinventory'>
-              <LinkButton title='Manage Inventory' clickFunction={() => { }} />
-            </Link>
-            <Link to='/trade'>
-              <LinkButton title='Trade' clickFunction={() => { }} />
-            </Link>
-            <Link to="/">
-              <LinkButton title='Logout' clickFunction={() => {firebaseAuth().signOut()}} />
-            </Link>
-          </ul>
         </div>
 
-        <div className="search">
-        <Link to="/searching">
-          <SearchHits/>
-        </Link>
-          <SearchToggler searchBy={this.props.searchBy}/>
+        <div className="navbar-search">
+          <Link to="/searching">
+            <SearchHits />
+          </Link>
+          {/* <SearchToggler searchBy={this.props.searchBy} /> */}
         </div>
-      </nav>
+
+        <div className="navbar-links">
+          <Link to='/manageinventory'>
+            <button title='Books' clickFunction={() => { }} >Books</button>
+          </Link>
+          <Link to='/trade'>
+            <button title='Trade' clickFunction={() => { }}>Trade</button>
+          </Link>
+          <Link to={'/addItems/'}>
+            <button type="button" className="">Add</button>
+          </Link>
+          <Link to="/">
+            <button title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >Logout</button>
+          </Link>
+        </div>
+{/*           
+        <div className="navbar-links">
+          <Link to={`/profile/${this.props.user.uid}`}>
+            <LinkButton title='Profile' clickFunction={() => {window.location.reload()}} />
+          </Link>
+          <Link to='/manageinventory'>
+            <button title='Books' clickFunction={() => { }} >Books</button>
+          </Link>
+          <Link to='/trade'>
+            <button title='Trade' clickFunction={() => { }}>Trade</button>
+          </Link>
+          <Link to={'/addItems/'}>
+            <button type="button" className="">Add</button>
+          </Link>
+          <Link to="/">
+          <button title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >Logout</button>
+          </Link>
+        </div> */}
+
+        <div className="navbar-avatar">
+          <Link to={`/profile/${this.props.user.uid}`}>
+            <UserInfo user={this.props.user} clickFunction={() => { }} />
+          </Link>
+        </div>
+        
+      </div>
     )
   }
 }
