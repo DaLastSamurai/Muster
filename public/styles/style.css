@@ -277,6 +277,25 @@ nav {
   grid-column: 1/6;
 } 
 
+.tradebox{
+  border: solid red;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.reqmade {
+  border: solid red;
+  width: 80%;
+}
+
+.reqreceiv {
+  border: solid red;
+  width: 80%;
+}
+
 /* userbar */
 
 
@@ -393,5 +412,44 @@ em {
   /* width: 600px;
   height: 600px; */
 }
+
+/* .main {
+  display: flex;
+  flex-direction: row; 
+  justify-content: center;
+  width: 100%;
+  border: solid red; 
+} */
+
+
+
+
+/* .req-container {
+  display: grid;
+  grid-template-columns: 30px, 30px, 30px, 30px, 30px;
+  grid-gap: 5px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.reqdate {
+  grid-column: 1/2;
+}
+.requser {
+  grid-column: 2/3;
+}
+.reqitem {
+  grid-column: 3/4;
+}
+.reqtype {
+  grid-column: 4/5;
+}
+.reqstatus {
+  grid-column: 5/6;
+}
+
+.reqrest {
+  grid-column: 1/6;
+}  */
+
 
 

@@ -193,7 +193,8 @@ handleshowSearchBox() {
 
   render() {
     console.log(this.state.showSearchBox)
-    return(<div>
+    return(
+      <div>
         <h4>search</h4>
         {/* <input name="searchUser"
                type="text"
@@ -221,7 +222,6 @@ handleshowSearchBox() {
             set the state
           </button>
           <button onClick={()=>console.log(this.state.selectedItem)}> show me the state</button>
-<br/>
 /////////////////////////////////////////////////////////////////////////////////////////////
         <h4>offer</h4>
 

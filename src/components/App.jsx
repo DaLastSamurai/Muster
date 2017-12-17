@@ -169,7 +169,6 @@ export default class App extends React.Component {
                 items={this.state.items}
                 request={this.state.request} />}/>
           </Switch>
-
         </div>
         </InstantSearch>
       </Router>
