@@ -129,7 +129,7 @@ export default class ProfileFrame extends React.Component {
     return Object.values(this.state).filter(el => el === null).length > 2
       ? (<div> loading... </div> ) 
       : (
-        <div>
+        <div className="profile-container">
           <div className = "followBar"> 
             {this.state.isUsersProfile 
               ? <div />

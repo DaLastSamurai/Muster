@@ -80,7 +80,7 @@ class ManageInventory extends React.Component {
 //>>>>>>when page out get data
   render() {
     return(
-      <div>
+      <div className="manage-inventory-container">
         <select onChange={this.handleSortBy}>
           <option value="collection">by collection</option>
           <option value="location">by location</option>

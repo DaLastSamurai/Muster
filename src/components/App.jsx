@@ -99,25 +99,28 @@ export default class App extends React.Component {
         apiKey="289636a507e4853ef95cc5b7e4cac8d9"
         indexName={this.state.indexName}
         >
-        <div>
+          <div className= 'app-container'>
           {this.state.authed
           ? (
-            <div>
-              <ProtectedNav user={this.state.user} searchBy={this.searchBy}/>
-              <MyCollections
-                // class="sidenav"
-                user={this.state.user}
-                userId={this.state.userId}
-                addNewCollection={this.addNewCollection}
-                searchMyCollections={this.searchMyCollections}
-                collectionList={this.state.collections}
-                getCollection={this.getCollection}
-                // getUserCollection={this.getUserCollection}
-              />
+            <div className='nav-container'>
+              <div className= 'protectednav-container'> 
+                <ProtectedNav user={this.state.user} searchBy={this.searchBy}/>
+              </div>
+
+              <div className='mycollections-container'>
+                <MyCollections
+                  user={this.state.user}
+                  userId={this.state.userId}
+                  addNewCollection={this.addNewCollection}
+                  searchMyCollections={this.searchMyCollections}
+                  collectionList={this.state.collections}
+                  getCollection={this.getCollection}
+                />
+              </div>
             </div>
           )
           : (
-              <div>
+              <div className= 'unprotectednav-container'>
                 <UnprotectedNav setIsOnAuthFrame={this.setIsOnAuthFrame} />
                 <div>
                   {this.state.isOnAuthFrame
