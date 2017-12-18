@@ -74,7 +74,7 @@ export default class ProtectedNav extends React.Component {
           </Link>
         </div> */}
 
-        <div className="navbar-avatar">
+        <div>
           <Link to={`/profile/${this.props.user.uid}`}>
             <UserInfo user={this.props.user} title="Profile" clickFunction={() => {window.location.reload()}} />
           </Link>

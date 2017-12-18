@@ -37,6 +37,7 @@ export default class NewCollectionsInput extends React.Component {
   render() {
     return(
       <form onSubmit={(e)=>{
+        this.props.toggleInputForm();
         e.preventDefault();
         this.handleSubmit(e);
       }}>

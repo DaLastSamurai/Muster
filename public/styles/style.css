@@ -175,7 +175,7 @@ input[type=submit]:hover {
 }
 
 .search-container{
-  padding: 100px;
+  padding: 10px;
 }
 
 .search-entry{
@@ -221,13 +221,10 @@ input[type=submit]:hover {
 }
 
 .navbar-avatar{
-  border : 0;
+  margin-top: 15px;
   border-radius: 50%;
-  align-content: right;
-  width: auto;
   max-width: 35px;
-  height: auto;
-  max-height: 35px;
+  max-height: 50px;
 }
 
 /* 
