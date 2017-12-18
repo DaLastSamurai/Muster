@@ -19,43 +19,44 @@ body {
 
 
 a:link {
-    text-decoration: none;
+  text-decoration: none;
+  color: #484848;
 }
 
 a:visited {
-    text-decoration: none;
+  text-decoration: none;
+  color: #484848;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
+  color: #484848;
 }
 
 a:active {
-    text-decoration: none;
+  text-decoration: none;
+  color: #484848;
 }
 
 button {
-    background-color: transparent;
-    color: black;
-    padding: 10px 24px;
-    border: 0px solid grey;
-    border-radius: 4px;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
+  background-color: transparent;
+  color: black;
+  padding: 10px 24px;
+  border: 0px solid grey;
+  border-radius: 4px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
 }
 
 button:hover {
-    background-color: rgb(246, 246, 246);
-    color: black;
+  background-color: rgb(246, 246, 246);
+  color: black;
 }
 
 /* layout */
 .nav-container {
-    overflow: hidden;
-    top: -1;
-    
-
-
+  overflow: hidden;
+  top: -1;
   z-index: 1;
   width: 100%;
   /* display: grid; */
@@ -127,29 +128,29 @@ button:hover {
 }
 
 input[type=text], select {
-    width: 400px;
-    padding: 10px 10px;
-    margin: 0px 0px;
-    display: inline-block;
-    border: 0px solid #ccc;
-    border-radius: 0px;
-    box-sizing: border-box;
+  width: 400px;
+  padding: 10px 10px;
+  margin: 0px 0px;
+  display: inline-block;
+  border: 0px solid #ccc;
+  border-radius: 0px;
+  box-sizing: border-box;
 }
 
 
 input[type=submit] {
-    width: 400px;
-    background-color: grey;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  width: 400px;
+  background-color: grey;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 input[type=submit]:hover {
-    background-color: lightgrey;
+  background-color: lightgrey;
 }
 
 .unprotectednav-container{
@@ -177,30 +178,6 @@ input[type=submit]:hover {
 
 .profile-container{
   padding: 100px;
-}
-
-.search-container{
-  padding: 100px;
-}
-
-.search-entry{
-  padding: 0px;
-}
-
-.search-hits-per-page{
-  
-}
-
-.search-entry{
-
-}
-
-.search-pagination{
-
-}
-
-.search-map{
-  
 }
 
 .navbar-container {
@@ -242,11 +219,74 @@ nav {
   height: 50px;
 } */
 
-
-
 /* payments */
 
 /* popular-category */
+
+/* search */
+.search-container{
+  padding: 100px;
+  background-color: #fff;
+  color: #444;
+  display: grid;
+  grid-gap: 1em;
+  grid-template-areas:
+    "header"
+    "seach-map"
+    "search-list"
+    "seach-map"
+    "search-pagination"
+}
+
+.seach-map {
+  grid-area: seach-map;
+}
+
+.search-list {
+  grid-area: search-list;
+}
+
+.search-hits-per-page {
+  grid-area: search-hits-per-page;
+}
+
+.search-pagination {
+  grid-area: search-pagination;
+}
+
+	@media only screen and (min-width: 500px)  {
+	.search-container {
+		grid-template-columns: 20% auto;
+		grid-template-areas:
+    "search-hits-per-page   search-hits-per-page"
+		"seach-map  search-list"
+		"seach-map seach-map"
+		"search-pagination   search-pagination";
+	}
+	}
+
+	@media only screen and (min-width: 600px)   {
+		.search-container {
+      grid-gap: 10px;
+			grid-template-columns: 120px auto 120px;
+			grid-template-areas:
+      "search-hits-per-page  search-hits-per-page  search-hits-per-page"
+			"search-list search-list seach-map"
+			"search-pagination  search-pagination  search-pagination";
+			max-width: 100%;
+		}
+	}
+
+.box {
+  padding: 10px;
+  font-size: 100%; 
+}
+
+.search-hits-per-page,
+.search-pagination {
+}
+
+
 
 /* trade */
 
