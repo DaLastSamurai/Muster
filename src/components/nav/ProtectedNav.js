@@ -34,7 +34,7 @@ export default class ProtectedNav extends React.Component {
           <Link to="/searching">
             <SearchHits />
           </Link>
-          {/* <SearchToggler searchBy={this.props.searchBy} /> */}
+          <SearchToggler searchBy={this.props.searchBy} />
         </div>
 
         <div className="navbar-links">

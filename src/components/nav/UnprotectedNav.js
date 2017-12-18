@@ -57,11 +57,11 @@ export default class UnprotectedNav extends React.Component {
               <Link to="/searching">
                 <SearchHits />
               </Link>
-              {/*<ul className="nav navbar-nav">
+              {/* <ul className="nav navbar-nav">
                 <li className="navbar-text navbar-center align-top search-bar">
                   <SearchBar search={(input) => {console.log(`you searched: ${input}, but this search function doesnt do shit`)}}/>
                 </li>
-              </ul>*/}
+              </ul> */}
 
             </div>
           </nav>
