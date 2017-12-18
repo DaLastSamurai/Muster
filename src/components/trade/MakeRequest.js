@@ -195,16 +195,6 @@ handleshowSearchBox() {
     console.log(this.state.showSearchBox)
     return(<div>
         <h4>search</h4>
-        {/* <input name="searchUser"
-               type="text"
-               placeholder="search for user"
-               value={this.state.searchUser}
-               onChange={this.handleChange}/>
-
-        <button onClick={() => {
-          this.setState({searchUser: ''})
-          return this.getUser(this.state.searchUser)}}>search</button> */}
-/////////////////////////////////////////////////////////////////////////////////////////////
           <TradeSearchToggler 
             handleshowSearchBox={this.handleshowSearchBox}
             getIndexName={this.props.getIndexName}
@@ -222,7 +212,7 @@ handleshowSearchBox() {
           </button>
           <button onClick={()=>console.log(this.state.selectedItem)}> show me the state</button>
 <br/>
-/////////////////////////////////////////////////////////////////////////////////////////////
+
         <h4>offer</h4>
 
         <label>buy</label>

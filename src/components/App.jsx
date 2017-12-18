@@ -98,6 +98,7 @@ export default class App extends React.Component {
         appId="9VH3I9OJWS"
         apiKey="289636a507e4853ef95cc5b7e4cac8d9"
         indexName={this.state.indexName}
+        urlSync={true}
         >
           <div className= 'app-container'>
           {this.state.authed
