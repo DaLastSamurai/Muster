@@ -6,6 +6,7 @@ class Map extends React.Component {
     super(props);
     this.state = {
       filteredSearches : [],
+      currentMarker : '',
     };
   }
   componentDidMount() {
@@ -17,43 +18,43 @@ class Map extends React.Component {
   }
 
   componentWillReceiveProps() {
-    // console.log('>>>>> map hits >>>>>>' + this.props.hits.hits )
+    console.log('>>>>> map hits >>>>>>' + this.props.hits )
     this.setState({filteredSearches : this.props.hits.hits.filter((hit)=>{
       return hit._geoloc !== undefined})})
-  }
-
-  toggleInfo() {
-
-  }
+    }
 
   render() {
-    // const markers = this.props.filteredSearches || [];
     // console.log(this.props.userLoc ? 'yes' : 'no');
-    console.log(this.state.filteredSearches.length)
+    // console.log('this is filtered searches >>> ', this.state.filteredSearches)
+    // console.log('current marker state >>> ', this.state.currentMarker)
     return (
       <div>
         <GoogleMap
-          defaultZoom={12}
+          defaultZoom={14}
           center={this.props.userLoc}
           defaultCenter={{ lat:-30.363882, lng:150.044922 }}          
           >
-          {this.state.filteredSearches.map((itemLoc)=>{
+          {this.state.filteredSearches.map((marker, index)=>{
             return <div>
-              <Marker position={itemLoc._geoloc}/>
-
-              <InfoWindow onCloseClick={()=>{this.toggleInfo}}
-                defaultPosition={itemLoc._geoloc}
-                options={{ closeBoxURL: ``, enableEventPropagation: true }}
-              >
-
-                <div style={{ backgroundColor: `white`, opacity: 0.5, padding: `6px` }}>
-                  <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
-                    {itemLoc.title}
-                   
-                  </div>
-                </div>
-
-              </InfoWindow>
+              <Marker 
+                ref={index}
+                position={marker._geoloc}
+                onMouseOver={()=>{
+                  this.setState({currentMarker : marker })
+                }}
+                  
+              />
+          {this.state.currentMarker ? (
+          <InfoWindow 
+          position={{lat : this.state.currentMarker._geoloc.lat + 0.0001, lng : this.state.currentMarker._geoloc.lng}}
+          >
+            <div style={{ backgroundColor: `white`, opacity: 0.75, padding: `0px` }}>
+              <div style={{ fontSize: `12px`, fontColor: `#08233B` }}>
+                {this.state.currentMarker.title}
+              </div>
+            </div>
+          </InfoWindow>) 
+          : (<div/>) }
               </div>
           })}
         </GoogleMap>
