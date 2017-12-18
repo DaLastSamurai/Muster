@@ -1,5 +1,4 @@
 import React from 'react';
-// import { BrowserRouter as Router, Route, Link, Switch, Redirect, Route } from 'react-router-dom'
 import { firebaseAuth } from '../../../config/firebaseCredentials'
 import Signup from './Signup'
 import Login from './Login'
@@ -17,6 +16,8 @@ export default class AuthFrame extends React.Component {
   }
 
   componentWillReceiveProps() {
+    // these props come down from the app.js and are toggled by clicking the 
+    // 'login' button in the unprotected nav. 
     this.setState({isSigningUp : this.props.isSigningUp})
   }
 
@@ -28,13 +29,10 @@ export default class AuthFrame extends React.Component {
     this.setState({isSigningUp: false})
   }
 
-  showLoadingIcon() {
-    this.setState({loading : true})
-  }
-
   render() {
     return this.state.isSigningUp 
-    ? (<Signup loadLoginPage = {this.loadLoginPage} showLoadingIcon = {this.showLoadingIcon} loading = {this.state.loading}  />) 
+    ? (<Signup loadLoginPage = {this.loadLoginPage} />) 
     : (<Login user = {this.props.user} loadSignupPage = {this.loadSignupPage}/>)
   }
 }
+

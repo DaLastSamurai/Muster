@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 import ResetPassword from './ResetPassword'
 import Signup from './Signup'
 import LinkButton from '../helperElements/LinkButton'
-import LoadingIcon from '../helperElements/LoadingIcon'
 
 export default class Login extends React.Component {
   constructor(props) {
