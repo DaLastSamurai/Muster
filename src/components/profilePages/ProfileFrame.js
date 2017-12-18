@@ -125,10 +125,11 @@ export default class ProfileFrame extends React.Component {
     // console.log('this is the props', this.props)
     // console.log('this is the state in profileFrame', this.state)
     // starts by checking to see if the state is loaded.
+    // console.log('>>>>>>>>>>>profileframe fav cat state',this.state.favoriteCategories)
     return Object.values(this.state).filter(el => el === null).length > 2
       ? (<div> loading... </div> ) 
       : (
-        <div>
+        <div className="profile-container">
           <div className = "followBar"> 
             {this.state.isUsersProfile 
               ? <div />
@@ -157,7 +158,7 @@ export default class ProfileFrame extends React.Component {
               
                 <ImageUpload setImageState = {this.setImageState}/>
                 <img src = {this.state.profilePhoto} className = "profilePhoto"/>
-
+                <div>
                 Username (click to edit, one word only):
                 <RIEInput
                   value={this.state.username}
@@ -167,6 +168,8 @@ export default class ProfileFrame extends React.Component {
                   classLoading="loading"
                   classInvalid="invalid"
                 />
+                </div>
+                <div>
                  Bio (click to edit):
                 <RIETextArea
                   value={this.state.bio}
@@ -176,16 +179,20 @@ export default class ProfileFrame extends React.Component {
                   classLoading="loading"
                   classInvalid="invalid"
                 />
+                </div>
               </div>
             ) : (
               <div>
-                <h5> 
-                  bio: {this.state.bio}
-                </h5> 
-                <br /> 
-                <h5> 
-                  Username: {this.state.username}
-                </h5> 
+                <div>
+                  <h3> 
+                    bio: {this.state.bio}
+                  </h3> 
+                </div>
+                <div> 
+                  <h3> 
+                    Username: {this.state.username}
+                  </h3> 
+                </div>
               </div>
             )
           }

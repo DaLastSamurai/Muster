@@ -56,7 +56,6 @@ class ImageUpload extends Component {
             this.props.setKeywordsState(keywords)
           })
         })
-        // AWSRekognize(imageURL)
       })
   };
 
@@ -65,10 +64,10 @@ class ImageUpload extends Component {
       <div>
         <form>
 
-          {this.state.imageURL && 
-            <img src={this.state.imageURL}
+          {this.props.imageUrl &&
+            <img src={this.props.imageUrl}
               style={{ width: 300 }} />}
-        
+
           <div>
             <label>Image</label>
               {this.state.isUploading && 

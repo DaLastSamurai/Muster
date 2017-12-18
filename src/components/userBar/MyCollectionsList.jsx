@@ -8,23 +8,19 @@ export default class MyCollectionsList extends React.Component {
     super(props);
   }
 
-  componentDidMount(){
-  }
-
   render() {
     return (
       <div>
-        {this.props.collectionList.map((collection) => {
-          return <div key={collection[0]}>
-            <Link to={`/items/:${collection[0]}`} >
+        {Object.keys(this.props.collectionList).map((id) => {
+          return <div key={id}>
+            <Link to={`/items/:${id}`} >
               <MyCollectionsEntry
-                categoryId={collection[1].categoryId}
-                name={collection[1].name}
-                publicCat={collection[1].publicCat}
-                id={collection[0]}
+                categoryId={this.props.collectionList[id].categoryId}
+                name={this.props.collectionList[id].name}
+                publicCat={this.props.collectionList[id].publicCat}
+                id={id}
               />
             </Link>
-            <button onClick={() => {this.props.deleteCollection(collection[0])}}> x </button>
           </div>
         })}
       </div>

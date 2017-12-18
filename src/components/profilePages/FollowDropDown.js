@@ -29,7 +29,7 @@ export default class FollowersDropDown extends React.Component {
 
   handleDataToState(userIds, followersDataArr = [], cb = () => {}) {
     // TODO: THIS IS AWFUL, FIX
-    console.log('these are the userIds in the handleDataToState: ', userIds)
+    // console.log('these are the userIds in the handleDataToState: ', userIds)
     // takes in the userIds and then queries the db to create an array of
     // followersData with the user's names. The cb is passed last. 
     if (userIds.length === 0) {
@@ -40,7 +40,7 @@ export default class FollowersDropDown extends React.Component {
     let dbPath = `users/${userToAdd}/profileInfo`
     firebase.database().ref(dbPath).on('value', (snapshot) => {
     
-    console.log('this is the snapshot.val in', this.props.title, ': ', snapshot.val())
+    // console.log('this is the snapshot.val in', this.props.title, ': ', snapshot.val())
       if (snapshot.val() !== null) { // for some reason, snapshot.val() is null sometimes. 
         userObj['value'] = userToAdd; // the uid. 
         userObj['label'] = snapshot.val().username // what the user sees in dropdown
@@ -59,7 +59,7 @@ export default class FollowersDropDown extends React.Component {
   }
 
   render() {
-    console.log('this is the user props in', this.props.title, this.props.users)
+    // console.log('this is the user props in', this.props.title, this.props.users)
     // console.log('this is the state in', this.props.title , this.state.followersDataArr)
     return this.state.followersDataArr === null 
     ? (<div> loading... </div>) 

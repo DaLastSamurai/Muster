@@ -3,13 +3,14 @@ import firebase from 'firebase'
 
 // this is used in the app.js to check to see if there is a user signed in. 
 
-export const checkAuthStatus = function() {
+export const checkAuthStatus = function(cb1, cb2, cb3) {
+
   firebaseAuth().onAuthStateChanged((user) => {
     if (user) {
       this.setState({
         authed: true,
         user: user,
-        userId: user.uid,
+        userId: user.uid, 
       }, () => {
         firebase.database().ref(`/users/${user.uid}/defaultsSet`).on('value', (snapshot) => {
           // if the defaults have not been set: 
@@ -32,8 +33,12 @@ export const checkAuthStatus = function() {
             updates[user.uid + '/info'] = basicInfo;
             return users.update(updates)
           }
+          cb1(user.uid)
+          cb2(user.uid)
+          cb3(user.uid)
         })
       })
+      
     } else {
       this.setState({
         authed : false,

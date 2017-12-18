@@ -28,12 +28,14 @@ export default class UnprotectedNav extends React.Component {
       ONLY WHEN THE USER IS NOT SIGNED IN */
   render() {
     return (
+      <div>
+        <div className="logo-container">
+        <Logo />
+        </div>
         <div>
-          <nav className="navbar navbar-default">
-            <div className="container-fluid">
-              <ul className="nav navbar-nav navbar-legt">
-                <li className="logo"><Logo />
-                </li>
+          <nav>
+            <div>
+              <ul>
 
                 <li className="link-button">
                   <Link to="/">
@@ -63,8 +65,8 @@ export default class UnprotectedNav extends React.Component {
 
             </div>
           </nav>
-
         </div>
+      </div>
     )
   }
 }
