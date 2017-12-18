@@ -18,16 +18,15 @@ class Map extends React.Component {
   }
 
   componentWillReceiveProps() {
-    // console.log('>>>>> map hits >>>>>>' + this.props.hits.hits )
+    console.log('>>>>> map hits >>>>>>' + this.props.hits )
     this.setState({filteredSearches : this.props.hits.hits.filter((hit)=>{
       return hit._geoloc !== undefined})})
-  }
+    }
 
   render() {
-    // const markers = this.props.filteredSearches || [];
     // console.log(this.props.userLoc ? 'yes' : 'no');
     // console.log('this is filtered searches >>> ', this.state.filteredSearches)
-    console.log('current marker state >>> ', this.state.currentMarker)
+    // console.log('current marker state >>> ', this.state.currentMarker)
     return (
       <div>
         <GoogleMap
