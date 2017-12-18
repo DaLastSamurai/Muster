@@ -51,11 +51,11 @@ class ImageUpload extends Component {
         this.setState({imageURL}, () => {
           this.props.setImageState(imageURL)
         })
-        ImageRecog(imageURL, (keywords) => {
-          this.setState({ keywords }, () => {
-            this.props.setKeywordsState(keywords)
-          })
-        })
+        // ImageRecog(imageURL, (keywords) => {
+        //   this.setState({ keywords }, () => {
+        //     this.props.setKeywordsState(keywords)
+        //   })
+        // })
       })
   };
 
@@ -63,10 +63,11 @@ class ImageUpload extends Component {
     return (
       <div>
         <form>
-
-          {this.props.imageUrl &&
+          {this.props.images.map(image => {
+            return <img src={image} style={{width: 300}} />})}
+          {/* {this.props.imageUrl &&
             <img src={this.props.imageUrl}
-              style={{ width: 300 }} />}
+              style={{ width: 300 }} />} */}
 
           <div>
             <label>Image</label>
