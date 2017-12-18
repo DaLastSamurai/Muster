@@ -219,6 +219,11 @@ input[type=submit]:hover {
 /* messaging */
 
 /* model */
+.image-model {
+  position: fixed;
+  z-index: 1;
+  background-color: white;
+}
 
 /* navbar */
 
@@ -250,6 +255,23 @@ nav {
 
 /* trade */
 
+.tradebox{
+  /* border: solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.reqmade {
+  width: 80%;
+}
+
+.reqreceiv {
+  width: 80%;
+}
+
 .req-container {
   display: grid;
   grid-template-columns: 30px, 30px, 30px, 30px, 30px;
@@ -276,25 +298,6 @@ nav {
 .reqrest {
   grid-column: 1/6;
 } 
-
-.tradebox{
-  border: solid red;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.reqmade {
-  border: solid red;
-  width: 80%;
-}
-
-.reqreceiv {
-  border: solid red;
-  width: 80%;
-}
 
 /* userbar */
 

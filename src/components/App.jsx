@@ -12,12 +12,11 @@ import CollectionList from './popularcategory/CollectionList';
 import ItemList from './popularcategory/ItemList';
 import MyCollections from './userBar/MyCollections.jsx'
 import AuthFrame from './authentication/AuthFrame';
-// import CollectionList from './collections/CollectionList';
-// import ItemList from './items/ItemList';
 import ManageInventory from './manageInventory/ManageInventory';
 import MessageFrame from './messaging/MessageFrame';
 import AddItems from './addItems/addItems';
 import Trade from './trade/Trade';
+// import ImageModel from './model/ImageModel';
 
 import UserInfo from './userBar/UserInfo.jsx';
 import ProfileFrame from './profilePages/ProfileFrame';

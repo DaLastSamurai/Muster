@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import ItemEntry from './ItemEntry';
@@ -81,7 +82,7 @@ class ItemList extends React.Component {
           <h2>{this.state.collectionName}</h2>
           <p>{this.state.userInfo.profileInfo.username}</p>
           {this.state.items.map((itemArr) => {
-            return <ItemEntry item={itemArr[1]} key={itemArr[0]} id={itemArr[0]} />
+            return <ItemEntry key={itemArr[0]} item={itemArr[1]} id={itemArr[0]} />
           })}
         </div>
       : 'add item'

@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 
 class RequestReceived extends React.Component {
   constructor(props) {
@@ -84,7 +85,9 @@ class RequestReceived extends React.Component {
       <div>
         <div className="req-container" onClick={this.toggleDetail}>
           <div className="reqdate">{this.props.reqRec.date}</div>
+          <Link to={`/profile/:${this.props.reqRec.exchangee[0]}`}>
           <div className="requser">{this.props.reqRec.exchangee[1]['profileInfo']['username']}</div>
+          </Link>
           <div className="reqitem">
             <img src={this.props.reqRec.item[1]['images'][0]}/>
             <div>{this.props.reqRec.item[1]['name']}</div>
