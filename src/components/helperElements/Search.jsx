@@ -106,7 +106,9 @@ export class SearchHits extends React.Component {
   render() {
     return (
       <header className="searchBar">
+      <div>
         <SearchBox translations={{placeholder:'Search'}} />
+      </div>
       </header>
     )
   }

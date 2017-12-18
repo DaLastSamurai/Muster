@@ -1,41 +1,41 @@
 import React from 'react';
 import { InstantSearch, SearchBox, Hits, Highlight, Pagination, HitsPerPage, InfiniteHits } from 'react-instantsearch/dom';
-import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import { connectHits } from 'react-instantsearch/connectors';
 
-function foundItem({hit}) {
+function foundItem({ hit }) {
   console.log('INDEXNAME',window.indexName)
   return(
     <div>
-    {window.indexName === undefined &&
-        (<div onClick={(e)=> console.log('this is what the item click handler passes: ', hit)}>
-          {/* <Link to={`/items/:${hit.collectionId}`}> */}
-            {hit.name}
-          {/* </Link> */}
-            <br/>
-      </div>)}
+    { window.indexName === undefined &&
+        (<div>
+          <button>
+            { hit? hit.title : null }
+          </button>
+          <br/>
+      </div>) }
 
       {window.indexName === 'item' &&
-      (<div onClick={()=> window.selectedItem = [hit.objectID, hit]}>
-        {/* <Link to={`/items/:${hit.collectionId}`}> */}
-          {hit.name}
-        {/* </Link> */}
-          <br/>
-      </div>)}
+      (<div onClick={ ()=> window.selectedItem = [hit.objectID, hit] }>
+        <button>
+          { hit? hit.title : null }
+        </button>
+        <br/>
+      </div>) }
 
       {window.indexName === 'users' &&
-        (<div onClick={()=> window.selectedItem = [hit.objectID, hit]}>
-          {/* <Link to={`/profile/`+ `${hit.objectID}`}> */}
-            {hit.profileInfo.username}
-          {/* </Link> */}
-      </div>)}
+        (<div onClick={ ()=> window.selectedItem = [hit.objectID, hit] }>
+          <button>
+            { hit.profileInfo ? hit.profileInfo.username : null }
+          </button>
+      </div>) }
 
       {window.indexName === 'category' &&
-          (<div onClick={()=> window.selectedItem = [hit.objectID, hit]}>
-          {/* <Link to={`/collections/:` + `${hit.objectID}`}> */}
-            {hit.objectID}
-          {/* </Link> */}
-      </div>)}
+          (<div onClick={ ()=> window.selectedItem = [hit.objectID, hit] }>
+          <button>
+            { hit ? hit.objectID : null }
+          </button>
+      </div>) }
 
 
     </div>
@@ -45,12 +45,9 @@ function foundItem({hit}) {
 //think of this as Search Result List component. it's like Search Result List Entry, maps and formats each found entry
 export function Search() {
     return (
-      <div>
-        <div style={{float: "center"}}>
-        <Hits hitComponent={foundItem} />
-        <br/>
-        <Pagination showLast={true} />
-        <br/>
+      <div className="search-container">
+        <div style={ { float: "center" } }>
+        <Hits hitComponent={ foundItem } />
         </div>
       </div>
     )
@@ -66,7 +63,7 @@ export class TradeSearch extends React.Component {
   render() {
     return (
       <header className="searchBar">
-        <SearchBox translations={{placeholder:'Search Me!'}} />
+        <SearchBox translations={ { placeholder:'Search Me!' } } />
       </header>
     )
   }

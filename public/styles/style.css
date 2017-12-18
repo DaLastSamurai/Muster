@@ -456,3 +456,10 @@ em {
 
 
 
+.ais-SearchBox__reset {
+  visibility: hidden
+}
+
+.ais-SearchBox__submit {
+  visibility : hidden
+}
