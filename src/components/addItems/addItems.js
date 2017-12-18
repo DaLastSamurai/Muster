@@ -38,7 +38,7 @@ class AddItems extends React.Component {
       savedKeywords: [],
       showDetailed: false,
       collectionList: [{id: null, name: 'loading collections...'}],
-      locationList: [],
+      locationList: [{lat: 0, lng: 0, name: 'default place'}],
       sell: '',
       
       // //depricated fields
@@ -64,6 +64,7 @@ class AddItems extends React.Component {
   };
 
   setImageState(imageUrl) {
+    // this.setState({ imageUrl });
     this.state.imageUrl = imageUrl;
   };
 
@@ -72,9 +73,13 @@ class AddItems extends React.Component {
   };
 
   setItemState(item) {
+    var currentImages = item.images.slice();
+    var update = currentImages.unshift(this.state.imageUrl);
+
+
     this.setState({
       title: item.title,
-      images: item.images,
+      images: currentImages,
       notes: item.notes,
       upc: item.upc,
       onlinePrice: item.onlinePrice,
@@ -252,7 +257,7 @@ class AddItems extends React.Component {
           //new boook fields
           id: this.props.editItem,
           title: snapshot.val().title,
-          images: snapshot.val().images,
+          images: snapshot.val().images || [],
           notes: snapshot.val().notes,
           upc: snapshot.val().upc,
           onlinePrice: snapshot.val().onlinePrice,
@@ -278,19 +283,29 @@ class AddItems extends React.Component {
   }
 
   componentDidUpdate() {
-
+    // console.log('this.state.imageUrl', this.state.imageUrl)
+    // console.log('this.state.images', this.state.images)
+    if (this.state.imageUrl !== '') {
+      var currentImages = this.state.images.slice();
+      var update = currentImages.unshift(this.state.imageUrl);
+      this.setState({
+        images: currentImages
+      })
+    }
     //Checks if keywords are empty, if so, loads them using ImageRecog
     if (this.state.keywords.length > 0) {
     } else {
       if (this.state.imageUrl) {
         ImageRecog(this.state.imageUrl, (keywords) => {
           this.setState({ keywords })
-        }); 
+        });
       }
     };
+
   }
- 
+
   render() {
+    console.log('locationlist!!!!!!', this.state.locationList)
     return (
       <div className="additems-container">
 
