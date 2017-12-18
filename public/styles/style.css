@@ -116,11 +116,6 @@ button:hover {
   text-align: left;
   padding: 9px 0;
 }
-.navbar-avatar {
-  text-align: left;
-  padding: 5px 0;
-
-}
 
 .searchBar {
   
@@ -225,12 +220,14 @@ input[type=submit]:hover {
   background-color: white;
 }
 
-/* navbar */
-
-
 .navbar-avatar{
+  border : 0;
   border-radius: 50%;
-  width: 35px;
+  align-content: right;
+  width: auto;
+  max-width: 35px;
+  height: auto;
+  max-height: 35px;
 }
 
 /* 
