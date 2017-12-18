@@ -73,22 +73,31 @@ function foundItem({hit}) {
     return (
       <div className="search-container">
         
-        <div className="search-hits-per-page">
+        <div className="box search-hits-per-page">
           <HitsPerPage
           defaultRefinement={5} 
           items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}]}
           />
         </div>
 
-        <div className="search-entry">
-          <Hits hitComponent={foundItem} />
+        <div className="box search-list">
+          <div className="box search-entry">
+            <Hits hitComponent={foundItem} />
+          </div>
         </div>
 
         <div style={{ float: "center" }}>
 
-        <div className="search-map">
-          <MapContainer hits={JSON.stringify(props)}/>
+
+        <div className="box search-map">
+          <MapContainer hits={JSON.stringify(props)} />
         </div>
+
+        <div className="box search-pagination">
+          <Pagination showLast={true} />
+
+        </div>
+
         
       </div>
       </div>
