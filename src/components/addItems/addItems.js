@@ -46,6 +46,7 @@ class AddItems extends React.Component {
       boughtFrom: '',
       name: '',
       imageUrl: '',
+      imageUrlUploaded: false,
       thumbnailUrl: '',
       productIds: '',
       purchaseTime: ''
@@ -64,8 +65,12 @@ class AddItems extends React.Component {
   };
 
   setImageState(imageUrl) {
-    // this.setState({ imageUrl });
-    this.state.imageUrl = imageUrl;
+    var currentImages = this.state.images.slice();
+    currentImages.unshift(imageUrl);
+    this.setState({ 
+      imageUrl: imageUrl,
+      images: currentImages
+    });
   };
 
   setKeywordsState(keywords) {
@@ -73,13 +78,10 @@ class AddItems extends React.Component {
   };
 
   setItemState(item) {
-    var currentImages = item.images.slice();
-    var update = currentImages.unshift(this.state.imageUrl);
-
 
     this.setState({
       title: item.title,
-      images: currentImages,
+      images: item.images,
       notes: item.notes,
       upc: item.upc,
       onlinePrice: item.onlinePrice,
@@ -127,7 +129,7 @@ class AddItems extends React.Component {
   handleSubmit(event) {
     
     let currentUID = firebase.auth().currentUser.uid
-
+    
     let postData = {
       //new book fields
       uid: currentUID,
@@ -228,24 +230,24 @@ class AddItems extends React.Component {
     }, (error) => { console.error(error) }
     );
 
-    let locationRef = firebase.database().ref(`/users/${this.state.uid}/locations/`);
-    locationRef.on("value", (snapshot) => {
-      let grabLocations = Object.keys(snapshot.val()).map((key, i) => {
-        return {
-          lat: snapshot.val()[key].lat,
-          lng: snapshot.val()[key].lng,
-          name: key,
-          value: {lat: snapshot.val()[key].lat, lng: snapshot.val()[key].lng},
-          label: snapshot.val()[key].name
-        }
-      });
+    // let locationRef = firebase.database().ref(`/users/${this.state.uid}/locations/`);
+    // locationRef.on("value", (snapshot) => {
+    //   let grabLocations = Object.keys(snapshot.val()).map((key, i) => {
+    //     return {
+    //       lat: snapshot.val()[key].lat,
+    //       lng: snapshot.val()[key].lng,
+    //       name: key,
+    //       value: {lat: snapshot.val()[key].lat, lng: snapshot.val()[key].lng},
+    //       label: snapshot.val()[key].name
+    //     }
+    //   });
 
-      this.setState({
-        locationList: grabLocations
-      });
+    //   this.setState({
+    //     locationList: grabLocations
+    //   });
 
-    }, (error) => { console.error(error) }
-    );
+    // }, (error) => { console.error(error) }
+    // );
 
     //Checks for props from the edit button in inventory manager
     if (this.props.editItem) {
@@ -254,10 +256,10 @@ class AddItems extends React.Component {
 
       itemRef.on("value", (snapshot) => {
         this.setState({
-          //new boook fields
+          //new book fields
           id: this.props.editItem,
           title: snapshot.val().title,
-          images: snapshot.val().images || [],
+          images: snapshot.val().images,
           notes: snapshot.val().notes,
           upc: snapshot.val().upc,
           onlinePrice: snapshot.val().onlinePrice,
@@ -272,7 +274,7 @@ class AddItems extends React.Component {
           //depricated fields 
           // name: snapshot.val().name,
           // location: snapshot.val().location,
-          // imageUrl: snapshot.val().imageUrl,
+          // imageUrl: snapshot.val().images[0],
           // productIds: snapshot.val().productIds,
           // purchaseTime: snapshot.val().purchaseTime,
           // boughtFrom: snapshot.val().boughtFrom
@@ -283,15 +285,6 @@ class AddItems extends React.Component {
   }
 
   componentDidUpdate() {
-    // console.log('this.state.imageUrl', this.state.imageUrl)
-    // console.log('this.state.images', this.state.images)
-    if (this.state.imageUrl !== '') {
-      var currentImages = this.state.images.slice();
-      var update = currentImages.unshift(this.state.imageUrl);
-      this.setState({
-        images: currentImages
-      })
-    }
     //Checks if keywords are empty, if so, loads them using ImageRecog
     if (this.state.keywords.length > 0) {
     } else {
@@ -301,24 +294,20 @@ class AddItems extends React.Component {
         });
       }
     };
-
   }
 
   render() {
-    console.log('locationlist!!!!!!', this.state.locationList)
     return (
       <div className="additems-container">
-
         <div className="">
-
           <div>
 
-            <FormDropDown arrayOfObjects={this.state.collectionList}/>
-
+            {/* <FormDropDown arrayOfObjects={this.state.collectionList}/> */}
             <ImageUpload 
               setImageState={this.setImageState} 
               setKeywordsState={this.setKeywordsState}
               imageUrl={this.state.imageUrl}
+              images={this.state.images}
             />
             
             {
