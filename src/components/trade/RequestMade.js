@@ -2,6 +2,7 @@ import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import Payments from '../payments/Payments.js';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
 
 class RequestMade extends React.Component {
   constructor(props) {
@@ -82,7 +83,9 @@ class RequestMade extends React.Component {
       <div>
         <div className="req-container" onClick={this.toggleDetail}>
           <div className="reqdate">{this.props.reqMade.date}</div>
-          <div className="requser">{this.props.reqMade.exchangee[1]['profileInfo']['username']}</div>
+          <Link to={`/profile/:${this.props.reqMade.exchangee[0]}`}>
+            <div className="requser">{this.props.reqMade.exchangee[1]['profileInfo']['username']}</div>
+          </Link>
           <div className="reqitem">
             <img src={this.props.reqMade.item[1]['images'][0]}/>
             <div>{this.props.reqMade.item[1]['name']}</div>

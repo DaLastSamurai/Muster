@@ -196,6 +196,11 @@ input[type=submit]:hover {
 /* messaging */
 
 /* model */
+.image-model {
+  position: fixed;
+  z-index: 1;
+  background-color: white;
+}
 
 /* navbar */
 
@@ -289,6 +294,23 @@ nav {
 
 
 /* trade */
+
+.tradebox{
+  /* border: solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.reqmade {
+  width: 80%;
+}
+
+.reqreceiv {
+  width: 80%;
+}
 
 .req-container {
   display: grid;
@@ -433,5 +455,44 @@ em {
   /* width: 600px;
   height: 600px; */
 }
+
+/* .main {
+  display: flex;
+  flex-direction: row; 
+  justify-content: center;
+  width: 100%;
+  border: solid red; 
+} */
+
+
+
+
+/* .req-container {
+  display: grid;
+  grid-template-columns: 30px, 30px, 30px, 30px, 30px;
+  grid-gap: 5px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.reqdate {
+  grid-column: 1/2;
+}
+.requser {
+  grid-column: 2/3;
+}
+.reqitem {
+  grid-column: 3/4;
+}
+.reqtype {
+  grid-column: 4/5;
+}
+.reqstatus {
+  grid-column: 5/6;
+}
+
+.reqrest {
+  grid-column: 1/6;
+}  */
+
 
 

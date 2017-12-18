@@ -45,7 +45,7 @@ class Trade extends React.Component {
                           toggleMakeRequest={this.toggleMakeRequest}
                           /> 
             : null}
-            <div>
+            <div className="reqmade">
               <h2>Trade Request You Made</h2>
                 {this.props.request && this.props.request.made 
                   ? <div>
@@ -63,6 +63,8 @@ class Trade extends React.Component {
                       })}
                     </div>
                   : 'no request'}
+            </div>
+            <div className="reqreceiv">      
               <h2>Trade Request You Received</h2>
                 {this.props.request && this.props.request.received 
                   ? <div>
@@ -79,7 +81,7 @@ class Trade extends React.Component {
                     })}
                     </div> 
                 : 'no request'}
-          </div>
+            </div>
         </div>
       </InstantSearch>
     )

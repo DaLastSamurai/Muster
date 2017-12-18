@@ -88,12 +88,14 @@ function foundItem({hit}) {
 
         <div style={{ float: "center" }}>
 
+
         <div className="box search-map">
           <MapContainer hits={JSON.stringify(props)} />
         </div>
 
         <div className="box search-pagination">
           <Pagination showLast={true} />
+
         </div>
 
         

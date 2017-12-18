@@ -1,7 +1,10 @@
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import firebase from 'firebase'
 
+// this is used in the app.js to check to see if there is a user signed in. 
+
 export const checkAuthStatus = function(cb1, cb2, cb3) {
+
   firebaseAuth().onAuthStateChanged((user) => {
     if (user) {
       this.setState({
@@ -19,16 +22,14 @@ export const checkAuthStatus = function(cb1, cb2, cb3) {
             }
             let profileInfo = {
               profilePhoto: 'http://bit.ly/2BoCV0Y', 
-              // following: ['AStkSi2lt3hFprd77H8GXoNq2KJ3'], // =seamus lol 
-              // followers: ['AStkSi2lt3hFprd77H8GXoNq2KJ3'], // =seamus lol 
+              following: ['RKBeM50YH3VBRY6Io8UUL8eojPo1'], // =seamus lol 
+              followers: ['RKBeM50YH3VBRY6Io8UUL8eojPo1'], // =seamus lol 
               bio: 'tell me about yourself...', 
-              favoriteCategories: ['Baseball Cards'],
               username : user.email, 
             }
             let updates = {};
             updates[user.uid + '/defaultsSet'] = true; 
             updates[user.uid + '/profileInfo'] = profileInfo
-            updates[user.uid + '/collectionIds'] = [0]; 
             updates[user.uid + '/info'] = basicInfo;
             return users.update(updates)
           }
