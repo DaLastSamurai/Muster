@@ -23,6 +23,7 @@ class MakeRequest extends React.Component {
       message: '',
       showSearchBox : false,
       selectedItem : window.selectedItem,
+      tempSelectedItem: false,
     }
   this.handleRequest = this.handleRequest.bind(this);
   this.handleChange = this.handleChange.bind(this);
