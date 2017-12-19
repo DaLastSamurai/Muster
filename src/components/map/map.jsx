@@ -29,7 +29,7 @@ class Map extends React.Component {
     return (
       <div>
         <GoogleMap
-          onIdle={({getBounds})=>console.log(getBounds())}
+          // onIdle={({getBounds})=>console.log(getBounds())}
           defaultZoom={8}
           center={this.props.userLoc}
           defaultCenter={{ lat:-30.363882, lng:150.044922 }}          

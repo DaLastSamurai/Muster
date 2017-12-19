@@ -56,15 +56,18 @@ class CategoryEntry extends React.Component {
         this.setState( {likedCategories : categoryNames} )
       })
   }
-  
+
   render() {
     // add a carousel to these with images from the collections. 
     return(
       <div className='popular-category'>
-      <Link to={`/collections/:${this.props.category[0]}`}>
-        <h4>{this.props.category[0]}</h4>
-        </Link>
-        <div>
+      <img src="https://dailyartfair.com/upload/large/66/6601_6.jpg" />
+        <div className="category-overlay-text">
+          <Link to={`/collections/:${this.props.category[0]}`}>
+            <h4>{this.props.category[0]}</h4>
+          </Link>
+        </div>
+        <div className="like-button">
           {!!firebase.auth().currentUser ?
             ( 
               this.state.likedCategories.includes(this.props.category[0])
