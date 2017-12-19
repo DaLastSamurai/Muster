@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 
 export default class MyCollectionsEntry extends React.Component {
   constructor(props) {
@@ -9,7 +10,9 @@ export default class MyCollectionsEntry extends React.Component {
     return(
       <div>
         <h5>
-          <a href={this.props.name}>{this.props.name}</a>
+        <Link to={`/items/:${this.props.collectionId}`} >
+          {this.props? <a href={this.props.name}>{this.props.name}</a> : null }
+        </Link>
         </h5>
       </div>
     )

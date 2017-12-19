@@ -36,24 +36,27 @@ export default class NewCollectionsInput extends React.Component {
 
   render() {
     return(
-      <form onSubmit={(e)=>{
-        e.preventDefault();
-        this.handleSubmit(e);
-      }}>
-        <div className="category-input">
-        <input
-          type="text"
-          placeholder={this.state.collectionName}
-          onChange={(e)=>{this.setState({collectionName:e.target.value})}}
-        />
-        <input
-          type="text"
-          placeholder={this.state.category}
-          onChange={(e)=>{this.setState({category:e.target.value})}}
-        />
-        </div>
-        <button type="submit"> + </button>
-      </form>
+      <div>
+        <form onSubmit={(e)=>{
+          this.props.toggleInputForm();
+          e.preventDefault();
+          this.handleSubmit(e);
+        }}>
+          <div className="category-input">
+          <input
+            type="text"
+            placeholder={this.state.collectionName}
+            onChange={(e)=>{this.setState({collectionName:e.target.value})}}
+          />
+          <input
+            type="text"
+            placeholder={this.state.category}
+            onChange={(e)=>{this.setState({category:e.target.value})}}
+          />
+          </div>
+          <button type="submit"> + </button>
+        </form>
+      </div>
     )
   }
 }
