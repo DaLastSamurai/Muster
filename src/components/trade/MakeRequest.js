@@ -13,7 +13,7 @@ class MakeRequest extends React.Component {
       selectedItem:['-L05bY3TFt2wbfh5TtOf', {uid: 'ra2wZZt7aYguQMpjKwtZ0HRIpMh1', imageUrl: "https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F9f1f7675-9a93-4555-b70d-1ca1f40e446a.jpg?alt=media&token=7c42873c-18fc-4f42-91a5-2f354325cb35", name: "onion"}],
       trade: false,
       tradeItem: {}, //items id that user selected to trade with
-      buy: false,
+      buy: true,
       price: '',
       tradeCol: '',
       loan: false,
@@ -21,7 +21,7 @@ class MakeRequest extends React.Component {
       initPrice:'',
       lateFee: '',
       message: '',
-      showSearchBox : false,
+      showSearchBox : true,
       selectedItem : window.selectedItem,
     }
   this.handleRequest = this.handleRequest.bind(this);
@@ -151,10 +151,10 @@ handleRequest() {
       let dateRec = {
         item: this.state.selectedItem,
         exchangee: [this.props.userId, rquserObj],
-        trade: this.state.trade,
-        buy: this.state.buy,
+        trade: false,
+        buy: true,
         price: this.state.price,
-        loan: this.state.loan,
+        loan: false,
         dueDate: this.state.dueDate,
         initialPrice: this.state.initPrice,
         lateFee: this.state.lateFee,
@@ -188,107 +188,124 @@ handleRequest() {
 }
 
 handleshowSearchBox() {
-  this.setState({showSearchBox:true})
+  // this.setState({showSearchBox:true})
 }
 
   render() {
     console.log(this.state.showSearchBox)
     return(
-      <div>
-        <h4>search</h4>
-          <TradeSearchToggler 
-            handleshowSearchBox={this.handleshowSearchBox}
-            getIndexName={this.props.getIndexName}
-          />
+      <div className="request-form-box">
+        <div className="req-search-box">
+          <h4>search</h4>
+            <div className="req-search">
+              <div className="search-form">
+                <TradeSearchToggler 
+                  handleshowSearchBox={this.handleshowSearchBox}
+                  getIndexName={this.props.getIndexName}
+                />
 
-          {this.state.showSearchBox ?
-          (<TradeSearch />) : (<div/>)
-          }
-          {window.indexName ?
-          (<Search />) : (<div/>)
-          }
-
-          <button onClick={()=>this.setState({selectedItem : window.selectedItem})}> 
-            set the state
-          </button>
-          <button onClick={()=>console.log(this.state.selectedItem)}> show me the state</button>
-<br/>
-
-        <h4>offer</h4>
-
-        <label>buy</label>
-        <input name="buy"
-               type="checkbox"
-               checked={this.state.buy}
-               onChange={this.toggleCheckbox}/>
-
-        {this.state.buy 
-          ? <div>
-              <p>$</p>
-              <input name="price"
-                    type="text"
-                    onChange={this.handleChange}
-                    placeholder="type your offer price"/>
-            </div>
-          : null}
-
-        <label>trade</label>
-        <input name="trade"
-               type="checkbox"
-               checked={this.state.trade}
-               onChange={this.toggleCheckbox}/>
-        
-        {this.props.collections && this.state.trade
-          ? <div>
-              <select onChange={this.handleSelect}> 
-                <option value='' defaultValue>select your collection</option>
-                {Object.keys(this.props.collections).map((col) => {
-                  return <option value={col} key={col}>
-                          {this.props.collections[col]['name']}
-                        </option> 
-                })}
-              </select>
-
-              {this.state.tradeCol.length > 0 
-                ? Object.keys(this.props.collections[this.state.tradeCol]['itemId']).map((itemid) => {
-                    return <div key={itemid}>
-                            <img src={this.props.items[itemid]['imageUrl']}/>
-                            <p>{this.props.items[itemid]['name']}</p>
-                            <input name={itemid} type="checkbox" onChange={this.handletradeItem}/>
-                          </div>
-                  })
-                : null}
-            </div>
-          : null}
-        <label>loan</label>
-        <input name="loan" type="checkbox" onChange={this.toggleCheckbox}/>
-        {this.state.loan 
-          ? <div>
-              <p>$</p>
-              <input name="initPrice" 
-                     type="text" 
-                     placeholder="initial price" 
-                     onChange={this.handleChange}
-                     value={this.state.initPrice}/>
-              <p>$</p>
-              <input name="lateFee" 
-                     type="text" 
-                     placeholder="late fee" 
-                     onChange={this.handleChange}
-                     value={this.state.lateFee}/> 
-              <input name="dueDate" 
-                     type="date"
-                     onChange={this.handleChange}
-                     value={this.state.dueDate}/>
+                {this.state.showSearchBox ?
+                (<TradeSearch />) : (<div/>)
+                }
+                {window.indexName ?
+                (<Search />) : (<div/>)
+                }
               </div>
-          : null}
-        <h4>message</h4>
-        <input name="message" 
-                     type="text" 
-                     placeholder="write message" 
-                     onChange={this.handleChange}
-                     value={this.state.message}/>
-        <button onClick={this.handleRequest}>Send Offer</button>
+              {window.selectedItem ? <img src={window.selectedItem[1]['images'][0]}/> : null}
+              <button onClick={()=>this.setState({selectedItem : window.selectedItem})}> 
+                select item
+              </button>
+              {/* <button onClick={()=>console.log(this.state.selectedItem)}> show me the state</button> */}
+            </div>
+        </div>
+        <div className="req-offer-box">
+          <h4>offer</h4>
+          <div className="req-offer-frame">
+          <div className="req-offer">
+            <h5 onClick={() => this.setState({buy: true, trade: false, loan: false})}
+                className={`offer-buy ${this.state.buy ? 'offer-selected' : null}`}>buy</h5>
+
+            {this.state.buy 
+              ? <div className="offer-buy-form">
+                  <p>$</p>
+                  <input name="price"
+                        type="text"
+                        onChange={this.handleChange}
+                        placeholder="type your offer price"/>
+                </div>
+              : null}
+
+            <h5 onClick={()=> this.setState({buy: false, trade: true, loan: false})}
+                className={`offer-trade ${this.state.trade ? 'offer-selected' : null}`}>trade</h5>
+            
+            {this.props.collections && this.state.trade
+              ? <div className="offer-trade-form">
+                  <select onChange={this.handleSelect}> 
+                    <option value='' defaultValue>select your collection</option>
+                    {Object.keys(this.props.collections).map((col) => {
+                      return <option value={col} key={col}>
+                              {this.props.collections[col]['name']}
+                            </option> 
+                    })}
+                  </select>
+
+                  {this.state.tradeCol.length > 0 
+                    ? Object.keys(this.props.collections[this.state.tradeCol]['itemId']).map((itemid) => {
+                        return <div key={itemid}>
+                                <img src={this.props.items[itemid]['imageUrl']}/>
+                                <p>{this.props.items[itemid]['name']}</p>
+                                <input name={itemid} type="checkbox" onChange={this.handletradeItem}/>
+                              </div>
+                      })
+                    : null}
+                </div>
+              : null}
+            <h5 onClick={() => this.setState({buy: false, trade: false, loan: true})}
+                className={`offer-loan  ${this.state.loan ? 'offer-selected' : null}`}>loan</h5>
+
+            {this.state.loan 
+              ? <div className="offer-loan-form">
+                  <div className="offer-loan-form-initial">
+                    <p>$</p>
+                    <input name="initPrice" 
+                          type="text" 
+                          placeholder="initial price" 
+                          onChange={this.handleChange}
+                          value={this.state.initPrice}/>
+                  </div>
+                  <div className="offer-loan-form-late">
+                    <p>$</p>
+                    <input name="lateFee" 
+                          type="text" 
+                          placeholder="late fee" 
+                          onChange={this.handleChange}
+                          value={this.state.lateFee}/> 
+                  </div>
+                  <div className="offer-loan-form-due">
+                    <input name="dueDate" 
+                          type="date"
+                          onChange={this.handleChange}
+                          value={this.state.dueDate}/>
+                  </div>
+                </div>
+              : null}
+          </div>
+          </div>
+        </div>
+        <div className="message-form-box">
+          <h4>message</h4>
+          <div className="message-form">
+            <input name="message" 
+                        type="text" 
+                        placeholder="write message" 
+                        onChange={this.handleChange}
+                        value={this.state.message}
+                        className="message-input"/>
+          </div>
+        </div>
+          <button onClick={this.handleRequest}
+                  className="button-sendoffer">Send Offer</button>
+        
       </div>
     )
   }

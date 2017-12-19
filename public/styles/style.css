@@ -1,8 +1,9 @@
 /* base */
 html {
+  height: 100%;
   margin: 0;
   padding: 0;
-  border: 0;
+  /* border: solid yellow; */
   vertical-align: baseline;
 }
 
@@ -15,6 +16,7 @@ body {
   -webkit-font-smoothing: antialiased;
   margin:0;
   padding: 0;
+  height: 100%;
 }
 
 a:link {
@@ -205,6 +207,29 @@ input[type=submit]:hover {
 } 
 
 /* app */
+#app {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  /* border: dotted purple; */
+}
+.app-container {
+  display: inline-block;
+  /* border: solid green; */
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+ 
+  margin:0;
+  padding:0;
+}
+
+.ais-InstantSearch__root {
+  /* border: solid blue; */
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+}
 
 /* add items */
 
@@ -251,6 +276,238 @@ nav {
 /* popular-category */
 
 /* trade */
+.main-container{
+  margin: 0;
+  padding:0;
+  /* border: solid red; */
+  height: 100%;
+  z-index: 1;
+}
+
+.request-trans{
+  margin-top: 120px;
+  margin-left: 5%;
+  width: 60%;
+  /* border: solid orange; */
+  float: left;
+  /* display: inline-block; */
+}
+.req-title {
+  border-bottom: 1px solid #bbbab89f;
+  margin-bottom: 10px;
+}
+
+.req-title > h2 {
+  /* border: solid red; */
+  margin: 5px;
+}
+
+.container-requset-form {
+  margin-right: 5%;
+  width: 25%;
+  height: 100%;
+  /* display: flex;
+  align-items: center; */
+  float: right;
+  /* border: solid pink; */
+  z-index: 1;
+}
+
+
+.request-form {
+  overflow: scroll;
+  border: 1px solid #bbbab89f;
+  border-radius: 1px;
+  position: fixed;
+  max-width: 400px;
+  height: 600px;
+  margin-top: 80px;
+  box-shadow: 0.6px 0.6px 2px #f5f4f4f1;
+}
+
+.request-form-box {
+  height: 100%;
+  margin: 0px 30px 0px 30px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.req-search-box {
+  /* border: solid red; */
+  height: 200px;
+}
+
+.request-form-box h4 {
+  margin-top: 10px;
+  padding-bottom: 3px;
+  border-bottom:1px solid #bbbab89f;
+}
+
+.req-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-form {
+  display: grid;
+  grid-template-columns: repeat(3, 86px);
+  grid-auto-rows: 120px;
+  grid-gap: 10px;
+  margin: 0;
+  /* overflow: scroll; */
+}
+
+.req-search-toggler {
+  grid-column: 1/2;
+}
+
+.req-search-toggler select {
+  width: 86px;
+}
+
+.ais-SearchBox__wrapper input {
+  width: 182px;
+  grid-column: 2/4;
+  grid-row: 1;
+}
+
+.search-container{
+  grid-column: 2/4;
+  grid-row: 1;
+  margin: 0;
+  padding:0;
+}
+
+.search-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-form .searchBar {
+  grid-column: 2/4;
+  grid-row: 1;
+}
+
+.search-container .ais-Hits__root {
+  margin-top: 20px;
+  overflow: scroll;
+  /* border: solid red; */
+}
+
+.ais-Hits__root button {
+  padding: 0;
+}
+
+.req-offer-box {
+  /* border: solid red; */
+  padding-bottom: 50px;
+}
+
+.req-offer-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.req-offer {
+  display: grid;
+  grid-template-columns: repeat(3, 86px);
+  grid-auto-rows: 30px 60px;
+  grid-gap: 10px;
+  margin: 0;
+}
+
+.req-offer h5 {
+  margin: 0px 0px 0px 30px;
+  padding:0;
+}
+
+.offer-buy {
+  grid-column: 1/2;
+  grid-row:1;
+}
+
+.offer-buy-form {
+  margin-top: 50px;
+  grid-column: 1/4;
+  grid-row:2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.offer-buy-form input {
+  /* border:1px solid #bbbab89f; */
+}
+
+.offer-trade {
+  grid-column: 2/3;
+  grid-row:1;
+}
+
+.offer-trade-form {
+  margin-top: 50px;
+  grid-column: 1/4;
+  grid-row:2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.offer-loan {
+  grid-column: 3/4;
+  grid-row:1;
+}
+
+.offer-loan-form {
+  grid-column: 1/4;
+  grid-row:2;
+}
+
+.offer-loan-form-initial {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.offer-loan-form-late {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.offer-loan-form-due {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.offer-selected {
+  color: #fd5c63;
+}
+
+.message-form-box {
+  /* border: solid red; */
+}
+
+.message-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0px 30px 0px 36px;
+  /* border:1px solid #bbbab89f; */
+}
+
+.message-input {
+
+}
+
+.button-sendoffer {
+  background-color: #fd5c6491;
+}
 
 .tradebox{
   /* border: solid red; */
@@ -263,6 +520,7 @@ nav {
 
 .reqmade {
   width: 80%;
+  margin-bottom: 40px;
 }
 
 .reqreceiv {

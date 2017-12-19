@@ -27,7 +27,7 @@ class Trade extends React.Component {
     this.setState({indexName : indexName})
   }
 
-  render() {console.log('trade>>>>', this.props)
+  render() {
     return(
       <InstantSearch
       appId="9VH3I9OJWS"
@@ -35,18 +35,26 @@ class Trade extends React.Component {
       indexName={this.state.indexName || 'item'}
       >
         <div className="main-container" >
-          <button onClick={this.toggleMakeRequest}>Make Request</button>
+          {/* <button onClick={this.toggleMakeRequest}>Make Request</button>
           {this.state.showMR 
-            ? <MakeRequest collections={this.props.collections}
-                          getIndexName={this.getIndexName} 
-                          items={this.props.items} 
-                          userId={this.props.userId}
-                          indexName={this.state.indexName}
-                          toggleMakeRequest={this.toggleMakeRequest}
-                          /> 
-            : null}
+            ?  */}
+            <div className="container-requset-form">
+              <div className="request-form">
+                <MakeRequest collections={this.props.collections}
+                            getIndexName={this.getIndexName} 
+                            items={this.props.items} 
+                            userId={this.props.userId}
+                            indexName={this.state.indexName}
+                            toggleMakeRequest={this.toggleMakeRequest}
+                            /> 
+              </div>
+            </div>
+            {/* // : null} */}
+            <div className="request-trans">
             <div className="reqmade">
-              <h2>Trade Request You Made</h2>
+              <div className="req-title">
+                <h2>Trade Request You Made</h2>
+              </div>
                 {this.props.request && this.props.request.made 
                   ? <div>
                       <div className="req-container">
@@ -64,8 +72,10 @@ class Trade extends React.Component {
                     </div>
                   : 'no request'}
             </div>
-            <div className="reqreceiv">      
-              <h2>Trade Request You Received</h2>
+            <div className="reqreceiv">
+              <div className="req-title">
+                <h2>Trade Request You Received</h2>
+              </div>
                 {this.props.request && this.props.request.received 
                   ? <div>
                       <div className="req-container">
@@ -81,6 +91,7 @@ class Trade extends React.Component {
                     })}
                     </div> 
                 : 'no request'}
+            </div>
             </div>
         </div>
       </InstantSearch>

@@ -73,7 +73,7 @@ class CollectionList extends React.Component {
                     <Link to={`/items/:${colArr[0]}`} key={colArr[0]}>
                       <CollectionEntry collection={colArr[1]} />
                     </Link>
-                    <Link to={`/profile/:${colArr[1]['uid'][0]}`}>
+                    <Link to={`/profile/${colArr[1]['uid'][0]}`}>
                       <p>{colArr[2]['profileInfo']['username']}</p>
                     </Link>
                   </div>
