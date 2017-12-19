@@ -53,7 +53,6 @@ class AddItems extends React.Component {
     };
 
     this.setImageState = this.setImageState.bind(this);
-    this.setKeywordsState = this.setKeywordsState.bind(this);
     this.setItemState = this.setItemState.bind(this);
     this.addRemoveKeyword = this.addRemoveKeyword.bind(this);
     this.addCustomeKeyword = this.addCustomeKeyword.bind(this);
@@ -61,9 +60,9 @@ class AddItems extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.geoFindMe = this.geoFindMe.bind(this);
     this.geoAddName = this.geoAddName.bind(this);
-    // this.setGeoImage = this.setGeoImage.bind(this);
   };
 
+  //function called by imageUploader to update images
   setImageState(imageUrl) {
     var currentImages = this.state.images.slice();
     currentImages.unshift(imageUrl);
@@ -73,12 +72,8 @@ class AddItems extends React.Component {
     });
   };
 
-  setKeywordsState(keywords) {
-    this.setState({ keywords });
-  };
-
+  //function called by edit item from inventory manager to fill fields
   setItemState(item) {
-
     this.setState({
       title: item.title,
       images: item.images,
@@ -129,11 +124,11 @@ class AddItems extends React.Component {
   handleSubmit(event) {
     
     let currentUID = firebase.auth().currentUser.uid
-    
     let postData = {
       //new book fields
       uid: currentUID,
       title: this.state.title,
+      collectionId: this.state.collectionId,
       images: this.state.images,
       notes: this.state.notes,
       upc: this.state.upc,
@@ -141,7 +136,6 @@ class AddItems extends React.Component {
       storeLinks: this.state.storeLinks,
       subject: this.state.subject,
       _geoloc: this.state._geoloc,
-      collectionId: this.state.collectionId,
       savedKeywords: this.state.savedKeywords,
       sell: this.state.sell,
       price: this.state.price
@@ -164,9 +158,9 @@ class AddItems extends React.Component {
     updates['/collection/' + this.state.collectionId + 
             '/itemId/' + newPostKey] = newPostKey;
 
-    return firebase.database().ref().update(updates);
+    firebase.database().ref().update(updates);
 
-    // event.target.reset();
+    event.target.reset();
   };
 
   //Gets user geolocation
@@ -265,9 +259,9 @@ class AddItems extends React.Component {
           onlinePrice: snapshot.val().onlinePrice,
           storeLinks: snapshot.val().storeLinks,
           subject: snapshot.val().subject,
+          collectionId: snapshot.val().collectionId,
           _geoloc: snapshot.val()._geoloc,
           savedKeywords: snapshot.val().savedKeywords || [],
-          collectionId: snapshot.val().collectionId,
           sell: snapshot.val().sell,
           price: snapshot.val().price,
           
@@ -293,6 +287,11 @@ class AddItems extends React.Component {
           this.setState({ keywords })
         });
       }
+      if (this.state.images.length > 0) {
+        ImageRecog(this.state.images[0], (keywords) => {
+          this.setState({ keywords })
+        });
+      }
     };
   }
 
@@ -305,7 +304,6 @@ class AddItems extends React.Component {
             {/* <FormDropDown arrayOfObjects={this.state.collectionList}/> */}
             <ImageUpload 
               setImageState={this.setImageState} 
-              setKeywordsState={this.setKeywordsState}
               imageUrl={this.state.imageUrl}
               images={this.state.images}
             />
@@ -399,7 +397,6 @@ class AddItems extends React.Component {
                     placeholder="subject"
                     value={this.state.subject}
                     onChange={this.handleChange}
-                    required
                   />
                 </div>
               </div>
