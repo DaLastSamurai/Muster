@@ -46,13 +46,13 @@ class AddItems extends React.Component {
       boughtFrom: '',
       name: '',
       imageUrl: '',
+      imageUrlUploaded: false,
       thumbnailUrl: '',
       productIds: '',
       purchaseTime: ''
     };
 
     this.setImageState = this.setImageState.bind(this);
-    this.setKeywordsState = this.setKeywordsState.bind(this);
     this.setItemState = this.setItemState.bind(this);
     this.addRemoveKeyword = this.addRemoveKeyword.bind(this);
     this.addCustomeKeyword = this.addCustomeKeyword.bind(this);
@@ -60,26 +60,23 @@ class AddItems extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.geoFindMe = this.geoFindMe.bind(this);
     this.geoAddName = this.geoAddName.bind(this);
-    // this.setGeoImage = this.setGeoImage.bind(this);
   };
 
+  //function called by imageUploader to update images
   setImageState(imageUrl) {
-    // this.setState({ imageUrl });
-    this.state.imageUrl = imageUrl;
+    var currentImages = this.state.images.slice();
+    currentImages.unshift(imageUrl);
+    this.setState({ 
+      imageUrl: imageUrl,
+      images: currentImages
+    });
   };
 
-  setKeywordsState(keywords) {
-    this.setState({ keywords });
-  };
-
+  //function called by edit item from inventory manager to fill fields
   setItemState(item) {
-    var currentImages = item.images.slice();
-    var update = currentImages.unshift(this.state.imageUrl);
-
-
     this.setState({
       title: item.title,
-      images: currentImages,
+      images: item.images,
       notes: item.notes,
       upc: item.upc,
       onlinePrice: item.onlinePrice,
@@ -127,11 +124,11 @@ class AddItems extends React.Component {
   handleSubmit(event) {
     
     let currentUID = firebase.auth().currentUser.uid
-
     let postData = {
       //new book fields
       uid: currentUID,
       title: this.state.title,
+      collectionId: this.state.collectionId,
       images: this.state.images,
       notes: this.state.notes,
       upc: this.state.upc,
@@ -139,7 +136,6 @@ class AddItems extends React.Component {
       storeLinks: this.state.storeLinks,
       subject: this.state.subject,
       _geoloc: this.state._geoloc,
-      collectionId: this.state.collectionId,
       savedKeywords: this.state.savedKeywords,
       sell: this.state.sell,
       price: this.state.price
@@ -162,9 +158,9 @@ class AddItems extends React.Component {
     updates['/collection/' + this.state.collectionId + 
             '/itemId/' + newPostKey] = newPostKey;
 
-    return firebase.database().ref().update(updates);
+    firebase.database().ref().update(updates);
 
-    // event.target.reset();
+    event.target.reset();
   };
 
   //Gets user geolocation
@@ -228,24 +224,24 @@ class AddItems extends React.Component {
     }, (error) => { console.error(error) }
     );
 
-    let locationRef = firebase.database().ref(`/users/${this.state.uid}/locations/`);
-    locationRef.on("value", (snapshot) => {
-      let grabLocations = Object.keys(snapshot.val()).map((key, i) => {
-        return {
-          lat: snapshot.val()[key].lat,
-          lng: snapshot.val()[key].lng,
-          name: key,
-          value: {lat: snapshot.val()[key].lat, lng: snapshot.val()[key].lng},
-          label: snapshot.val()[key].name
-        }
-      });
+    // let locationRef = firebase.database().ref(`/users/${this.state.uid}/locations/`);
+    // locationRef.on("value", (snapshot) => {
+    //   let grabLocations = Object.keys(snapshot.val()).map((key, i) => {
+    //     return {
+    //       lat: snapshot.val()[key].lat,
+    //       lng: snapshot.val()[key].lng,
+    //       name: key,
+    //       value: {lat: snapshot.val()[key].lat, lng: snapshot.val()[key].lng},
+    //       label: snapshot.val()[key].name
+    //     }
+    //   });
 
-      this.setState({
-        locationList: grabLocations
-      });
+    //   this.setState({
+    //     locationList: grabLocations
+    //   });
 
-    }, (error) => { console.error(error) }
-    );
+    // }, (error) => { console.error(error) }
+    // );
 
     //Checks for props from the edit button in inventory manager
     if (this.props.editItem) {
@@ -254,25 +250,25 @@ class AddItems extends React.Component {
 
       itemRef.on("value", (snapshot) => {
         this.setState({
-          //new boook fields
+          //new book fields
           id: this.props.editItem,
           title: snapshot.val().title,
-          images: snapshot.val().images || [],
+          images: snapshot.val().images,
           notes: snapshot.val().notes,
           upc: snapshot.val().upc,
           onlinePrice: snapshot.val().onlinePrice,
           storeLinks: snapshot.val().storeLinks,
           subject: snapshot.val().subject,
+          collectionId: snapshot.val().collectionId,
           _geoloc: snapshot.val()._geoloc,
           savedKeywords: snapshot.val().savedKeywords || [],
-          collectionId: snapshot.val().collectionId,
           sell: snapshot.val().sell,
           price: snapshot.val().price,
           
           //depricated fields 
           // name: snapshot.val().name,
           // location: snapshot.val().location,
-          // imageUrl: snapshot.val().imageUrl,
+          // imageUrl: snapshot.val().images[0],
           // productIds: snapshot.val().productIds,
           // purchaseTime: snapshot.val().purchaseTime,
           // boughtFrom: snapshot.val().boughtFrom
@@ -283,15 +279,6 @@ class AddItems extends React.Component {
   }
 
   componentDidUpdate() {
-    // console.log('this.state.imageUrl', this.state.imageUrl)
-    // console.log('this.state.images', this.state.images)
-    if (this.state.imageUrl !== '') {
-      var currentImages = this.state.images.slice();
-      var update = currentImages.unshift(this.state.imageUrl);
-      this.setState({
-        images: currentImages
-      })
-    }
     //Checks if keywords are empty, if so, loads them using ImageRecog
     if (this.state.keywords.length > 0) {
     } else {
@@ -300,25 +287,25 @@ class AddItems extends React.Component {
           this.setState({ keywords })
         });
       }
+      if (this.state.images.length > 0) {
+        ImageRecog(this.state.images[0], (keywords) => {
+          this.setState({ keywords })
+        });
+      }
     };
-
   }
 
   render() {
-    console.log('locationlist!!!!!!', this.state.locationList)
     return (
       <div className="additems-container">
-
         <div className="">
-
           <div>
 
-            <FormDropDown arrayOfObjects={this.state.collectionList}/>
-
+            {/* <FormDropDown arrayOfObjects={this.state.collectionList}/> */}
             <ImageUpload 
               setImageState={this.setImageState} 
-              setKeywordsState={this.setKeywordsState}
               imageUrl={this.state.imageUrl}
+              images={this.state.images}
             />
             
             {
@@ -410,7 +397,6 @@ class AddItems extends React.Component {
                     placeholder="subject"
                     value={this.state.subject}
                     onChange={this.handleChange}
-                    required
                   />
                 </div>
               </div>

@@ -20,7 +20,11 @@ function foundItem({hit}) {
             </Link>
 
               { hit.price ? <div> ${hit.price} </div> :<div> price upon request </div> }
-              { hit.savedKeywords ? <p> Tags : { hit.savedKeywords } </p> : null }
+              { hit.savedKeywords ? 
+                <p> 
+                  Tags : { hit.savedKeywords.map((tag)=> {return <a className="tags"> { tag } </a>}) } 
+                </p> 
+              : null }
               <br />
             </div> 
             : null
@@ -40,7 +44,7 @@ function foundItem({hit}) {
             </Link>
 
             { hit.price ? <div> ${hit.price} </div> :<div> price upon request </div> }
-            { hit.savedKeywords ? <p> Tags : { hit.savedKeywords} </p> : null }
+            { hit.savedKeywords ? <p> Tags : { hit.savedKeywords.map((tag)=> {return <a className="tags"> { tag } </a>}) } </p> : null }
             </div> 
             : null
           }

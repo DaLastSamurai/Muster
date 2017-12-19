@@ -113,7 +113,7 @@ export default class App extends React.Component {
                   userId={this.state.userId}
                   addNewCollection={this.addNewCollection}
                   searchMyCollections={this.searchMyCollections}
-                  collectionList={this.state.collections}
+                  collections={this.state.collections}
                   getCollection={this.getCollection}
                 />
               </div>
