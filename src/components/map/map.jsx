@@ -13,14 +13,13 @@ class Map extends React.Component {
     // console.log('Map component should be array of hits', this.props.hits.hits)
     // console.log(Array.isArray(this.props.hits.hits))
     this.setState({filteredSearches : this.props.hits.hits.filter((hit)=>{
-      return hit._geoloc !== undefined})
+      return hit._geoLoc !== undefined})
     })
   }
 
   componentWillReceiveProps() {
-    console.log('>>>>> map hits >>>>>>' + this.props.hits )
     this.setState({filteredSearches : this.props.hits.hits.filter((hit)=>{
-      return hit._geoloc !== undefined})})
+      return hit._geoLoc !== undefined})})
     }
 
   render() {
@@ -30,7 +29,8 @@ class Map extends React.Component {
     return (
       <div>
         <GoogleMap
-          defaultZoom={14}
+          onIdle={({getBounds})=>console.log(getBounds())}
+          defaultZoom={8}
           center={this.props.userLoc}
           defaultCenter={{ lat:-30.363882, lng:150.044922 }}          
           >
@@ -38,7 +38,7 @@ class Map extends React.Component {
             return <div>
               <Marker 
                 ref={index}
-                position={marker._geoloc}
+                position={marker._geoLoc}
                 onMouseOver={()=>{
                   this.setState({currentMarker : marker })
                 }}
@@ -46,7 +46,7 @@ class Map extends React.Component {
               />
           {this.state.currentMarker ? (
           <InfoWindow 
-          position={{lat : this.state.currentMarker._geoloc.lat + 0.0001, lng : this.state.currentMarker._geoloc.lng}}
+          position={{lat : this.state.currentMarker._geoLoc.lat + 0.0001, lng : this.state.currentMarker._geoLoc.lng}}
           >
             <div style={{ backgroundColor: `white`, opacity: 0.75, padding: `0px` }}>
               <div style={{ fontSize: `12px`, fontColor: `#08233B` }}>
