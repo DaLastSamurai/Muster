@@ -41,32 +41,37 @@ export default class MyCollections extends React.Component {
 
   render() {
     return(
-        <div className="navbar-mycollection">
-        <li>
-        <button type="button" className="btn btn-outline-secondary bg-primary"
-        onClick={() => { this.toggleInputForm() }}>
-        New Collection
-        </button>
-        {this.state.showInputForm ?
-        (<NewCollectionsInput
-        toggleInputForm= { this.toggleInputForm }
-        getUserCollection={this.props.getUserCollection}
-        addNewCollection={this.addNewCollection}
-        handleAddCollection={this.handleAddCollection} />) :
-        (<div />)}
-        </li>
-        {/* <Link to='/manageinventory'>
-          <button title='Books' clickFunction={() => { }} >Books</button>
-        </Link>
-        <Link to='/trade'>
-          <button title='Trade' clickFunction={() => { }}>Trade</button>
-        </Link>
-        <Link to={'/addItems/'}>
-          <button type="button" className="">Add</button>
-        </Link>
-        <Link to="/">
-          <button title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >Logout</button>
-        </Link> */}
+      <div className="navbar-mycollection">
+        <ul className="collectionNav">
+          <li>
+            <button type="button" className="btn btn-outline-secondary bg-primary"
+            onClick={() => { this.toggleInputForm() }}>
+            New Collection
+            </button>
+            {this.state.showInputForm ?
+            (<NewCollectionsInput
+            toggleInputForm= { this.toggleInputForm }
+            getUserCollection={this.props.getUserCollection}
+            addNewCollection={this.addNewCollection}
+            handleAddCollection={this.handleAddCollection} />) :
+            (<div />)}
+          </li>
+          {/* <Link to='/manageinventory'>
+            <button title='Books' clickFunction={() => { }} >Books</button>
+          </Link>
+          <Link to='/trade'>
+            <button title='Trade' clickFunction={() => { }}>Trade</button>
+          </Link>
+          <Link to={'/addItems/'}>
+            <button type="button" className="">Add</button>
+          </Link>
+          <Link to="/">
+            <button title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >Logout</button>
+          </Link> */}
+          <li>
+            <MyCollectionsList collections={this.props.collections} />
+          </li>
+        </ul>
       </div>
     )
   }

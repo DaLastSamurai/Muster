@@ -20,6 +20,7 @@ export default class ProtectedNav extends React.Component {
   }
 
   render() {
+    console.log(this.props.user)
     return (
       <div className="protectednavbar-container">
 
@@ -50,6 +51,9 @@ export default class ProtectedNav extends React.Component {
           <Link to="/">
             <button title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >Logout</button>
           </Link>
+          {/* <Link to={`/profile/${this.props.user.uid}`}>
+            <img src={"https://winaero.com/blog/wp-content/uploads/2015/05/windows-10-user-account-login-icon.png"} title='Profile' clickFunction={() => {window.location.reload()}} />
+          </Link> */}
         </div>
 {/*           
         <div className="navbar-links">
@@ -70,9 +74,9 @@ export default class ProtectedNav extends React.Component {
           </Link>
         </div> */}
 
-        <div className="navbar-avatar">
+        <div>
           <Link to={`/profile/${this.props.user.uid}`}>
-            <UserInfo user={this.props.user} clickFunction={() => { }} />
+            <UserInfo user={this.props.user} title="Profile" clickFunction={() => {window.location.reload()}} />
           </Link>
         </div>
         
