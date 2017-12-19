@@ -41,8 +41,8 @@ export default class MyCollections extends React.Component {
 
   render() {
     return(
-      <div className="navbar-mycollection">
-        <ul className="collectionNav">
+      <div>
+        <ul className="mycollections-container">
           <li>
             <button type="button" className="btn btn-outline-secondary bg-primary"
             onClick={() => { this.toggleInputForm() }}>
