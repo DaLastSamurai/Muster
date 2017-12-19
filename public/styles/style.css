@@ -472,3 +472,46 @@ em {
   text-decoration: none;
   
   }
+
+  .pagination__container {
+    text-align: center;
+  }
+  
+  .ais-Pagination__item {
+    display: inline-block;
+      padding: 10px;
+  }
+
+  .popular-category {
+    text-align : center;
+    border-radius: 10px;    
+    width: 150px;
+    /* border: 1px solid #bbbab89f; */
+    box-shadow: 0px 1px 1px #888;
+    min-height: 150px;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .popular-category-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content : center;
+  }
+
+  .popular-category-container {
+    align-content: center;
+    text-align : center;
+  }
+
+  .like-button {
+    padding : 5px;
+  }
+
+  .popular-category {
+    padding : 5px;    
+  }
+
+  .category-overlay-text {
+    
+  }
