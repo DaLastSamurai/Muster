@@ -18,19 +18,19 @@ class Map extends React.Component {
   }
 
   componentWillReceiveProps() {
-    console.log('>>>>> map hits >>>>>>' + this.props.hits )
+    // console.log('>>>>> map hits >>>>>>' + thxis.props.hits )
     this.setState({filteredSearches : this.props.hits.hits.filter((hit)=>{
       return hit._geoloc !== undefined})})
     }
 
   render() {
     // console.log(this.props.userLoc ? 'yes' : 'no');
-    // console.log('this is filtered searches >>> ', this.state.filteredSearches)
+    console.log('this is filtered searches >>> ', this.state.filteredSearches)
     // console.log('current marker state >>> ', this.state.currentMarker)
     return (
       <div>
         <GoogleMap
-          defaultZoom={14}
+          defaultZoom={8}
           center={this.props.userLoc}
           defaultCenter={{ lat:-30.363882, lng:150.044922 }}          
           >

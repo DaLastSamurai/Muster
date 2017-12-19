@@ -18,7 +18,7 @@ export default class MyCollectionsList extends React.Component {
       <div>
         {this.props.collections ? (Object.entries(this.props.collections).map((collection) => {
           if(collection[1] !== null) {
-          return <div key={collection} className="collectionNav">
+          return <div key={collection} className="collectionList">
               <MyCollectionsEntry
                 categoryId={collection[1].categoryId}
                 name={collection[1].name}
