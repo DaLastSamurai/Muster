@@ -92,11 +92,6 @@ button:hover {
   right: 0px !important; */
 }
 
-.mycollections-container {
-
-
-}
-
 .navbar-search {
   text-align: left;
   padding: 11px 0;
@@ -725,17 +720,19 @@ em {
   visibility : hidden
 }
 
-.collectionNav {
+.collectionList {
   display: inline-block;
   color: white;
   text-align: center;
   text-decoration: none;
+  margin-right: 35px;
+  margin-left: 35px;
 }
 
-.navbar-mycollection {
+.mycollections-container {
   display: inline-block;
-  color: white;
+  color: rgba(255, 255, 255, 0.829);
   text-align: center;
-  padding: 14px;
   text-decoration: none;
-}
+  
+  }

@@ -63,8 +63,14 @@ class ImageUpload extends Component {
     return (
       <div>
         <form>
-          {this.props.images.map(image => {
-            return <img src={image} style={{width: 300}} />})}
+          {this.props.images? 
+          this.props.images.map(image => {
+            return <img src={image} style={{width: 300}} />}) 
+          : null
+          }
+          {/* {this.props.images.map(image => {
+          return <img src={image} style={{width: 300}} />})} */}
+
           {/* {this.props.imageUrl &&
             <img src={this.props.imageUrl}
               style={{ width: 300 }} />} */}
