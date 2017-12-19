@@ -60,20 +60,22 @@ class InventoryLocation extends React.Component {
   render() {
     return(
       <div>
-        <h4>sort by location</h4>
-        {Object.keys(this.props.itemList).length > 0 
-          ? [...new Set(Object.keys(this.props.itemList).map((itemKey) => {
-              return this.props.itemList[itemKey]['location']
-            }))].map((location) => {
-              return <InventoryLocationList
-                key={location}
-                location={location}
-                itemList={this.props.itemList}
-                getNodes={this.getNodes}
-                deleteItem={this.props.deleteItem}
-                editItem={this.props.editItem} />
-            })
-          : console.log('no items in your account')}
+        {/* <h4 className="manage-sortby-title">sort by location</h4> */}
+        <div className="manage-inventory-sortby">
+          {Object.keys(this.props.itemList).length > 0 
+            ? [...new Set(Object.keys(this.props.itemList).map((itemKey) => {
+                return this.props.itemList[itemKey]['location']
+              }))].map((location) => {
+                return <InventoryLocationList
+                  key={location}
+                  location={location}
+                  itemList={this.props.itemList}
+                  getNodes={this.getNodes}
+                  deleteItem={this.props.deleteItem}
+                  editItem={this.props.editItem} />
+              })
+            : console.log('no items in your account')}
+        </div>
       </div>
     )
   }

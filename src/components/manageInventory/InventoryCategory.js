@@ -65,18 +65,20 @@ class InventoryCategory extends React.Component {
   render() {
     return(
       <div>
-        <h4>sort by category</h4>
-        {this.props.categoryList
-          ? Object.keys(this.props.categoryList).map((catName) => {
-              return <InventoryCategoryList 
-                key={catName}
-                catName={catName}
-                category={this.props.categoryList[catName]}
-                collectionList={this.props.collectionList}
-                getNodes={this.getNodes}
-              />
-            })
-          : console.log('no category in your account')}
+        {/* <h4 className="manage-sortby-title">sort by category</h4> */}
+        <div className="manage-inventory-sortby">
+          {this.props.categoryList
+            ? Object.keys(this.props.categoryList).map((catName) => {
+                return <InventoryCategoryList 
+                  key={catName}
+                  catName={catName}
+                  category={this.props.categoryList[catName]}
+                  collectionList={this.props.collectionList}
+                  getNodes={this.getNodes}
+                />
+              })
+            : console.log('no category in your account')}
+        </div>
       </div>
     )
   }

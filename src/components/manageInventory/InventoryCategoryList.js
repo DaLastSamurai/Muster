@@ -16,8 +16,12 @@ class InventoryCategoryList extends React.Component {
   
   render() {
     return(
-      <div>
+      <div className="manage-inventory-sortby-item">
+      <div className="manage-item-title">
         <h4>{this.props.catName}</h4>
+        </div>
+        <div className="manage-item-container">
+          <div className="manaage-item-list-box">
         <div className={`${this.props.catName} dragulaContainer`} ref='node'>
         {this.props.category.collectionId
         ? Object.keys(this.props.category.collectionId).map((colKey) => {
@@ -28,6 +32,8 @@ class InventoryCategoryList extends React.Component {
           })
         : console.log(`no collection in ${this.props.category}`)}
         </div>
+      </div>
+      </div>
       </div>
     )
   }

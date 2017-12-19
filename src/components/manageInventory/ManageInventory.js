@@ -81,11 +81,22 @@ class ManageInventory extends React.Component {
   render() {
     return(
       <div className="manage-inventory-container">
-        <select onChange={this.handleSortBy}>
-          <option value="collection">by collection</option>
-          <option value="location">by location</option>
-          <option value="category">by category</option>
-        </select>
+        <div className="manage-sortby-selectbox">
+          <h4>Sort by</h4>
+          <h4 onClick={() => this.setState({sort: 'collection'})}
+              className={this.state.sort === 'collection' ? 'manage-sortby-select' : null}>collection</h4>
+          <h4 onClick={() => this.setState({sort: 'category'})}
+              className={this.state.sort === 'category' ? 'manage-sortby-select' : null}>category</h4>
+          <h4 onClick={() => this.setState({sort: 'location'})}
+              className={this.state.sort === 'location' ? 'manage-sortby-select' : null}>location</h4>
+        </div>
+        {/* <select onChange={this.handleSortBy}
+                className="manage-inventory-container-select">
+          <option value="collection">sort by collection</option>
+          <option value="location">sort by location</option>
+          <option value="category">sort by category</option>
+        </select> */}
+  
           {this.state.sort === 'collection'
             ? <InventoryCollection 
                 userId={this.props.userId}
