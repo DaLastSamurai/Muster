@@ -336,6 +336,8 @@ nav {
 .req-search-box {
   /* border: solid red; */
   height: 200px;
+  display: flex;
+  flex-direction: column;
 }
 
 .request-form-box h4 {
@@ -353,7 +355,7 @@ nav {
 .search-form {
   display: grid;
   grid-template-columns: repeat(3, 86px);
-  grid-auto-rows: 120px;
+  grid-auto-rows: repeat(1, 160px);
   grid-gap: 10px;
   margin: 0;
   /* overflow: scroll; */
@@ -381,9 +383,9 @@ nav {
 }
 
 .search-container > div {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
 }
 
 .search-form .searchBar {
@@ -398,7 +400,7 @@ nav {
 }
 
 .req-search button {
-
+  margin: 120px;
 }
 
 .ais-Hits__root button {
