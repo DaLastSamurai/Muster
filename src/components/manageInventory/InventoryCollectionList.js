@@ -23,24 +23,31 @@ class InventoryCollectionList extends React.Component {
   
   render() {
     return(
-      <div>
-        <h4>{this.props.collection.name}</h4>
-        <button onClick={() => {
-          this.props.deleteCollection(this.props.collectionId, this.props.collection.itemId)
-          }}> x </button>
-        <button onClick={this.toggleEdit}>edit</button>
-        {this.state.showEdit === true ? <EditCollection collection={this.props.collection} /> : null}
-        <div className={`${this.props.collectionId} dragulaContainer`} ref='node'>
-        {this.props.collection.itemId 
-        ? Object.keys(this.props.collection.itemId).map((id) => {
-          return <InventoryCollectionEntry
-            key={id} 
-            itemId={id} 
-            itemInCol={this.props.itemList[id]} 
-            deleteItem={this.props.deleteItem}
-            editItem={this.props.editItem} />
-        })
-        : console.log(`no item in${this.props.collection.name}`)}
+      <div className="manage-inventory-sortby-item">
+        <div className="manage-item-title">
+          <h4>{this.props.collection.name}</h4>
+          <button onClick={() => {
+            this.props.deleteCollection(this.props.collectionId, this.props.collection.itemId)
+            }}> x </button>
+          <button onClick={this.toggleEdit}>edit</button>
+          {this.state.showEdit === true ? <EditCollection collection={this.props.collection} /> : null}
+        </div>
+        <div className="manage-item-container">
+          <div className="manaage-item-list-box">
+            
+            <div className={`${this.props.collectionId} dragulaContainer manaage-item-list`} ref='node'>
+            {this.props.collection.itemId 
+            ? Object.keys(this.props.collection.itemId).map((id) => {
+              return <InventoryCollectionEntry
+                key={id} 
+                itemId={id} 
+                itemInCol={this.props.itemList[id]} 
+                deleteItem={this.props.deleteItem}
+                editItem={this.props.editItem} />
+            })
+            : console.log(`no item in${this.props.collection.name}`)}
+            </div>
+          </div>
         </div>
       </div>
     )

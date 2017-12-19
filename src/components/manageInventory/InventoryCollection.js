@@ -76,20 +76,22 @@ class InventoryCollection extends React.Component {
   render() {
     return(
       <div>
-        <h4>sort by collection</h4>
-        {Object.keys(this.props.collectionList).length > 0 
-          ? Object.keys(this.props.collectionList).map((colKey) => {
-              return <InventoryCollectionList 
-                key={colKey} 
-                collectionId={colKey}
-                collection={this.props.collectionList[colKey]} 
-                itemList={this.props.itemList} 
-                getNodes={this.getNodes}
-                deleteCollection={this.props.deleteCollection}
-                deleteItem={this.props.deleteItem} 
-                editItem={this.props.editItem} />
-            })
-          : console.log('no collection in your account')}
+        {/* <h4 className="manage-sortby-title">sort by collection</h4> */}
+        <div className="manage-inventory-sortby">
+          {Object.keys(this.props.collectionList).length > 0 
+            ? Object.keys(this.props.collectionList).map((colKey) => {
+                return <InventoryCollectionList 
+                  key={colKey} 
+                  collectionId={colKey}
+                  collection={this.props.collectionList[colKey]} 
+                  itemList={this.props.itemList} 
+                  getNodes={this.getNodes}
+                  deleteCollection={this.props.deleteCollection}
+                  deleteItem={this.props.deleteItem} 
+                  editItem={this.props.editItem} />
+              })
+            : console.log('no collection in your account')}
+        </div>
       </div>
     )
   }
