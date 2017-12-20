@@ -30,6 +30,7 @@ export default class MapContainer extends React.Component {
 					<div>
 						<h2>Find by Location</h2>
 						<Map
+						
 							userLoc={this.state.userLoc}
 							hits={JSON.parse(this.props.hits)}
 							containerElement={<div style={{ height: `400px` }} />}

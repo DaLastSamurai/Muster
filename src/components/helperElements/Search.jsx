@@ -80,20 +80,20 @@ function foundItem({hit}) {
         <div className="search-hits-per-page">
           <HitsPerPage
           defaultRefinement={5} 
-          items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}]}
+          items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}, {value:50, label: 'show 50'}]}
           />
         </div>
 
         <div className="search-entry">
           <Hits hitComponent={foundItem} />
         </div>
-
+        <div className="pagination__container">
+          <Pagination showLast={true} className="pagination-container"/>
+        </div>
         <div style={{ float: "center" }}>
-
         <div className="search-map">
           <MapContainer hits={JSON.stringify(props)}/>
         </div>
-        
       </div>
       </div>
     )
