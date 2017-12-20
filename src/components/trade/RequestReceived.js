@@ -87,15 +87,17 @@ class RequestReceived extends React.Component {
           <div className="reqdate">
             <p>{this.props.reqRec.date}</p>
           </div>
-          <Link to={`/profile/:${this.props.reqRec.exchangee[0]}`}>
             <div className="requser">
-              <p>{this.props.reqRec.exchangee[1]['profileInfo']['username']}</p>
+              <Link to={`/profile/:${this.props.reqRec.exchangee[0]}`}>
+                <p>{this.props.reqRec.exchangee[1]['profileInfo']['username']}</p>
+              </Link>
             </div>
-          </Link>
           <div className="reqitem">
             <div className="reqitem-div">
               <img src={this.props.reqRec.item[1]['images'][0]}/>
-              <p>{this.props.reqRec.item[1]['title']}</p>
+              <div className="req-item-div-title">
+                <p>{this.props.reqRec.item[1]['title']}</p>
+              </div>
             </div>
           </div>
           <div className="reqtype">
@@ -125,26 +127,26 @@ class RequestReceived extends React.Component {
               </div>
               :null}
               
-              {this.props.reqRec.price.length > 0 
+              {this.props.reqRec.buy
                 ? <div className="req-detail-ontheway">
-                    <h4>offer price</h4> 
-                    <p>{this.props.reqRec.price}</p>
+                    <h4>offered price</h4> 
+                    <p>{`$ ${this.props.reqRec.price}`}</p>
                   </div>
                 : null}
 
               {this.props.reqRec.loan
                 ? <div className="req-detail-loan">
-                    <h4>return date</h4>
+                    <h4>offered return date</h4>
                     <p>{this.props.reqRec.dueDate}</p>
-                    <h4>initial price</h4>
-                    <p>{this.props.reqRec.initialPrice}</p>
-                    <h4>late fee</h4>
-                    <p>{this.props.reqRec.lateFee}</p>
+                    <h4>offered initial price</h4>
+                    <p>{`$ ${this.props.reqRec.initialPrice}`}</p>
+                    <h4>offered late fee</h4>
+                    <p>{`$ ${this.props.reqRec.lateFee}`}</p>
                   </div>
                 : null}
               {this.props.reqRec.trade
                 ? <div className="req-detail-trade">
-                    <h4>trading item</h4>
+                    <h4>offered trading item</h4>
                     <img src={this.props.reqRec.tradeItem[1]['images'][0]}/>
                     <p>{this.props.reqRec.tradeItem[1]['name']}</p>
                   </div>
@@ -167,26 +169,34 @@ class RequestReceived extends React.Component {
                 : null}
 
               {this.props.reqRec.paied
-                ?<p>payment received</p>
+                ?<div className="req-detail-getadd">
+                  <h4>payment received</h4>
+                  </div>
                 : null}
 
               {(this.props.reqRec.trade && this.props.reqRec.exaddress.length > 0) 
                 || (this.props.reqRec.paied && this.props.reqRec.exaddress.length > 0)
                 ? <div className="req-detail-getadd">
-                    <h5>address to send</h5>
+                    <h4>address to send</h4>
                     <p>{this.props.reqRec.exaddress}</p>
-                    {this.props.reqRec.sentTracking.length < 1
-                      ? <div className="req-detail-sendadd">
-                          <h5>after sent trading item submit tracking number</h5>
-                          <input name="tracking" 
-                                      type="text" 
-                                      placeholder="write tracking number" 
-                                      onChange={this.handleChange}
-                                      value={this.state.tracking}/>
-                          <button onClick={this.sendTracking}>submit</button>
-                        </div>
-                      : <p>you've sent item (tracking number: {this.props.reqRec.sentTracking})</p>}
                   </div>
+                : null}
+
+              {this.props.reqRec.accept === true ? 
+                this.props.reqRec.sentTracking.length < 1 
+                  ? <div className="req-detail-sendadd">
+                      <h4>after send trading item submit tracking number</h4>
+                      <input name="tracking" 
+                                  type="text" 
+                                  placeholder="write tracking number" 
+                                  onChange={this.handleChange}
+                                  value={this.state.tracking}/>
+                      <button onClick={this.sendTracking}>submit</button>
+                    </div>
+                  : <div className="req-detail-getadd">
+                      <h4>you've sent item</h4>
+                      <p>tracking number: {this.props.reqRec.sentTracking}</p>
+                    </div>
                 : null}
 
                 {this.props.reqRec.tracking.length > 0 

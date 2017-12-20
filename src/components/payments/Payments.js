@@ -15,9 +15,11 @@ class Payments extends Component {
             amount={this.props.amount}
             // token={token =>{this.props.handleToken(token)}}
             stripeKey = "pk_test_I2yd8RwncnL08WEDu6iRP77v" >
-        <button className="btn" onClick={this.props.handlePayment}>
-        Pay
-        </button>
+        <div className="req-detail-checkout">
+          <button className="btn" onClick={this.props.handlePayment}>
+          checkout
+          </button>
+        </div>
         </StripeCheckout>
     );
   }

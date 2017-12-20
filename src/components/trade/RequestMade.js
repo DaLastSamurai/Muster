@@ -87,13 +87,17 @@ class RequestMade extends React.Component {
              {this.props.reqMade.date}
             </p>
           </div>
+          <div className="requser">
           <Link to={`/profile/:${this.props.reqMade.exchangee[0]}`}>
-            <p className="requser">{this.props.reqMade.exchangee[1]['profileInfo']['username']}</p>
+            <p>{this.props.reqMade.exchangee[1]['profileInfo']['username']}</p>
           </Link>
+          </div>
           <div className="reqitem">
             <div className="reqitem-div">
               <img src={this.props.reqMade.item[1]['images'][0]}/>
-              <p>{this.props.reqMade.item[1]['title']}</p>
+              <div className="req-item-div-title">
+                <p>{this.props.reqMade.item[1]['title']}</p>
+              </div>
             </div>
           </div>
           <div className="reqtype">
@@ -118,11 +122,18 @@ class RequestMade extends React.Component {
                                   <h4>return date</h4>
                                   <p>{this.props.reqMade.dueDate}</p>
                                   <h4>initial price</h4>
-                                  <p>{this.props.reqMade.initialPrice}</p>
+                                  <p>{`$ ${this.props.reqMade.initialPrice}`}</p>
                                   <h4>late fee</h4>
-                                  <p>{this.props.reqMade.lateFee}</p>
+                                  <p>{`$ ${this.props.reqMade.lateFee}`}</p>
                                 </div>
                               : null}
+
+              {this.props.reqMade.buy
+                ? <div className="req-detail-ontheway">
+                    <h4>offer price</h4> 
+                    <p>{`$ ${this.props.reqMade.price}`}</p>
+                  </div>
+                : null}
               
               {this.props.reqMade.trade && this.props.reqMade.exaddress.length > 0 
                 ? <div className="req-detail-send">
@@ -166,7 +177,7 @@ class RequestMade extends React.Component {
                     userName={this.props.userObj.profileInfo.username}
                     description={`$${this.props.reqMade.price.length > 0 ? this.props.reqMade.price : this.props.reqMade.initialPrice} for ${this.props.reqMade.item[1]['name']}`}
                     amount={this.props.reqMade.price.length > 0 ? parseInt(this.props.reqMade.price) * 100 : parseInt(this.props.reqMade.initialPrice) * 100} />
-                : (this.props.reqMade.paied ? <p>your payment has been processed</p> : null)}
+                : (this.props.reqMade.paied ? <h4>your payment has been processed</h4> : null)}
                 </div>
                 
               {this.props.reqMade.tracking.length > 0 
