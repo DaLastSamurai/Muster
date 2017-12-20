@@ -23,6 +23,7 @@ class InProgressCarousel extends React.Component {
     scannedRef.on("value", (snapshot) => {
       let grabItems = Object.keys(snapshot.val()).map((k, i) => {
         return {
+          id: k,
           uid: currentUID,
           title: snapshot.val()[k].title,
           images: snapshot.val()[k].images || ['https://i5.walmartimages.com/asr/f752abb3-1b49-4f99-b68a-7c4d77b45b40_1.39d6c524f6033c7c58bd073db1b99786.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF'],
