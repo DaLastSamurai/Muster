@@ -44,13 +44,8 @@ export default class FavoriteCategories extends React.Component {
             //grab random collection
             let ranCollectionIndex = Math.floor(Math.random() * (Object.keys(this.state.allCategories[currentCat].collectionId).length));
             let ranCollectionHashes = Object.keys(this.state.allCategories[currentCat].collectionId)[ranCollectionIndex]
-            // console.log('this is the hash',ranCollectionHash)
             let randomCollection = this.state.allCategories[currentCat].collectionId[ranCollectionHashes]
-            // console.log(ranCollectionHashes)
-            // console.log('random collection >>>>',randomCollection)
-            // console.log('collection photoUrl',this.state.collection[ranCollectionHashes].photoUrl)
             let currentCollectionId = this.state.allCategories[currentCat].collectionId;
-            console.log('>>>',randomCollection)
             this.state.favoriteCategories.push([currentCat, this.state.collection[ranCollectionHashes].photoUrl, randomCollection])
           }
         }
@@ -68,7 +63,7 @@ export default class FavoriteCategories extends React.Component {
       horizontalSwiping: true,
       infinite: false,      
     };
-    console.log(this.state.favoriteCategories)
+    // console.log(this.state.favoriteCategories)
     return (
       <div className="carousel-container">
         <h3> Your Favorite Categories </h3>
@@ -76,7 +71,7 @@ export default class FavoriteCategories extends React.Component {
           {
             this.state.favoriteCategories.map((category) =>
               <div>
-              <Link to={`/collections/:` + category[2]}>
+              <Link to={`/collections/${category[2]}`}>
                 <img src={category[1]!== ''? category[1] : "http://www.wrbh.org/wp-content/uploads/2017/02/ReadyPlayerONe.jpg"}/>
                 <h5>{category[0]}</h5>
               </Link>

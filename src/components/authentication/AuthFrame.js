@@ -12,7 +12,6 @@ export default class AuthFrame extends React.Component {
     }; 
     this.loadSignupPage = this.loadSignupPage.bind(this); 
     this.loadLoginPage = this.loadLoginPage.bind(this);
-    this.showLoadingIcon = this.showLoadingIcon.bind(this); 
   }
 
   componentWillReceiveProps() {

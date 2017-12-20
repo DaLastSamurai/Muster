@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
-import { provider } from '../../../config/firebaseAuthCredentials'
+import { OAUTH_Key, HASHED_PASS } from '../../../config/firebaseAuthCredentials'
+import GoogleLogin  from 'react-google-login'
 import { firebaseAuth } from '../../../config/firebaseCredentials'
 // import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
 import Login from './Login'
@@ -17,19 +18,12 @@ export default class Signup extends React.Component {
     this.handleEmailSubmit = this.handleEmailSubmit.bind(this)
   }
 
-  componentDidMount() { 
-  
-  }
-
-  handleGoogleSubmit(e) {
-    e.preventDefault(); 
-    firebaseAuth().signInWithRedirect(provider)
-      .then(function(result) {
-        // console.log('this is the result of signing in with google: ', result)
-      })
-      .catch(function(error) {
-        this.setState({error: error.toString()})
-      });
+  handleGoogleSubmit(res) {
+    console.log('this is the response from the signup: ', res.profileObj.email, HASHED_PASS)
+    firebaseAuth()
+      .signInWithEmailAndPassword(res.profileObj.email, HASHED_PASS)
+      .then(() => {this.setState({loading : true})})
+      .catch(error => this.setState({error: error.toString()}))
   }
 
 
@@ -46,9 +40,14 @@ export default class Signup extends React.Component {
       <div className="col-sm-4 col-sm-offset-4">
         <h1> Sign Up </h1>
           {/* This is the google authentication: */}
-          <form onSubmit={this.handleGoogleSubmit}>
-            <LinkButton type={"submit"} title='Signup With Google' clickFunction={() => {} } />
-          </form>
+          <div> 
+            <GoogleLogin 
+              clientId="725434233122-7silvg3edd82c818tqko0o5sjk1tmdtq.apps.googleusercontent.com"
+              buttonText="Signup With Google"
+              onSuccess={this.handleGoogleSubmit}
+              onFailure={() => console.log('There is an error in the google signup!')}
+            />
+          </div> 
 
           {/* This is the email auth*/}
 

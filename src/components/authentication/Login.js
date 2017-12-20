@@ -1,6 +1,7 @@
 import React from 'react';
 import { firebaseAuth } from '../../../config/firebaseCredentials'
-import { provider } from '../../../config/firebaseAuthCredentials'
+import { OAUTH_Key, HASHED_PASS } from '../../../config/firebaseAuthCredentials'
+import GoogleLogin  from 'react-google-login'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
 import ResetPassword from './ResetPassword'
 import Signup from './Signup'
@@ -17,22 +18,18 @@ export default class Login extends React.Component {
       loading: false, 
     }; 
     this.handleEmailSubmit = this.handleEmailSubmit.bind(this)
+    this.handleGoogleSubmit = this.handleGoogleSubmit.bind(this)
   }
 
-  handleGoogleSubmit(e) {
-    e.preventDefault(); 
-    firebaseAuth().signInWithRedirect(provider)
-      .then(function(result) {
-        // console.log('this is the result of signing in with google: ', result)
-      })
-      .catch(function(error) {
-        this.setState({error: error.toString()})
-      });
+  handleGoogleSubmit(res) {
+    firebaseAuth()
+      .signInWithEmailAndPassword(res.profileObj.email, HASHED_PASS)
+      .then(() => {this.setState({loading : true})})
+      .catch(error => this.setState({error: error.toString()}))
   }
 
   handleEmailSubmit(e) {
     e.preventDefault(); 
-    // console.log('this is email and password in handleEmailSubmit: ', `\n ${this.state.email.value}`, `\n ${this.state.pw.value}`)
     // these are being retrieved from the form with thier refs. 
     firebaseAuth()
       .signInWithEmailAndPassword(this.state.email.value, this.state.pw.value)
@@ -41,6 +38,9 @@ export default class Login extends React.Component {
   }
 
   render() {
+      const responseGoogle = (response) => {
+          console.log(response);
+      }
     // console.log('this is the state', this.state.loading)
     // console.log('these are the props from authFrame', this.props)
     return (
@@ -48,9 +48,14 @@ export default class Login extends React.Component {
         <h1> Login </h1>
         
         {/* This is the google authentication: */}
-        <form onSubmit={this.handleGoogleSubmit}>
-          <LinkButton type={"submit"} title='Login With Google' clickFunction={() => {} } />
-        </form>
+        <div>
+          <GoogleLogin 
+            clientId="725434233122-7silvg3edd82c818tqko0o5sjk1tmdtq.apps.googleusercontent.com"
+            buttonText="Login With Google"
+            onSuccess={this.handleGoogleSubmit}
+            onFailure={() => console.log('There is an error in the google login!')}
+          />
+        </div>
 
         {/* This is the email auth*/}
         <form onSubmit={this.handleEmailSubmit}>
