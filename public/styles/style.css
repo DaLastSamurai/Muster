@@ -182,34 +182,6 @@ input[type=submit]:hover {
   padding: 100px;
 } 
 
-.profile-container{
-  padding: 100px;
-}
-
-.search-container{
-  padding: 10px;
-}
-
-.search-entry{
-  padding: 0px;
-}
-
-.search-hits-per-page{
-  
-}
-
-.search-entry{
-
-}
-
-.search-pagination{
-
-}
-
-.search-map{
-  
-}
-
 .navbar-container {
 } 
 
@@ -603,6 +575,7 @@ nav {
 .search-container .ais-Hits__root {
   margin-top: 20px;
   overflow: scroll;
+<<<<<<< HEAD
 
 }
 
@@ -610,6 +583,12 @@ nav {
 
 }
 
+=======
+  width: 200px;
+  /* border: solid red; */
+}
+
+>>>>>>> debug3map
 .ais-Hits__root button {
   padding: 0;
 }
@@ -1109,11 +1088,6 @@ img {
   /* display: inline-block; */
 }
 
-/* Algolia-related components */
-.ais-HitsPerPage__root {} /* HitsPerPage */
-
-
-
 /* carousel */
 
 .carousel-container {
@@ -1190,6 +1164,8 @@ em {
 }
 
 .mycollections-container {
+  /* flex:; */
+  flex-direction: row;
   display: inline-block;
   color: rgba(255, 255, 255, 0.829);
   text-align: center;
@@ -1199,6 +1175,7 @@ em {
 
   .pagination__container {
     text-align: center;
+    width: 200px
   }
   
   .ais-Pagination__item {
@@ -1239,3 +1216,110 @@ em {
   .category-overlay-text {
     
   }
+
+  .search-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: stretch;
+    padding: 10px;
+  }
+
+  .search-map{
+    width: 800px;
+    justify-content: flex-end;
+  }
+  
+  .search-entry{
+    width: 200px;
+  }
+
+  .search-list-container{
+    width: 200px;
+    height: 500px;
+    justify-content: flex-start;
+    overflow: scroll;
+  }
+  
+  .search-hits-per-page{
+    
+  }
+  
+  .search-pagination{
+  
+  }
+  
+
+/* Algolia-related components */
+.ais-HitsPerPage__root {
+  width: 100px;
+  justify-content: center;  
+} /* HitsPerPage */
+
+.card-size-images {
+  border-radius: 5px;
+  width: 150px;
+}
+
+.carousel-images {
+  height:300px;
+  overflow-x: auto;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+
+.card {
+  width: 200px;
+  display: inline-block;
+}
+
+.col-sm-2 {
+  color: transparent;
+  padding: 10px 24px;
+  border: 0px solid grey;
+  border-radius: 4px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width:150px;
+  outline:none;
+}
+
+.col-sm-2:hover {
+  background-color: rgb(246, 246, 246);
+}
+
+/* styling profile page */
+
+.profile-container {
+  flex-wrap: nowrap;
+  padding: 50px;
+  justify-content: center;  
+}
+
+.follow-unfollow {
+  display: inline-block;
+}
+
+/* class on follow / unfollow */
+div.sc-gzVnrw { 
+  display: none;
+}
+
+div.iuLDOj {
+  display: none;
+}
+
+.profilePhoto {
+  border-radius: 75px;
+  width:150px;
+}
+
+.clickable-text {
+}
+
+.clickable-text:hover {
+  text-decoration: none;  
+  color: #fd5c63;
+  outline:none;
+  font-weight: bold;
+}

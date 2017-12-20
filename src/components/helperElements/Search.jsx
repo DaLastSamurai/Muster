@@ -15,7 +15,7 @@ function foundItem({hit}) {
             <div> 
               
             <Link to={ `/items/:${ hit.collectionId }` }>
-              { hit.images ? (<img src={ hit.images }/>) : (<img src={ hit.imageUrl }/>) }
+              { hit.images ? (<img className="card-size-images" src={ hit.images }/>) : (<img className="card-size-images" src={ hit.imageUrl }/>) }
               { hit.title ? (<div>{ hit.title }</div>) : (<div>{ hit.name })</div>) }
             </Link>
 
@@ -39,7 +39,7 @@ function foundItem({hit}) {
             <div> 
               
             <Link to={ `/items/:${hit.collectionId}` }>
-              <img src={ hit.imageUrl} />
+              <img className="card-size-images" src={ hit.imageUrl} />
               { hit.name } <br />
             </Link>
 
@@ -54,7 +54,7 @@ function foundItem({hit}) {
       {window.indexName === 'users' &&
         (<div onClick={ (e)=> console.log('this is what the users click handler passes: ', hit) }>
           <Link to={ `/profile/`+ `${hit.objectID}` }>
-            <img src={ hit.profileInfo.profilePhoto } />
+            <img className="card-size-images" src={ hit.profileInfo.profilePhoto } />
             { hit.profileInfo.username }
           </Link>
       </div>) }
@@ -76,25 +76,26 @@ function foundItem({hit}) {
     // console.log('props in Search:', props)
     return (
       <div className="search-container">
-        
-        <div className="search-hits-per-page">
-          <HitsPerPage
-          defaultRefinement={5} 
-          items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}, {value:50, label: 'show 50'}]}
-          />
+        <div className="search-list-container">
+          <div className="search-hits-per-page">
+            <HitsPerPage
+            defaultRefinement={5} 
+            items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}, {value:50, label: 'show 50'}]}
+            />
+          </div>
+
+          <div className="search-entry">
+            <Hits hitComponent={foundItem} />
+          </div>
+
+          <div className="pagination__container">
+            <Pagination showLast={true} className="pagination-container"/>
+          </div>
         </div>
 
-        <div className="search-entry">
-          <Hits hitComponent={foundItem} />
-        </div>
-        <div className="pagination__container">
-          <Pagination showLast={true} className="pagination-container"/>
-        </div>
-        <div style={{ float: "center" }}>
         <div className="search-map">
           <MapContainer hits={JSON.stringify(props)}/>
         </div>
-      </div>
       </div>
     )
   }

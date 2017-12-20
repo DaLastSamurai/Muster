@@ -131,6 +131,8 @@ export default class ProfileFrame extends React.Component {
       ? (<div> loading... </div> ) 
       : (
         <div className="profile-container">
+
+
           <div className = "followBar"> 
             {this.state.isUsersProfile 
               ? <div />
@@ -138,17 +140,20 @@ export default class ProfileFrame extends React.Component {
                   profileUID={this.state.profileUID}
                 />
             }
-          
-            <FollowDropDown
-              title = {"followers"}
-              users = {this.state.followers || {}}
-              updateProfileUID = {this.updateProfileUID}
-            />
-            <FollowDropDown
-              title = {"following"}
-              users = {this.state.following || {}}
-              updateProfileUID = {this.updateProfileUID}
-            />
+            <div className="follow-unfollow">
+              <FollowDropDown
+                title = {"followers"}
+                users = {this.state.followers || {}}
+                updateProfileUID = {this.updateProfileUID}
+              />
+            </div>
+            <div className="follow-unfollow">
+              <FollowDropDown
+                title = {"following"}
+                users = {this.state.following || {}}
+                updateProfileUID = {this.updateProfileUID}
+              />
+            </div>
           </div>
 
 
@@ -160,7 +165,9 @@ export default class ProfileFrame extends React.Component {
                 <ImageUpload setImageState={this.setImageState}/>
                 <img src={this.state.profilePhoto} className = "profilePhoto"/>
                 <div>
-                Username (click to edit, one word only):
+                <a className="clickable-text">
+                  Username : 
+                </a>
                 <RIEInput
                   value={this.state.username}
                   change={this.sendUpdatedUserDataToDB}
@@ -171,7 +178,9 @@ export default class ProfileFrame extends React.Component {
                 />
                 </div>
                 <div>
-                 Bio (click to edit):
+                  <a className="clickable-text">
+                    Bio :
+                  </a> 
                 <RIETextArea
                   value={this.state.bio}
                   change={this.sendUpdatedUserDataToDB}

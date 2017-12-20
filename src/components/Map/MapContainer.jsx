@@ -13,7 +13,7 @@ export default class MapContainer extends React.Component {
 		componentDidMount() {
 			if ("geolocation" in navigator) {
 				/* geolocation is available */
-				navigator.geolocation.watchPosition((position)=>{
+				navigator.geolocation.getCurrentPosition((position)=>{
 					this.setState({userLoc : {lat : position.coords.latitude, lng: position.coords.longitude}});
 				});
 			} else {

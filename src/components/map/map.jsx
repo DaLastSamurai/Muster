@@ -34,7 +34,7 @@ class Map extends React.Component {
       <Configure insideBoundingBox={[this.state.coordinates]} />    
         <GoogleMap
           onIdle={()=>this.setState({coordinates : [googleMap.getBounds().getNorthEast().lat(), googleMap.getBounds().getSouthWest().lng(), googleMap.getBounds().getSouthWest().lat(), googleMap.getBounds().getNorthEast().lng()]})}
-          defaultZoom={8}
+          defaultZoom={14}
           center={this.props.userLoc}
           defaultCenter={{ lat:-30.363882, lng:150.044922 }}
           ref={(googleMap) => {window.googleMap = googleMap}}          

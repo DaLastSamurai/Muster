@@ -13,7 +13,9 @@ class CollectionEntry extends React.Component {
     return(
       <div>
         <Card>
-          <ImageHeader imageSrc={this.props.collection.photoUrl} />
+          <div className="card-size-images">
+            <ImageHeader imageSrc={this.props.collection.photoUrl} />
+          </div>
           {/* <img src={this.props.collection.photoUrl}/> */}
           <h4>{this.props.collection.name}</h4>
         </Card>
@@ -21,5 +23,4 @@ class CollectionEntry extends React.Component {
     )
   }
 }
-
 export default CollectionEntry;

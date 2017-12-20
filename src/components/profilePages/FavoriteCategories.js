@@ -55,31 +55,23 @@ export default class FavoriteCategories extends React.Component {
   }
 
   render() {
-    const settings = {
-      dots: false,
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      horizontal: true,
-      horizontalSwiping: true,
-      infinite: false,      
-    };
     // console.log(this.state.favoriteCategories)
     return (
-      <div className="carousel-container">
+      <div >
         <h3> Your Favorite Categories </h3>
-        <Slider {...settings}>
-          {
-            this.state.favoriteCategories.map((category) =>
-              <div>
-              <Link to={`/collections/${category[2]}`}>
-                <img src={category[1]!== ''? category[1] : "http://www.wrbh.org/wp-content/uploads/2017/02/ReadyPlayerONe.jpg"}/>
-                <h5>{category[0]}</h5>
-              </Link>
-              </div>
-            )
-          }
-        </Slider>
-      </div>
+        <div className="carousel-images" >
+            {
+              this.state.favoriteCategories.map((category) =>
+              <div class="card">
+                  <Link className="clickable-text" to={`/collections/${category[2]}`}>
+                      <img className="card-size-images" src={category[1]!== ''? category[1] : "http://www.wrbh.org/wp-content/uploads/2017/02/ReadyPlayerONe.jpg"}/>
+                      <h5>{category[0]}</h5>
+                  </Link>
+                </div>
+              )
+            }
+        </div>
+        </div>
     );
   }
 };
