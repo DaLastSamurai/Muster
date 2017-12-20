@@ -26,9 +26,9 @@ class MakeRequest extends React.Component {
       tempSelectedItem: false,
     }
   
-  window.setSelectedItemState = (hit) => {
+  window.setSelectedItemState = (objectId, itemObj, name) => {
     console.log('this is setSelectedItemState', hit)
-    this.setState({selectedItem: hit}, () => console.log('THIS IS THE SSTATE', this.state.selectedItem))
+    this.setState({selectedItem: hit}, () => console.log('THIS IS THE SSTATE', this.state.selectedItem, '>>>', objectId, 'this is hit obj', itemObj))
   }
   
   window.setSelectedItemState.bind(this);

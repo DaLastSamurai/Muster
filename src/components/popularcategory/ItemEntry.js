@@ -23,7 +23,9 @@ class ItemEntry extends React.Component {
         <div onClick={this.toggleDetail}>
           <Card>
           <CardBody>
-            <ImageHeader imageSrc={ this.props.item.images } />       
+            <div className="card-size-images">
+              <ImageHeader imageSrc={ this.props.item.images } />       
+            </div>
             <h3>{ this.props.item.title }</h3>
             { this.props.item.notes } 
           </CardBody>
