@@ -5,11 +5,6 @@ import TradeSearchToggler from './TradeSearchToggler.jsx';
 import { TradeSearch } from './TradeSearch.jsx';
 import Search from './TradeSearch.jsx'
 
-window.setSelectedItemState = (hit) => {
-  // console.log(JSON.stringify(hit).slice(8))
-  console.log(hit)
-}
-
 class MakeRequest extends React.Component {
   constructor(props) {
     super(props)
@@ -30,6 +25,12 @@ class MakeRequest extends React.Component {
       selectedItem : window.selectedItem,
       tempSelectedItem: false,
     }
+  
+  window.setSelectedItemState = (hit) => {
+    console.log('this is setSelectedItemState', hit)
+    this.setState({selectedItem: hit}, () => console.log('THIS IS THE SSTATE', this.state.selectedItem))
+  }
+  
   window.setSelectedItemState.bind(this);
   this.handleRequest = this.handleRequest.bind(this);
   this.handleChange = this.handleChange.bind(this);
