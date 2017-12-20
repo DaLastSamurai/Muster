@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-ro
 import { connectHits } from 'react-instantsearch/connectors';
 
 function foundItem({ hit }) {
-  // console.log('this is state in founditem', console.log(this))
+  // console.log('this is hit', hit.objectID);
   return(
     <div onClick={(e) => {
       e.preventDefault()
-      window.setSelectedItemState(e.target.innerHTML)
+      window.setSelectedItemState([hit.objectID, hit, e.target.innerHTML])
     } }>
     { window.indexName === undefined &&
         (<div>

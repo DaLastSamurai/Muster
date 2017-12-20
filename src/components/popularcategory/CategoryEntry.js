@@ -61,7 +61,7 @@ class CategoryEntry extends React.Component {
     // add a carousel to these with images from the collections. 
     return(
       <div className='popular-category'>
-      <img src="https://dailyartfair.com/upload/large/66/6601_6.jpg" />
+        <img className="card-size-images" src="https://dailyartfair.com/upload/large/66/6601_6.jpg" />
         <div className="category-overlay-text">
           <Link to={`/collections/:${this.props.category[0]}`}>
             <h4>{this.props.category[0]}</h4>
