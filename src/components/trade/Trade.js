@@ -50,14 +50,14 @@ class Trade extends React.Component {
               </div>
             </div>
             {/* // : null} */}
-            <div className="request-trans">
+          <div className="request-trans">
             <div className="reqmade">
               <div className="req-title">
                 <h2>Trade Request You Made</h2>
               </div>
                 {this.props.request && this.props.request.made 
                   ? <div>
-                      <div className="req-container">
+                      <div className="req-container-title">
                         <h4 className="reqdate">date</h4>  <h4 className="requser">item owner</h4>  
                         <h4 className="reqitem">item</h4>  <h4 className="reqtype">trade type</h4>  <h4 className="reqstatus">status</h4>
                       </div>
@@ -78,7 +78,7 @@ class Trade extends React.Component {
               </div>
                 {this.props.request && this.props.request.received 
                   ? <div>
-                      <div className="req-container">
+                      <div className="req-container-title">
                         <h4 className="reqdate">date</h4>  <h4 className="requser">person who offer</h4>  
                         <h4 className="reqitem">item</h4>  <h4 className="reqtype">trade type</h4>  <h4 className="reqstatus">status</h4>
                       </div>
@@ -92,7 +92,7 @@ class Trade extends React.Component {
                     </div> 
                 : 'no request'}
             </div>
-            </div>
+          </div>
         </div>
       </InstantSearch>
     )

@@ -159,10 +159,10 @@ handleRequest() {
       let dateRec = {
         item: this.state.selectedItem,
         exchangee: [this.props.userId, rquserObj],
-        trade: false,
-        buy: true,
+        trade: this.state.trade,
+        buy: this.state.buy,
         price: this.state.price,
-        loan: false,
+        loan: this.state.loan,
         dueDate: this.state.dueDate,
         initialPrice: this.state.initPrice,
         lateFee: this.state.lateFee,
@@ -219,7 +219,7 @@ handleshowSearchBox() {
                 (<Search />) : (<div/>)
                 }
               </div>
-              {window.selectedItem ? <img src={window.selectedItem[1]['images'][0]}/> : null}
+              {/* {window.selectedItem ? <img src={window.selectedItem[1]['images'][0]}/> : null} */}
               <button onClick={()=>this.setState({selectedItem : window.selectedItem})}> 
                 select item
               </button>
@@ -229,75 +229,74 @@ handleshowSearchBox() {
         <div className="req-offer-box">
           <h4>offer</h4>
           <div className="req-offer-frame">
-          <div className="req-offer">
-            <h5 onClick={() => this.setState({buy: true, trade: false, loan: false})}
-                className={`offer-buy ${this.state.buy ? 'offer-selected' : null}`}>buy</h5>
-
-            {this.state.buy 
-              ? <div className="offer-buy-form">
-                  <p>$</p>
-                  <input name="price"
-                        type="text"
-                        onChange={this.handleChange}
-                        placeholder="type your offer price"/>
-                </div>
-              : null}
-
-            <h5 onClick={()=> this.setState({buy: false, trade: true, loan: false})}
-                className={`offer-trade ${this.state.trade ? 'offer-selected' : null}`}>trade</h5>
-            
-            {this.props.collections && this.state.trade
-              ? <div className="offer-trade-form">
-                  <select onChange={this.handleSelect}> 
-                    <option value='' defaultValue>select your collection</option>
-                    {Object.keys(this.props.collections).map((col) => {
-                      return <option value={col} key={col}>
-                              {this.props.collections[col]['name']}
-                            </option> 
-                    })}
-                  </select>
-
-                  {this.state.tradeCol.length > 0 
-                    ? Object.keys(this.props.collections[this.state.tradeCol]['itemId']).map((itemid) => {
-                        return <div key={itemid}>
-                                <img src={this.props.items[itemid]['imageUrl']}/>
-                                <p>{this.props.items[itemid]['name']}</p>
-                                <input name={itemid} type="checkbox" onChange={this.handletradeItem}/>
-                              </div>
-                      })
-                    : null}
-                </div>
-              : null}
-            <h5 onClick={() => this.setState({buy: false, trade: false, loan: true})}
-                className={`offer-loan  ${this.state.loan ? 'offer-selected' : null}`}>loan</h5>
-
-            {this.state.loan 
-              ? <div className="offer-loan-form">
-                  <div className="offer-loan-form-initial">
+            <div className="req-offer">
+              <h5 onClick={() => this.setState({buy: true, trade: false, loan: false})}
+                  className={`offer-buy ${this.state.buy ? 'offer-selected' : null}`}>buy</h5>
+              <h5 onClick={()=> this.setState({buy: false, trade: true, loan: false})}
+                  className={`offer-trade ${this.state.trade ? 'offer-selected' : null}`}>trade</h5>
+              <h5 onClick={() => this.setState({buy: false, trade: false, loan: true})}
+                  className={`offer-loan  ${this.state.loan ? 'offer-selected' : null}`}>loan</h5>
+            </div>
+            <div className="req-offer-form">  
+              {this.state.buy 
+                ? <div className="offer-buy-form">
                     <p>$</p>
-                    <input name="initPrice" 
-                          type="text" 
-                          placeholder="initial price" 
+                    <input name="price"
+                          type="text"
                           onChange={this.handleChange}
-                          value={this.state.initPrice}/>
+                          placeholder="type your offer price"/>
                   </div>
-                  <div className="offer-loan-form-late">
-                    <p>$</p>
-                    <input name="lateFee" 
-                          type="text" 
-                          placeholder="late fee" 
-                          onChange={this.handleChange}
-                          value={this.state.lateFee}/> 
+                : null}
+              {this.props.collections && this.state.trade
+                ? <div className="offer-trade-form">
+                    <select onChange={this.handleSelect}> 
+                      <option value='' defaultValue>select your collection</option>
+                      {Object.keys(this.props.collections).map((col) => {
+                        return <option value={col} key={col}>
+                                {this.props.collections[col]['name']}
+                              </option> 
+                      })}
+                    </select>
+                    <div className="offer-trade-items-box">
+                      {this.state.tradeCol.length > 0 
+                        ? Object.keys(this.props.collections[this.state.tradeCol]['itemId']).map((itemid) => {
+                            return <div key={itemid} className="offer-trade-item">
+                                    <img src={this.props.items[itemid]['images'][0]}/>
+                                    <p>{this.props.items[itemid]['title']}</p>
+                                    <input name={itemid} type="checkbox" onChange={this.handletradeItem}/>
+                                  </div>
+                          })
+                        : null}
+                      </div>
                   </div>
-                  <div className="offer-loan-form-due">
-                    <input name="dueDate" 
-                          type="date"
-                          onChange={this.handleChange}
-                          value={this.state.dueDate}/>
+                : null}
+              {this.state.loan 
+                ? <div className="offer-loan-form">
+                    <div className="offer-loan-form-initial">
+                      <p>$</p>
+                      <input name="initPrice" 
+                            type="text" 
+                            placeholder="initial price" 
+                            onChange={this.handleChange}
+                            value={this.state.initPrice}/>
+                    </div>
+                    <div className="offer-loan-form-late">
+                      <p>$</p>
+                      <input name="lateFee" 
+                            type="text" 
+                            placeholder="late fee" 
+                            onChange={this.handleChange}
+                            value={this.state.lateFee}/> 
+                    </div>
+                    <div className="offer-loan-form-due">
+                      <input name="dueDate" 
+                            type="date"
+                            onChange={this.handleChange}
+                            value={this.state.dueDate}/>
+                    </div>
                   </div>
-                </div>
-              : null}
-          </div>
+                : null}
+            </div>
           </div>
         </div>
         <div className="message-form-box">
