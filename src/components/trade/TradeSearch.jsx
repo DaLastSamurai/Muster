@@ -19,7 +19,10 @@ function foundItem({ hit }) {
         </div>) }
 
       {window.indexName === 'item' &&
-      (<div >
+      (<div onClick={(e) => {
+        e.preventDefault()
+        window.setSelectedItemState(e.target.innerHTML)
+      } }>
         <button>
           { hit? hit.title : null }
         </button>
@@ -27,14 +30,20 @@ function foundItem({ hit }) {
       </div>) }
 
       {window.indexName === 'users' &&
-        (<div onClick={ ()=> window.selectedItem = [hit.objectID, hit] }>
+        (<div onClick={(e) => {
+          e.preventDefault()
+          window.setSelectedItemState(e.target.innerHTML)
+        } }>
           <button>
             { hit.profileInfo ? hit.profileInfo.username : null }
           </button>
       </div>) }
 
       {window.indexName === 'category' &&
-          (<div onClick={ ()=> window.selectedItem = [hit.objectID, hit] }>
+          (<div onClick={(e) => {
+            e.preventDefault()
+            window.setSelectedItemState(e.target.innerHTML)
+          } }>
           <button>
             { hit ? hit.objectID : null }
           </button>
