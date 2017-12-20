@@ -24,9 +24,9 @@ class AddItems extends React.Component {
       price: '',
 
       //location states
-      _geoloc: {},
+      _geoloc: null,
       _geolocPosition: null,
-      _geolocName: 'your location',
+      _geolocName: '',
       _geoSavingName: false,
       _geolocImage: '',
       
@@ -38,7 +38,7 @@ class AddItems extends React.Component {
       savedKeywords: [],
       showDetailed: false,
       collectionList: [{id: null, name: 'loading collections...'}],
-      locationList: [{lat: 0, lng: 0, name: 'default place'}],
+      locationList: [{lat: 0, lng: 0, name: 'default place', position: {lat: 0,lng:0}}],
       sell: '',
       
       // //depricated fields
@@ -125,28 +125,19 @@ class AddItems extends React.Component {
     
     let currentUID = firebase.auth().currentUser.uid
     let postData = {
-      //new book fields
       uid: currentUID,
       title: this.state.title,
       collectionId: this.state.collectionId,
-      images: this.state.images,
-      notes: this.state.notes,
-      upc: this.state.upc,
-      onlinePrice: this.state.onlinePrice,
-      storeLinks: this.state.storeLinks,
-      subject: this.state.subject,
-      _geoloc: this.state._geoloc,
-      savedKeywords: this.state.savedKeywords,
-      sell: this.state.sell,
-      price: this.state.price
-      
-      //depricated fields
-      // location: this.state.location,
-      // productIds: this.state.productIds,
-      // purchaseTime: this.state.purchaseTime,
-      // boughtFrom: this.state.boughtFrom,
-      // name: this.state.name,
-      // imageUrl: this.state.imageUrl,
+      images: this.state.images || [],
+      notes: this.state.notes || '',
+      upc: this.state.upc || '',
+      onlinePrice: this.state.onlinePrice || '',
+      storeLinks: this.state.storeLinks || {},
+      subject: this.state.subject || '',
+      _geoloc: this.state._geoloc || {},
+      savedKeywords: this.state.savedKeywords || [],
+      sell: this.state.sell || '',
+      price: this.state.price || ''
     };
     
     let newPostKey = this.state.id || 
@@ -201,9 +192,11 @@ class AddItems extends React.Component {
   componentDidMount() {
 
     //Checks database for collections owned by the user
+    let currentUser;
     let collectionRef = firebase.database().ref('/collection');
     collectionRef.on("value", (snapshot) => {
       let currentUID = firebase.auth().currentUser.uid;
+      currentUser = currentUID
       // let currentUID = this.props.userId;
       let grabIdName = Object.keys(snapshot.val()).map((key, i) => {
         return {
@@ -220,25 +213,45 @@ class AddItems extends React.Component {
         collectionList: grabIdName,
         uid: currentUID
       });
+      let locationRef = firebase.database().ref(`/users/${currentUID}/locations/`);
+
+      locationRef.on("value", (snapshot) => {
+        let grabLocations = Object.keys(snapshot.val()).map((key, i) => {
+          return {
+            lat: snapshot.val()[key].lat,
+            lng: snapshot.val()[key].lng,
+            name: key,
+            position: {
+              lat: snapshot.val()[key].lat,
+              lng: snapshot.val()[key].lng
+            }
+          }
+        })
+
+        this.setState({
+          locationList: grabLocations
+        })
+        console.log('locationlist', this.state.locationList)
+      })
 
     }, (error) => { console.error(error) }
     );
 
-    // let locationRef = firebase.database().ref(`/users/${this.state.uid}/locations/`);
+    // let locationRef = firebase.database().ref(`/users/${currentUser}/locations/`);
     // locationRef.on("value", (snapshot) => {
-    //   let grabLocations = Object.keys(snapshot.val()).map((key, i) => {
-    //     return {
-    //       lat: snapshot.val()[key].lat,
-    //       lng: snapshot.val()[key].lng,
-    //       name: key,
-    //       value: {lat: snapshot.val()[key].lat, lng: snapshot.val()[key].lng},
-    //       label: snapshot.val()[key].name
-    //     }
-    //   });
+    //   console.log('snapshot in location ref', snapshot.val())
+    //   // let grabLocations = Object.keys(snapshot.val()).map((key, i) => {
+    //   //   return {
+    //   //     lat: snapshot.val()[key].lat,
+    //   //     lng: snapshot.val()[key].lng,
+    //   //     name: key,
+    //   //     value: {lat: snapshot.val()[key].lat, lng: snapshot.val()[key].lng},
+    //   //     label: snapshot.val()[key].name
+    //   //   }
 
-    //   this.setState({
-    //     locationList: grabLocations
-    //   });
+    //   // this.setState({
+    //   //   locationList: grabLocations
+    //   // });
 
     // }, (error) => { console.error(error) }
     // );
@@ -250,7 +263,6 @@ class AddItems extends React.Component {
 
       itemRef.on("value", (snapshot) => {
         this.setState({
-          //new book fields
           id: this.props.editItem,
           title: snapshot.val().title,
           images: snapshot.val().images,
@@ -263,16 +275,7 @@ class AddItems extends React.Component {
           _geoloc: snapshot.val()._geoloc,
           savedKeywords: snapshot.val().savedKeywords || [],
           sell: snapshot.val().sell,
-          price: snapshot.val().price,
-          
-          //depricated fields 
-          // name: snapshot.val().name,
-          // location: snapshot.val().location,
-          // imageUrl: snapshot.val().images[0],
-          // productIds: snapshot.val().productIds,
-          // purchaseTime: snapshot.val().purchaseTime,
-          // boughtFrom: snapshot.val().boughtFrom
-          
+          price: snapshot.val().price
         });
       }, (error) => { console.error(error) });
     }
@@ -393,7 +396,7 @@ class AddItems extends React.Component {
                 <div>
                   <select
                     className="form-control"
-                    name="locationList"
+                    name="_geoloc"
                     component="select"
                     value={this.state._geoloc}
                     onChange={this.handleChange}
@@ -404,6 +407,7 @@ class AddItems extends React.Component {
                   </select>
                 </div>
               </div>
+              
 
               <a onClick={this.geoFindMe}>Use my current location</a>
 
@@ -420,7 +424,7 @@ class AddItems extends React.Component {
                           className="form-control"
                           name="_geolocName"
                           component="text"
-                          placeholder="Name of location"
+                          placeholder=""
                           value={this.state._geolocName}
                           onChange={this.handleChange}
                         />
@@ -552,7 +556,7 @@ class AddItems extends React.Component {
           </form>
         </div>
 
-        <div className="ditems-carousel">
+        <div className="additems-carousel">
           <InProgressCarousel
             setItemState={this.setItemState} 
             currentUserId={this.props.userId}/>
