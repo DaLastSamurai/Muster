@@ -83,68 +83,80 @@ class RequestReceived extends React.Component {
   render() {
     return(this.props.reqRec ? 
       <div>
-        <div className="req-container" onClick={this.toggleDetail}>
-          <div className="reqdate">{this.props.reqRec.date}</div>
-          <Link to={`/profile/:${this.props.reqRec.exchangee[0]}`}>
-          <div className="requser">{this.props.reqRec.exchangee[1]['profileInfo']['username']}</div>
-          </Link>
+        <div className={`req-container ${this.state.showDetail ? 'req-container-clicked' : null}`} onClick={this.toggleDetail}>
+          <div className="reqdate">
+            <p>{this.props.reqRec.date}</p>
+          </div>
+            <div className="requser">
+              <Link to={`/profile/:${this.props.reqRec.exchangee[0]}`}>
+                <p>{this.props.reqRec.exchangee[1]['profileInfo']['username']}</p>
+              </Link>
+            </div>
           <div className="reqitem">
-            <img src={this.props.reqRec.item[1]['images'][0]}/>
-            <div>{this.props.reqRec.item[1]['name']}</div>
+            <div className="reqitem-div">
+              <img src={this.props.reqRec.item[1]['images'][0]}/>
+              <div className="req-item-div-title">
+                <p>{this.props.reqRec.item[1]['title']}</p>
+              </div>
+            </div>
           </div>
           <div className="reqtype">
-            {this.props.reqRec.buy ? 'purchase ' : null}{this.props.reqRec.trade ? 'trade ' : null}{this.props.reqRec.loan ? 'rent ' : null}
+            <p>
+              {this.props.reqRec.buy ? 'purchase ' : null}
+              {this.props.reqRec.trade ? 'trade ' : null}
+              {this.props.reqRec.loan ? 'rent ' : null}
+            </p>
           </div>
         
           <div className="reqstatus">
             {this.props.reqRec.accept === 'pro' 
-              ? <div>
+              ? <div className="reqstatus-button-box">
                   <button name="true" onClick={this.handleAccept}>accept</button>
                   <button name="false" onClick={this.handleAccept}>reject</button> 
                 </div>
-              : (this.props.reqRec.accept ? 'accepted' : 'rejected')}
+              : <p className={this.props.reqRec.accept ? 'green' : 'red'}>{this.props.reqRec.accept ? 'accepted' : 'rejected'}</p>}
           </div>
         </div>
       
         {this.state.showDetail
-          ? <div>
+          ? <div className="req-detail-container">
               {this.props.reqRec.message.length > 0
-              ?<div>
-                <div>message from {this.props.reqRec.exchangee[1]['profileInfo']['username']}</div>
+              ?<div className="req-detail-message">
+                <h4>message from {this.props.reqRec.exchangee[1]['profileInfo']['username']}</h4>
                 <p>{this.props.reqRec.message}</p>
               </div>
               :null}
               
-              {this.props.reqRec.price.length > 0 
-                ? <div>
-                    <div>offer price</div> 
-                    <div>{this.props.reqRec.price}</div>
+              {this.props.reqRec.buy
+                ? <div className="req-detail-ontheway">
+                    <h4>offered price</h4> 
+                    <p>{`$ ${this.props.reqRec.price}`}</p>
                   </div>
                 : null}
 
               {this.props.reqRec.loan
-                ? <div>
-                    <div>return date</div>
-                    <div>{this.props.reqRec.dueDate}</div>
-                    <div>initial price</div>
-                    <div>{this.props.reqRec.initialPrice}</div>
-                    <div>late fee</div>
-                    <div>{this.props.reqRec.lateFee}</div>
+                ? <div className="req-detail-loan">
+                    <h4>offered return date</h4>
+                    <p>{this.props.reqRec.dueDate}</p>
+                    <h4>offered initial price</h4>
+                    <p>{`$ ${this.props.reqRec.initialPrice}`}</p>
+                    <h4>offered late fee</h4>
+                    <p>{`$ ${this.props.reqRec.lateFee}`}</p>
                   </div>
                 : null}
               {this.props.reqRec.trade
-                ? <div>
-                    <div>trading item</div>
+                ? <div className="req-detail-trade">
+                    <h4>offered trading item</h4>
                     <img src={this.props.reqRec.tradeItem[1]['images'][0]}/>
-                    <div>{this.props.reqRec.tradeItem[1]['name']}</div>
+                    <p>{this.props.reqRec.tradeItem[1]['name']}</p>
                   </div>
                 : null}
 
               {this.props.reqRec.accept === true && this.props.reqRec.trade 
-                ? <div>
+                ? <div className="req-detail-getadd">
                     <h4>address</h4>
                     {this.props.reqRec.address.length < 1
-                      ? <div>
+                      ? <div className="req-detail-sendadd">
                           <input name="address" 
                                  type="text" 
                                  placeholder="write address" 
@@ -157,31 +169,40 @@ class RequestReceived extends React.Component {
                 : null}
 
               {this.props.reqRec.paied
-                ?<p>payment received</p>
-                : null}
-
-              {(this.props.reqRec.trade && this.props.reqRec.exaddress.length > 0) || (this.props.reqRec.paied && this.props.reqRec.exaddress.length > 0)
-                ? <div>
-                    <h5>address to send</h5>
-                    <div>{this.props.reqRec.exaddress}</div>
-                    {this.props.reqRec.sentTracking.length < 1
-                      ? <div>
-                          <h5>after sent trading item submit tracking number</h5>
-                          <input name="tracking" 
-                                      type="text" 
-                                      placeholder="write tracking number" 
-                                      onChange={this.handleChange}
-                                      value={this.state.tracking}/>
-                          <button onClick={this.sendTracking}>submit</button>
-                        </div>
-                      : <p>you've sent item (tracking number: {this.props.reqRec.sentTracking})</p>}
+                ?<div className="req-detail-getadd">
+                  <h4>payment received</h4>
                   </div>
                 : null}
 
+              {(this.props.reqRec.trade && this.props.reqRec.exaddress.length > 0) 
+                || (this.props.reqRec.paied && this.props.reqRec.exaddress.length > 0)
+                ? <div className="req-detail-getadd">
+                    <h4>address to send</h4>
+                    <p>{this.props.reqRec.exaddress}</p>
+                  </div>
+                : null}
+
+              {this.props.reqRec.accept === true ? 
+                this.props.reqRec.sentTracking.length < 1 
+                  ? <div className="req-detail-sendadd">
+                      <h4>after send trading item submit tracking number</h4>
+                      <input name="tracking" 
+                                  type="text" 
+                                  placeholder="write tracking number" 
+                                  onChange={this.handleChange}
+                                  value={this.state.tracking}/>
+                      <button onClick={this.sendTracking}>submit</button>
+                    </div>
+                  : <div className="req-detail-getadd">
+                      <h4>you've sent item</h4>
+                      <p>tracking number: {this.props.reqRec.sentTracking}</p>
+                    </div>
+                : null}
+
                 {this.props.reqRec.tracking.length > 0 
-                ? <div>
+                ? <div className="req-detail-ontheway">
                     <h5>your item is on the way</h5>
-                    <div>{this.props.reqRec.tracking}</div>
+                    <p>{this.props.reqRec.tracking}</p>
                   </div>
                 : null}
             </div>

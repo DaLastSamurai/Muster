@@ -81,45 +81,67 @@ class RequestMade extends React.Component {
   render() {
     return(this.props.reqMade ? 
       <div>
-        <div className="req-container" onClick={this.toggleDetail}>
-          <div className="reqdate">{this.props.reqMade.date}</div>
+        <div className={`req-container ${this.state.showDetail ? 'req-container-clicked' : null}`} onClick={this.toggleDetail}>
+          <div className="reqdate">
+            <p>
+             {this.props.reqMade.date}
+            </p>
+          </div>
+          <div className="requser">
           <Link to={`/profile/:${this.props.reqMade.exchangee[0]}`}>
-            <div className="requser">{this.props.reqMade.exchangee[1]['profileInfo']['username']}</div>
+            <p>{this.props.reqMade.exchangee[1]['profileInfo']['username']}</p>
           </Link>
+          </div>
           <div className="reqitem">
-            <img src={this.props.reqMade.item[1]['images'][0]}/>
-            <div>{this.props.reqMade.item[1]['name']}</div>
+            <div className="reqitem-div">
+              <img src={this.props.reqMade.item[1]['images'][0]}/>
+              <div className="req-item-div-title">
+                <p>{this.props.reqMade.item[1]['title']}</p>
+              </div>
+            </div>
           </div>
           <div className="reqtype">
-            {this.props.reqMade.buy ? 'purchase ' : null}
-            {this.props.reqMade.trade ? 'trade ' : null}
-            {this.props.reqMade.loan ? 'rent ' : null}
+            <p>
+              {this.props.reqMade.buy ? 'purchase ' : null}
+              {this.props.reqMade.trade ? 'trade ' : null}
+              {this.props.reqMade.loan ? 'rent ' : null}
+            </p>
           </div>
           <div className="reqstatus">
             {this.props.reqMade.accept === 'pro' 
-              ? 'sent request' : (this.props.reqMade.accept ? 'accepted' : 'rejected')}
+              ? <p>sent request</p> 
+              : (this.props.reqMade.accept 
+                ? <p className="green">accepted</p> 
+                : <p className="red">rejected</p>)}
           </div>
         </div>
         {this.state.showDetail
-          ? <div>
+          ? <div className="req-detail-container">
               {this.props.reqMade.loan
-                              ? <div>
-                                  <div>return date</div>
-                                  <div>{this.props.reqMade.dueDate}</div>
-                                  <div>initial price</div>
-                                  <div>{this.props.reqMade.initialPrice}</div>
-                                  <div>late fee</div>
-                                  <div>{this.props.reqMade.lateFee}</div>
+                              ? <div className="req-detail-loan">
+                                  <h4>return date</h4>
+                                  <p>{this.props.reqMade.dueDate}</p>
+                                  <h4>initial price</h4>
+                                  <p>{`$ ${this.props.reqMade.initialPrice}`}</p>
+                                  <h4>late fee</h4>
+                                  <p>{`$ ${this.props.reqMade.lateFee}`}</p>
                                 </div>
                               : null}
+
+              {this.props.reqMade.buy
+                ? <div className="req-detail-ontheway">
+                    <h4>offer price</h4> 
+                    <p>{`$ ${this.props.reqMade.price}`}</p>
+                  </div>
+                : null}
               
               {this.props.reqMade.trade && this.props.reqMade.exaddress.length > 0 
-                ? <div>
-                    <h5>address to send</h5>
-                    <div>{this.props.reqMade.exaddress}</div>
+                ? <div className="req-detail-send">
+                    <h4>address to send</h4>
+                    <p>{this.props.reqMade.exaddress}</p>
                     {this.props.reqMade.sentTracking.length < 1
-                    ? <div>
-                        <h5>after sent trading item submit tracking number</h5>
+                    ? <div className="req-detail-sendadd">
+                        <h4>after sent trading item submit tracking number</h4>
                         <input name="tracking" 
                               type="text" 
                               placeholder="write tracking number" 
@@ -132,10 +154,10 @@ class RequestMade extends React.Component {
                 : null}
           
               {this.props.reqMade.accept === true 
-                ? <div>
+                ? <div className="req-detail-getadd">
                     <h4>address</h4>
                     {this.props.reqMade.address.length < 1
-                      ? <div>
+                      ? <div className="req-detail-sendadd">
                           <input name="address" 
                                 type="text" 
                                 placeholder="write address" 
@@ -147,6 +169,7 @@ class RequestMade extends React.Component {
                   </div>
                 : null}
 
+              <div className="req-detail-pay">
               {(this.props.reqMade.buy && this.props.reqMade.accept === true && this.props.reqMade.paied === false) 
                 || (this.props.reqMade.initialPrice.length > 0 && this.props.reqMade.accept === true && this.props.reqMade.paied === false)
                 ? <Payments 
@@ -154,12 +177,13 @@ class RequestMade extends React.Component {
                     userName={this.props.userObj.profileInfo.username}
                     description={`$${this.props.reqMade.price.length > 0 ? this.props.reqMade.price : this.props.reqMade.initialPrice} for ${this.props.reqMade.item[1]['name']}`}
                     amount={this.props.reqMade.price.length > 0 ? parseInt(this.props.reqMade.price) * 100 : parseInt(this.props.reqMade.initialPrice) * 100} />
-                : (this.props.reqMade.paied ? <p>your payment has been processed</p> : null)}
+                : (this.props.reqMade.paied ? <h4>your payment has been processed</h4> : null)}
+                </div>
                 
               {this.props.reqMade.tracking.length > 0 
-                ? <div>
-                    <h5>your item is on the way</h5>
-                    <div>{this.props.reqMade.tracking}</div>
+                ? <div className="req-detail-ontheway">
+                    <h4>your item is on the way</h4>
+                    <p>{this.props.reqMade.tracking}</p>
                   </div>
                 : null}
                 
