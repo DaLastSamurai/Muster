@@ -298,7 +298,7 @@ class AddItems extends React.Component {
   render() {
     return (
       <div className="additems-container">
-        <div className="">
+        <div className="additems-forms">
           <div>
 
             {/* <FormDropDown arrayOfObjects={this.state.collectionList}/> */}
@@ -312,10 +312,10 @@ class AddItems extends React.Component {
             (this.state.keywords.length > 0) ?
             <div>
               <label>Suggested</label>
-              <div>
+              <div className="additems-suggested" >
                 <ul id="menu">
                   {this.state.keywords.map(keyword =>
-                    <button className="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{'+ ' + keyword}</button>)}
+                    <button className="additems-keyword-button" onClick={() => { this.addRemoveKeyword(keyword) }}>{'+ ' + keyword}</button>)}
                 </ul>
               </div>
             </div>
@@ -326,17 +326,19 @@ class AddItems extends React.Component {
             <div>
               <label>Keywords</label>
               <div>
-                <ul id="menu">
-                  {this.state.savedKeywords.map(keyword =>
-                    <button className="btn .btn-link btn-xs" onClick={() => { this.addRemoveKeyword(keyword) }}>{keyword + '  ̽'}</button>)}
-                </ul>
+                <div className="additems-keywords">
+                  <ul id="menu">
+                    {this.state.savedKeywords.map(keyword =>
+                      <button className="additems-keyword-add" onClick={() => { this.addRemoveKeyword(keyword) }}>{keyword + '  ̽'}</button>)}
+                  </ul>
+                </div>
 
                 <input
                   className="form-control"
                   name="customKeyword"
                   component="input"
                   type="text"
-                  placeholder="add a keyword"
+                  placeholder=""
                   value={this.state.customKeyword}
                   onChange={this.handleChange}
                   required
@@ -378,7 +380,7 @@ class AddItems extends React.Component {
                     name="title"
                     component="input"
                     type="text"
-                    placeholder="title of book..."
+                    placeholder=""
                     value={this.state.title}
                     onChange={this.handleChange}
                     required
@@ -386,20 +388,6 @@ class AddItems extends React.Component {
                 </div>
               </div>
 
-              <div>
-                <label>Subject</label>
-                <div>
-                  <input
-                    className="form-control"
-                    name="subject"
-                    component="input"
-                    type="text"
-                    placeholder="subject"
-                    value={this.state.subject}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
               <div>
                 <label>Location</label>
                 <div>
@@ -409,7 +397,6 @@ class AddItems extends React.Component {
                     component="select"
                     value={this.state._geoloc}
                     onChange={this.handleChange}
-                    required
                   >
                     <option></option>
                     {this.state.locationList.map(location =>
@@ -451,49 +438,63 @@ class AddItems extends React.Component {
               {this.state.showDetailed ? 
               (
               <div>
-              <div>
 
+              <div>
                 <label>Notes</label>
                 <div>
                   <input
                     className="form-control"
                     name="notes"
-                    component="text"
-                    placeholder="notes..."
+                    component="input"
+                    type="text"
+                    placeholder=""
                     value={this.state.notes}
                     onChange={this.handleChange}
                   />
                 </div>
               </div>
 
-              {/* <div>
-                <label>UPC</label>
-                <div>
-                  <input
-                    className="form-control"
-                    name="UPC"
-                    component="input"
-                    type="text"
-                    placeholder="UPC of book..."
-                    value={this.state.upc}
-                    onChange={this.handleChange}
-                    required
-                  />
-                </div>
-              </div> */}
-              
               <div>
-                <label>Online Price</label>
+                <label>Subject</label>
                 <div>
                   <input
                     className="form-control"
                     name="subject"
                     component="input"
                     type="text"
-                    placeholder="Price of book..."
+                    placeholder=""
+                    value={this.state.subject}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label>UPC</label>
+                <div>
+                  <input
+                    className="form-control"
+                    name="upc"
+                    component="input"
+                    type="text"
+                    placeholder=""
+                    value={this.state.upc}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label>Online Price</label>
+                <div>
+                  <input
+                    className="form-control"
+                    name="onlinePrice"
+                    component="input"
+                    type="text"
+                    placeholder=""
                     value={this.state.onlinePrice}
                     onChange={this.handleChange}
-                    required
                   />
                 </div>
               </div>
@@ -506,57 +507,12 @@ class AddItems extends React.Component {
                     name="price"
                     component="input"
                     type="text"
-                    placeholder="$1.00"
+                    placeholder=""
                     value={this.state.price}
                     onChange={this.handleChange}
                   />
                 </div>
               </div>
-{/* 
-              <div>
-                <label>Bought From</label>
-                <div>
-                  <input
-                    className="form-control"
-                    name="boughtFrom"
-                    component="input"
-                    type="text"
-                    placeholder="where did you buy this from?"
-                    value={this.state.boughtFrom}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label>Amazon Link</label>
-                <div>
-                  <input
-                    className="form-control"
-                    name="productIds"
-                    component="input"
-                    type="text"
-                    placeholder="https://www.amazon.com/..."
-                    value={this.state.productIds}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label>Purchase Date</label>
-                <div>
-                  <input
-                    className="form-control"
-                    name="purchaseTime"
-                    component="input"
-                    type="text"
-                    placeholder="where did you buy this?"
-                    value={this.state.purchaseTime}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div> */}
 
               <div>
                 <div>
@@ -575,7 +531,6 @@ class AddItems extends React.Component {
               ) : (<div></div>)}
 
               <div>
-                <input type="submit" value="Submit" />
 
                 {this.state.showDetailed ? 
                   (<a onClick={() => { 
@@ -590,11 +545,14 @@ class AddItems extends React.Component {
                 }
 
               </div>
+
             </div>
+
+            <input type="submit" value="Submit" />
           </form>
         </div>
 
-        <div className="additems-carousel">
+        <div className="ditems-carousel">
           <InProgressCarousel
             setItemState={this.setItemState} 
             currentUserId={this.props.userId}/>

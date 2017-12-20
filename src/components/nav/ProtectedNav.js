@@ -55,7 +55,7 @@ export default class ProtectedNav extends React.Component {
             <img src={"https://winaero.com/blog/wp-content/uploads/2015/05/windows-10-user-account-login-icon.png"} title='Profile' clickFunction={() => {window.location.reload()}} />
           </Link> */}
         </div>
-{/*           
+        {/*           
         <div className="navbar-links">
           <Link to={`/profile/${this.props.user.uid}`}>
             <LinkButton title='Profile' clickFunction={() => {window.location.reload()}} />

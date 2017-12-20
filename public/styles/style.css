@@ -120,20 +120,34 @@ button:hover {
 }
 
 input[type=text], select {
-  width: 400px;
+  width: 500px;
   padding: 10px 10px;
-  margin: 0px 0px;
+  margin: 5px 5px;
   display: inline-block;
   border: 0px solid #ccc;
-  border-radius: 0px;
+  border-radius: 3px;
   box-sizing: border-box;
   outline:none;
+  background-color: rgb(250, 250, 250);
+  box-shadow: 1px 1px 1px #ccc;
+}
+
+input[type=select], select {
+  width: 500px;
+  padding: 10px 10px;
+  margin: 5px 5px;
+  display: inline-block;
+  border: 0px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+  outline:none;
+  background-color: rgb(250, 250, 250);
+  box-shadow: 1px 1px 1px #ccc;
 }
 
 input[type=submit] {
   width: 400px;
-  background-color: grey;
-  color: white;
+  background-color: lightgrey;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
@@ -143,16 +157,14 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-  background-color: lightgrey;
+  background-color: rgb(250, 250, 250);
   outline:none;
 }
 
 .unprotectednav-container{
   
 }
-.additems-container {
-  padding: 100px;
-}
+
 .authentication-container {
   padding: 100px;
 }
@@ -227,6 +239,56 @@ input[type=submit]:hover {
 }
 
 /* add items */
+
+.additems-container {
+  padding: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.additems-forms {
+
+}
+
+.additems-suggested {
+  max-width: 500px;
+  /* max-height: 50px;
+  overflow: scroll; */
+}
+
+.additems-keyword-button {
+  color: #fd5c63;
+  padding: 0px 5px;
+  border: 0px solid grey;
+  border-radius: 4px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  outline:none;
+}
+
+.additems-keywords {
+  max-width: 500px;
+  /* max-height: 50px;
+  overflow: scroll; */
+}
+
+.additems-keyword-add {
+  color: #fd5c63;
+  padding: 0px 5px;
+  border: 0px solid grey;
+  border-radius: 4px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  outline:none;
+}
+
+.additems-carousel {
+  width: 140px;
+}
+
+.additems-carousel-img {
+  width: 100px;
+}
 
 /* authentication */
 
