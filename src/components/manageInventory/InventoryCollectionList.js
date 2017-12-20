@@ -26,10 +26,10 @@ class InventoryCollectionList extends React.Component {
       <div className="manage-inventory-sortby-item">
         <div className="manage-item-title">
           <h4>{this.props.collection.name}</h4>
-          <button onClick={() => {
+          <p onClick={() => {
             this.props.deleteCollection(this.props.collectionId, this.props.collection.itemId)
-            }}> x </button>
-          <button onClick={this.toggleEdit}>edit</button>
+            }}> x </p>
+          <p onClick={this.toggleEdit}>edit</p>
           {this.state.showEdit === true ? <EditCollection collection={this.props.collection} /> : null}
         </div>
         <div className="manage-item-container">

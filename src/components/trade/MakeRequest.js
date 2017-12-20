@@ -212,7 +212,7 @@ handleshowSearchBox() {
                 (<Search />) : (<div/>)
                 }
               </div>
-              {window.selectedItem ? <img src={window.selectedItem[1]['images'][0]}/> : null}
+              {/* {window.selectedItem ? <img src={window.selectedItem[1]['images'][0]}/> : null} */}
               <button onClick={()=>this.setState({selectedItem : window.selectedItem})}> 
                 select item
               </button>

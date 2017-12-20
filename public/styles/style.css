@@ -277,7 +277,7 @@ input[type=submit]:hover {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .manage-inventory-sortby-item {
@@ -288,6 +288,26 @@ input[type=submit]:hover {
   /* border: solid red; */
   margin: 1.5%;
   width: 28%;
+}
+
+.manage-item-title {
+  overflow: scroll;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0px;
+}
+
+.manage-item-title h4 {
+  margin: 0px 5px;
+}
+
+.manage-item-title p {
+   margin: 0px 5px;
+}
+
+.manage-item-title p:hover {
+  cursor: pointer;
 }
 
 .manage-item-container {
@@ -360,11 +380,7 @@ input[type=submit]:hover {
   box-shadow: 0px 0.5px 3px #bbbab836;
 }
 
-.manage-item-title {
-  overflow: scroll;
-  display: flex;
-  flex-direction: row;
-}
+
 
 .manage-item-itemtitle {
   max-height: 20px;
@@ -444,14 +460,17 @@ nav {
   /* border: solid red; */
   height: 100%;
   z-index: 1;
+  /* display: grid;
+  grid-column: repeat(3, 3fr) */
 }
 
 .request-trans{
-  margin-top: 120px;
+  margin-top: 50px;
   margin-left: 5%;
-  width: 60%;
+  width: 76%;
+  /* border: solid red; */
   /* border: solid orange; */
-  float: left;
+  /* float: left; */
   /* display: inline-block; */
 }
 .req-title {
@@ -465,6 +484,8 @@ nav {
 }
 
 .container-requset-form {
+  position: relative;
+  top: -100px;
   margin-right: 5%;
   width: 25%;
   height: 100%;
@@ -688,40 +709,243 @@ nav {
 
 .reqmade {
   width: 80%;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .reqreceiv {
   width: 80%;
 }
 
+.req-container-title{
+  display: grid;
+  grid-template-columns: 1fr, 1fr, 1fr, 1fr, 1fr;
+  grid-gap: 5px;
+  grid-template-rows: 50px;
+  background-color: rgba(233, 233, 232, 0.26);
+  margin: 5px 0px 5px 0px;
+}
+
 .req-container {
   display: grid;
-  grid-template-columns: 30px, 30px, 30px, 30px, 30px;
+  grid-template-columns: 1fr, 1fr, 1fr, 1fr, 1fr;
   grid-gap: 5px;
   grid-auto-rows: minmax(100px, auto);
 }
 
+.req-container:hover {
+  background-color: rgba(236, 236, 235, 0.26);
+}
+
+.req-container-clicked {
+  background-color: rgba(236, 236, 235, 0.26);
+}
+
+.req-container p {
+  /* border: solid red; */
+  text-align: center;
+  font-size: 14px;
+}
+
+.reqitem-div > p {
+  margin:0;
+}
+
 .reqdate {
+  width: 120px;
+  /* height: 100px; */
+  display: flex;
+  align-item: center;
+  justify-content:space-around;
+  /* border: solid red; */
   grid-column: 1/2;
 }
 .requser {
+  width: 120px;
+  /* height: 100px; */
+  display: flex;
+  align-item: center;
+  justify-content:space-around;
+  /* border: solid red; */
   grid-column: 2/3;
 }
 .reqitem {
+  width: 120px;
+  /* height: 100px; */
+  display: flex;
+  align-item: center;
+  justify-content:space-around;
+  /* border: solid red; */
   grid-column: 3/4;
 }
+
+.reqitem-div {
+  position: relative;
+  top: 8px;
+  max-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+  border: 1px solid #bbbab89f;
+}
+
+.reqitem img {
+  object-fit: cover;
+  width: 100px;
+  height: 60px;
+  /* border: solid red; */
+}
+
 .reqtype {
+  width: 120px;
+  /* height: 100px; */
+  display: flex;
+  aline-item: center;
+  justify-content:space-around;
+  /* border: solid red; */
   grid-column: 4/5;
+  /* position: relative;
+  top:15px; */
 }
 .reqstatus {
+  width: 120px;
+  /* height: 100px; */
+  display: flex;
+  aline-item: center;
+  justify-content:space-around;
+  /* border: solid red; */
   grid-column: 5/6;
+  /* position: relative;
+  top:15px; */
+}
+
+.reqstatus .red {
+  color: rgb(141, 50, 22);
+}
+
+.reqstatus .green {
+  color: rgb(48, 112, 69);
+}
+
+.reqstatus-button-box {
+  display: flex;
+  justify-content: center;
+  max-height: 40px;
+  /* position: relative;
+  top:20px; */
+}
+
+.reqstatus-button-box button {
+  padding: 5px;
 }
 
 .reqrest {
+  width: 120px;
+  /* height: 100px; */
+  display: flex;
+  aline-item: center;
+  justify-content:space-around;
+  /* border: solid red; */
   grid-column: 1/6;
+  /* position: relative;
+  top:15px; */
 } 
 
+.req-detail-container {
+  border: solid red;
+  height: 160px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  padding: 5px;
+  justify-content:flex-start;
+}
+
+.req-detail-container h4{
+  margin: 5px 5px 1px 5px;
+
+}
+
+.req-detail-container p{
+  margin: 5px;
+  font-size: 12px;
+}
+
+.req-detail-message {
+  border:solid red;
+  width: 200px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.req-detail-loan {
+  border:solid red;
+  width: 200px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.req-detail-send {
+  border:solid red;
+  width: 200px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.req-detail-getadd {
+  border:solid red;
+  width: 200px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.req-detail-trade {
+  border:solid red;
+  width: 200px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.req-detail-sendadd {
+  position: relative;
+  top: 20px;
+  border:solid red;
+  width: 200px;
+  /* margin: 5px; */
+  display: flex;
+  flex-direction: column;
+}
+
+.req-detail-sendadd input {
+  width: 200px;
+  border: 1px solid #bbbab89f;
+}
+
+.req-detail-sendadd button {
+  width: 200px;
+
+}
+
+.req-detail-pay {
+  border:solid red;
+  width: 200px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.req-detail-ontheway {
+  border:solid red;
+  width: 200px;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}
 /* userbar */
 
 
