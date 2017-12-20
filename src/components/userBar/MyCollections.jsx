@@ -72,6 +72,10 @@ export default class MyCollections extends React.Component {
             <MyCollectionsList collections={this.props.collections} />
           </li>
         </ul>
+
+        <ul>
+          <ChatRoomList />
+        </ul>
       </div>
     )
   }
