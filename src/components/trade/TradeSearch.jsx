@@ -6,15 +6,16 @@ import { connectHits } from 'react-instantsearch/connectors';
 function foundItem({ hit }) {
   // console.log('this is state in founditem', console.log(this))
   return(
-    <div onClick={(e) => {
+    <div className="req-search-result" onClick={(e) => {
       e.preventDefault()
-      window.setSelectedItemState(e.target.innerHTML)
+      window.setSelectedItemState(e.target.innerHTML, e.target)
+      console.log('//////', window)
     } }>
     { window.indexName === undefined &&
         (<div>
-          <button>
+          <p>
             { hit? hit.title : null }
-          </button>
+          </p>
           <br/>
         </div>) }
 
@@ -23,9 +24,9 @@ function foundItem({ hit }) {
         e.preventDefault()
         window.setSelectedItemState(e.target.innerHTML)
       } }>
-        <button>
+        <p>
           { hit? hit.title : null }
-        </button>
+        </p>
         <br/>
       </div>) }
 
@@ -34,9 +35,9 @@ function foundItem({ hit }) {
           e.preventDefault()
           window.setSelectedItemState(e.target.innerHTML)
         } }>
-          <button>
+          <p>
             { hit.profileInfo ? hit.profileInfo.username : null }
-          </button>
+          </p>
       </div>) }
 
       {window.indexName === 'category' &&
@@ -44,9 +45,9 @@ function foundItem({ hit }) {
             e.preventDefault()
             window.setSelectedItemState(e.target.innerHTML)
           } }>
-          <button>
+          <p>
             { hit ? hit.objectID : null }
-          </button>
+          </p>
       </div>) }
 
 
@@ -58,7 +59,7 @@ function foundItem({ hit }) {
 function Search(props) {
     return (
       <div className="search-container">
-        <div style={ { float: "center" } }>
+        <div className="search-results-box" style={ { float: "center" } }>
         <Hits 
         hits={props.hits}
         hitComponent={ foundItem } />

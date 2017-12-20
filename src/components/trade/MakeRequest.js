@@ -28,7 +28,7 @@ class MakeRequest extends React.Component {
   
   window.setSelectedItemState = (hit) => {
     console.log('this is setSelectedItemState', hit)
-    this.setState({selectedItem: hit}, () => console.log('THIS IS THE SSTATE', this.state.selectedItem))
+    this.setState({selectedItem: hit}, () => console.log('THIS IS THE SSTATE'))
   }
   
   window.setSelectedItemState.bind(this);
@@ -69,16 +69,10 @@ getUser(userName) {
   })
 }
 
-handletradeItem(e) {
-  if (this.state.tradeItem[e.target.name]) {
-    let tempObj = this.state.tradeItem
-    delete tempObj[e.target.name]
-    this.setState({tradeItem: tempObj})
-  } else {
-     let obj = this.state.tradeItem
-     obj[e.target.name] = e.target.name;
-     this.setState({tradeItem: obj})
-  }
+handletradeItem(itemid) {
+  let tempObj = {}
+  tempObj[itemid] = itemid;
+  this.setState({tradeItem: tempObj})
 }
 
 toggleCheckbox(e) {
@@ -215,14 +209,16 @@ handleshowSearchBox() {
                 {this.state.showSearchBox ?
                 (<TradeSearch />) : (<div/>)
                 }
+                <div className="search-result-container">
                 {window.indexName ?
                 (<Search />) : (<div/>)
                 }
+                </div>
               </div>
               {/* {window.selectedItem ? <img src={window.selectedItem[1]['images'][0]}/> : null} */}
-              <button onClick={()=>this.setState({selectedItem : window.selectedItem})}> 
+              {/* <button onClick={()=>this.setState({selectedItem : window.selectedItem})}> 
                 select item
-              </button>
+              </button> */}
               {/* <button onClick={()=>console.log(this.state.selectedItem)}> show me the state</button> */}
             </div>
         </div>
@@ -260,10 +256,11 @@ handleshowSearchBox() {
                     <div className="offer-trade-items-box">
                       {this.state.tradeCol.length > 0 
                         ? Object.keys(this.props.collections[this.state.tradeCol]['itemId']).map((itemid) => {
-                            return <div key={itemid} className="offer-trade-item">
+                            return <div key={itemid} onClick={() => this.handletradeItem(itemid)} 
+                                        className={`offer-trade-item ${this.state.tradeItem[itemid] ? "trade-item-click" : null }`}>
                                     <img src={this.props.items[itemid]['images'][0]}/>
                                     <p>{this.props.items[itemid]['title']}</p>
-                                    <input name={itemid} type="checkbox" onChange={this.handletradeItem}/>
+                                    {/* <input name={itemid} type="checkbox" onChange={this.handletradeItem}/> */}
                                   </div>
                           })
                         : null}
