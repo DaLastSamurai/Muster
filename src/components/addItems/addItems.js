@@ -4,7 +4,6 @@ import UserInfo from '../userBar/UserInfo.jsx';
 import ImageUpload from '../helperElements/imageUploader';
 import InProgressCarousel from './inProgressCarousel';
 import ImageRecog from '../helperElements/imageRecog';
-import FormDropDown from './FormDropDown';
 
 
 class AddItems extends React.Component {
@@ -91,6 +90,7 @@ class AddItems extends React.Component {
       keywords: [],
       savedKeywords: []
     });
+
   };
 
   //Handles dynamically adding and removing keywords from suggested to saved
@@ -143,7 +143,10 @@ class AddItems extends React.Component {
     let newPostKey = this.state.id || 
       firebase.database().ref('/item').push().key;
 
+    // firebase.database().ref('/items-scanned/' + currentUID + '/' + this.state.id).remove();
+
     let updates = {};
+    updates['/items-scanned/' + currentUID + '/' + this.state.id] = null;
     updates['/users/' + currentUID + '/itemIds/' + newPostKey] = newPostKey;
     updates['/item/' + newPostKey] = postData;
     updates['/collection/' + this.state.collectionId + 
@@ -236,25 +239,6 @@ class AddItems extends React.Component {
 
     }, (error) => { console.error(error) }
     );
-
-    // let locationRef = firebase.database().ref(`/users/${currentUser}/locations/`);
-    // locationRef.on("value", (snapshot) => {
-    //   console.log('snapshot in location ref', snapshot.val())
-    //   // let grabLocations = Object.keys(snapshot.val()).map((key, i) => {
-    //   //   return {
-    //   //     lat: snapshot.val()[key].lat,
-    //   //     lng: snapshot.val()[key].lng,
-    //   //     name: key,
-    //   //     value: {lat: snapshot.val()[key].lat, lng: snapshot.val()[key].lng},
-    //   //     label: snapshot.val()[key].name
-    //   //   }
-
-    //   // this.setState({
-    //   //   locationList: grabLocations
-    //   // });
-
-    // }, (error) => { console.error(error) }
-    // );
 
     //Checks for props from the edit button in inventory manager
     if (this.props.editItem) {
