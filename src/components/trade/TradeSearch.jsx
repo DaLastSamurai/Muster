@@ -4,19 +4,22 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-ro
 import { connectHits } from 'react-instantsearch/connectors';
 
 function foundItem({ hit }) {
-  console.log('INDEXNAME',window.indexName)
+  // console.log('this is state in founditem', console.log(this))
   return(
-    <div>
+    <div onClick={(e) => {
+      e.preventDefault()
+      window.setSelectedItemState(e.target.innerHTML)
+    } }>
     { window.indexName === undefined &&
         (<div>
           <button>
             { hit? hit.title : null }
           </button>
           <br/>
-      </div>) }
+        </div>) }
 
       {window.indexName === 'item' &&
-      (<div onClick={ ()=> window.selectedItem = [hit.objectID, hit] }>
+      (<div >
         <button>
           { hit? hit.title : null }
         </button>
@@ -43,15 +46,19 @@ function foundItem({ hit }) {
 }
 
 //think of this as Search Result List component. it's like Search Result List Entry, maps and formats each found entry
-export function Search() {
+function Search(props) {
     return (
       <div className="search-container">
         <div style={ { float: "center" } }>
-        <Hits hitComponent={ foundItem } />
+        <Hits 
+        hits={props.hits}
+        hitComponent={ foundItem } />
         </div>
       </div>
     )
   }
+
+export default connectHits(Search)
 
 //place through higher order function
 

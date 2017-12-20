@@ -2,7 +2,13 @@ import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
 import TradeSearchToggler from './TradeSearchToggler.jsx';
-import { TradeSearch, Search } from './TradeSearch.jsx';
+import { TradeSearch } from './TradeSearch.jsx';
+import Search from './TradeSearch.jsx'
+
+window.setSelectedItemState = (hit) => {
+  // console.log(JSON.stringify(hit).slice(8))
+  console.log(hit)
+}
 
 class MakeRequest extends React.Component {
   constructor(props) {
@@ -10,7 +16,6 @@ class MakeRequest extends React.Component {
     this.state = {
       searchUser: '',
       exUserObj:[],
-      selectedItem:['-L05bY3TFt2wbfh5TtOf', {uid: 'ra2wZZt7aYguQMpjKwtZ0HRIpMh1', imageUrl: "https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F9f1f7675-9a93-4555-b70d-1ca1f40e446a.jpg?alt=media&token=7c42873c-18fc-4f42-91a5-2f354325cb35", name: "onion"}],
       trade: false,
       tradeItem: {}, //items id that user selected to trade with
       buy: true,
@@ -25,6 +30,7 @@ class MakeRequest extends React.Component {
       selectedItem : window.selectedItem,
       tempSelectedItem: false,
     }
+  window.setSelectedItemState.bind(this);
   this.handleRequest = this.handleRequest.bind(this);
   this.handleChange = this.handleChange.bind(this);
   this.getUser = this.getUser.bind(this);
@@ -143,7 +149,7 @@ handleRequest() {
     })
     .then(() => {
       users.child(this.props.userId).on('value', (snap) => {
-        console.log(snap.val())
+        // console.log(snap.val())
         rquserObj = snap.val()
         return snap.val()
       })
@@ -180,9 +186,9 @@ handleRequest() {
       }
 
       let updateRec = {};
-      console.log('///',dateRec)
+      // console.log('///',dateRec)
       updateRec['/request/' + this.state.selectedItem[1]['uid'] + '/received/' + this.state.selectedItem[0]] = dateRec;
-      console.log(updateRec)
+      // console.log(updateRec)
       return firebase.database().ref().update(updateRec)
     })
   }
@@ -193,7 +199,7 @@ handleshowSearchBox() {
 }
 
   render() {
-    console.log(this.state.showSearchBox)
+    // console.log(this.state.showSearchBox)
     return(
       <div className="request-form-box">
         <div className="req-search-box">
