@@ -14,11 +14,10 @@ class ManageInventory extends React.Component {
     }
     this.handleSortBy = this.handleSortBy.bind(this);
     this.deleteCollection = this.deleteCollection.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   deleteCollection(collectionId, itemIdObj) {
-    let answer = confirm('are you sure?');
-    if (answer === true) {
       new Promise((resolve, reject) => {
         collection.child(collectionId).child('categoryId').on('value', (snap) => {
           resolve(snap.val())
@@ -34,9 +33,10 @@ class ManageInventory extends React.Component {
         collection.child(collectionId).remove()
       )
       .then(() => {
-        if (itemObj) {
+        if (itemIdObj) {
           Object.keys(itemIdObj).forEach((itemId) => {
             item.child(itemId).remove()
+            users.child(this.props.userId).child('itemIds').child(itemId).remove()
           })
         } else {
           this.props.getData(this.props.userId)
@@ -48,12 +48,9 @@ class ManageInventory extends React.Component {
         this.props.getData(this.props.userId)
         this.props.getUserCollection()
       })
-    }
   }
 
   deleteItem(clickedItemId) {
-    let answer = confirm('are you sure?');
-    if (answer === true) {
       new Promise((resolve, reject) => {
         item.child(clickedItemId).child('collectionId').on('value', (snap) => {
           resolve(snap.val())
@@ -65,10 +62,11 @@ class ManageInventory extends React.Component {
       .then(() => {
         item.child(clickedItemId).remove()
       })
-  
-      this.props.getData()
-    }
-    
+      .then(() => {
+        console.log('ssss',this.props.userId)
+        users.child(this.props.userId).child('itemIds').child(clickedItemId).remove()
+      })
+      // this.props.getData()
   }
 
   handleSortBy(e) {
