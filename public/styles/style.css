@@ -186,30 +186,6 @@ input[type=submit]:hover {
   padding: 100px;
 }
 
-.search-container{
-  padding: 10px;
-}
-
-.search-entry{
-  padding: 0px;
-}
-
-.search-hits-per-page{
-  
-}
-
-.search-entry{
-
-}
-
-.search-pagination{
-
-}
-
-.search-map{
-  
-}
-
 .navbar-container {
 } 
 
@@ -615,6 +591,7 @@ nav {
 .search-container .ais-Hits__root {
   margin-top: 20px;
   overflow: scroll;
+  width: 200px;
   /* border: solid red; */
 }
 
@@ -873,11 +850,6 @@ img {
   /* display: inline-block; */
 }
 
-/* Algolia-related components */
-.ais-HitsPerPage__root {} /* HitsPerPage */
-
-
-
 /* carousel */
 
 .carousel-container {
@@ -963,6 +935,7 @@ em {
 
   .pagination__container {
     text-align: center;
+    width: 200px
   }
   
   .ais-Pagination__item {
@@ -1003,3 +976,43 @@ em {
   .category-overlay-text {
     
   }
+
+  .search-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: stretch;
+    padding: 10px;
+  }
+
+  .search-map{
+    width: 800px;
+    justify-content: flex-end;
+  }
+  
+  .search-entry{
+    width: 200px;
+  }
+
+  .search-list-container{
+    width: 200px;
+    height: 500px;
+    justify-content: flex-start;
+    overflow: scroll;
+  }
+  
+  .search-hits-per-page{
+    
+  }
+  
+  .search-pagination{
+  
+  }
+  
+
+/* Algolia-related components */
+.ais-HitsPerPage__root {
+  width: 100px;
+  justify-content: center;  
+} /* HitsPerPage */
+
