@@ -85,12 +85,12 @@ export default class App extends React.Component {
   reloadPage() { window.location.reload() }
 
   searchBy(receiveIndexName) {
-    console.log('this function changes indexName as state')
+    // console.log('this function changes indexName as state')
     this.setState({indexName : receiveIndexName})
   }
   
 
-  render() {console.log('app', this.state)
+  render() {
     return (
       <Router>
         <InstantSearch
