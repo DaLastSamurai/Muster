@@ -54,7 +54,7 @@ class InProgressCarousel extends React.Component {
       verticalSwiping: true
     };
     return (
-      <div className="carousel-container">
+      <div className="additems-carousel">
         <h5>Scanned Items</h5>
         <Slider {...settings}>
 
@@ -63,7 +63,7 @@ class InProgressCarousel extends React.Component {
               <div style={{height: 200}} onClick={() => {
                 this.populateFields(item);
               }}>
-                <img src={item.images[0]} />
+                <img className="additems-carousel-img" src={item.images[0]} />
                 <h5>{item.title}</h5>
               </div>)
           }
