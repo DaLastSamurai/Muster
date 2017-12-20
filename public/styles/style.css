@@ -376,6 +376,10 @@ input[type=submit]:hover {
   background-color: white;
 }
 
+.inventory-delete {
+  display: none;
+}
+
 .manage-item-image {
   display: flex;
   justify-content: center;
@@ -537,6 +541,7 @@ nav {
 .search-form {
   display: grid;
   grid-template-columns: repeat(3, 86px);
+  grid-template-rows: repeat(1, 14px);
   grid-gap: 10px;
   margin: 0;
   /* overflow: scroll; */
@@ -572,37 +577,25 @@ nav {
   grid-row: 1;
 }
 
-.search-container .ais-Hits__root {
-  margin-top: 20px;
-  overflow: scroll;
-<<<<<<< HEAD
-
-}
 
 .search-form button {
 
 }
 
-=======
-  width: 200px;
-  /* border: solid red; */
-}
-
->>>>>>> debug3map
 .ais-Hits__root button {
   padding: 0;
 }
 
 .req-offer-box {
   position: relative;
-  bottom: 40px;
+  bottom: 10px;
 }
 
 .req-offer-frame {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 230px;
+  height: 200px;
 }
 
 .req-offer {
@@ -687,19 +680,79 @@ nav {
   align-items: center;
 }
 
+.offer-trade-item:hover {
+  cursor: pointer;
+}
+
+.trade-item-click {
+  color: #fd5c63;
+}
+
 .offer-trade-item p {
   text-align: center;
   width: 100px;
   overflow: scroll;
   overflow-wrap: break-word;
+  margin: 0;
 }
 
 .offer-trade-item img {
+  position: relative;
+  top: 3px;
   width: 90px;
   height: 100px;
   object-fit: cover;
   border-bottom:1px solid #bbbab85e;
   box-shadow: 0px 0.5px 3px #bbbab836;
+}
+
+/* .ais-searchBox__root {
+  border: solid red;
+} */
+
+
+.req-search-result {
+}
+
+.search-result-container {
+  position: relative;
+  left: 94px;
+  float: right;
+  width: 180px;
+}
+
+.ais-SearchBox__wrapper input {
+  z-index: 2;
+}
+
+.req-search-result div {
+  height: 15px;
+  width: 200px;
+  margin: 2px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space:nowrap
+  /* overflow: scroll; */
+}
+
+.req-search-result p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.req-search-result p:hover {
+  cursor: pointer;
+}
+
+.search-results-box {
+  /* position: relative;
+  top: 1px; */
+  max-height: 120px;
+  overflow: scroll;
+}
+
+.searchBar {
+  /* background-color: white; */
 }
 
 .offer-loan {
