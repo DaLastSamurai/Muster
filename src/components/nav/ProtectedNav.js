@@ -31,14 +31,14 @@ export default class ProtectedNav extends React.Component {
             <Logo />
           </Link>
         </div>
-
-        <div className="navbar-search">
-          <Link to="/searching">
-            <SearchHits />
-          </Link>
-          {/* <SearchToggler searchBy={this.props.searchBy} /> */}
+        <div className="navbar-search-container">
+          <div>
+            <Link to="/searching">
+              <SearchHits />
+            </Link>
+            {/* <SearchToggler searchBy={this.props.searchBy} /> */}
+          </div>
         </div>
-
 
 
         <nav role="navigation" className="nav" className="navbar-links">

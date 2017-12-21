@@ -56,9 +56,11 @@ class AddItems extends React.Component {
     this.addRemoveKeyword = this.addRemoveKeyword.bind(this);
     this.addCustomeKeyword = this.addCustomeKeyword.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleGeoChange = this.handleGeoChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.geoFindMe = this.geoFindMe.bind(this);
     this.geoAddName = this.geoAddName.bind(this);
+    
   };
 
   //function called by imageUploader to update images
@@ -86,7 +88,7 @@ class AddItems extends React.Component {
       name: item.name,
       imageUrl: item.images[0],
       collectionId: item.collectionId,
-      location: item.location,
+      _geoLoc: item._geoLoc,
       keywords: [],
       savedKeywords: []
     });
@@ -120,9 +122,23 @@ class AddItems extends React.Component {
     })
   };
   
+  handleGeoChange() {
+    var locationObj = {};
+    debugger
+    locationObj['lng'] = this.lng
+    locationObj['lat'] = this.lat
+    locationObj['name'] = this.name 
+
+    this.setState({
+      _geoloc: locationObj
+    })
+  };
+
   //Submits information in fields to the database
   handleSubmit(event) {
     
+    console.log('geoloc in handlesubmit', this.state._geoLoc)
+
     let currentUID = firebase.auth().currentUser.uid
     let postData = {
       uid: currentUID,
@@ -134,7 +150,7 @@ class AddItems extends React.Component {
       onlinePrice: this.state.onlinePrice || '',
       storeLinks: this.state.storeLinks || {},
       subject: this.state.subject || '',
-      _geoloc: this.state._geoloc || {},
+      _geoloc: {lat: this.state._geoloc.lat, lng: this.state._geoloc.lng, name: this.state._geoloc.name},
       savedKeywords: this.state.savedKeywords || [],
       sell: this.state.sell || '',
       price: this.state.price || ''
@@ -151,6 +167,8 @@ class AddItems extends React.Component {
     updates['/item/' + newPostKey] = postData;
     updates['/collection/' + this.state.collectionId + 
             '/itemId/' + newPostKey] = newPostKey;
+    updates['/collection/' + this.state.collectionId +
+      '/photoUrl'] = this.state.images[0];
 
     firebase.database().ref().update(updates);
 
@@ -168,15 +186,14 @@ class AddItems extends React.Component {
     navigator.geolocation.getCurrentPosition((position) => {
       var x = position.coords.latitude;
       var y = position.coords.longitude;
-      var position = {lat: x, lng: y}
 
       output.innerHTML = '<p>Latitude is ' + x + '° <br>Longitude is ' + y + '°</p>';
 
-      var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + x + "," + y + "&zoom=17&size=400x400&sensor=false";
+      // var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + x + "," + y + "&zoom=17&size=400x400&sensor=false";
 
       this.setState({
         _geolocPosition: position,
-        _geolocImage: img
+        // _geolocImage: img
       })
     },
     () => {
@@ -223,11 +240,7 @@ class AddItems extends React.Component {
           return {
             lat: snapshot.val()[key].lat,
             lng: snapshot.val()[key].lng,
-            name: key,
-            position: {
-              lat: snapshot.val()[key].lat,
-              lng: snapshot.val()[key].lng
-            }
+            name: key
           }
         })
 
@@ -383,11 +396,22 @@ class AddItems extends React.Component {
                     name="_geoloc"
                     component="select"
                     value={this.state._geoloc}
-                    onChange={this.handleChange}
+                    onChange={this.handleGeoChange}
                   >
                     <option></option>
-                    {this.state.locationList.map(location =>
-                      <option value={location}>{location.name}</option>)}
+                    {this.state.locationList.map(location => {
+                        console.log('location in map function', location)
+                        let locationObj = {};
+
+                        locationObj['lng'] = location.lng
+                        locationObj['lat'] = location.lat
+                        locationObj['name'] = location.name 
+                        
+                        // let locationJSON = JSON.stringify(location)
+                        // let reparsedObj = JSON.parse(locationJSON)
+                      return < option value={locationObj} > { location.name }</option>
+                      }
+                      )}
                   </select>
                 </div>
               </div>
