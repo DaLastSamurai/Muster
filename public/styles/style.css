@@ -402,7 +402,7 @@ input[type=submit]:hover {
 }
 
 .manage-item-itemedit {
-  display: flex;
+  /* display: flex; */
   justify-content: flex-end;
 }
 
@@ -1272,6 +1272,7 @@ em {
 .profile-header {
   display: inline-block;
   width:100%;
+  flex-direction: row;
 
 }
 
@@ -1304,9 +1305,8 @@ div.col-sm-2 {
 
 .followBar {
   width: 200px;
-  display: inline-block;
-  /* align-items: flex-start; */
-  position: relative;
+  /* display: inline-block; */
+  align-items: flex-end;
   bottom: 20px;
 }
 

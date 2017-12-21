@@ -40,6 +40,9 @@ export default class ProfileFrame extends React.Component {
       favoriteCategories: null,
 
       reloaded: false,
+
+      //toggle upload image option on hover
+      showUploadImage: false,
     };
     this.isStringAcceptable = isStringAcceptable.bind(this) // imported from profileHelpers.js
     this.addUserDataToState = this.addUserDataToState.bind(this)
@@ -132,42 +135,52 @@ export default class ProfileFrame extends React.Component {
       : (
         <div className="profile-container">
 
-
-
-
-
           {this.state.isUsersProfile
             ? (
-              <div>
-                <div className="image-uploader">
-                  <ImageUpload setImageState={this.setImageState}/>
-                </div>
-                <div className="profile-header">
-                    <img src={this.state.profilePhoto} className = "profilePhoto"/>
+              <div >
+                
+                <div className="profile-header"                 
+                  onMouseEnter={()=>{
+                      this.setState({showUploadImage : true})
+                      console.log('show image uploader? ', this.state.showUploadImage)
+                    }} 
+                    onMouseLeave={()=>{
+                      this.setState({showUploadImage : false})
+                      console.log('show image uploader? ', this.state.showUploadImage)
+                    }}
+                >
 
-                  <div className = "followBar"> 
-                    {this.state.isUsersProfile 
-                      ? <div />
-                      : <FollowButton 
-                          profileUID={this.state.profileUID}
+                  {this.state.showUploadImage !== false ? 
+                    <div className="image-uploader">
+                      <ImageUpload setImageState={this.setImageState}/>
+                    </div> : null}
+                      <img src={this.state.profilePhoto} className="profilePhoto" />
+                  <div >
+                    <div className="followBar"> 
+                      {this.state.isUsersProfile 
+                        ? <div />
+                        : <FollowButton 
+                            profileUID={this.state.profileUID}
+                          />
+                      }
+                      <div className="follow-unfollow">
+                        <FollowDropDown
+                          title = {"followers"}
+                          users = {this.state.followers || {}}
+                          updateProfileUID = {this.updateProfileUID}
                         />
-                    }
-                    <div className="follow-unfollow">
-                      <FollowDropDown
-                        title = {"followers"}
-                        users = {this.state.followers || {}}
-                        updateProfileUID = {this.updateProfileUID}
-                      />
-                    </div>
-                    <div className="follow-unfollow">
-                      <FollowDropDown
-                        title = {"following"}
-                        users = {this.state.following || {}}
-                        updateProfileUID = {this.updateProfileUID}
-                      />
+                      </div>
+                      <div className="follow-unfollow">
+                        <FollowDropDown
+                          title = {"following"}
+                          users = {this.state.following || {}}
+                          updateProfileUID = {this.updateProfileUID}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
+
+              </div>
 
                 <div>
                 <a className="clickable-text">
