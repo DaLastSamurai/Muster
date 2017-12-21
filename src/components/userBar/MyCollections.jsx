@@ -68,14 +68,13 @@ export default class MyCollections extends React.Component {
           <Link to="/">
             <button title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >Logout</button>
           </Link> */}
-          <li>
+
+          {/* <li>
             <MyCollectionsList collections={this.props.collections} />
-          </li>
+          </li> */}
+          
         </ul>
 
-        <ul>
-          <ChatRoomList />
-        </ul>
       </div>
     )
   }

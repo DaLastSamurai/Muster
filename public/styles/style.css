@@ -67,7 +67,10 @@ button:hover {
   grid-gap: 1em;
   /* grid-template-rows: 1fr 1fr; */
   grid-auto-rows: minmax(100px, auto);
-  background-color: white;
+  background-color: transparent;
+
+  background: linear-gradient(0deg, #ffffff, #f7f7f7) !important;
+  background: -webkit-linear-gradient(0deg, #ffffff, #f7f7f7) !important;
   box-shadow: 1px 0px 1px #888888;
   margin: 0;
   padding: 0;
@@ -80,6 +83,8 @@ button:hover {
 }
 
 .protectednavbar-container{
+  background: linear-gradient(0deg, #ffffff, #f7f7f7) !important;
+  background: -webkit-linear-gradient(0deg, #ffffff, #f7f7f7) !important;
   display:grid;
   width: 100%;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -93,11 +98,17 @@ button:hover {
 }
 
 .navbar-search {
+
+  background: linear-gradient(0deg, #ffffff, #f7f7f7) !important;
+  background: -webkit-linear-gradient(0deg, #ffffff, #f7f7f7) !important;
   text-align: left;
   padding: 11px 0;
 }
 
 .navbar-logo {
+
+  background: linear-gradient(0deg, #ffffff, #f7f7f7) !important;
+  background: -webkit-linear-gradient(0deg, #ffffff, #f7f7f7) !important;
   text-align: center;
   padding: 0px 0;
   /* order: -1; */
@@ -110,6 +121,9 @@ button:hover {
 }
 
 .navbar-links {
+
+  background: linear-gradient(0deg, #ffffff, #f7f7f7) !important;
+  background: -webkit-linear-gradient(0deg, #ffffff, #f7f7f7) !important;
   text-align: left;
   padding: 9px 0;
 }
