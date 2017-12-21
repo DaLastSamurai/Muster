@@ -27,8 +27,7 @@ class MakeRequest extends React.Component {
     }
   
   window.setSelectedItemState = (objectId, itemObj, name) => {
-    console.log('this is setSelectedItemState', hit)
-    this.setState({selectedItem: hit}, () => console.log('THIS IS THE SSTATE', this.state.selectedItem, '>>>', objectId, 'this is hit obj', itemObj))
+    this.setState({selectedItem: objectId}, () => console.log('THIS IS THE SSTATE', this.state.selectedItem, '>>>', objectId, 'this is hit obj', itemObj))
   }
   
   window.setSelectedItemState.bind(this);
@@ -186,6 +185,26 @@ handleRequest() {
       // console.log(updateRec)
       return firebase.database().ref().update(updateRec)
     })
+    .then(() => {
+      whindow.indexName = "";
+      this.setState({
+        searchUser: '',
+        exUserObj:[],
+        trade: false,
+        tradeItem: {},
+        buy: true,
+        price: '',
+        tradeCol: '',
+        loan: false,
+        dueDate:'',
+        initPrice:'',
+        lateFee: '',
+        message: '',
+        showSearchBox : true,
+        selectedItem : false,
+        tempSelectedItem: false,
+      })
+    })
   }
 }
 
@@ -213,6 +232,7 @@ handleshowSearchBox() {
                 {window.indexName ?
                 (<Search />) : (<div/>)
                 }
+                {this.state.selectedItem ? <div className="image-thumb"><img src={this.state.selectedItem[1]['images'][0]} /><div className="image-thumbnail-title"><p>{this.state.selectedItem[2]}</p></div></div> : null} 
                 </div>
               </div>
               {/* {window.selectedItem ? <img src={window.selectedItem[1]['images'][0]}/> : null} */}
