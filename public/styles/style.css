@@ -628,7 +628,7 @@ nav {
   border: 1px solid #bbbab89f;
   border-radius: 1px;
   margin: 0;
-  width: 98%;
+  width: 88%;
   height: 80%;
   box-shadow: 0.6px 0.6px 2px #f5f4f4f1;
   /* display: flex;
@@ -639,7 +639,7 @@ nav {
 .request-form-box {
   /* overflow-y: scroll; */
   /* border: solid red; */
-  height: 600px;
+  min-height: 600px;
   margin: 0px 30px 0px 30px;
   display: flex;
   justify-content: space-around;
@@ -673,7 +673,7 @@ nav {
 .search-form {
   display: grid;
   grid-template-columns: repeat(3, 30%);
-  grid-template-rows: repeat(1, 14px);
+  grid-template-rows: 40px;
   grid-gap: 10px;
   margin: 0;
   overflow: scroll;
@@ -696,7 +696,7 @@ nav {
 .search-container{
   grid-column: 2/4;
   grid-row: 1;
-  margin: 0;
+  margin: 5px;
   padding:0;
 }
 
@@ -847,11 +847,17 @@ nav {
 }
 
 .search-result-container {
-  padding: 10px;
+  /* padding: 10px;
   position: relative;
   left: 90px;
-  float: right;
-  width: 180px;
+  float: right; 
+   grid-column: 2/4; 
+  width: 180px; */
+  grid-column: 1/4;
+  display: grid;
+  grid-template-columns: repeat(3, 30%);
+  grid-gap: 10px;
+  margin: 0;
 }
 
 .search-result-container img {
@@ -867,13 +873,11 @@ nav {
 
 .search-result-container .image-thumb {
   /* border: solid red; */
-  float: left;
-  position: absolute;
-  bottom: 26px;
-  right: 210px;
-  display: flex;
+  /* float: left; */
+  grid-column: 1/2;
   align-items: center;
-  flex-direction: column;
+  margin: 5px;
+  /* flex-direction: column; */
   
 }
 
@@ -890,6 +894,7 @@ nav {
 .ais-SearchBox__wrapper input {
   z-index: 2;
     width: 100%; 
+
 
 }
 
@@ -964,6 +969,7 @@ nav {
 .message-form-box {
   position: relative;
   bottom: 20px;
+  height: 120px;
 }
 
 .message-form {
@@ -973,8 +979,9 @@ nav {
   margin: 0px 30px 0px 36px;
 }
 
-.message-input {
-
+.message-form input {
+  /* border: solid red; */
+  width: 100%;
 }
 
 .button-sendoffer {
@@ -1513,7 +1520,7 @@ em {
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-content: stretch;
-    padding: 10px;
+    padding: 0px;
   }
 
   .search-map{
