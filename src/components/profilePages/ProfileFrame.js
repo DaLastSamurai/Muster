@@ -134,6 +134,7 @@ export default class ProfileFrame extends React.Component {
       ? (<div> loading... </div> ) 
       : (
         <div className="profile-container">
+        <h2>{this.state.username? `${ this.state.username }'s Muster` : null}</h2>
 
           {this.state.isUsersProfile
             ? (
