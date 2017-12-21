@@ -19,17 +19,13 @@ class ItemEntry extends React.Component {
   render() {
     console.log('item',this.props.id)
     return(
-      <div>
+      <div className='popular-category'>
         <div onClick={this.toggleDetail}>
-          <Card>
-          <CardBody>
-            <div className="card-size-images">
-              <ImageHeader imageSrc={ this.props.item.images } />       
+            <img className="card-size-images" src={this.props.item.images[0]}/>
+            <div className="category-overlay-text">
+            <h4>{ this.props.item.title }</h4>
             </div>
-            <h3>{ this.props.item.title }</h3>
-            { this.props.item.notes } 
-          </CardBody>
-          </Card>
+            {/* { this.props.item.notes } */}
         </div>
         {this.state.showDetail ? <ImageModel item={this.props.item} toggleDetail={this.toggleDetail} /> : null}
       </div>
