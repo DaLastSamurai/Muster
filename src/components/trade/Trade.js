@@ -35,21 +35,21 @@ class Trade extends React.Component {
       indexName={this.state.indexName || 'item'}
       >
         <div className="main-container" >
-          {/* <button onClick={this.toggleMakeRequest}>Make Request</button>
-          {this.state.showMR 
-            ?  */}
-            <div className="container-requset-form">
-              <div className="request-form">
-                <MakeRequest collections={this.props.collections}
-                            getIndexName={this.getIndexName} 
-                            items={this.props.items} 
-                            userId={this.props.userId}
-                            indexName={this.state.indexName}
-                            toggleMakeRequest={this.toggleMakeRequest}
-                            /> 
+          <div className="float-reqbox">
+          <h2>Make Request</h2>
+              <div className="container-requset-form">
+              
+                <div className="request-form">
+                  <MakeRequest collections={this.props.collections}
+                              getIndexName={this.getIndexName} 
+                              items={this.props.items} 
+                              userId={this.props.userId}
+                              indexName={this.state.indexName}
+                              toggleMakeRequest={this.toggleMakeRequest}
+                              /> 
+                </div>
               </div>
             </div>
-            {/* // : null} */}
           <div className="request-trans">
             <div className="reqmade">
               <div className="req-title">
