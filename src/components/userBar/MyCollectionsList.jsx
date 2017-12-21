@@ -1,6 +1,8 @@
 import React from 'react';
 import { firebaseAuth, rootRef, collection} from '../../../config/firebaseCredentials';
 import MyCollectionsEntry from './MyCollectionsEntry.jsx';
+import NewCollectionsInput from './NewCollectionsInput.jsx';
+
 
 export default class MyCollectionsList extends React.Component {
   constructor(props) {
@@ -16,6 +18,7 @@ export default class MyCollectionsList extends React.Component {
   render() {
     return (
       <div>
+        
         {this.props.collections ? (Object.entries(this.props.collections).map((collection) => {
           if(collection[1] !== null) {
           return <div key={collection} className="collectionList">

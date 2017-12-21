@@ -102,8 +102,14 @@ button:hover {
 
   /* background: linear-gradient(0deg, #ffffff, #f7f7f7) !important;
   background: -webkit-linear-gradient(0deg, #ffffff, #f7f7f7) !important; */
-  text-align: left;
+
+}
+
+.navbar-search-container {
+  text-align: center;
   padding: 11px 0;
+  justify-content: center;
+  width: 100%;
 }
 
 .navbar-logo {
@@ -124,8 +130,8 @@ button:hover {
 .navbar-links {
   /* background: linear-gradient(0deg, #ffffff, #f7f7f7) !important;
   background: -webkit-linear-gradient(0deg, #ffffff, #f7f7f7) !important; */
-  text-align: left;
-  padding: 9px 0;
+  text-align: right;
+  padding: 9px 0px 0px 0px;
 }
 
 .searchBar {
@@ -134,7 +140,7 @@ button:hover {
 }
 
 input[type=text], .ais-SearchBox__input, select {
-  width: 500px;
+  /* width: 500px; */
   padding: 10px 10px;
   margin: 0;
   display: inline-block;
@@ -147,9 +153,16 @@ input[type=text], .ais-SearchBox__input, select {
 }
 
 .ais-SearchBox__input{
+  width: 100%; 
+  margin: 5px;
   justify-content: right;
-  width: 290px;
+  /* width: 200px; */
 }
+/* 
+.searchBar .ais-SearchBox__input {
+  justify-content: right;
+  width: 200px;
+} */
 
 input[type=select], select {
   width: 500px;
@@ -651,9 +664,9 @@ nav {
 }
 
 .ais-SearchBox__wrapper input {
-  /* width:; */
-  grid-column: 2/4;
-  grid-row: 1;
+  width: 100%; 
+  /* grid-column: 2/4;
+  grid-row: 1; */
 }
 
 .search-container{
@@ -851,6 +864,8 @@ nav {
 
 .ais-SearchBox__wrapper input {
   z-index: 2;
+    width: 100%; 
+
 }
 
 .req-search-result div {
@@ -1371,11 +1386,9 @@ em {
 }
 
 .mycollections-container {
-  /* flex:; */
-  flex-direction: row;
-  
+  display: flex;
+  justify-content : center;
   align-items: center;
-  justify-content: center;
   display: inline-block;
   color: rgba(255, 255, 255, 0.829);
   text-align: center;
@@ -1570,4 +1583,40 @@ div.iuLDOj {
   color: #fd5c63;
   outline:none;
   font-weight: bold;
+}
+
+.chat-container {
+  position: fixed;
+  z-index: 9001;
+  right: 100px;
+  bottom: 10px;
+  background: rgb(250, 250, 250);
+  box-shadow: 2px 2px 2px #c9c9c9;
+
+  height: 400px;
+  width: 300px;
+  border: solid 1px #transparent;
+  /* border-radius: 24px; */
+  fill: #fd5c63;
+
+  font-size: 24px;
+  padding-bottom: 6px;
+}
+
+.chat_button {
+  position: fixed;
+  z-index: 9001;
+  right: 32px;
+  bottom: 32px;
+  background: rgb(250, 250, 250);
+  box-shadow: 1px 1px 1px #c9c9c9;
+
+  height: 48px;
+  width: 48px;
+  border: solid 0px #transparent;
+  border-radius: 24px;
+  fill: #fd5c63;
+
+  font-size: 24px;
+  padding-bottom: 6px;
 }
