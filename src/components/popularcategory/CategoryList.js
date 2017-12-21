@@ -31,7 +31,7 @@ class CategoryList extends React.Component {
       resolve(Object.keys(colsInCat)[0])
     })
     .then((collectionId) => {
-      console.log(this.state.collection[collectionId].photoUrl)
+      // console.log(this.state.collection[collectionId].photoUrl)
     })
   }
 
@@ -43,7 +43,7 @@ class CategoryList extends React.Component {
             <div className="popular-category-list">
               {Object.keys(this.props.popularCategoryList).map((id) => {
                 let collectionKey = Object.keys(this.props.popularCategoryList[id][1].collectionId)[0]
-                console.log(this.props.popularCategoryList[id][1].collectionId[0])
+                // console.log(this.props.popularCategoryList[id][1].collectionId[0])
                 // this.getRandomCategoryImage(this.props.popularCategoryList[id][1].collectionId) //pass this category's collectionIds
                   return (
                     <div key={id}>

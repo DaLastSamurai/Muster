@@ -5,7 +5,7 @@ import { firebaseAuth } from '../../../config/firebaseCredentials'
 import Logo from './Logo'
 import LinkButton from '../helperElements/LinkButton'
 import AuthFrame from '../authentication/AuthFrame'
-
+import firebase from 'firebase'
 import {InstantSearch, SearchBox} from 'react-instantsearch/dom';
 import { SearchHits } from '../helperElements/Search.jsx'
 import SearchToggler from '../helperElements/SearchToggler.jsx'
@@ -18,10 +18,19 @@ export default class ProtectedNav extends React.Component {
     super(props);
     this.state = {};
 
+    this.signOutUser = async () => {
+      try {
+        console.log('this is getting run')
+          await firebase.auth().signOut();
+          window.location.reload()
+      } catch (e) {
+          console.log(e);
+      }
+    }
+
   }
 
   render() {
-    console.log(this.props.user)
     return (
       <nav className="protectednavbar-container">
 
@@ -45,25 +54,25 @@ export default class ProtectedNav extends React.Component {
           <ul className="nav-items">
             <li className="nav-item dropdown">
               <Link to='/manageinventory'>
-                <a className="nav-link" title='library' clickFunction={() => { }} >library</a>
+                <a className="nav-link" title='library' >library</a>
               </Link>
             </li>
 
             <li className="nav-item dropdown">
               <Link to={'/addItems'}>
-                <a className="nav-link" title='add' clickFucntion={() => { }}>add</a>
+                <a className="nav-link" title='add'>add</a>
               </Link>           
             </li>
 
             <li className="nav-item dropdown">
               <Link to='/trade'>
-                <a className="nav-link" title='trade' clickFunction={() => { }}>trade</a>
+                <a className="nav-link" title='trade' >trade</a>
               </Link>
             </li>
 
             <li className="nav-item dropdown">
               <Link to="/">
-                <a className="nav-link" title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >logout</a>
+                <a className="nav-link" title='Logout' onClick={this.signOutUser}>logout</a>
               </Link>
             </li>
 
@@ -72,7 +81,9 @@ export default class ProtectedNav extends React.Component {
 
         <div>
           <Link to={`/profile/${this.props.user.uid}`}>
-            <UserInfo user={this.props.user} title="Profile" clickFunction={() => { window.location.reload() }} />
+            <div onClick={() => { window.location.reload() }}> 
+              <UserInfo user={this.props.user} title="Profile"  />
+            </div> 
           </Link>
         </div>
 

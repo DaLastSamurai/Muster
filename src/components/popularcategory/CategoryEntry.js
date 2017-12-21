@@ -40,9 +40,6 @@ class CategoryEntry extends React.Component {
         this.setState({image: snap.val()})
       })
     })
-    
-
-    console.log('///////////////////////////////',this.props.category[1])
   }
 
   handleLike(e) {

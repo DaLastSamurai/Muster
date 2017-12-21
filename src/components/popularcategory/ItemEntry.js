@@ -17,7 +17,7 @@ class ItemEntry extends React.Component {
   }
 
   render() {
-    console.log('item',this.props.id)
+    // console.log('item',this.props.id)
     return(
       <div className='popular-category'>
         <div onClick={this.toggleDetail}>
