@@ -609,6 +609,8 @@ nav {
 }
 .float-reqbox h2 {
   margin: 2px;
+  padding-left: 6%;
+  align-self: flex-start;
 }
 
 .container-requset-form {
