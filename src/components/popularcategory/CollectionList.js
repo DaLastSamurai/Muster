@@ -66,10 +66,12 @@ class CollectionList extends React.Component {
   render() {console.log('collection list', this.state)
     return(
       this.state.collections.length > 0
-       ? <div>
+       ? <div className="popular-category-container">
           <h2>{this.state.categoryName}</h2>
+          <div className="popular-category-container">
+            <div className="popular-category-list">
           {this.state.collections.map((colArr) => {
-            return <div>
+            return <div className='popular-category'>
                     <Link to={`/items/:${colArr[0]}`} key={colArr[0]}>
                       <CollectionEntry collection={colArr[1]} />
                     </Link>
@@ -79,6 +81,8 @@ class CollectionList extends React.Component {
                   </div>
             })
           }
+            </div>
+          </div>
         </div>
       : 'loading'
     )

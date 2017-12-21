@@ -15,6 +15,7 @@ class ItemList extends React.Component {
       userInfo: null,
       items:[],
       rerender: null,
+      userId: null,
     }
     this.getItemData = this.getItemData.bind(this);
   }
@@ -63,6 +64,7 @@ class ItemList extends React.Component {
     })
     .then((itemArr) => {
       let userId = itemArr[0][1]['uid'];
+      this.setState({userId: userId})
       users.child(userId).on('value', (snap) => {
         this.setState({userInfo: snap.val()})
       })
@@ -75,15 +77,21 @@ class ItemList extends React.Component {
     })
   }
 
-  render() {
+  render() {console.log('userinfo', this.state.userId)
     return(
       this.state.items.length > 0 && this.state.userInfo
-      ? <div>
+      ? <div className="popular-category-container">
           <h2>{this.state.collectionName}</h2>
-          <p>{this.state.userInfo.profileInfo.username}</p>
-          {this.state.items.map((itemArr) => {
-            return <ItemEntry key={itemArr[0]} item={itemArr[1]} id={itemArr[0]} />
-          })}
+          <Link to={`/profile/${this.state.userId}`}>
+            <p>{this.state.userInfo.profileInfo.username}</p>
+          </Link>
+          <div className="popular-category-container">
+            <div className="popular-category-list itemlist-thumb-image-view">
+              {this.state.items.map((itemArr) => {
+                return <ItemEntry key={itemArr[0]} item={itemArr[1]} id={itemArr[0]} />
+              })}
+            </div>
+          </div>
         </div>
       : 'add item'
     )
