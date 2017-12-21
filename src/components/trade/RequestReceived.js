@@ -148,7 +148,9 @@ class RequestReceived extends React.Component {
                 ? <div className="req-detail-trade">
                     <h4>offered trading item</h4>
                     <img src={this.props.reqRec.tradeItem[1]['images'][0]}/>
-                    <p>{this.props.reqRec.tradeItem[1]['name']}</p>
+                    <div className="trade-item-inner-box">
+                      <p>{this.props.reqRec.tradeItem[1]['title']}</p>
+                    </div>
                   </div>
                 : null}
 
@@ -185,7 +187,7 @@ class RequestReceived extends React.Component {
               {this.props.reqRec.accept === true ? 
                 this.props.reqRec.sentTracking.length < 1 
                   ? <div className="req-detail-sendadd">
-                      <h4>after send trading item submit tracking number</h4>
+                      <h4>submit tracking number</h4>
                       <input name="tracking" 
                                   type="text" 
                                   placeholder="write tracking number" 
