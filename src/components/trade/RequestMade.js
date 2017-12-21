@@ -134,6 +134,16 @@ class RequestMade extends React.Component {
                     <p>{`$ ${this.props.reqMade.price}`}</p>
                   </div>
                 : null}
+
+              {this.props.reqMade.trade
+                ? <div className="req-detail-trade">
+                    <h4>offer trading item</h4>
+                      <img src={this.props.reqMade.tradeItem[1]['images'][0]}/>
+                    <div className="trade-item-inner-box">
+                      <p>{this.props.reqMade.tradeItem[1]['title']}</p>
+                    </div>
+                  </div>
+                : null}
               
               {this.props.reqMade.trade && this.props.reqMade.exaddress.length > 0 
                 ? <div className="req-detail-send">
@@ -141,7 +151,7 @@ class RequestMade extends React.Component {
                     <p>{this.props.reqMade.exaddress}</p>
                     {this.props.reqMade.sentTracking.length < 1
                     ? <div className="req-detail-sendadd">
-                        <h4>after sent trading item submit tracking number</h4>
+                        <h4>submit tracking number</h4>
                         <input name="tracking" 
                               type="text" 
                               placeholder="write tracking number" 
