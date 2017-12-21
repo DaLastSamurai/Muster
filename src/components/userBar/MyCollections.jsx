@@ -41,7 +41,7 @@ export default class MyCollections extends React.Component {
 
   render() {
     return(
-      <div>
+      <nav>
         <ul className="mycollections-container">
           <li>
             <button type="button" className="btn btn-outline-secondary bg-primary"
@@ -56,26 +56,12 @@ export default class MyCollections extends React.Component {
             handleAddCollection={this.handleAddCollection} />) :
             (<div />)}
           </li>
-          {/* <Link to='/manageinventory'>
-            <button title='Books' clickFunction={() => { }} >Books</button>
-          </Link>
-          <Link to='/trade'>
-            <button title='Trade' clickFunction={() => { }}>Trade</button>
-          </Link>
-          <Link to={'/addItems/'}>
-            <button type="button" className="">Add</button>
-          </Link>
-          <Link to="/">
-            <button title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >Logout</button>
-          </Link> */}
 
-          {/* <li>
-            <MyCollectionsList collections={this.props.collections} />
-          </li> */}
-          
+          <MyCollectionsList collections={this.props.collections} />
+        
         </ul>
 
-      </div>
+      </nav>
     )
   }
 }

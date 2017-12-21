@@ -540,7 +540,7 @@ class AddItems extends React.Component {
           </form>
         </div>
 
-        <div className="additems-carousel">
+        <div>
           <InProgressCarousel
             setItemState={this.setItemState} 
             currentUserId={this.props.userId}/>

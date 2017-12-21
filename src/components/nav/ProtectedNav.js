@@ -41,66 +41,31 @@ export default class ProtectedNav extends React.Component {
 
 
 
-
         <nav role="navigation" className="nav" className="navbar-links">
           <ul className="nav-items">
             <li className="nav-item dropdown">
-              <a href="#" className="nav-link"><span>books</span></a>
-              <nav className="submenu">
-                <ul className="submenu-items">
-                  <div>
-
-                  </div>
-                </ul>
-              </nav>
+              <Link to='/manageinventory'>
+                <a className="nav-link" title='library' clickFunction={() => { }} >library</a>
+              </Link>
             </li>
 
             <li className="nav-item dropdown">
-              <a href="#" className="nav-link"><span>msgs</span></a>
-              <nav className="submenu">
-                <ul className="submenu-items">
-                  <div>
-
-                  </div>
-                </ul>
-              </nav>
+              <Link to={'/addItems'}>
+                <a className="nav-link" title='add' clickFucntion={() => { }}>add</a>
+              </Link>           
             </li>
 
             <li className="nav-item dropdown">
-              <a href="#" className="nav-link"><span>trade</span></a>
-              <nav className="submenu">
-                <ul className="submenu-items">
-                  <div>
-
-                  </div>
-                </ul>
-              </nav>
+              <Link to='/trade'>
+                <a className="nav-link" title='trade' clickFunction={() => { }}>trade</a>
+              </Link>
             </li>
 
             <li className="nav-item dropdown">
-              <a href="#" className="nav-link"><span>add</span></a>
-              <nav className="submenu">
-                <ul className="submenu-items">
-                  <div>
-
-                  </div>
-                </ul>
-              </nav>
+              <Link to="/">
+                <a className="nav-link" title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >logout</a>
+              </Link>
             </li>
-
-
-
-            <li className="nav-item dropdown">
-              <a href="#" className="nav-link"><span>logout</span></a>
-              <nav className="submenu">
-                <ul className="submenu-items">
-                  <div>
-
-                  </div>
-                </ul>
-              </nav>
-            </li>
-
 
           </ul>
         </nav>
