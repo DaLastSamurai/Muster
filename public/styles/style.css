@@ -575,7 +575,6 @@ nav {
 .search-container .ais-Hits__root {
   margin-top: 20px;
   overflow: scroll;
-<<<<<<< HEAD
 
 }
 
@@ -583,12 +582,10 @@ nav {
 
 }
 
-=======
   width: 200px;
   /* border: solid red; */
 }
 
->>>>>>> debug3map
 .ais-Hits__root button {
   padding: 0;
 }
@@ -1058,16 +1055,6 @@ img {
   width: 220; */
 }
 
-
-
-.followBar {
-  /* display: block; 
-  right : 0px;
-  margin: auto;
-  width: 80%;  */
-}
-
-
 .c1 {
   /* color : rgb(94, 94, 94); */
 }
@@ -1273,20 +1260,6 @@ em {
   display: inline-block;
 }
 
-.col-sm-2 {
-  color: transparent;
-  padding: 10px 24px;
-  border: 0px solid grey;
-  border-radius: 4px;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  width:150px;
-  outline:none;
-}
-
-.col-sm-2:hover {
-  background-color: rgb(246, 246, 246);
-}
 
 /* styling profile page */
 
@@ -1296,11 +1269,48 @@ em {
   justify-content: center;  
 }
 
-.follow-unfollow {
+.profile-header {
+  display: inline-block;
+  width:100%;
+
+}
+
+div.col-sm-2 {
+  margin: 0;
+  color: transparent;
+  padding: 10px 24px;
+  border: 0px solid grey;
+  border-radius: 4px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width:150px;
+  outline:none;
+  
+}
+
+.col-sm-2:hover {
+  background-color: rgb(246, 246, 246);
+}
+
+.image-uploader {
+  border: 0;
+  width: 20%;
   display: inline-block;
 }
 
-/* class on follow / unfollow */
+.follow-unfollow {
+  /* display: inline-block; */
+}
+
+.followBar {
+  width: 200px;
+  display: inline-block;
+  /* align-items: flex-start; */
+  position: relative;
+  bottom: 20px;
+}
+
+/* classes on follow / unfollow */
 div.sc-gzVnrw { 
   display: none;
 }
@@ -1312,6 +1322,7 @@ div.iuLDOj {
 .profilePhoto {
   border-radius: 75px;
   width:150px;
+  display: inline-block;
 }
 
 .clickable-text {

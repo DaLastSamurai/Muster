@@ -63,7 +63,7 @@ class CategoryEntry extends React.Component {
       <div className='popular-category'>
         <img className="card-size-images" src="https://dailyartfair.com/upload/large/66/6601_6.jpg" />
         <div className="category-overlay-text">
-          <Link to={`/collections/:${this.props.category[0]}`}>
+          <Link className="clickable-text" to={`/collections/:${this.props.category[0]}`}>
             <h4>{this.props.category[0]}</h4>
           </Link>
         </div>

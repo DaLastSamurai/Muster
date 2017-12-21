@@ -133,37 +133,42 @@ export default class ProfileFrame extends React.Component {
         <div className="profile-container">
 
 
-          <div className = "followBar"> 
-            {this.state.isUsersProfile 
-              ? <div />
-              : <FollowButton 
-                  profileUID={this.state.profileUID}
-                />
-            }
-            <div className="follow-unfollow">
-              <FollowDropDown
-                title = {"followers"}
-                users = {this.state.followers || {}}
-                updateProfileUID = {this.updateProfileUID}
-              />
-            </div>
-            <div className="follow-unfollow">
-              <FollowDropDown
-                title = {"following"}
-                users = {this.state.following || {}}
-                updateProfileUID = {this.updateProfileUID}
-              />
-            </div>
-          </div>
 
 
 
           {this.state.isUsersProfile
             ? (
               <div>
-              
-                <ImageUpload setImageState={this.setImageState}/>
-                <img src={this.state.profilePhoto} className = "profilePhoto"/>
+                <div className="image-uploader">
+                  <ImageUpload setImageState={this.setImageState}/>
+                </div>
+                <div className="profile-header">
+                    <img src={this.state.profilePhoto} className = "profilePhoto"/>
+
+                  <div className = "followBar"> 
+                    {this.state.isUsersProfile 
+                      ? <div />
+                      : <FollowButton 
+                          profileUID={this.state.profileUID}
+                        />
+                    }
+                    <div className="follow-unfollow">
+                      <FollowDropDown
+                        title = {"followers"}
+                        users = {this.state.followers || {}}
+                        updateProfileUID = {this.updateProfileUID}
+                      />
+                    </div>
+                    <div className="follow-unfollow">
+                      <FollowDropDown
+                        title = {"following"}
+                        users = {this.state.following || {}}
+                        updateProfileUID = {this.updateProfileUID}
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div>
                 <a className="clickable-text">
                   Username : 
