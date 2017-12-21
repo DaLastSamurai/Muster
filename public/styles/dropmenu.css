@@ -4,11 +4,11 @@ html {
     box-sizing: border-box;
 }
 
-*, 
+/* *, 
 *:before, 
 *:after {
     box-sizing: inherit;
-}
+} */
 
 body {
   font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;

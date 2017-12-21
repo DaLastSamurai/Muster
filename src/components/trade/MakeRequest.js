@@ -235,11 +235,6 @@ handleshowSearchBox() {
                 {this.state.selectedItem ? <div className="image-thumb"><img src={this.state.selectedItem[1]['images'][0]} /><div className="image-thumbnail-title"><p>{this.state.selectedItem[2]}</p></div></div> : null} 
                 </div>
               </div>
-              {/* {window.selectedItem ? <img src={window.selectedItem[1]['images'][0]}/> : null} */}
-              {/* <button onClick={()=>this.setState({selectedItem : window.selectedItem})}> 
-                select item
-              </button> */}
-              {/* <button onClick={()=>console.log(this.state.selectedItem)}> show me the state</button> */}
             </div>
         </div>
         <div className="req-offer-box">
