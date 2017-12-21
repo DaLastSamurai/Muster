@@ -54,6 +54,10 @@ button:hover {
   background-color: rgb(246, 246, 246);
   color: black;
   outline:none;
+  text-decoration: none;  
+  color: #fd5c63;
+  outline:none;
+  font-weight: bold;
 }
 
 /* layout */
@@ -1383,6 +1387,10 @@ em {
     text-align: center;
     width: 200px
   }
+
+  .ais-Pagination__root {
+    text-align: center;
+  }
   
   .ais-Pagination__item {
     display: inline-block;
@@ -1436,6 +1444,10 @@ em {
     padding : 5px;
   }
 
+  .like-button:hover {
+
+  }
+
   .like-button button {
     padding: 3px 5px;
     position: relative;
@@ -1483,6 +1495,7 @@ em {
   .search-list-container{
     width: 200px;
     height: 500px;
+    margin-top: 80px;
     justify-content: flex-start;
     overflow: scroll;
   }
@@ -1606,4 +1619,18 @@ div.iuLDOj {
 
 .search-text {
   margin: 0;
+}
+
+.itemList-no-content {
+  padding: 100px;
+  text-align: center;
+}
+
+.map-header {
+  padding: 20px;
+  text-align: center;
+}
+
+.map-wrap {
+  padding: 20px;
 }

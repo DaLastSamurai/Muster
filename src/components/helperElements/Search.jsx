@@ -89,7 +89,12 @@ function foundItem({hit}) {
           </div>
 
           <div className="pagination__container">
-            <Pagination showLast={true} className="pagination-container"/>
+            <Pagination 
+            showLast={true} 
+            showFirst={false}
+            showNext={false}
+            showPrevious={false}
+            className="pagination-container"/>
           </div>
         </div>
 
