@@ -8,7 +8,7 @@ import MapContainer from '../Map/MapContainer.jsx'
 function foundItem({hit}) {
   // console.log(hit)
   return(
-    <div>
+    <div> 
       {window.indexName === undefined && (
       <div onClick={ (e)=> console.log('this is what the item click handler passes: ', hit) }>
           {hit.author !== ""? /* check if it's book or 'item'*/
@@ -21,7 +21,7 @@ function foundItem({hit}) {
 
               { hit.price ? <div> ${hit.price} </div> :<div> price upon request </div> }
               { hit.savedKeywords ? 
-                <p> 
+                <p className="search-text"> 
                   Tags : { hit.savedKeywords.map((tag)=> {return <a className="tags"> { tag } </a>}) } 
                 </p> 
               : null }
@@ -44,7 +44,7 @@ function foundItem({hit}) {
             </Link>
 
             { hit.price ? <div> ${hit.price} </div> :<div> price upon request </div> }
-            { hit.savedKeywords ? <p> Tags : { hit.savedKeywords.map((tag)=> {return <a className="tags"> { tag } </a>}) } </p> : null }
+            { hit.savedKeywords ? <p className="search-text"> Tags : { hit.savedKeywords.map((tag)=> {return <a className="tags"> { tag } </a>}) } </p> : null }
             </div> 
             : null
           }

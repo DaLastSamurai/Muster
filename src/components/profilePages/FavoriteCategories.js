@@ -62,7 +62,7 @@ export default class FavoriteCategories extends React.Component {
               this.state.favoriteCategories.map((category) =>
               <div class="card">
                   <Link className="clickable-text" to={`/collections/:${category[0]}`}>
-                      <img className="card-size-images" src={category[1]!== ''? category[1] : "http://www.wrbh.org/wp-content/uploads/2017/02/ReadyPlayerONe.jpg"}/>
+                      <img className="card-size-images" src={category[1]!== ''? category[1] : "https://i5.walmartimages.com/asr/f752abb3-1b49-4f99-b68a-7c4d77b45b40_1.39d6c524f6033c7c58bd073db1b99786.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF"}/>
                       <h5>{category[0]}</h5>
                   </Link>
                 </div>
