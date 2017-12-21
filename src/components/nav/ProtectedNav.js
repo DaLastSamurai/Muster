@@ -11,6 +11,7 @@ import { SearchHits } from '../helperElements/Search.jsx'
 import SearchToggler from '../helperElements/SearchToggler.jsx'
 import UserInfo from '../userBar/UserInfo.jsx';
 
+import ChatRoomList from '../messaging/ChatRoomList'
 
 export default class ProtectedNav extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ export default class ProtectedNav extends React.Component {
   render() {
     console.log(this.props.user)
     return (
-      <div className="protectednavbar-container">
+      <nav className="protectednavbar-container">
 
 
         <div>
@@ -38,49 +39,44 @@ export default class ProtectedNav extends React.Component {
           {/* <SearchToggler searchBy={this.props.searchBy} /> */}
         </div>
 
-        <div className="navbar-links">
-          <Link to='/manageinventory'>
-            <button title='Books' clickFunction={() => { }} >Books</button>
-          </Link>
-          <Link to='/trade'>
-            <button title='Trade' clickFunction={() => { }}>Trade</button>
-          </Link>
-          <Link to={'/addItems/'}>
-            <button type="button" className="">Add</button>
-          </Link>
-          <Link to="/">
-            <button title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >Logout</button>
-          </Link>
-          {/* <Link to={`/profile/${this.props.user.uid}`}>
-            <img src={"https://winaero.com/blog/wp-content/uploads/2015/05/windows-10-user-account-login-icon.png"} title='Profile' clickFunction={() => {window.location.reload()}} />
-          </Link> */}
-        </div>
-        {/*           
-        <div className="navbar-links">
-          <Link to={`/profile/${this.props.user.uid}`}>
-            <LinkButton title='Profile' clickFunction={() => {window.location.reload()}} />
-          </Link>
-          <Link to='/manageinventory'>
-            <button title='Books' clickFunction={() => { }} >Books</button>
-          </Link>
-          <Link to='/trade'>
-            <button title='Trade' clickFunction={() => { }}>Trade</button>
-          </Link>
-          <Link to={'/addItems/'}>
-            <button type="button" className="">Add</button>
-          </Link>
-          <Link to="/">
-          <button title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >Logout</button>
-          </Link>
-        </div> */}
+
+
+        <nav role="navigation" className="nav" className="navbar-links">
+          <ul className="nav-items">
+            <li className="nav-item dropdown">
+              <Link to='/manageinventory'>
+                <a className="nav-link" title='library' clickFunction={() => { }} >library</a>
+              </Link>
+            </li>
+
+            <li className="nav-item dropdown">
+              <Link to={'/addItems'}>
+                <a className="nav-link" title='add' clickFucntion={() => { }}>add</a>
+              </Link>           
+            </li>
+
+            <li className="nav-item dropdown">
+              <Link to='/trade'>
+                <a className="nav-link" title='trade' clickFunction={() => { }}>trade</a>
+              </Link>
+            </li>
+
+            <li className="nav-item dropdown">
+              <Link to="/">
+                <a className="nav-link" title='Logout' clickFunction={() => { firebaseAuth().signOut() }} >logout</a>
+              </Link>
+            </li>
+
+          </ul>
+        </nav>
 
         <div>
           <Link to={`/profile/${this.props.user.uid}`}>
-            <UserInfo user={this.props.user} title="Profile" clickFunction={() => {window.location.reload()}} />
+            <UserInfo user={this.props.user} title="Profile" clickFunction={() => { window.location.reload() }} />
           </Link>
         </div>
-        
-      </div>
+
+      </nav>
     )
   }
 }

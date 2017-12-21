@@ -1,0 +1,21 @@
+addItems
+\__FormDropDown 
+ \__inProgressCarousel
+  \__imageUploader
+      \__generateThumbnail
+   \__imageRecog
+
+AuthFrame
+\__Signup
+\__LinkButton
+\__Login
+    \__ResetPassword
+\__authenticationHelpers
+
+ChatRoomList (in userBar)
+  \___AddChatRoomFrame (in userBar) (see AddChatRoom for logic)
+   \__ChatRoomEntry (in userBar)
+        \__onClick___MessageFrame (pops out into currentPage?)
+                        \___MessageStatus
+                         \__MessageHistory
+                          \_MessageInputField
