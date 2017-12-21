@@ -61,7 +61,7 @@ class ImageUpload extends Component {
 
   render() {
     return (
-      <div>
+      <div >
         <form>
           {this.props.images? 
           this.props.images.map(image => {
@@ -76,7 +76,7 @@ class ImageUpload extends Component {
               style={{ width: 300 }} />} */}
 
           <div>
-            <label>Image</label>
+            <label>Change Profile Photo</label>
               {this.state.isUploading && 
                 <p>Progress: {this.state.progress}</p>}
           </div>

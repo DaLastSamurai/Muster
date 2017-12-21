@@ -1246,7 +1246,16 @@ em {
 .card-size-images {
   border-radius: 5px;
   width: 150px;
+  transition: filter .5s ease-in-out;
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
 }
+
+.card-size-images:hover {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+  
 
 .carousel-images {
   height:300px;
@@ -1273,7 +1282,7 @@ em {
   display: inline-block;
   width:100%;
   flex-direction: row;
-
+  flex-wrap: wrap;
 }
 
 div.col-sm-2 {
@@ -1304,8 +1313,9 @@ div.col-sm-2 {
 }
 
 .followBar {
+  float: right;
   width: 200px;
-  /* display: inline-block; */
+  display: inline-block;
   align-items: flex-end;
   bottom: 20px;
 }
