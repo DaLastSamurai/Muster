@@ -20,7 +20,6 @@ export default class ProtectedNav extends React.Component {
 
     this.signOutUser = async () => {
       try {
-        console.log('this is getting run')
           await firebase.auth().signOut();
           window.location.reload()
       } catch (e) {
