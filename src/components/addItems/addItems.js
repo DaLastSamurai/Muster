@@ -4,7 +4,8 @@ import UserInfo from '../userBar/UserInfo.jsx';
 import ImageUpload from '../helperElements/imageUploader';
 import InProgressCarousel from './inProgressCarousel';
 import ImageRecog from '../helperElements/imageRecog';
-
+import NewCollectionsInput from '../userBar/NewCollectionsInput.jsx';
+import { addNewCollection } from '../userBar/writeNewCollectionHelpers';
 
 class AddItems extends React.Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class AddItems extends React.Component {
       collectionList: [{id: null, name: 'loading collections...'}],
       locationList: [{lat: 0, lng: 0, name: 'default place', position: {lat: 0,lng:0}}],
       sell: '',
+      showInputForm: false,
       
       // //depricated fields
       location: '',
@@ -60,8 +62,22 @@ class AddItems extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.geoFindMe = this.geoFindMe.bind(this);
     this.geoAddName = this.geoAddName.bind(this);
-    
-  };
+    this.handleAddCollection = this.handleAddCollection.bind(this);
+    this.addNewCollection = addNewCollection.bind(this);
+    this.toggleInputForm = this.toggleInputForm.bind(this);
+  }
+
+  toggleInpurForm() {
+    this.setState({ showInputForm: !this.state.showInputForm })
+  }
+
+  handleAddCollection() {
+    this.props.getUserCollection()
+  }
+
+  toggleInputForm() {
+    this.setState({ showInputForm: !this.state.showInputForm })
+  }
 
   //function called by imageUploader to update images
   setImageState(imageUrl) {
@@ -332,7 +348,7 @@ class AddItems extends React.Component {
                   required
                 />
 
-                <button onClick={() => { this.addRemoveKeyword(this.state.customKeyword) }}>+</button>
+                <button onClick={() => { this.addRemoveKeyword(this.state.customKeyword) }}>Add Keyword</button>
 
               </div>
             </div>
@@ -358,6 +374,24 @@ class AddItems extends React.Component {
                       <option value={collection.id}>{collection.name}</option>)}
                   </select>
                 </div>
+              </div>
+
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary bg-primary"
+                  onClick={() => { this.toggleInputForm() }}>
+                  Add Collection
+                </button>
+
+                {this.state.showInputForm ?
+                  (<NewCollectionsInput
+                    toggleInputForm={this.toggleInputForm}
+                    getUserCollection={this.props.getUserCollection}
+                    addNewCollection={this.addNewCollection}
+                    handleAddCollection={this.handleAddCollection} />) :
+                  (<div />)}
+
               </div>
 
               <div>
