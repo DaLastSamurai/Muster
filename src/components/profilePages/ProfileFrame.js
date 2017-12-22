@@ -150,7 +150,9 @@ export default class ProfileFrame extends React.Component {
                       console.log('show image uploader? ', this.state.showUploadImage)
                     }}
                 >
+                  {this.state.profilePhoto !== null? 
                   <img src={this.state.profilePhoto} className="profilePhoto" />
+                  : <img src="http://peacelabs.co/_assets/img/default_avatar.png" />}
                   {this.state.showUploadImage !== false ? 
                     <div className="image-uploader clickable-text">
                       <ImageUpload setImageState={this.setImageState}/>
