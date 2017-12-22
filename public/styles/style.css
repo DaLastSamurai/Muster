@@ -409,6 +409,11 @@ input[type=submit]:hover {
   right: 5px;
 }
 
+.additems-forms input {
+  /* border: solid red; */
+  width: 100%;
+}
+
 .additems-suggested {
   max-width: 500px;
   /* max-height: 50px;
@@ -1653,10 +1658,13 @@ em {
 
   .like-button {
     position: relative;
+<<<<<<< HEAD
     bottom: 8px;
     left: 3px;
     /* bottom: 8px; */
     /* left: 6px; */
+=======
+>>>>>>> bug fix
     /* bottom: 8px; */
     left: 6px;
     display: flex;
