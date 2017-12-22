@@ -107,9 +107,9 @@ export default class AddChatRoomFrame extends React.Component {
     // console.log('this is the this.state.roomName',  this.state.roomName)
     return this.state.isAddingChatRoom 
     ? (
-      <div>
+      <div className="chat-add-room">
 
-        ==addChatRoom==
+        New Chat
         <input
           autoComplete="off"
           className="form-control"
@@ -120,9 +120,11 @@ export default class AddChatRoomFrame extends React.Component {
           onChange={e => this.setState({roomName : e.target.value})}
           onKeyUp={this.checkSubmit}
         />
-        You may add any user that is following you: 
         <div>
-          <AutoCompleteInput
+        You may add any user that is following you: 
+        </div>
+        <div>
+          <AutoCompleteInput className="chat-autocomplete-input"
             items={this.state.followerUsers}
             shouldItemRender={(item, value) => item.label.toLowerCase().indexOf(value.toLowerCase()) > -1}
             getItemValue={item => item.label}

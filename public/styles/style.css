@@ -198,7 +198,8 @@ button:hover {
 
 
 input[type=text],input[type=password],input[type=email], .ais-SearchBox__input, select {
-  /* width: 500px; */
+  justify-content: left;
+  width: 80%;
   padding: 10px 10px;
   margin: 0;
   display: inline-block;
@@ -223,7 +224,7 @@ input[type=text],input[type=password],input[type=email], .ais-SearchBox__input, 
 } */
 
 input[type=select], select {
-  width: 500px;
+  width: 80%;
   padding: 10px 10px;
   margin: 5px 5px;
   display: inline-block;
@@ -236,7 +237,7 @@ input[type=select], select {
 }
 
 input[type=submit] {
-  width: 400px;
+  width: 80%;
   background-color: lightgrey;
   padding: 14px 20px;
   margin: 8px 0;
@@ -381,10 +382,12 @@ input[type=submit]:hover {
   padding: 100px;
   display: flex;
   justify-content: center;
+  margin: 0
+
 }
 
 .additems-forms {
-
+  width: 80%;
 }
 
 .additems-suggested {
@@ -1816,16 +1819,17 @@ div.iuLDOj {
   right: 100px;
   bottom: 10px;
   background: rgb(250, 250, 250);
-  box-shadow: 2px 2px 2px #c9c9c9;
+  box-shadow: 1px 1px 1px #fd5c63;
 
+  border-radius: 25x;
   max-height: 600px;
   width: 300px;
-  border: solid 1px #transparent;
-  /* border-radius: 24px; */
+  border: solid 2px #fd5c63;
   fill: #fd5c63;
 
   font-size: 24px;
   padding-bottom: 6px;
+
 }
 
 .chat_button {
@@ -1845,6 +1849,54 @@ div.iuLDOj {
   font-size: 24px;
   padding-bottom: 6px;
 }
+
+.chat-status {
+  justify-content: center;
+}
+.chat-input-field {
+
+  justify-content: center;
+}
+.chat-history{
+  font-size: 14px;
+  text-align: left;
+  justify-content: center;
+}
+
+.chat-add-room {
+  font-size: 14px;
+}
+
+.chat-add-room input {
+
+  justify-content: left;
+  width: 200px;
+  padding: 10px 10px;
+  margin: 0;
+  display: inline-block;
+  border: 0px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+  outline:none;
+  background-color: rgb(250, 250, 250);
+  box-shadow: 1px 1px 1px #ccc;
+}
+
+.chat-autocomplete-input > div > div > input {
+
+  justify-content: left;
+  width: 80%;
+  padding: 10px 10px;
+  margin: 0;
+  display: inline-block;
+  border: 0px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+  outline:none;
+  background-color: rgb(250, 250, 250);
+  box-shadow: 1px 1px 1px #ccc;
+}
+
 .search-text {
   margin: 0;
 }

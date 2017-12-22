@@ -35,9 +35,8 @@ export default class MessageHistory extends React.Component {
 
 
   render() {
-    // console.log('this is the state: ', this.state.messageHistory)
     return  (
-      <div>
+      <div className="chat-history">
         {/*=messageHistory=*/}
         <InfiniteScroll 
           style = {{height : '200px', overflow : 'auto'}}

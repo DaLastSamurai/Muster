@@ -27,11 +27,10 @@ export default class MessageFrame extends React.Component {
   render() {
     
     return  (
-      <div style = {{'border-radius' : "1px"}} className = "chat-frame">
-
-        <MessageStatus className="chat-frame" chatRoomName = {this.props.chatRoomName}/> 
-        <MessageInputField className="chat-frame" chatRoomName = {this.props.chatRoomName}/> 
-        <MessageHistory className="chat-frame" chatRoomName = {this.props.chatRoomName} /> 
+      <div className = "chat-frame">
+        <MessageStatus chatRoomName = {this.props.chatRoomName}/> 
+        <MessageInputField chatRoomName = {this.props.chatRoomName}/> 
+        <MessageHistory chatRoomName = {this.props.chatRoomName} /> 
       </div> 
     )
   }
