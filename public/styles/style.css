@@ -399,6 +399,11 @@ input[type=submit]:hover {
   width: 100%;
 }
 
+.additems-forms input {
+  /* border: solid red; */
+  width: 100%;
+}
+
 .additems-suggested {
   max-width: 500px;
   /* max-height: 50px;
