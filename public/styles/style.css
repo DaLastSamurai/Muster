@@ -1996,3 +1996,7 @@ div.iuLDOj {
   justify-content: center;
   flex-direction: column;
 }
+
+.follow-button {
+  list-style: none;
+}
