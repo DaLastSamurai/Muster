@@ -25,7 +25,7 @@ export default class UserInfo extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="nav-profile-img">
         <Link to={`/profile/${this.props.user.uid}`}>
 
           <img className="navbar-avatar" src={this.state.profilePhoto} clickFunction={() => { window.location.reload() }} />

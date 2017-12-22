@@ -35,7 +35,7 @@ export default class ProtectedNav extends React.Component {
       <nav className="protectednavbar-container">
 
 
-        <div>
+        <div className="logo-navbar">
           <Link to="/">
             <Logo />
           </Link>
@@ -50,7 +50,7 @@ export default class ProtectedNav extends React.Component {
         </div>
 
 
-        <nav role="navigation" className="nav" className="navbar-links">
+        <div role="navigation" className="nav" className="navbar-links">
           <ul className="nav-items">
             <li className="nav-item dropdown">
               <Link to='/manageinventory'>
@@ -77,9 +77,9 @@ export default class ProtectedNav extends React.Component {
             </li>
 
           </ul>
-        </nav>
+        </div>
 
-        <div>
+        <div className="profoile-nav">
           <Link to={`/profile/${this.props.user.uid}`}>
             <div onClick={() => { window.location.reload() }}> 
               <UserInfo user={this.props.user} title="Profile"  />
