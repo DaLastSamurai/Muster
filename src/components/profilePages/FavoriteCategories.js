@@ -18,8 +18,8 @@ export default class FavoriteCategories extends React.Component {
 
 
   componentDidMount() {
-    this.setState({currentUID: firebaseAuth().currentUser.uid})
-
+    
+    var userId = firebaseAuth().currentUser.uid
     new Promise((resolve, reject) => {
       collection.on("value", (snap) => {
         this.setState({collection : snap.val()})
@@ -31,7 +31,7 @@ export default class FavoriteCategories extends React.Component {
       // get all user's favorite categories
       users.on("value", (snap) => {
         // set user's favorited categories to state and pass in promise
-        resolve(snap.val()[this.state.currentUID].profileInfo.favoriteCategories)
+        resolve(snap.val()[userId].profileInfo.favoriteCategories)
       })
     })
     .then((userFavCatObj) => {
@@ -40,7 +40,6 @@ export default class FavoriteCategories extends React.Component {
         if(!!userFavCatObj[key][0]) {
           let currentCat = userFavCatObj[key][0]
           if(!!this.state.allCategories[currentCat]) {
-            // console.log('fav cat ',this.state.allCategories[currentCat].collectionId)
             //grab random collection
             let ranCollectionIndex = Math.floor(Math.random() * (Object.keys(this.state.allCategories[currentCat].collectionId).length));
             let ranCollectionHashes = Object.keys(this.state.allCategories[currentCat].collectionId)[ranCollectionIndex]
@@ -55,16 +54,15 @@ export default class FavoriteCategories extends React.Component {
   }
 
   render() {
-    // console.log(this.state.favoriteCategories)
     return (
       <div >
-        <h3> Your Favorite Categories </h3>
+        <h3> My Favorite Categories </h3>
         <div className="carousel-images" >
             {
               this.state.favoriteCategories.map((category) =>
               <div class="card">
-                  <Link className="clickable-text" to={`/collections/${category[2]}`}>
-                      <img className="card-size-images" src={category[1]!== ''? category[1] : "http://www.wrbh.org/wp-content/uploads/2017/02/ReadyPlayerONe.jpg"}/>
+                  <Link className="clickable-text" to={`/collections/:${category[0]}`}>
+                      <img className="card-size-images" src={category[1]!== ''? category[1] : "https://i5.walmartimages.com/asr/f752abb3-1b49-4f99-b68a-7c4d77b45b40_1.39d6c524f6033c7c58bd073db1b99786.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF"}/>
                       <h5>{category[0]}</h5>
                   </Link>
                 </div>

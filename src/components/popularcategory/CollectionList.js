@@ -71,7 +71,7 @@ class CollectionList extends React.Component {
           <div className="popular-category-container">
             <div className="popular-category-list">
           {this.state.collections.map((colArr) => {
-            return <div className='popular-category'>
+            return <div className='popular-category clickable-text'>
                     <Link to={`/items/:${colArr[0]}`} key={colArr[0]}>
                       <CollectionEntry collection={colArr[1]} />
                     </Link>
