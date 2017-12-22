@@ -1629,7 +1629,7 @@ div.iuLDOj {
   background: rgb(250, 250, 250);
   box-shadow: 2px 2px 2px #c9c9c9;
 
-  height: 400px;
+  max-height: 600px;
   width: 300px;
   border: solid 1px #transparent;
   /* border-radius: 24px; */
@@ -1655,4 +1655,10 @@ div.iuLDOj {
 
   font-size: 24px;
   padding-bottom: 6px;
+}
+
+.chat-frame {
+  text-align: center;
+  padding: 0px 0;
+  justify-content: center;
 }

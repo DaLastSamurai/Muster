@@ -99,7 +99,7 @@ export default class App extends React.Component {
   
 
   render() {
-    console.log('this is the user in APP: ', this.state.user)
+    // console.log('this is the user in APP: ', this.state.user)
     return (
       <Router>
         <InstantSearch
