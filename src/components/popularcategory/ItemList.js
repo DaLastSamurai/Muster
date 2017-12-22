@@ -93,7 +93,10 @@ class ItemList extends React.Component {
             </div>
           </div>
         </div>
-      : 'add item'
+      :
+      <div className="itemList-no-content">
+      this collection is currently empty
+      </div>
     )
   }
 }
