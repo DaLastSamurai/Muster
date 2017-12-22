@@ -28,43 +28,50 @@ export default class UnprotectedNav extends React.Component {
       ONLY WHEN THE USER IS NOT SIGNED IN */
   render() {
     return (
-      <div>
-        <div className="logo-container">
-        <Logo />
+      <div className="protectednavbar-container">
+        <div className="logo-navbar">
+          <Link to="/">
+            <Logo />
+          </Link>
         </div>
-        <div>
-          <nav>
-            <div>
-              <ul>
+        <div className="navbar-search-container">
+          <div>
+            <Link to="/searching">
+              <SearchHits />
+            </Link>
+            {/* <SearchToggler searchBy={this.props.searchBy} /> */}
+          </div>
+        </div>
 
-                <li className="link-button">
-                  <Link to="/">
-                    <LinkButton title='Home' clickFunction={() => {}}/>
-                  </Link>
-                </li>
+        <div className="login-nav">
+          <ul className="nav-items">
 
-                <li className="link-button">
-                  <Link to="/">
-                    <LinkButton title='Login' clickFunction={() => {
-                      // this needs to set state in the app that will cause the
-                      // auth frame to render and then unrender on rerender.
-                      this.props.setIsOnAuthFrame(true)
-                    }} />
-                  </Link>
-                </li>
-
-              </ul>
-              <Link to="/searching">
-                <SearchHits />
+            {/* <li className="link-button">
+              <Link to="/">
+                <LinkButton title='Home' clickFunction={() => {}}/>
               </Link>
-              {/*<ul className="nav navbar-nav">
-                <li className="navbar-text navbar-center align-top search-bar">
-                  <SearchBar search={(input) => {console.log(`you searched: ${input}, but this search function doesnt do shit`)}}/>
-                </li>
-              </ul>*/}
+            </li> */}
 
-            </div>
-          </nav>
+            <li className="link-button">
+              <Link to="/">
+                <LinkButton title='Login' clickFunction={() => {
+                  // this needs to set state in the app that will cause the
+                  // auth frame to render and then unrender on rerender.
+                  this.props.setIsOnAuthFrame(true)
+                }} />
+              </Link>
+            </li>
+
+          </ul>
+          {/* <Link to="/searching">
+            <SearchHits />
+          </Link> */}
+          {/*<ul className="nav navbar-nav">
+            <li className="navbar-text navbar-center align-top search-bar">
+              <SearchBar search={(input) => {console.log(`you searched: ${input}, but this search function doesnt do shit`)}}/>
+            </li>
+          </ul>*/}
+
         </div>
       </div>
     )
