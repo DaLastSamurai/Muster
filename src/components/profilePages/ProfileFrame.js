@@ -54,7 +54,7 @@ export default class ProfileFrame extends React.Component {
   }
 
   componentWillMount() {
-    console.log('the state has changed: ', this.state.profileUID)
+    // console.log('the state has changed: ', this.state.profileUID)
     this.setCurrentUserAndIsUsersProfile()
     this.addUserDataToState(["bio", "username", "profilePhoto", "following", "followers", "favoriteCategories"])
   }
@@ -73,7 +73,7 @@ export default class ProfileFrame extends React.Component {
   }
 
   setCurrentUserAndIsUsersProfile() {
-    console.log('propsmatchparamsuid', this.props.match.params.uid )
+    console.log('propsmatchparamsuid', this.props.match.params.uid)
     let currentUser = "none"
     if (firebase.auth().currentUser !== null) {
       currentUser = firebase.auth().currentUser.uid
@@ -90,7 +90,7 @@ export default class ProfileFrame extends React.Component {
   addUserDataToState(fieldsToAddToState = [], stateObj = {}) {
     // takes in an array of fieldsToAddToState, queries the db and sets state with result
     // recursively calls each element in the array and renders it.
-    if (fieldsToAddToState.length === 0) {this.setState(stateObj)}
+    if (fieldsToAddToState.length === 0) { this.setState(stateObj) }
     else {
       let currentField = fieldsToAddToState.pop()
       let dbPath = `users/${this.state.profileUID}/profileInfo/${currentField}`
@@ -103,13 +103,13 @@ export default class ProfileFrame extends React.Component {
 
   setImageState(profilePhoto) {
     let dbPath = `${this.state.currentUser}/profileInfo/profilePhoto`;
-    let update = {}; 
-    update[dbPath] = profilePhoto; 
+    let update = {};
+    update[dbPath] = profilePhoto;
     users.update(update);
-    this.setState({profilePhoto});
+    this.setState({ profilePhoto });
   }
 
-  updateProfileUID(profileUID) { this.setState( {profileUID} ) }
+  updateProfileUID(profileUID) { this.setState({ profileUID }) }
 
   sendUpdatedUserDataToDB(fieldData) {
     let update = {}
@@ -133,98 +133,95 @@ export default class ProfileFrame extends React.Component {
     // console.log('>>>>>>>>>>>profileframe fav cat state',this.state.favoriteCategories)
     // console.log( '>>>>>>>>>>>>>>>>>>' +this.state.profilePhoto)
     return Object.values(this.state).filter(el => el === null).length > 2
-      ? (<div> loading... </div> ) 
+      ? (<div> loading... </div>)
       : (
         <div className="profile-container">
-        <h2>{this.state.username? `${ this.state.username }'s Muster` : null}</h2>
+          <h2>{this.state.username ? `${this.state.username}'s Muster` : null}</h2>
 
           {this.state.isUsersProfile
             ? (
               <div >
-                
-                <div className="profile-header"                 
-                  onMouseEnter={()=>{
-                      this.setState({showUploadImage : true})
-                      console.log('show image uploader? ', this.state.showUploadImage)
-                    }} 
-                    onMouseLeave={()=>{
-                      this.setState({showUploadImage : false})
-                      console.log('show image uploader? ', this.state.showUploadImage)
-                    }}
+
+                <div className="profile-header"
+                  onMouseEnter={() => {
+                    this.setState({ showUploadImage: true })
+                    console.log('show image uploader? ', this.state.showUploadImage)
+                  }}
+                  onMouseLeave={() => {
+                    this.setState({ showUploadImage: false })
+                    console.log('show image uploader? ', this.state.showUploadImage)
+                  }}
                 >
-                  {this.state.profilePhoto !== null? 
                   <img src={this.state.profilePhoto} className="profilePhoto" />
-                    
-                  : <img src="http://peacelabs.co/_assets/img/default_avatar.png" />}
-                  {this.state.showUploadImage !== false ? 
 
-                    <div className="image-uploader clickable-text">
-                      <AvatarUpload setImageState={this.setImageState}/>
-                    </div>
 
-                <div className="followBar"> 
-                  {this.state.isUsersProfile 
-                    ? <div />
-                    : <FollowButton 
+                  <div className="image-uploader clickable-text">
+                    <AvatarUpload setImageState={this.setImageState} />
+                  </div>
+
+                  <div className="followBar">
+                    {this.state.isUsersProfile
+                      ? <div />
+                      : <FollowButton
                         profileUID={this.state.profileUID}
                       />
-                  }
-                  <div className="follow-unfollow">
-                    <FollowDropDown
-                      title = {"followers"}
-                      users = {this.state.followers || {}}
-                      updateProfileUID = {this.updateProfileUID}
-                    />
+                    }
+                    <div className="follow-unfollow">
+                      <FollowDropDown
+                        title={"followers"}
+                        users={this.state.followers || {}}
+                        updateProfileUID={this.updateProfileUID}
+                      />
+                    </div>
+                    <div className="follow-unfollow">
+                      <FollowDropDown
+                        title={"following"}
+                        users={this.state.following || {}}
+                        updateProfileUID={this.updateProfileUID}
+                      />
+                    </div>
                   </div>
-                  <div className="follow-unfollow">
-                    <FollowDropDown
-                      title = { "following" }
-                      users = { this.state.following || {} }
-                      updateProfileUID = {this.updateProfileUID}
-                    />
-                  </div>
+
                 </div>
 
-              </div>
-
                 <div>
-                <a className="clickable-text">
-                  Username : 
+                  <a className="clickable-text">
+                    Username :
                 </a>
-                <RIEInput
-                  value={this.state.username}
-                  change={this.sendUpdatedUserDataToDB}
-                  propName="text"
-                  validate={this.isStringAcceptable}
-                  classLoading="loading"
-                  classInvalid="invalid"
-                />
+                  <RIEInput
+                    value={this.state.username}
+                    change={this.sendUpdatedUserDataToDB}
+                    propName="text"
+                    validate={this.isStringAcceptable}
+                    classLoading="loading"
+                    classInvalid="invalid"
+                  />
                 </div>
                 <div>
                   <a className="clickable-text">
                     Bio :
-                  </a> 
-                <RIETextArea
-                  value={this.state.bio}
-                  change={this.sendUpdatedUserDataToDB}
-                  propName="textarea"
-                  validate={this.isStringAcceptable}
-                  classLoading="loading"
-                  classInvalid="invalid"
-                />
+                  </a>
+                  <RIETextArea
+                    value={this.state.bio}
+                    change={this.sendUpdatedUserDataToDB}
+                    propName="textarea"
+                    validate={this.isStringAcceptable}
+                    classLoading="loading"
+                    classInvalid="invalid"
+                  />
                 </div>
               </div>
             ) : (
               <div>
                 <div>
-                  <h3> 
+                  <h3>
                     bio: {this.state.bio}
-                  </h3> 
+                  </h3>
                 </div>
-                <div> 
-                  <h3> 
+                <div>
+                  <h3>
                     Username: {this.state.username}
-                  </h3> 
+                  </h3>
                 </div>
                 {this.state.isUsersProfile
                   ? <div />
@@ -236,8 +233,9 @@ export default class ProfileFrame extends React.Component {
             )
           }
 
-          <FavoriteCategories favoriteCategories={this.state.favoriteCategories} currentUID={this.state.profileUID} username={this.state.username} />
-       </div>
-    )
+          <FavoriteCategories favoriteCategories={this.state.favoriteCategories} currentUID={this.state.profileUID} username={this.state.username} /> 
+        </div>
+      )
   }
-}
+}          
+
