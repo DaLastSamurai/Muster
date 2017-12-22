@@ -211,7 +211,6 @@ class AddItems extends React.Component {
   }
 
   componentDidMount() {
-
     //Checks database for collections owned by the user
     let currentUser;
     let collectionRef = firebase.database().ref('/collection');

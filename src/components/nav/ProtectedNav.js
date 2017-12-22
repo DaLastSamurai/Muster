@@ -58,7 +58,7 @@ export default class ProtectedNav extends React.Component {
               </Link>
             </li>
 
-            <li className="nav-item dropdown">
+            <li className="nav-item dropdown" onClick={() => { window.location.reload() }}>
               <Link to={'/addItems'}>
                 <a className="nav-link" title='add'>add</a>
               </Link>           
