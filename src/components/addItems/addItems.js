@@ -127,15 +127,6 @@ class AddItems extends React.Component {
     this.setState({
       _geoloc: obj
     }) 
-    // var locationObj = {};
-    // debugger
-    // locationObj['lng'] = this.lng
-    // locationObj['lat'] = this.lat
-    // locationObj['name'] = this.name 
-
-    // this.setState({
-    //   _geoloc: locationObj
-    // })
   };
 
   //Submits information in fields to the database
@@ -159,8 +150,6 @@ class AddItems extends React.Component {
     
     let newPostKey = this.state.id || 
       firebase.database().ref('/item').push().key;
-
-    // firebase.database().ref('/items-scanned/' + currentUID + '/' + this.state.id).remove();
 
     let updates = {};
     updates['/items-scanned/' + currentUID + '/' + this.state.id] = null;
