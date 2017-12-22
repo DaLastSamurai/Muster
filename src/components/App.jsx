@@ -166,8 +166,9 @@ export default class App extends React.Component {
             <ItemList {...props} userId={this.state.userId} />} />
 
             <Route path='/profile/:uid' onEnter={() => {this.reloadPage()}} component={ProfileFrame} />
-            <Route exact path='/addItems' render={() => 
-              <AddItems 
+            <Route exact path='/addItems' 
+              render={() => 
+                <AddItems 
                 user={this.state.user} 
                 userId={this.state.userId} 
                 editItem={this.state.editItem}
