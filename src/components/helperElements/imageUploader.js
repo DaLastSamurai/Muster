@@ -76,7 +76,7 @@ class ImageUpload extends Component {
               style={{ width: 300 }} />} */}
 
           <div>
-            <label>Change Profile Photo</label>
+            {/* <label>Change Profile Photo</label> */}
               {this.state.isUploading && 
                 <p>Progress: {this.state.progress}</p>}
           </div>
