@@ -75,6 +75,7 @@ class AddItems extends React.Component {
 
   //function called by edit item from inventory manager to fill fields
   setItemState(item) {
+    console.log('item.geoloc', item)
     this.setState({
       title: item.title,
       images: item.images,
@@ -83,16 +84,14 @@ class AddItems extends React.Component {
       onlinePrice: item.onlinePrice,
       storeLinks: item.storeLinks,
       subject: item.subject,
-
       id: item.id,
       name: item.name,
       imageUrl: item.images[0],
       collectionId: item.collectionId,
-      _geoLoc: item._geoLoc,
+      _geoloc: item._geoLoc,
       keywords: [],
       savedKeywords: []
     });
-
   };
 
   //Handles dynamically adding and removing keywords from suggested to saved
@@ -122,23 +121,25 @@ class AddItems extends React.Component {
     })
   };
   
-  handleGeoChange() {
-    var locationObj = {};
-    debugger
-    locationObj['lng'] = this.lng
-    locationObj['lat'] = this.lat
-    locationObj['name'] = this.name 
-
+  handleGeoChange(event) {
+    event.preventDefault();
+    let obj = event.target.value;
     this.setState({
-      _geoloc: locationObj
-    })
+      _geoloc: obj
+    }) 
+    // var locationObj = {};
+    // debugger
+    // locationObj['lng'] = this.lng
+    // locationObj['lat'] = this.lat
+    // locationObj['name'] = this.name 
+
+    // this.setState({
+    //   _geoloc: locationObj
+    // })
   };
 
   //Submits information in fields to the database
   handleSubmit(event) {
-    
-    console.log('geoloc in handlesubmit', this.state._geoLoc)
-
     let currentUID = firebase.auth().currentUser.uid
     let postData = {
       uid: currentUID,
@@ -150,7 +151,7 @@ class AddItems extends React.Component {
       onlinePrice: this.state.onlinePrice || '',
       storeLinks: this.state.storeLinks || {},
       subject: this.state.subject || '',
-      _geoloc: {lat: this.state._geoloc.lat, lng: this.state._geoloc.lng, name: this.state._geoloc.name},
+      _geoloc: JSON.parse(this.state._geoloc),
       savedKeywords: this.state.savedKeywords || [],
       sell: this.state.sell || '',
       price: this.state.price || ''
@@ -247,7 +248,6 @@ class AddItems extends React.Component {
         this.setState({
           locationList: grabLocations
         })
-        console.log('locationlist', this.state.locationList)
       })
 
     }, (error) => { console.error(error) }
@@ -400,7 +400,6 @@ class AddItems extends React.Component {
                   >
                     <option></option>
                     {this.state.locationList.map(location => {
-                        console.log('location in map function', location)
                         let locationObj = {};
 
                         locationObj['lng'] = location.lng
@@ -409,7 +408,7 @@ class AddItems extends React.Component {
                         
                         // let locationJSON = JSON.stringify(location)
                         // let reparsedObj = JSON.parse(locationJSON)
-                      return < option value={locationObj} > { location.name }</option>
+                      return < option value={JSON.stringify(locationObj)} > { location.name }</option>
                       }
                       )}
                   </select>
