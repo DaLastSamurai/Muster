@@ -186,7 +186,6 @@ handleRequest() {
       return firebase.database().ref().update(updateRec)
     })
     .then(() => {
-      whindow.indexName = "";
       this.setState({
         searchUser: '',
         exUserObj:[],
@@ -205,7 +204,18 @@ handleRequest() {
         tempSelectedItem: false,
       })
     })
+    window.location.reload();
   }
+}
+
+shouldComponentUpdate(nextProps, nextState) {
+  if (nextState !== this.state) {
+    return true;
+  }
+  if (nextProps !== this.props) {
+    return true;
+  }
+  return false;
 }
 
 handleshowSearchBox() {
