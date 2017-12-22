@@ -1,4 +1,4 @@
-/* base */
+ /* base */
 html {
   height: 100%;
   margin: 0;
@@ -1497,7 +1497,7 @@ img {
   /* display: none; */
 }
 .dragulaContainer {
-  min-height: 20px;
+  min-height: 200px;
 }
 
 
@@ -1658,13 +1658,8 @@ em {
 
   .like-button {
     position: relative;
-    bottom: 8px;
-    left: 3px;
-    /* bottom: 8px; */
-    /* left: 6px; */
-    /* bottom: 8px; */
-    left: 6px;
     display: flex;
+    top: 24px;
     flex-direction: row;
     justify-content: flex-end;
     padding : 1px;
@@ -1677,7 +1672,7 @@ em {
   .like-button button {
     padding: 3px 5px;
     position: relative;
-    top: 3px;
+    /* top: 10px; */
   }
 
   .like-button button:hover {
@@ -1765,6 +1760,8 @@ em {
   overflow-x: auto;
   overflow-y: auto;
   white-space: nowrap;
+  display: flex;
+  justify-content: center;
 }
 
 .card {
@@ -1786,6 +1783,12 @@ em {
   width:100%;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.profile-box {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 div.col-sm-2 {

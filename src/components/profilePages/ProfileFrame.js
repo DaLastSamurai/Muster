@@ -137,11 +137,10 @@ export default class ProfileFrame extends React.Component {
       : (
         <div className="profile-container">
           <h2>{this.state.username ? `${this.state.username}'s Muster` : null}</h2>
-
+          
           {this.state.isUsersProfile
             ? (
-              <div >
-
+              <div>
                 <div className="profile-header"
                   onMouseEnter={() => {
                     this.setState({ showUploadImage: true })
@@ -232,7 +231,7 @@ export default class ProfileFrame extends React.Component {
               </div>
             )
           }
-
+         
           <FavoriteCategories favoriteCategories={this.state.favoriteCategories} currentUID={this.state.profileUID} username={this.state.username} /> 
         </div>
       )
