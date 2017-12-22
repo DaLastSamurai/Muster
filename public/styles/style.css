@@ -1647,6 +1647,8 @@ em {
     left: 3px;
     /* bottom: 8px; */
     /* left: 6px; */
+    /* bottom: 8px; */
+    left: 6px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
