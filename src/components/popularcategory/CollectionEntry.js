@@ -23,12 +23,12 @@ class CollectionEntry extends React.Component {
 
   render() {
     return(
-      <div>
+      <div className="clickable-text">
           {this.state.image 
           ? <img className="card-size-images" src={this.state.image} />
           : <img className="card-size-images" src="http://www.aitwb.org/upload/centers_img/no-image-available.jpg"/>}
           <div className="category-overlay-text">
-            <h4>{this.props.collection.name}</h4>
+            <h4 >{this.props.collection.name}</h4>
           </div>
       </div>
     )

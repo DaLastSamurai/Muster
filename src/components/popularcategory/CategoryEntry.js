@@ -80,16 +80,12 @@ class CategoryEntry extends React.Component {
   render() {
     // add a carousel to these with images from the collections. 
     return(
-      <div className='popular-category'>
-      <Link to={`/collections/:${this.props.category[0]}`}>
+      <div className='popular-category clickable-text'>
+      <Link className="clickable-text" to={`/collections/:${this.props.category[0]}`}>
         {this.state.image 
           ? <img className="card-size-images" src={this.state.image} />
-          : <img className="card-size-images" src="http://www.aitwb.org/upload/centers_img/no-image-available.jpg"/>}
-        <div className="category-overlay-text">
-          
-            <h4>{this.props.category[0]}</h4>
-          
-        </div>
+          : <img className="card-size-images" src="http://www.aitwb.org/upload/centers_img/no-image-available.jpg"/>}          
+            <h4 >{this.props.category[0]}</h4>
         </Link>
         <div className="like-button">
           {!!firebase.auth().currentUser ?

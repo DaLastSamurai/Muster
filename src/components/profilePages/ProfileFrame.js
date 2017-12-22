@@ -40,6 +40,9 @@ export default class ProfileFrame extends React.Component {
       favoriteCategories: null,
 
       reloaded: false,
+
+      //toggle upload image option on hover
+      showUploadImage: false,
     };
     this.isStringAcceptable = isStringAcceptable.bind(this) // imported from profileHelpers.js
     this.addUserDataToState = this.addUserDataToState.bind(this)
@@ -131,39 +134,53 @@ export default class ProfileFrame extends React.Component {
       ? (<div> loading... </div> ) 
       : (
         <div className="profile-container">
-
-
-          <div className = "followBar"> 
-            {this.state.isUsersProfile 
-              ? <div />
-              : <FollowButton 
-                  profileUID={this.state.profileUID}
-                />
-            }
-            <div className="follow-unfollow">
-              <FollowDropDown
-                title = {"followers"}
-                users = {this.state.followers || {}}
-                updateProfileUID = {this.updateProfileUID}
-              />
-            </div>
-            <div className="follow-unfollow">
-              <FollowDropDown
-                title = {"following"}
-                users = {this.state.following || {}}
-                updateProfileUID = {this.updateProfileUID}
-              />
-            </div>
-          </div>
-
-
+        <h2>{this.state.username? `${ this.state.username }'s Muster` : null}</h2>
 
           {this.state.isUsersProfile
             ? (
-              <div>
-              
-                <ImageUpload setImageState={this.setImageState}/>
-                <img src={this.state.profilePhoto} className = "profilePhoto"/>
+              <div >
+                
+                <div className="profile-header"                 
+                  onMouseEnter={()=>{
+                      this.setState({showUploadImage : true})
+                      console.log('show image uploader? ', this.state.showUploadImage)
+                    }} 
+                    onMouseLeave={()=>{
+                      this.setState({showUploadImage : false})
+                      console.log('show image uploader? ', this.state.showUploadImage)
+                    }}
+                >
+                  <img src={this.state.profilePhoto} className="profilePhoto" />
+                  {this.state.showUploadImage !== false ? 
+                    <div className="image-uploader clickable-text">
+                      <ImageUpload setImageState={this.setImageState}/>
+                    </div> : null
+                  }
+                <div className="followBar"> 
+                  {this.state.isUsersProfile 
+                    ? <div />
+                    : <FollowButton 
+                        profileUID={this.state.profileUID}
+                      />
+                  }
+                  <div className="follow-unfollow">
+                    <FollowDropDown
+                      title = {"followers"}
+                      users = {this.state.followers || {}}
+                      updateProfileUID = {this.updateProfileUID}
+                    />
+                  </div>
+                  <div className="follow-unfollow">
+                    <FollowDropDown
+                      title = { "following" }
+                      users = { this.state.following || {} }
+                      updateProfileUID = {this.updateProfileUID}
+                    />
+                  </div>
+                </div>
+
+              </div>
+
                 <div>
                 <a className="clickable-text">
                   Username : 

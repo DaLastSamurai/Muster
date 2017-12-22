@@ -1,6 +1,7 @@
 import React from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { Configure } from 'react-instantsearch/dom';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 
 
 class Map extends React.Component {
@@ -28,7 +29,7 @@ class Map extends React.Component {
   render() {
     // console.log(this.props.userLoc ? 'yes' : 'no');
     // console.log('this is filtered searches >>> ', this.state.filteredSearches)
-    // console.log('current marker state >>> ', this.state.currentMarker)
+    console.log('current marker state >>> ', this.state.currentMarker)
     return (
       <div>
       <Configure insideBoundingBox={[this.state.coordinates]} />    
@@ -55,7 +56,9 @@ class Map extends React.Component {
           >
             <div style={{ backgroundColor: `white`, opacity: 0.75, padding: `0px` }}>
               <div style={{ fontSize: `12px`, fontColor: `#08233B` }}>
-                {this.state.currentMarker.title}
+                <Link to={ `/items/:${ this.state.currentMarker.collectionId }` }>
+                  {this.state.currentMarker.title}
+                </Link>
               </div>
             </div>
           </InfoWindow>) 
