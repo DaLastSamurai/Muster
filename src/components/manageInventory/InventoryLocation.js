@@ -40,14 +40,21 @@ class InventoryLocation extends React.Component {
       // ignoreInputTextSelection: true     // allows users to select input text, see details below gu-transit  
     };
 
+    // updates['/category/' + targetId + '/collectionId/' + clickedEl] = collectionName;
+    // firebase.database().ref().update(updates);
+    // category.child(sourceId).child('collectionId').child(clickedEl).remove()
+
     if(componentBackingInstance) {
       let drake = Dragula(componentBackingInstance, option)
       .on('drop', (el, target, source) => {
         let clickedEl = el.className.split(' ')[0];
         let targetId = target.className.split(' ')[0];
         let sourceId = source.className.split(' ')[0];
-        console.log('drag on', clickedEl, targetId, sourceId)
-        item.child(clickedEl).child('location').set(targetId)
+        // console.log('drag on', clickedEl, targetId, sourceId)
+        // item.child(clickedEl).child('_geoloc').set(targetId)
+        let updates = {};
+        updates['/item/' + clackedEl + '/_geoloc/name'] = targetId;
+        firebase.database().ref().update(updates);
       })
     }
   };
@@ -64,7 +71,9 @@ class InventoryLocation extends React.Component {
         <div className="manage-inventory-sortby">
           {Object.keys(this.props.itemList).length > 0 
             ? [...new Set(Object.keys(this.props.itemList).map((itemKey) => {
-                return this.props.itemList[itemKey]['location']
+                if (this.props.itemList[itemKey]['_geoloc']) {
+                  return this.props.itemList[itemKey]['_geoloc']['name'];
+                }
               }))].map((location) => {
                 return <InventoryLocationList
                   key={location}

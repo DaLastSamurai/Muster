@@ -25,7 +25,10 @@ class InventoryLocationList extends React.Component {
             <div className={`${this.props.location} dragulaContainer`} ref='node'>
             {this.props.itemList
             ? Object.keys(this.props.itemList).filter((id) => {
-              return this.props.itemList[id]['location'] === this.props.location
+              if (this.props.itemList[id]['_geoloc']) {
+                return this.props.itemList[id]['_geoloc']['name'] === this.props.location;
+              }
+              // return this.props.itemList[id]['_geoloc']['name'] === this.props.location
             }).map((itemKey) => {
                 // console.log('need to be filtered',this.props.itemList[itemKey], this.props.location)
                 return <InventoryLocationEntry 
