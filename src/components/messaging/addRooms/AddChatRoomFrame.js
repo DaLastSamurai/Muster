@@ -109,7 +109,7 @@ export default class AddChatRoomFrame extends React.Component {
     ? (
       <div className="chat-add-room">
 
-        New Chat
+        <h4>New Chat</h4>
         <input
           autoComplete="off"
           className="form-control"
@@ -121,7 +121,7 @@ export default class AddChatRoomFrame extends React.Component {
           onKeyUp={this.checkSubmit}
         />
         <div>
-        You may add any user that is following you: 
+        <h4>You may add any user that is following you:</h4>
         </div>
         <div>
           <AutoCompleteInput className="chat-autocomplete-input"
@@ -148,7 +148,7 @@ export default class AddChatRoomFrame extends React.Component {
           Publish Chat Room
         </button> 
         <div> 
-          Users In ChatRoom: 
+          Users In ChatRoom:
           {this.state.chatRoomMembers.map(member => 
             <div> 
               {member.label}   
@@ -167,8 +167,8 @@ export default class AddChatRoomFrame extends React.Component {
       </div> 
     )
     : (
-      <div> 
-        <button onClick = {this.toggleIsAddingChatRoom}> 
+      <div className="create-newchat-box"> 
+        <button className="create-new-chat" onClick = {this.toggleIsAddingChatRoom}> 
           Create a New Chat
         </button> 
       </div>

@@ -51,7 +51,7 @@ export default class ChatRoomList extends React.Component {
         <AddChatRoomFrame userChatRoomData = {this.state.userChatRoomData} />
         
         {Object.keys(this.state.userChatRooms).length === 0 
-        ? (<div> You don't have any chats yet </div>)
+        ? (<h6 className= "nochatroom-text">You don't have any chats yet</h6>)
         : (
           <div>
             <ul className="ChatRoomEntries" >
