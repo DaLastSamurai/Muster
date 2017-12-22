@@ -22,19 +22,23 @@ class EditCollection extends React.Component {
 
   render() {console.log('>>>>>>>>',this.props.collection)
     return(
-      <div>
+      <div className="edit-collection-box">
+      <div className="edit-collection">
           <label>Name</label>
           <input 
             type="text"
             name="name"
             placeholder={`${this.props.collection.name}`}
             onChange={this.handleChange} />
+      </div>
+      <div className="edit-collection-public">
           <label>public</label>
           <div>
             <input type="checkbox" id="public" name="public" value="public"  />
-            <p for="public">Coding</p>
+            {/* <p for="public">Coding</p> */}
           </div>
-          <button>submit change</button>
+      </div>
+          <button className="edit-col-btn">submit change</button>
       </div>
     )
   }
