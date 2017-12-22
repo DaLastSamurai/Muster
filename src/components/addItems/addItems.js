@@ -193,7 +193,7 @@ class AddItems extends React.Component {
       // var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + x + "," + y + "&zoom=17&size=400x400&sensor=false";
 
       this.setState({
-        _geolocPosition: position,
+        _geolocPosition: {lat: x, lng: y},
         // _geolocImage: img
       })
     },
@@ -420,7 +420,7 @@ class AddItems extends React.Component {
 
               {
 
-                (this.state._geolocPosition !== null) ?
+                (this.state._geolocPosition) ?
                   <div id="out">
                     {/* <img src={this.state._geolocImage}/>     */}
 

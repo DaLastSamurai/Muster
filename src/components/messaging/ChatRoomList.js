@@ -54,7 +54,6 @@ export default class ChatRoomList extends React.Component {
         ? (<div> You don't have any chats yet </div>)
         : (
           <div>
-            ==ChatRoomList==
             <ul className="ChatRoomEntries" >
               {
                 Object.keys(this.state.userChatRooms).map((chatRoomName) => {

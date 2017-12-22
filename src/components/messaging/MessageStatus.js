@@ -28,8 +28,8 @@ export default class MessageStatus extends React.Component {
   render() {
     
     return  (
-      <div>
-        =messageStatus=
+      <div className="chat-status">
+        {/* =messageStatus= */}
         
 
       </div> 

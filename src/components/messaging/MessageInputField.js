@@ -62,7 +62,7 @@ export default class MessageInputField extends React.Component {
   render() {
 
     return  (
-      <div>
+      <div className="chat-input-field">
         {/*=messageInputField= */}
         <input
           autoComplete="off"
