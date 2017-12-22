@@ -377,6 +377,10 @@ input[type=submit]:hover {
 
 /* add items */
 
+.scaned-item {
+  margin: 5%;
+}
+
 .additems-container {
   padding: 100px;
   display: flex;
@@ -385,6 +389,11 @@ input[type=submit]:hover {
 
 .additems-forms {
 
+}
+
+.additems-forms input {
+  /* border: solid red; */
+  width: 100%;
 }
 
 .additems-suggested {
@@ -578,7 +587,7 @@ input[type=submit]:hover {
 }
 
 .manage-item-itemedit {
-  /* display: flex; */
+  display: flex;
   justify-content: flex-end;
 }
 
@@ -1627,9 +1636,11 @@ em {
     text-align : center;
   }
 
+
+
   .like-button {
     position: relative;
-    bottom: 8px;
+    /* bottom: 8px; */
     left: 6px;
     display: flex;
     flex-direction: row;
@@ -1655,6 +1666,11 @@ em {
   .popular-category {
     padding : 5px; 
       
+  }
+
+  .popular-category h4 {
+    margin-top: 4px;
+    margin-bottom: 0;
   }
 
   .category-overlay-text {
