@@ -54,7 +54,7 @@ export default class ProfileFrame extends React.Component {
   }
 
   componentWillMount() {
-    // console.log('the state has changed: ', this.state.profileUID)
+    console.log('the state has changed: ', this.state.profileUID)
     this.setCurrentUserAndIsUsersProfile()
     this.addUserDataToState(["bio", "username", "profilePhoto", "following", "followers", "favoriteCategories"])
   }
@@ -152,9 +152,12 @@ export default class ProfileFrame extends React.Component {
                       console.log('show image uploader? ', this.state.showUploadImage)
                     }}
                 >
+                  {this.state.profilePhoto !== null? 
                   <img src={this.state.profilePhoto} className="profilePhoto" />
-                  
                     
+                  : <img src="http://peacelabs.co/_assets/img/default_avatar.png" />}
+                  {this.state.showUploadImage !== false ? 
+
                     <div className="image-uploader clickable-text">
                       <AvatarUpload setImageState={this.setImageState}/>
                     </div>
@@ -233,7 +236,7 @@ export default class ProfileFrame extends React.Component {
             )
           }
 
-          <FavoriteCategories favoriteCategories={this.state.favoriteCategories} />
+          <FavoriteCategories favoriteCategories={this.state.favoriteCategories} currentUID={this.state.profileUID} username={this.state.username} />
        </div>
     )
   }
