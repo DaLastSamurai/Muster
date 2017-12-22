@@ -6,11 +6,13 @@ import { isStringAcceptable } from './profileHelpers.js'
 import FavoriteCategories from './FavoriteCategories'
 import FollowButton from './FollowButton'
 import FollowDropDown from './FollowDropDown' // for both followers and following.
-import ImageUpload from '../helperElements/imageUploader'
+// import ImageUpload from '../helperElements/imageUploader'
+import AvatarUpload from '../helperElements/avatarUploader'
 // dynamic text editing:
 import { RIEToggle, RIEInput, RIETextArea, RIENumber, RIETags, RIESelect } from 'riek'
 import _ from 'lodash'
 // this profile is always called by a route in the form /profile/:uid
+
 
 export default class ProfileFrame extends React.Component {
   constructor(props) {
@@ -71,16 +73,16 @@ export default class ProfileFrame extends React.Component {
   }
 
   setCurrentUserAndIsUsersProfile() {
-    // precarious
+    console.log('propsmatchparamsuid', this.props.match.params.uid )
     let currentUser = "none"
     if (firebase.auth().currentUser !== null) {
-      currentUser = firebaseAuth().currentUser.uid
+      currentUser = firebase.auth().currentUser.uid
     }
-    this.setState({currentUser}, () => {
+    this.setState({ currentUser }, () => {
       if (currentUser === this.props.match.params.uid) {
-        this.setState({isUsersProfile : true})
+        this.setState({ isUsersProfile: true })
       } else {
-        this.setState({isUsersProfile : false})
+        this.setState({ isUsersProfile: false })
       }
     })
   }
@@ -151,11 +153,12 @@ export default class ProfileFrame extends React.Component {
                     }}
                 >
                   <img src={this.state.profilePhoto} className="profilePhoto" />
-                  {this.state.showUploadImage !== false ? 
+                  
+                    
                     <div className="image-uploader clickable-text">
-                      <ImageUpload setImageState={this.setImageState}/>
-                    </div> : null
-                  }
+                      <AvatarUpload setImageState={this.setImageState}/>
+                    </div>
+
                 <div className="followBar"> 
                   {this.state.isUsersProfile 
                     ? <div />
@@ -220,6 +223,12 @@ export default class ProfileFrame extends React.Component {
                     Username: {this.state.username}
                   </h3> 
                 </div>
+                {this.state.isUsersProfile
+                  ? <div />
+                  : <FollowButton
+                    profileUID={this.state.profileUID}
+                  />
+                }
               </div>
             )
           }

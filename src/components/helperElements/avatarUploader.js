@@ -1,38 +1,38 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import ImageUploader from 'react-firebase-image-uploader';
+import ImageRecog from './imageRecog';
 
-//component called in none
+//component called in addItems
 
 class AvatarUpload extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      avatar: '',
+      image: '',
       isUploading: false,
       progress: 0,
-      avatarUrl: ''
+      imageURL: '',
+      keywords: []
     };
 
-    this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleUploadStart = this.handleUploadStart.bind(this);
     this.handleProgress = this.handleProgress.bind(this);
     this.handleUploadError = this.handleUploadError.bind(this);
     this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
-  }
-
-  handleChangeUsername(event) {
-    this.setState({ username: event.target.value });
   };
 
   handleUploadStart() {
-    this.setState({ 
-      isUploading: true, 
-      progress: 0 
+    this.setState({
+      isUploading: true,
+      progress: 0
     });
   };
 
-  handleProgress(progress) { this.setState({ progress }) };
+  handleProgress(progress) {
+    this.setState({ progress })
+  };
 
   handleUploadError(error) {
     this.setState({ isUploading: false });
@@ -41,33 +41,50 @@ class AvatarUpload extends Component {
 
   handleUploadSuccess(filename) {
     this.setState({
-      avatar: filename,
+      image: filename,
       progress: 100,
       isUploading: false
     });
-
-    firebase.storage().ref('avatars/').child(filename)
-      .getDownloadURL().then(url =>
-        this.setState({ avatarUrl: url }));
+    firebase.storage().ref('avatars').child(filename)
+      .getDownloadURL()
+      .then(imageURL => {
+        this.setState({ imageURL }, () => {
+          this.props.setImageState(imageURL)
+        })
+        // ImageRecog(imageURL, (keywords) => {
+        //   this.setState({ keywords }, () => {
+        //     this.props.setKeywordsState(keywords)
+        //   })
+        // })
+      })
   };
 
   render() {
     return (
-      <div>
+      <div >
         <form>
+          <label>Change Avatar</label>
+          {this.props.images ?
+            this.props.images.map(image => {
+              return <img src={image} style={{ width: 300 }} />
+            })
+            : null
+          }
+          {/* {this.props.images.map(image => {
+          return <img src={image} style={{width: 300}} />})} */}
 
-          <label>Avatar</label>
+          {/* {this.props.imageUrl &&
+            <img src={this.props.imageUrl}
+              style={{ width: 300 }} />} */}
 
-          {this.state.isUploading &&
-            <p>Progress: {this.state.progress}</p>}
-          
-          {this.state.avatarUrl &&
-            <img src={this.state.avatarUrl}
-              style={{ width: 100, height: 100 }}/>}
-
+          <div>
+            {/* <label>Change Profile Photo</label> */}
+            {this.state.isUploading &&
+              <p>Progress: {this.state.progress}</p>}
+          </div>
           <ImageUploader
-            name="avatar"
-            storageRef={firebase.storage().ref('avatars/')}
+            name="image"
+            storageRef={firebase.storage().ref('avatars')}
             onUploadStart={this.handleUploadStart}
             onUploadError={this.handleUploadError}
             onUploadSuccess={this.handleUploadSuccess}
