@@ -37,7 +37,8 @@ export default class Signup extends React.Component {
 
   render() {
     return (
-      <div className="col-sm-4 col-sm-offset-4">
+      <div className="col-sm-6 col-sm-offset-4">
+      <div className="login-form-container">
         <h1> Sign Up </h1>
           {/* This is the google authentication: */}
           <div> 
@@ -53,19 +54,20 @@ export default class Signup extends React.Component {
 
         <form onSubmit={this.handleEmailSubmit}>
           <div className="form-group">
-            <label>Email</label>
-            <input className="form-control" ref={(email) => this.state.email = email} placeholder="Your Email Address"/>
+            <h4>Email</h4>
+            <input type='email' className="form-control" ref={(email) => this.state.email = email} placeholder="Your Email Address"/>
           </div>
           <div className="form-group">
-            <label>Password</label>
+            <h4>Password</h4>
             <input type="password" className="form-control" placeholder="Password" ref={(pw) => this.state.pw = pw} />
           </div>
           <button type="submit" className="btn btn-primary">Sign Up</button>
-        <div>
+        <div className="signuppg-button">
           {this.state.error}   
           <LinkButton title='Login Page' clickFunction={this.props.loadLoginPage}/>
         </div> 
         </form>
+        </div>
       </div> 
     )
   }

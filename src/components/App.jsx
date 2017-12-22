@@ -144,7 +144,7 @@ export default class App extends React.Component {
           : (
               <div className= 'unprotectednav-container'>
                 <UnprotectedNav setIsOnAuthFrame={this.setIsOnAuthFrame} />
-                <div>
+                <div className="login-form-outerbox">
                   {this.state.isOnAuthFrame
                     ? (<AuthFrame user={this.props.user} isSigningUp={false} />)
                     : (<div />
