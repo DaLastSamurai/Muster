@@ -68,13 +68,18 @@ export default class FollowButton extends React.Component {
     // console.log('this is the props in follow button', this.props)
     return this.state.isFollowing 
     ? (
-      <div>
+      <div className="follow-button">
+        <button>
         <LinkButton title='Unfollow' clickFunction={this.handleUnfollow} />
+        </button>
       </div> 
     ) : (
-      <div>
+      <div className="follow-button">
+        <button>
         <LinkButton title='Follow' clickFunction={this.handleFollow} />
+        </button>
       </div> 
     )
   }
 }
+
