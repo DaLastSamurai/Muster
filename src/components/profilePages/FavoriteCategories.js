@@ -19,7 +19,7 @@ export default class FavoriteCategories extends React.Component {
 
   componentDidMount() {
     
-    var userId = firebaseAuth().currentUser.uid
+    // var userId = firebaseAuth().currentUser.uid
     new Promise((resolve, reject) => {
       collection.on("value", (snap) => {
         this.setState({collection : snap.val()})
@@ -31,7 +31,7 @@ export default class FavoriteCategories extends React.Component {
       // get all user's favorite categories
       users.on("value", (snap) => {
         // set user's favorited categories to state and pass in promise
-        resolve(snap.val()[userId].profileInfo.favoriteCategories)
+        resolve(snap.val()[this.props.currentUID].profileInfo.favoriteCategories)
       })
     })
     .then((userFavCatObj) => {
@@ -56,7 +56,7 @@ export default class FavoriteCategories extends React.Component {
   render() {
     return (
       <div >
-        <h3> My Favorite Categories </h3>
+        <h3> {this.props.username}'s Favorites </h3>
         <div className="carousel-images" >
             {
               this.state.favoriteCategories.map((category) =>
