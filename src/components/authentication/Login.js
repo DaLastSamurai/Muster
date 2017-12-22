@@ -45,6 +45,7 @@ export default class Login extends React.Component {
     // console.log('these are the props from authFrame', this.props)
     return (
       <div className="col-sm-6 col-sm-offset-4">
+      <div className="login-form-container">
         <h1> Login </h1>
         
         {/* This is the google authentication: */}
@@ -60,16 +61,16 @@ export default class Login extends React.Component {
         {/* This is the email auth*/}
         <form onSubmit={this.handleEmailSubmit}>
           <div className="form-group">
-            <label>Email</label>
-            <input className="form-control" ref={(email) => this.state.email = email} placeholder="Your Email Address"/>
+            <h4>Email</h4>
+            <input type="email" className="form-control" ref={(email) => this.state.email = email} placeholder="Your Email Address"/>
           </div>
           <div className="form-group">
-            <label>Password</label>
+            <h4>Password</h4>
             <input type="password" className="form-control" placeholder="Password" ref={(pw) => this.state.pw = pw} />
           </div>
             <button type="submit" className="btn btn-primary">Login</button>
         </form>
-        <div>
+        <div className="loginpg-button">
           {this.state.error} 
           {!this.state.resettingPW 
             ? (<LinkButton title='Reset Password' clickFunction={() => { this.setState({resettingPW : true}) } }/>)
@@ -77,6 +78,7 @@ export default class Login extends React.Component {
           }
           <LinkButton title='Signup Page' clickFunction={this.props.loadSignupPage}/>
         </div> 
+        </div>
       </div> 
     )
   }

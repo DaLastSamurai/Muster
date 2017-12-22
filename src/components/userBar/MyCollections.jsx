@@ -42,8 +42,8 @@ export default class MyCollections extends React.Component {
   render() {
     return(
       <nav className="mycollections-container">
-        <ul >
-          <li>
+        {/* <ul > */}
+          {/* <li>
             <button type="button" className="btn btn-outline-secondary bg-primary"
             onClick={() => { this.toggleInputForm() }}>
             New Collection
@@ -55,11 +55,11 @@ export default class MyCollections extends React.Component {
             addNewCollection={this.addNewCollection}
             handleAddCollection={this.handleAddCollection} />) :
             (<div />)}
-          </li>
+          </li> */}
 
           <MyCollectionsList collections={this.props.collections} />
         
-        </ul>
+        {/* </ul> */}
 
       </nav>
     )

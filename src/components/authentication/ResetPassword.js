@@ -23,10 +23,10 @@ export default class ResetPassword extends React.Component {
 
   render() {
     return (
-      <div className="">
+      <div className="resetpass-form-box">
         <form onSubmit={this.resetPassword}>
           <div className="form-group">
-            <input 
+            <input type='text'
               className="form-control" 
               ref={(email) => this.state.email = email} 
               placeholder="Enter Your Email To Reset Password"
