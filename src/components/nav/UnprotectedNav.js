@@ -18,10 +18,7 @@ export default class UnprotectedNav extends React.Component {
   }
 
   componentDidMount() {
-
-
     this.state = {};
-
   }
 
   /* THIS IS THE UNPROTECTED NAV, MEANING ALL BUTTONS AND ROUTES WILL BE VISIBLE
@@ -39,19 +36,11 @@ export default class UnprotectedNav extends React.Component {
             <Link to="/searching">
               <SearchHits />
             </Link>
-            {/* <SearchToggler searchBy={this.props.searchBy} /> */}
           </div>
         </div>
 
         <div className="login-nav">
           <ul className="nav-items">
-
-            {/* <li className="link-button">
-              <Link to="/">
-                <LinkButton title='Home' clickFunction={() => {}}/>
-              </Link>
-            </li> */}
-
             <li className="link-button">
               <Link to="/">
                 <LinkButton title='Login' clickFunction={() => {
@@ -61,17 +50,7 @@ export default class UnprotectedNav extends React.Component {
                 }} />
               </Link>
             </li>
-
           </ul>
-          {/* <Link to="/searching">
-            <SearchHits />
-          </Link> */}
-          {/*<ul className="nav navbar-nav">
-            <li className="navbar-text navbar-center align-top search-bar">
-              <SearchBar search={(input) => {console.log(`you searched: ${input}, but this search function doesnt do shit`)}}/>
-            </li>
-          </ul>*/}
-
         </div>
       </div>
     )

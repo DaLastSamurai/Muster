@@ -6,11 +6,10 @@ import MapContainer from '../Map/MapContainer.jsx'
 
 
 function foundItem({hit}) {
-  // console.log(hit)
   return(
-    <div> 
+    <div /*onClick={(e)=> console.log('this is what the click handler passes: ', hit)}*/> 
       {window.indexName === undefined && (
-      <div onClick={ (e)=> console.log('this is what the item click handler passes: ', hit) }>
+      <div>
           {hit.author !== ""? /* check if it's book or 'item'*/
             <div> 
               
@@ -22,7 +21,7 @@ function foundItem({hit}) {
               { hit.price ? <div> ${hit.price} </div> :<div> price upon request </div> }
               { hit.savedKeywords ? 
                 <p className="search-text"> 
-                  Tags : { hit.savedKeywords.map((tag)=> {return <a className="tags"> { tag } </a>}) } 
+                  Tags : { hit.savedKeywords.map((tag, index)=> {return <a className="tags" key={index}> { tag } </a>}) } 
                 </p> 
               : null }
               <br />
@@ -33,7 +32,7 @@ function foundItem({hit}) {
       )}
 
       {window.indexName === 'item' && (
-        <div onClick={ (e)=> console.log('this is what the item click handler passes: ', hit) }>
+        <div>
         {/* only show books */}
           {hit.author !== ""?
             <div> 
@@ -52,7 +51,7 @@ function foundItem({hit}) {
       )}
 
       {window.indexName === 'users' &&
-        (<div onClick={ (e)=> console.log('this is what the users click handler passes: ', hit) }>
+        (<div>
           <Link to={ `/profile/`+ `${hit.objectID}` }>
             <img className="card-size-images" src={ hit.profileInfo.profilePhoto } />
             { hit.profileInfo.username }
@@ -60,7 +59,7 @@ function foundItem({hit}) {
       </div>) }
 
       {window.indexName === 'category' &&
-          (<div onClick={(e)=> console.log('this is what the category click handler passes: ', hit) }>
+          (<div>
           <Link to={ `/collections/:` + `${ hit.objectID }` }>
             { hit.objectID }
           </Link>
@@ -73,7 +72,6 @@ function foundItem({hit}) {
 
 //think of this as Search Result List component. it's like Search Result List Entry, maps and formats each found entry
   function Search(props) {
-    // console.log('props in Search:', props)
     return (
       <div className="search-container">
         <div className="search-list-container">
@@ -99,20 +97,17 @@ function foundItem({hit}) {
         </div>
 
         <div className="search-map">
-          <MapContainer hits={JSON.stringify(props)}/>
+          <MapContainer 
+          hits={JSON.stringify(props)}
+          />
         </div>
       </div>
     )
   }
+export default connectHits(Search); //place through higher order function
 
-//place through higher order function
-export default connectHits(Search);
 
 export class SearchHits extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <header className="searchBar">
