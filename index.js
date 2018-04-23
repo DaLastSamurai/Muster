@@ -20,17 +20,17 @@ const item = algolia.initIndex('item');
 const users  = algolia.initIndex('users')
 const category  = algolia.initIndex('category')
 const collection  = algolia.initIndex('collection')
-const dummyData = algolia.initIndex('geoSearchDummy')
-//////////////////////////////////////////// configure search settings
+// const dummyData = algolia.initIndex('geoSearchDummy')
+// //////////////////////////////////////////// configure search settings
 
-dummyData.setSettings({
-  searchableAttributes: [
-    'name',
-    'location',
-    'savedKeywords',
-    '_geoloc'
-  ]
-})
+// dummyData.setSettings({
+//   searchableAttributes: [
+//     'name',
+//     'location',
+//     'savedKeywords',
+//     '_geoloc'
+//   ]
+// })
 
 item.setSettings({
   searchableAttributes: [
@@ -42,11 +42,12 @@ item.setSettings({
     'storeLinks',
     'subject',
     'title'
-  ]
+  ],
+  hitsPerPage: 20,
 });
 
 
-///////////////////////////////////////////////////////////////////////////// INitial Import / One time get allData from Firebase
+// ///////////////////////////////////////////////////////////////////////////// INitial Import / One time get allData from Firebase
 // database.ref('users/').once('value', item => {
 //   // Build an array of all records to push to Algolia
 //   const records = [];
@@ -64,14 +65,40 @@ item.setSettings({
 //   users
 //     .saveObjects(records)
 //     .then(() => {
-      // console.log('items imported into Algolia');
+//       console.log('items imported into Algolia');
 //     })
 //     .catch(error => {
-      // console.error('Error when importing items into Algolia', error);
+//       console.error('Error when importing items into Algolia', error);
 //       process.exit(1);
 //     });
 // });
-/////////////////////////////////////////////////////////////////////////////
+
+
+database.ref('item/').once('value', item => {
+  // Build an array of all records to push to Algolia
+  const records = [];
+  item.forEach(item => {
+    // get the key and data from the snapshot
+    const childKey = item.key;
+    const childData = item.val();
+    // We set the Algolia objectID as the Firebase .key
+    childData.objectID = childKey;
+    // Add object for indexing
+    records.push(childData);
+  });
+
+  // Add or update new objects
+  // item
+  //   .saveObjects(records)
+  //   .then(() => {
+  //     console.log('items imported into Algolia');
+  //   })
+  //   .catch(error => {
+  //     console.error('Error when importing items into Algolia', error);
+  //     process.exit(1);
+  //   });
+});
+// /////////////////////////////////////////////////////////////////////////////
 
 const itemRef = database.ref('item/');
 itemRef.on('child_added', addOrUpdateItemRecord);
@@ -148,39 +175,39 @@ function deleteUserRecord(user) {
 }
 
 
-const categoryRef = database.ref('category/');
-categoryRef.on('child_added', addOrUpdateCategoryRecord);
-categoryRef.on('child_changed', addOrUpdateCategoryRecord);
-categoryRef.on('child_removed', deleteCategoryRecord);
+// const categoryRef = database.ref('category/');
+// categoryRef.on('child_added', addOrUpdateCategoryRecord);
+// categoryRef.on('child_changed', addOrUpdateCategoryRecord);
+// categoryRef.on('child_removed', deleteCategoryRecord);
 
-function addOrUpdateCategoryRecord(category_) {
-  // Get Firebase object
-  const records = category_.val();
-  // Specify Algolia's objectID using the Firebase object key
-  records.objectID = category_.key;
-  // Add or update object
-  category
-    .saveObject(records)
-    .then(() => {
-      console.log('Firebase object indexed in Algolia', records.objectID);
-    })
-    .catch(error => {
-      console.error('Error when indexing users into Algolia', error);
-      process.exit(1);
-    });
-}
+// function addOrUpdateCategoryRecord(category_) {
+//   // Get Firebase object
+//   const records = category_.val();
+//   // Specify Algolia's objectID using the Firebase object key
+//   records.objectID = category_.key;
+//   // Add or update object
+//   category
+//     .saveObject(records)
+//     .then(() => {
+//       console.log('Firebase object indexed in Algolia', records.objectID);
+//     })
+//     .catch(error => {
+//       console.error('Error when indexing users into Algolia', error);
+//       process.exit(1);
+//     });
+// }
 
-function deleteCategoryRecord(category_) {
-  // Get Algolia's objectID from the Firebase object key
-  const objectID = category_.key;
-  // Remove the object from Algolia
-  category
-    .deleteObject(objectID)
-    .then(() => {
-      // console.log('Firebase object deleted from Algolia', objectID);
-    })
-    .catch(error => {
-      console.error('Error when deleting category from Algolia', error);
-      process.exit(1);
-    });
-}
+// function deleteCategoryRecord(category_) {
+//   // Get Algolia's objectID from the Firebase object key
+//   const objectID = category_.key;
+//   // Remove the object from Algolia
+//   category
+//     .deleteObject(objectID)
+//     .then(() => {
+//       // console.log('Firebase object deleted from Algolia', objectID);
+//     })
+//     .catch(error => {
+//       console.error('Error when deleting category from Algolia', error);
+//       process.exit(1);
+//     });
+// }
