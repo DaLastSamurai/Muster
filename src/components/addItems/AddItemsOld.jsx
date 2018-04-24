@@ -105,7 +105,6 @@ class AddItems extends React.Component {
     });
   }
 
-
   handleChange(event) {
     event.preventDefault();
     const target = event.target;
@@ -115,7 +114,6 @@ class AddItems extends React.Component {
       [name]: value
     });
   }
-
 
   //Submits information in fields to the database
   handleSubmit(event) {
@@ -157,8 +155,6 @@ class AddItems extends React.Component {
 
     event.target.reset();
   }
-
- 
 
   componentDidMount() {
     //Checks database for collections owned by the user
@@ -287,25 +283,6 @@ class AddItems extends React.Component {
 
           <form onSubmit={this.handleSubmit.bind(this)}>
             <div className="form-group">
-              <div>
-                <label>Collection</label>
-                <div>
-                  <select
-                    className="form-control"
-                    name="collectionId"
-                    component="select"
-                    value={this.state.collectionId}
-                    onChange={this.handleChange}
-                    required
-                  >
-                    <option />
-                    {this.state.collectionList.map(collection => (
-                      <option value={collection.id}>{collection.name}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
               <div>
                 <button
                   type="button"
