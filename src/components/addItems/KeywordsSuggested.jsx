@@ -1,7 +1,7 @@
 import React from 'react';
 import * as firebase from 'firebase';
 
-class KeywordsSuggested extends React.component {
+class KeywordsSuggested extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};

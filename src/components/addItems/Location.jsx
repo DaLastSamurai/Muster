@@ -1,7 +1,7 @@
 import React from 'react';
 import * as firebase from 'firebase';
 
-class Location extends React.component {
+class Location extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
