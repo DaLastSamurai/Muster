@@ -1,5 +1,4 @@
 import React from 'react';
-import { firebaseAuth } from '../../../config/firebaseCredentials'
 import Signup from './Signup'
 import Login from './Login'
 
@@ -14,10 +13,10 @@ export default class AuthFrame extends React.Component {
     this.loadLoginPage = this.loadLoginPage.bind(this);
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(isSigningUp) {
     // these props come down from the app.js and are toggled by clicking the 
     // 'login' button in the unprotected nav. 
-    this.setState({isSigningUp : this.props.isSigningUp})
+    this.setState({ isSigningUp })
   }
 
   loadSignupPage() {
