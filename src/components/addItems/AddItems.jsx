@@ -2,14 +2,25 @@ import React from 'react';
 import * as firebase from 'firebase';
 import NewCollectionsInput from '../userBar/NewCollectionsInput.jsx';
 import Collections from './Collections';
+import Form from './Form';
+import Book from '../helperElements/Book';
 
 class AddItems extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       uid: '',
+      title: '',
+      author: '',
+      images: [],
       collection: '',
-      collectionId: ''
+      collectionId: '',
+      notes: '',
+      upc: '',
+      onlinePrice: '',
+      storeLinks: {},
+      subject: '',
+      price: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -32,18 +43,29 @@ class AddItems extends React.Component {
   }
 
   render() {
-    console.log('state of collection ID:', this.state);
     return (
-      <div className="additems-container">
-        <div className="additems-forms">
-          <div>
-            <p>{JSON.stringify(this.state.uid)}</p>
-            <p>{JSON.stringify(this.state.collection)}</p>
-            <p>{JSON.stringify(this.state.collectionId)}</p>
-            <p>{JSON.stringify(this.state.value)}</p>
+      // <div className="additems-container">
+      <div className="main-container">
+        <div className="float-reqbox">
+          <h2>Add/Edit Book</h2>
+
+          {/* <div className="additems-forms"> */}
+          <div className="container-requset-form">
+            <div className="requset-form-box">
+              <Collections userId={this.props.userId} handler={this.handleChange} />
+              <NewCollectionsInput />
+              <Form handler={this.handleChange} />
+            </div>
           </div>
-          <NewCollectionsInput />
-          <Collections userId={this.props.userId} handler={this.handleChange} />
+        </div>
+        <div className="request-trans">
+          <div className="reqmade">
+            <div className="req-title">
+              <h2>Preview</h2>
+            </div>
+            <Book bookInfo={this.state} />
+            <p>{JSON.stringify(this.state)}</p>
+          </div>
         </div>
       </div>
     );
