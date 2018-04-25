@@ -20,6 +20,7 @@ class AddItems extends React.Component {
   }
 
   render() {
+    console.log(event);
     return (
       <div className="additems-container">
         <div className="additems-forms">
