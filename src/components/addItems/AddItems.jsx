@@ -12,20 +12,13 @@ class AddItems extends React.Component {
       collectionId: ''
     };
 
-    this.collectionHandler = this.collectionHandler.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    let currentUID = this.props.userId;
-
     this.setState({
-      uid: currentUID
+      uid: this.props.userId
     });
-  }
-
-  collectionHandler(e) {
-    this.setState({ collectionId: e.target.value });
   }
 
   handleChange(event) {
