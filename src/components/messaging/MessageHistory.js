@@ -2,7 +2,8 @@ import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, users } from '../../../config/firebaseCredentials'
 import LinkButton from '../helperElements/LinkButton'
-import InfiniteScroll from 'react-infinite-scroller' 
+import InfiniteScroll from 'react-infinite-scroller'
+import LoadingIcon from "../helperElements/LoadingIcon";
 // this should probably use the infinite scroll npm module. 
 // this recieves this.props.chatRoomName from MessageFrame
 
@@ -43,7 +44,7 @@ export default class MessageHistory extends React.Component {
           pageStart={1000}
           loadMore={() => {}}
           hasMore={false}
-          loader={<div className="loader">Loading ...</div>}
+          loader={<LoadingIcon/>}
         >
 
         {this.state.messageHistory

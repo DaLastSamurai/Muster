@@ -2,7 +2,6 @@ import React from 'react';
 import firebase from 'firebase';
 import { firebaseAuth, users} from '../../../config/firebaseCredentials'
 import LinkButton from '../helperElements/LinkButton'
-// NEED TO START WITH THIS
 // this is getting called by the profile
 
 export default class FollowButton extends React.Component {
