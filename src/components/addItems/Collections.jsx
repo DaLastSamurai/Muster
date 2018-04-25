@@ -5,8 +5,21 @@ class Collections extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      collectionList: [{ id: 1, name: 'programming' }, { id: 2, name: 'comic books' }]
+      collectionList: [{ id: 1, name: 'programming' }, { id: 2, name: 'comic books' }],
+      collectionId: ''
     };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    event.preventDefault();
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value
+    });
+    this.props.handler(event);
   }
 
   componentDidMount() {
