@@ -5,18 +5,20 @@ class Book extends React.Component {
     super(props);
     this.state = {};
   }
+
   render() {
+    let {author, title, notes} = this.props.bookInfo;
     return (
       <div class="main">
         <ul id="bk-list" class="bk-list clearfix">
           <li>
             <div class="bk-book book-1 bk-bookdefault">
               <div class="bk-front">
-                <div class="bk-cover-back" />
+                <div class="bk-cover-back"/>
                 <div class="bk-cover">
                   <h2>
-                    <span>{this.props.bookInfo.author}</span>
-                    <span>{this.props.bookInfo.title}</span>
+                    <span>{author}</span>
+                    <span>{title}</span>
                   </h2>
                 </div>
               </div>
@@ -32,26 +34,26 @@ class Book extends React.Component {
                 </div>
               </div>
               <div class="bk-back">
-                <p>{this.props.bookInfo.notes}</p>
+                <p>{notes}</p>
               </div>
-              <div class="bk-right" />
+              <div class="bk-right"/>
               <div class="bk-left">
                 <h2>
-                  <span>{this.props.bookInfo.author}</span>
-                  <span>{this.props.bookInfo.title}</span>
+                  <span>{author}</span>
+                  <span>{title}</span>
                 </h2>
               </div>
-              <div class="bk-top" />
-              <div class="bk-bottom" />
+              <div class="bk-top"/>
+              <div class="bk-bottom"/>
             </div>
             <div class="bk-info">
               {/* <button class="bk-bookback">Flip</button>
               <button class="bk-bookview">View inside</button> */}
               <h3>
-                <span>{this.props.bookInfo.author}</span>
-                <span>{this.props.bookInfo.title}</span>
+                <span>{author}</span>
+                <span>{title}</span>
               </h3>
-              <p>{this.props.bookInfo.notes}</p>
+              <p>{notes}</p>
             </div>
           </li>
         </ul>

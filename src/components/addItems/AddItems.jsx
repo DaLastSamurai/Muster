@@ -1,5 +1,4 @@
 import React from 'react';
-import * as firebase from 'firebase';
 import NewCollectionsInput from '../userBar/NewCollectionsInput.jsx';
 import Collections from './Collections';
 import Form from './Form';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {firebaseAuth} from '../../../config/firebaseCredentials'
 import LoadingIcon from "../helperElements/LoadingIcon";
 
@@ -33,7 +33,6 @@ export default class ResetPassword extends Component {
   }
 
   render() {
-    console.log('this is the email', typeof this.props.email)
     return this.state.loading
       ? <LoadingIcon/>
       : (
@@ -51,6 +50,7 @@ export default class ResetPassword extends Component {
               Send Me Reset Password Instructions
             </button>
           </form>
+
           <div>
             {this.state.error}
           </div>

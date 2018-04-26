@@ -1,17 +1,10 @@
 // This navbar will show up when the user is logged in.
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
-import { firebaseAuth } from '../../../config/firebaseCredentials';
+import { Link } from 'react-router-dom';
 import Logo from './Logo';
-import LinkButton from '../helperElements/LinkButton';
-import AuthFrame from '../authentication/AuthFrame';
 import firebase from 'firebase';
-import { InstantSearch, SearchBox } from 'react-instantsearch/dom';
 import { SearchHits } from '../helperElements/Search.jsx';
-import SearchToggler from '../helperElements/SearchToggler.jsx';
 import UserInfo from '../userBar/UserInfo.jsx';
-
-import ChatRoomList from '../messaging/ChatRoomList';
 
 export default class ProtectedNav extends React.Component {
   constructor(props) {

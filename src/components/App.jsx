@@ -11,7 +11,6 @@ import CategoryList from './popularcategory/CategoryList';
 import CollectionList from './popularcategory/CollectionList';
 import ItemList from './popularcategory/ItemList';
 import MyCollections from './userBar/MyCollections.jsx';
-import AuthFrame from './authentication/AuthFrame';
 import ManageInventory from './manageInventory/ManageInventory';
 import AddItems from './addItems/AddItems';
 import Trade from './trade/Trade';
@@ -20,6 +19,7 @@ import {checkAuthStatus} from './authentication/authenticationHelpers';
 import {getPopularCategory, getCollection, getItem, getCategory} from './helperElements/FetchData';
 import Search from './helperElements/Search.jsx'; // importing default
 import ChatRoomList from './messaging/ChatRoomList';
+import Login from "./authentication/Login";
 
 export default class App extends React.Component {
   constructor() {
@@ -29,7 +29,7 @@ export default class App extends React.Component {
       user: null,
       userId: null,
       userObj: {},
-      isOnAuthFrame: false,
+      isOnLoginPage: false,
       popularCategoryList: [],
       categorys: {},
       collections: {},
@@ -41,7 +41,7 @@ export default class App extends React.Component {
     };
 
     this.checkAuthStatus = checkAuthStatus.bind(this);
-    this.setIsOnAuthFrame = this.setIsOnAuthFrame.bind(this);
+    this.openLoginPage = this.openLoginPage.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
     this.getPopularCategory = getPopularCategory.bind(this);
     this.searchBy = this.searchBy.bind(this);
@@ -84,8 +84,8 @@ export default class App extends React.Component {
     });
   }
 
-  setIsOnAuthFrame(isOnAuthFrame) {
-    this.setState({isOnAuthFrame});
+  openLoginPage(isOnLoginPage = true) {
+    this.setState({ isOnLoginPage });
   }
 
   reloadPage() {
@@ -139,9 +139,9 @@ export default class App extends React.Component {
               </div>
             ) : (
               <div className="unprotectednav-container">
-                <UnprotectedNav setIsOnAuthFrame={this.setIsOnAuthFrame}/>
+                <UnprotectedNav openLoginPage={this.openLoginPage}/>
                 <div className="login-form-outerbox">
-                  {this.state.isOnAuthFrame ? <AuthFrame user={this.props.user} isSigningUp={false}/> : <div/>}
+                  {this.state.isOnLoginPage ? <Login user={this.props.user} isSigningUp={false}/> : <div/>}
                 </div>
               </div>
             )}
@@ -151,7 +151,7 @@ export default class App extends React.Component {
                 exact
                 path="/"
                 render={() =>
-                  this.state.isOnAuthFrame ? (
+                  this.state.isOnLoginPage ? (
                     <div/>
                   ) : (
                     <CategoryList popularCategoryList={this.state.popularCategoryList}/>

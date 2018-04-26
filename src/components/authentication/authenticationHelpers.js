@@ -1,4 +1,4 @@
-import { firebaseAuth, rootRef, collection, category, item, users} from '../../../config/firebaseCredentials';
+import { firebaseAuth, users} from '../../../config/firebaseCredentials';
 import firebase from 'firebase'
 
 // this is used in the app.js to check to see if there is a user signed in. 
