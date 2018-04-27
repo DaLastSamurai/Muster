@@ -30,8 +30,8 @@ class Trade extends React.Component {
   render() {
     return(
       <InstantSearch
-      appId="9VH3I9OJWS"
-      apiKey="289636a507e4853ef95cc5b7e4cac8d9"
+      appId="E1SL0XPK2X"
+      apiKey="626c569da94a754853920b18017d8760"
       indexName={this.state.indexName || 'item'}
       >
         <div className="main-container" >

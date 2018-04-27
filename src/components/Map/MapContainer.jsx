@@ -6,19 +6,25 @@ export default class MapContainer extends React.Component {
     constructor(props) {
 			super(props);
 			this.state = {
-				userLoc : null,
+				userLoc : {lat : 40.7504733, lng:-73.9765122 }, //set default center to Manhattan
 			}
+			this.onGetCurrentLocationSuccess = this.onGetCurrentLocationSuccess.bind(this);
+			this.onGetCurrentLocationFail = this.onGetCurrentLocationFail.bind(this);
+		}
+
+		onGetCurrentLocationSuccess (position) {
+			console.log('onGetCurrentLocationSuccess')
+			this.setState({userLoc : {lat : position.coords.latitude, lng: position.coords.longitude}});
+		}
+
+		onGetCurrentLocationFail () {
+			console.warn(`ERROR(${err.code}): ${err.message}`);
 		}
 
 		componentDidMount() {
-			if ("geolocation" in navigator) {
+			if (navigator.geolocation) {
 				/* geolocation is available */
-				navigator.geolocation.getCurrentPosition((position)=>{
-					this.setState({userLoc : {lat : position.coords.latitude, lng: position.coords.longitude}});
-				});
-			} else {
-				/* geolocation IS NOT available */
-				console.error('no location provided')
+				navigator.geolocation.getCurrentPosition(this.onGetCurrentLocationSuccess, this.onGetCurrentLocationFail);
 			}
 		}
 

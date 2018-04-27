@@ -6,6 +6,7 @@ import MapContainer from '../Map/MapContainer.jsx'
 
 
 function foundItem({hit}) {
+  console.log('running running?')
   return(
     <div /*onClick={(e)=> console.log('this is what the click handler passes: ', hit)}*/> 
       {window.indexName === undefined && (
@@ -64,38 +65,20 @@ function foundItem({hit}) {
             { hit.objectID }
           </Link>
       </div>) }
-
-
     </div>
   )
 }
 
 //think of this as Search Result List component. it's like Search Result List Entry, maps and formats each found entry
   function Search(props) {
+    console.log(props)
     return (
       <div className="search-container">
         <div className="search-list-container">
-          <div className="search-hits-per-page">
-            <HitsPerPage
-            defaultRefinement={5} 
-            items={[{value: 5, label: 'Show 5 hits'}, {value: 20, label: 'Show 20 hits'}, {value:50, label: 'show 50'}]}
-            />
-          </div>
-
           <div className="search-entry">
             <Hits hitComponent={foundItem} />
           </div>
-
-          <div className="pagination__container">
-            <Pagination 
-            showLast={true} 
-            showFirst={false}
-            showNext={false}
-            showPrevious={false}
-            className="pagination-container"/>
-          </div>
         </div>
-
         <div className="search-map">
           <MapContainer 
           hits={JSON.stringify(props)}
