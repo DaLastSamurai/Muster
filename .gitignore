@@ -2,7 +2,8 @@ node_modules
 functions/node_modules
 public/bundle.js
 firebase-debug.log
-.idea
+.idea/*
 creds.json
 .DS_Store
 ./config
+package-lock.json

@@ -1,10 +1,8 @@
 // This navbar will show up when the user is not logged in.
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
-import { firebaseAuth } from '../../../config/firebaseCredentials'
+import { Link } from 'react-router-dom'
 import Logo from './Logo'
 import LinkButton from '../helperElements/LinkButton'
-import AuthFrame from '../authentication/AuthFrame'
 import { SearchHits } from '../helperElements/Search.jsx'
 
 export default class UnprotectedNav extends React.Component {
@@ -46,7 +44,7 @@ export default class UnprotectedNav extends React.Component {
                 <LinkButton title='Login' clickFunction={() => {
                   // this needs to set state in the app that will cause the
                   // auth frame to render and then unrender on rerender.
-                  this.props.setIsOnAuthFrame(true)
+                  this.props.openLoginPage()
                 }} />
               </Link>
             </li>

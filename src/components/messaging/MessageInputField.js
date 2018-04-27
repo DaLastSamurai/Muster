@@ -15,10 +15,6 @@ export default class MessageInputField extends React.Component {
     this.setInputValue = this.setInputValue.bind(this)
   }
 
-  componentDidMount() {
-
-  }
-
   setInputValue(e) {this.setState({inputValue : e.target.value})}
 
   checkSubmit(e) {

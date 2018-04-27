@@ -1,7 +1,4 @@
 import React from 'react';
-import firebase from 'firebase';
-import { firebaseAuth, users } from '../../../config/firebaseCredentials'
-import LinkButton from '../helperElements/LinkButton'
 import MessageFrame from './MessageFrame'
 // receives the chatRoomName. When clicked, it should render the 
 
@@ -12,10 +9,6 @@ export default class ChatRoomEntry extends React.Component {
       isMessageFrameOpen : false, 
     }; 
     this.toggleMessageFrame = this.toggleMessageFrame.bind(this)
-  }
-
-  componentWillMount() {
-
   }
 
   toggleMessageFrame(e) {

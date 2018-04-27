@@ -1,6 +1,6 @@
 import React from 'react';
 import firebase from 'firebase';
-import { firebaseAuth, users } from '../../../config/firebaseCredentials'
+import {firebaseAuth, users} from '../../../config/firebaseCredentials'
 import LinkButton from '../helperElements/LinkButton'
 import ChatRoomEntry from './ChatRoomEntry'
 import AddChatRoomFrame from './addRooms/AddChatRoomFrame'
@@ -23,14 +23,14 @@ export default class ChatRoomList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userChatRooms: {} 
+      userChatRooms: {}
     };
     this.getUserChatRooms = this.getUserChatRooms.bind(this)
   }
 
   componentDidMount() {
     // this will cause the getUserChatRooms to be called twice. 
-    this.getUserChatRooms() 
+    this.getUserChatRooms()
   }
 
   getUserChatRooms() {
@@ -47,29 +47,29 @@ export default class ChatRoomList extends React.Component {
 
   render() {
     return (
-      <div> 
-        <AddChatRoomFrame userChatRoomData = {this.state.userChatRoomData} />
-        
-        {Object.keys(this.state.userChatRooms).length === 0 
-        ? (<h6 className= "nochatroom-text">You don't have any chats yet</h6>)
-        : (
-          <div>
-            <ul className="ChatRoomEntries" >
-              {
-                Object.keys(this.state.userChatRooms).map((chatRoomName) => {
-                  let chatRoomData = this.state.userChatRooms[chatRoomName]
-                  return <ChatRoomEntry 
-                    key={chatRoomName} 
-                    chatRoomName={chatRoomName} 
-                    chatRoomData={chatRoomData} 
-                  />
-                })  
-              }
-            </ul> 
-          </div> 
+      <div>
+        <AddChatRoomFrame userChatRoomData={this.state.userChatRoomData}/>
+
+        {Object.keys(this.state.userChatRooms).length === 0
+          ? (<h6 className="nochatroom-text">You don't have any chats yet</h6>)
+          : (
+            <div>
+              <ul className="ChatRoomEntries">
+                {
+                  Object.keys(this.state.userChatRooms).map((chatRoomName) => {
+                    let chatRoomData = this.state.userChatRooms[chatRoomName]
+                    return <ChatRoomEntry
+                      key={chatRoomName}
+                      chatRoomName={chatRoomName}
+                      chatRoomData={chatRoomData}
+                    />
+                  })
+                }
+              </ul>
+            </div>
           )
         }
-      </div> 
+      </div>
     )
   }
 }

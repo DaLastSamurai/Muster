@@ -1,7 +1,4 @@
 import React from 'react';
-import firebase from 'firebase';
-import { firebaseAuth, users } from '../../../config/firebaseCredentials'
-import LinkButton from '../helperElements/LinkButton'
 import MessageStatus from './MessageStatus'
 import MessageHistory from './MessageHistory'
 import MessageInputField from './MessageInputField'
@@ -17,15 +14,7 @@ export default class MessageFrame extends React.Component {
 
     };
   }
-
-  componentDidMount() {
-
-  }
-
-
-
   render() {
-    
     return  (
       <div className = "chat-frame">
         <MessageStatus chatRoomName = {this.props.chatRoomName}/> 
