@@ -312,13 +312,13 @@
 .book-1 .bk-back,
 .book-1 .bk-left,
 .book-1 .bk-front:after {
-  background-color: #ff924a;
+  background-color: lightgray;
 }
 
 .book-1 .bk-cover {
-  background-image: url(../images/1.png);
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/muster-94d83.appspot.com/o/images%2F977df732-f79a-44ff-99c7-561a09618eab.jpg?alt=media&token=61649caf-ca51-4eb6-bbed-529092e1464b);
   background-repeat: no-repeat;
-  background-position: 10px 40px;
+  /* background-position: 10px 40px; */
 }
 
 .book-1 .bk-cover h2 {
@@ -367,158 +367,6 @@
   padding: 40px;
   text-align: center;
   font-weight: 700;
-}
-
-/* Book 2 */
-
-.book-2 .bk-front > div,
-.book-2 .bk-back,
-.book-2 .bk-left,
-.book-2 .bk-front:after {
-  background-color: #222;
-}
-
-.book-2 .bk-cover {
-  background-image: url(../images/2.png);
-  background-repeat: no-repeat;
-  background-position: 98% 0%;
-}
-
-.book-2 .bk-cover h2,
-.book-2 .bk-left h2 {
-  color: #fff;
-  font-family: 'the_godfatherregular', Georgia, serif;
-  font-weight: 400;
-}
-
-.book-2 .bk-cover h2 {
-  font-size: 138px;
-  line-height: 102px;
-  padding: 30px;
-}
-
-.book-2 .bk-cover h2 span:first-child {
-  position: relative;
-  display: block;
-}
-
-.book-2 .bk-cover h2 span:first-child:before {
-  content: 'A novel';
-  font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif;
-  text-transform: uppercase;
-  position: absolute;
-  color: red;
-  font-size: 20px;
-  right: -15px;
-  bottom: -60px;
-}
-
-.book-2 .bk-cover h2 span:last-child {
-  font-size: 100px;
-  line-height: 80px;
-  display: block;
-  position: relative;
-}
-
-.book-2 .bk-cover h2 span:last-child:before {
-  content: 'by';
-  font-size: 16px;
-  color: red;
-  position: absolute;
-  top: -32px;
-  left: 62px;
-  font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif;
-}
-
-.book-2 .bk-cover h2 span:last-child:after {
-  content: '';
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #f9ed65;
-  position: absolute;
-  top: 5px;
-  left: 101px;
-}
-
-.book-2 .bk-left h2 {
-  font-size: 20px;
-  line-height: 40px;
-  padding-right: 10px;
-  text-align: right;
-}
-
-.book-2 .bk-back p {
-  color: red;
-  font-size: 13px;
-  font-family: 'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif;
-  padding: 40px;
-  text-align: center;
-}
-
-/* Book 3 */
-
-.book-3 .bk-front > div,
-.book-3 .bk-back,
-.book-3 .bk-left,
-.book-3 .bk-front:after {
-  background-color: #a4c19e;
-}
-
-.book-3 .bk-cover {
-  background-image: url(../images/3.png);
-  background-repeat: no-repeat;
-  background-position: 100% 95%;
-}
-
-.book-3 .bk-cover h2 {
-  position: absolute;
-  top: 40px;
-  right: 40px;
-  left: 40px;
-  padding-top: 15px;
-  color: #fff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
-}
-
-.book-3 .bk-cover h2 span:first-child,
-.book-3 .bk-left h2 span:first-child {
-  text-transform: uppercase;
-  font-weight: 400;
-  font-size: 13px;
-  padding-right: 20px;
-}
-
-.book-3 .bk-cover h2 span:first-child {
-  display: block;
-}
-
-.book-3 .bk-cover h2 span:last-child,
-.book-3 .bk-left h2 span:last-child,
-.book-3 .bk-content p {
-  font-family: Georgia, Times, 'Times New Roman', serif;
-}
-
-.book-3 .bk-left h2 {
-  color: #fff;
-  font-size: 14px;
-  line-height: 40px;
-  text-align: center;
-}
-
-.book-3 .bk-back img {
-  width: 200px;
-  display: block;
-  margin: 30px auto 0;
-}
-
-.book-3 .bk-back p {
-  color: #fff;
-  font-size: 13px;
-  font-family: Georgia, Times, 'Times New Roman', serif;
-  padding: 40px;
-  text-align: center;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 /* Fallbacks */
