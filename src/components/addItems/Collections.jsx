@@ -56,6 +56,7 @@ class Collections extends React.Component {
             component="select"
             value={this.state.collectionId}
             onChange={this.handleChange}
+            placeholder="select collection..."
             required
           >
             <option />
